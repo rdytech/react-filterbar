@@ -1,0 +1,4 @@
+exclude_paths:
+- dist/**/*.rb
+- gulpfile.js
+- __tests__/**/*.rb
