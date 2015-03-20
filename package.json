@@ -1,0 +1,64 @@
+{
+  "name": "react-filterbar",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/reactFilterBar.js",
+  "dependencies": {
+    "bootstrap": "^3.3.4",
+    "jquery": "^2.1.3",
+    "react": "^0.13.1",
+    "react-bootstrap": "^0.17.0"
+  },
+  "devDependencies": {
+    "babelify": "^5.0.4",
+    "browser-sync": "^2.3.0",
+    "browserify": "^9.0.3",
+    "del": "^1.1.1",
+    "express": "^4.12.3",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-debug": "^2.0.1",
+    "gulp-jest": "^0.4.0",
+    "gulp-jshint": "^1.9.4",
+    "gulp-less": "^3.0.1",
+    "gulp-minify-css": "^1.0.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-react": "^3.0.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-run": "^1.6.6",
+    "gulp-uglify": "^1.1.0",
+    "gulp-util": "^3.0.4",
+    "jest-cli": "^0.4.0",
+    "react-bootstrap": "^0.17.0",
+    "reactify": "^1.1.0",
+    "uglify-js": "^2.4.17",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^2.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "paths": {
+    "scripts": "./src",
+    "build": "./dist",
+    "example": "./example",
+    "test": "./test",
+    "js": "./src/**/*.js",
+    "jsx": "./src/**/*.jsx"
+  },
+  "dest": {
+    "app": "react-filterbar.js",
+    "dist": "dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jobready/react-filterbar"
+  },
+  "author": "Jacob Bass",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/jobready/react-filterbar/issues"
+  },
+  "homepage": "https://github.com/jobready/react-filterbar"
+}
