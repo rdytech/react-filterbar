@@ -5,6 +5,6 @@
 //= require react
 //= require react_ujs
 //= require react_bootstrap
-//= require react-filterbar
+//= require reactFilterBar
 //= require moment
 //= require bootstrap-datetimepicker

@@ -1,0 +1,25 @@
+{
+  "name": "react-filterbar",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jobready/react-filterbar",
+  "authors": [
+    "Jacob Bass <jacob@jacobbass.net>"
+  ],
+  "description": "Jobready Filterbar in ReactJS",
+  "main": "dist/reactFilterBar.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "src",
+    "example",
+    "tmp",
+    "gulpfile,js",
+    "package.json",
+    "README.md",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,9 +1,9 @@
-var FilterList = require('./filterlist.js.jsx');
-var ApplyConfigurationButton = require('./applyconfigurationbutton.js.jsx');
-var ClearConfigurationButton = require('./clearconfigurationbutton.js.jsx');
-var SaveConfigurationButton = require('./saveconfigurationbutton.js.jsx');
-var ConfigurationList = require('./configurationlist.js.jsx');
-var FilterDisplay = require('./filterdisplay.js.jsx');
+var FilterList = require('./filterList.js.jsx');
+var ApplyConfigurationButton = require('./applyConfigurationButton.js.jsx');
+var ClearConfigurationButton = require('./clearConfigurationButton.js.jsx');
+var SaveConfigurationButton = require('./saveConfigurationButton.js.jsx');
+var ConfigurationList = require('./configurationList.js.jsx');
+var FilterDisplay = require('./filterDisplay.js.jsx');
 
 var FilterBar = React.createClass({
   getInitialState: function() {
@@ -70,7 +70,7 @@ var FilterBar = React.createClass({
     });
 
     var filters = filteredArray.map(function(filter) {
-      filterConfig = {};
+      var filterConfig = {};
       filterConfig.uid = filter.uid;
       filterConfig.value= filter.value;
       return filterConfig;
@@ -117,9 +117,9 @@ var FilterBar = React.createClass({
       success: function(data) {
       },
       error: function(xhr,status,error) {
-        console.error(xhr);
-        console.error(status);
-        console.error(error);
+        console.error("XHR:",xhr);
+        console.error("STATUS:",status);
+        console.error("ERROR:",error);
       }
     });
   },
