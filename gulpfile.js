@@ -16,10 +16,10 @@ var buildPath = package.paths.build;
 var examplePath = package.paths.example;
 var testPath = package.paths.test;
 
-var appName = 'reactFilterbar';
+var appName = 'reactFilterBar';
 var appFile = appName + '.js';
-var appDistFile = appName + '-' + package.version + '.js';
-var appMinDistFile = appName + '-' + package.version + '.min.js';
+var appDistFile = appName + '.js';
+var appMinDistFile = appName + '.min.js';
 
 gulp.task('watch', function() {
   gulp.watch(scriptsPath, ['example']);

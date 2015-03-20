@@ -1,6 +1,6 @@
-var TextInput = require('./inputs/textinput.js.jsx');
-var DateInput = require('./inputs/dateinput.js.jsx');
-var SelectInput = require('./inputs/selectinput.js.jsx');
+var TextInput = require('./inputs/textInput.js.jsx');
+var DateInput = require('./inputs/dateInput.js.jsx');
+var SelectInput = require('./inputs/selectInput.js.jsx');
 
 var FilterDisplay = React.createClass({
   render: function() {

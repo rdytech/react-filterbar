@@ -1,10 +1,10 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
-var FilterBar = require("./components/filterbar.js.jsx");
+var FilterBar = require("./components/filterBar.js.jsx");
 window.FilterBar = FilterBar;
 
-},{"./components/filterbar.js.jsx":5}],2:[function(require,module,exports){
+},{"./components/filterBar.js.jsx":5}],2:[function(require,module,exports){
 "use strict";
 
 var ApplyConfigurationButton = React.createClass({
@@ -133,12 +133,12 @@ module.exports = ConfigurationList;
 },{}],5:[function(require,module,exports){
 "use strict";
 
-var FilterList = require("./filterlist.js.jsx");
-var ApplyConfigurationButton = require("./applyconfigurationbutton.js.jsx");
-var ClearConfigurationButton = require("./clearconfigurationbutton.js.jsx");
-var SaveConfigurationButton = require("./saveconfigurationbutton.js.jsx");
-var ConfigurationList = require("./configurationlist.js.jsx");
-var FilterDisplay = require("./filterdisplay.js.jsx");
+var FilterList = require("./filterList.js.jsx");
+var ApplyConfigurationButton = require("./applyConfigurationButton.js.jsx");
+var ClearConfigurationButton = require("./clearConfigurationButton.js.jsx");
+var SaveConfigurationButton = require("./saveConfigurationButton.js.jsx");
+var ConfigurationList = require("./configurationList.js.jsx");
+var FilterDisplay = require("./filterDisplay.js.jsx");
 
 var FilterBar = React.createClass({
   displayName: "FilterBar",
@@ -257,7 +257,7 @@ var FilterBar = React.createClass({
     });
 
     var filters = filteredArray.map(function (filter) {
-      filterConfig = {};
+      var filterConfig = {};
       filterConfig.uid = filter.uid;
       filterConfig.value = filter.value;
       return filterConfig;
@@ -323,9 +323,9 @@ var FilterBar = React.createClass({
 
         return _errorWrapper;
       })(function (xhr, status, error) {
-        console.error(xhr);
-        console.error(status);
-        console.error(error);
+        console.error("XHR:", xhr);
+        console.error("STATUS:", status);
+        console.error("ERROR:", error);
       })
     });
   },
@@ -418,12 +418,12 @@ var FilterBar = React.createClass({
 
 module.exports = FilterBar;
 
-},{"./applyconfigurationbutton.js.jsx":2,"./clearconfigurationbutton.js.jsx":3,"./configurationlist.js.jsx":4,"./filterdisplay.js.jsx":6,"./filterlist.js.jsx":7,"./saveconfigurationbutton.js.jsx":11}],6:[function(require,module,exports){
+},{"./applyConfigurationButton.js.jsx":2,"./clearConfigurationButton.js.jsx":3,"./configurationList.js.jsx":4,"./filterDisplay.js.jsx":6,"./filterList.js.jsx":7,"./saveConfigurationButton.js.jsx":11}],6:[function(require,module,exports){
 "use strict";
 
-var TextInput = require("./inputs/textinput.js.jsx");
-var DateInput = require("./inputs/dateinput.js.jsx");
-var SelectInput = require("./inputs/selectinput.js.jsx");
+var TextInput = require("./inputs/textInput.js.jsx");
+var DateInput = require("./inputs/dateInput.js.jsx");
+var SelectInput = require("./inputs/selectInput.js.jsx");
 
 var FilterDisplay = React.createClass({
   displayName: "FilterDisplay",
@@ -610,7 +610,7 @@ var AgeSelectInput = React.createClass({
 
 module.exports = FilterDisplay;
 
-},{"./inputs/dateinput.js.jsx":8,"./inputs/selectinput.js.jsx":9,"./inputs/textinput.js.jsx":10}],7:[function(require,module,exports){
+},{"./inputs/dateInput.js.jsx":8,"./inputs/selectInput.js.jsx":9,"./inputs/textInput.js.jsx":10}],7:[function(require,module,exports){
 "use strict";
 
 var FilterList = React.createClass({
