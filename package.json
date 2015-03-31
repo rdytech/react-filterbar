@@ -2,7 +2,7 @@
   "name": "react-filterbar",
   "version": "0.0.0",
   "description": "",
-  "main": "dist/reactFilterBar.js",
+  "main": "dist/react-filterbar.js",
   "dependencies": {
     "bootstrap": "^3.3.4",
     "jquery": "^2.1.3",
