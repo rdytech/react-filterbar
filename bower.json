@@ -9,14 +9,16 @@
   "license": "MIT",
   "private": true,
   "ignore": [
-    "**/.*",
     "src",
     "example",
     "tmp",
-    "gulpfile,js",
+    "gulpfile.js",
     "package.json",
     "README.md",
     "node_modules",
+    "RailsExample",
+    "docs",
+    "Guardfile",
     "bower_components",
     "test",
     "tests"

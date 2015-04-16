@@ -1,0 +1,24 @@
+!!!
+/[if lt IE 7 ] <html class="ie ie6" lang="en">
+/[if IE 7 ] <html class="ie ie7" lang="en">
+/[if IE 8 ] <html class="ie ie8" lang="en">
+/[if IE 9 ] <html class="ie ie9" lang="en">
+%html
+  %head
+    = yield(:head_start)
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
+    %title= content_for?(:title) ? yield(:title) : 'Live'
+    = stylesheet_link_tag 'application', media: 'all'
+
+    %link{:href => "http://fonts.googleapis.com/css?family=Lato", :rel => "stylesheet", :type => "text/css"}/
+
+    = javascript_include_tag 'application'
+
+    = csrf_meta_tags
+  %body.live
+    %section#container
+      %section#main-content
+        %section.wrapper
+          = yield
+    #modal
+      #main-modal.modal.fade{role: "dialog"}

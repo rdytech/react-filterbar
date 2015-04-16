@@ -22,7 +22,7 @@ var appDistFile = appName + '.js';
 var appMinDistFile = appName + '.min.js';
 
 gulp.task('watch', function() {
-  gulp.watch(scriptsPath, ['example']);
+  gulp.watch(scriptsPath + '/**/*.*', ['example','neptune']);
 });
 
 gulp.task('example', function () {
@@ -33,8 +33,20 @@ gulp.task('example', function () {
   })
   .transform(babelify)
   .bundle()
-  .pipe(source(appFile))
-  .pipe(gulp.dest('example/rails/filterbar_example/vendor/assets/javascripts'));
+  .pipe(source(appDistFile))
+  .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('neptune', function() {
+  browserify({
+    entries: './src/' + appFile,
+    extensions: ['.js'],
+    debug: true
+  })
+  .transform(babelify)
+  .bundle()
+  .pipe(source(appDistFile))
+  .pipe(gulp.dest('/Users/jacobb1/development/jr/neptune/lib/assets/static/bower_components/react-filterbar/dist'));
 });
 
 gulp.task('build', function () {
@@ -58,27 +70,5 @@ gulp.task('compress', ['build'], function() {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('jest', function () {
-    var nodeModules = path.resolve('./node_modules');
-    return gulp.src('**')
-        .pipe(jest({
-            scriptPreprocessor: nodeModules + '/babel-jest',
-            testPathIgnorePatterns: [
-                "node_modules",
-                "test/support"
-            ],
-            moduleFileExtensions: [
-                "jsx",
-                "js",
-                "json",
-                "react"
-            ],
-            //rootDir: "src",
-            testDirectoryName: "test",
-            unmockedModulePathPatterns: [nodeModules + '/react']
-        }));
-});
-
-gulp.task('test', ['jest']);
-gulp.task('default',['example','watch']);
+gulp.task('default',['example','neptune','watch']);
 gulp.task('dist', ['build', 'compress']);
