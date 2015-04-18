@@ -12,11 +12,10 @@ export class FilterableTable extends React.Component {
     super(props);
     this.id = props.filterableTableId;
 
-
-    this.tableStore = new TableStore(props.table);
-    this.tableActor = new TableActor(this.tableStore);
-
     this.filterBarStore = new FilterBarStore(props.filterbar);
+    this.tableStore = new TableStore(props.table);
+
+    this.tableActor = new TableActor(this.tableStore);
     this.filterBarActor = new FilterBarActor(this.filterBarStore, this.tableStore);
   }
 

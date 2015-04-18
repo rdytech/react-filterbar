@@ -1,17 +1,22 @@
-import {FilterBarConstants} from '../constants/FilterBarConstants';
-
 var SharedUtils = require('../utils/SharedUtils');
 
 export class FilterBarStore {
   constructor(filterBarOptions) {
     this.CHANGE_EVENT = 'change';
     this.eventEmitter = new EventEmitter();
-    this.constants = FilterBarConstants;
+
+    // this.searchUrl        = parseSearchUrl();
+    // this.saveSearchUrl    = parseSaveSearchUrl();
+    // this.savedSearchUrl   = parseSavedSearchUrl();
+    // this.exportResultsUrl = parseexportResultsUrl();
+    // this.filters          = parseFilters();
 
     this.filters = this.parseRawFilterList(
       filterBarOptions.configuration.querySelector('dl.filters').querySelectorAll('dt.filter')
     );
+
     this.url = filterBarOptions.configuration.querySelector('dt.search-url').getAttribute('data-url');
+    this.searchUrl = filterBarOptions.configuration.querySelector('dt.search-url').getAttribute('data-url');
 
     if (window.location.search != '') {
       var queries = window.location.search.split('?')[1].split('&'),
@@ -20,7 +25,7 @@ export class FilterBarStore {
       for (var i = 0; i < queries.length; i++) {
         query = queries[i];
         if (query.match(/^q=/)) {
-          enabledFilters = JSON.parse(atob(query.substring(2,query.length)));
+          enabledFilters = JSON.parse(decodeURI(query).substring(2,query.length));
         }
       }
       var filter;
@@ -29,6 +34,10 @@ export class FilterBarStore {
         this.enableFilter(filter.uid, filter.value)
       }
     }
+  }
+
+  getSearchUrl() {
+    return this.searchUrl;
   }
 
   getFilter(filterUid) {
@@ -53,6 +62,19 @@ export class FilterBarStore {
       }
     }
     return enabledFilters;
+  }
+
+  getQuery() {
+    var enabledFilters = Object.keys(this.getEnabled()).map(function(filterUid) {
+      var filter = this.getFilter(filterUid);
+      return {
+        uid: filterUid,
+        type: filter.type,
+        field: filter.field,
+        value: filter.value
+      }
+    },this);
+    return enabledFilters.length > 0 ? 'q=' + JSON.stringify(enabledFilters) + '&' : '';
   }
 
   getBase64Query() {

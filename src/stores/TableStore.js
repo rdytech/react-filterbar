@@ -1,12 +1,9 @@
-import {TableConstants} from '../constants/TableConstants';
-
 import * as SearchUtils from '../utils/SearchUtils';
 
 export class TableStore {
   constructor(tableOptions) {
     this.CHANGE_EVENT = 'change';
     this.eventEmitter = new EventEmitter();
-    this.constants = TableConstants;
 
     this.rows = [];
     this.currentPage = 1;
@@ -15,12 +12,22 @@ export class TableStore {
     this.columnHeadings = this.parseRawColumnHeadingList(
       tableOptions.configuration.querySelector('dl.columns').querySelectorAll('dt.column')
     )
-    this.baseUrl = tableOptions.configuration.querySelector('dt.data-url').getAttribute('data-url');
-    this.url = window.location;
+
+    this.baseUrl = this.parseDataUrl(tableOptions.configuration.querySelector('dt.data-url').getAttribute('data-url'));
+    this.url = window.location.href;
     this.fetchData();
   }
 
+  parseDataUrl(rawUrl) {
+    var parsedUrl = '';
+    if (rawUrl.indexOf('?') == -1) {
+      parsedUrl = rawUrl + '?';
+    } else {
+      return rawUrl;
+    }
 
+    return parsedUrl;
+  }
 
   setUrl(url) {
     this.url = url;
@@ -34,13 +41,9 @@ export class TableStore {
     return this.baseUrl;
   }
 
-  fetchData(page) {
-    var url = this.url;
-    if(page != null) {
-      url += '&page=' + page;
-    }
+  fetchData() {
     SearchUtils.search(
-      url,
+      this.url + `page=${this.currentPage}`,
       this.setData.bind(this)
     );
   }
@@ -80,6 +83,10 @@ export class TableStore {
 
   getTotalPages() {
     return this.totalPages;
+  }
+
+  setCurrentPage(page) {
+    this.currentPage = page;
   }
 
   emitChange() {

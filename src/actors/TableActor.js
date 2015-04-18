@@ -20,6 +20,13 @@ export class TableActor {
   }
 
   fetchPagedData(page) {
-    this.tableStore.fetchData(page);
+    var currentUrl = this.tableStore.getUrl();
+    var newUrl = currentUrl + 'page=' + page + '&';
+
+    history.pushState({}, "", newUrl);
+    localStorage[window.location.pathname.replace(/\//g,'')] = window.location.search;
+
+    this.tableStore.setCurrentPage(page);
+    this.tableStore.fetchData();
   }
 }

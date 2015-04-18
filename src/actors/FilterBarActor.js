@@ -34,12 +34,12 @@ export class FilterBarActor {
   }
 
   applyFilters() {
-    var base64Query = this.filterBarStore.getBase64Query();
-    var tableBaseUrl = this.tableStore.getBaseUrl();
-    var newUrl = tableBaseUrl + "?q=" + base64Query + "&";
+    var searchUrl = this.filterBarStore.getSearchUrl();
+    var query = this.filterBarStore.getQuery();
+    var newUrl = searchUrl + "?" + query;
 
-    localStorage[window.location.pathname.replace(/\//,'')] = base64Query;
     history.pushState({}, "", newUrl);
+    localStorage[window.location.pathname.replace(/\//g,'')] = window.location.search;
 
     this.tableStore.setUrl(newUrl);
     this.tableStore.fetchData();
