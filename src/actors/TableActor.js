@@ -1,3 +1,5 @@
+import * as SharedUtils from '../utils/SharedUtils';
+
 export class TableActor {
   constructor(tableStore) {
     this.tableStore = tableStore;
@@ -20,11 +22,11 @@ export class TableActor {
   }
 
   fetchPagedData(page) {
+    var id = this.tableStore.getId();
     var currentUrl = this.tableStore.getUrl();
     var newUrl = currentUrl + 'page=' + page + '&';
 
-    history.pushState({}, "", newUrl);
-    localStorage[window.location.pathname.replace(/\//g,'')] = window.location.search;
+    SharedUtils.updateUrl(id, 'page', page);
 
     this.tableStore.setCurrentPage(page);
     this.tableStore.fetchData();

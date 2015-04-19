@@ -1,39 +1,21 @@
 var SharedUtils = require('../utils/SharedUtils');
 
 export class FilterBarStore {
-  constructor(filterBarOptions) {
+  constructor(configuration) {
     this.CHANGE_EVENT = 'change';
     this.eventEmitter = new EventEmitter();
 
-    // this.searchUrl        = parseSearchUrl();
-    // this.saveSearchUrl    = parseSaveSearchUrl();
-    // this.savedSearchUrl   = parseSavedSearchUrl();
-    // this.exportResultsUrl = parseexportResultsUrl();
-    // this.filters          = parseFilters();
+    this.id = configuration.id;
+    this.url = configuration.searchUrl;
+    this.searchUrl = configuration.searchUrl;
+    this.saveSearchUrl = configuration.saveSearchUrl;
+    this.savedSearchUrl = configuration.savedSearchUrl;
+    this.exportResultsUrl = configuration.exportResultsUrl;
+    this.filters = configuration.filters;
+  }
 
-    this.filters = this.parseRawFilterList(
-      filterBarOptions.configuration.querySelector('dl.filters').querySelectorAll('dt.filter')
-    );
-
-    this.url = filterBarOptions.configuration.querySelector('dt.search-url').getAttribute('data-url');
-    this.searchUrl = filterBarOptions.configuration.querySelector('dt.search-url').getAttribute('data-url');
-
-    if (window.location.search != '') {
-      var queries = window.location.search.split('?')[1].split('&'),
-          enabledFilters,
-          query;
-      for (var i = 0; i < queries.length; i++) {
-        query = queries[i];
-        if (query.match(/^q=/)) {
-          enabledFilters = JSON.parse(decodeURI(query).substring(2,query.length));
-        }
-      }
-      var filter;
-      for (var i = 0; i < enabledFilters.length; i++) {
-        filter = enabledFilters[i];
-        this.enableFilter(filter.uid, filter.value)
-      }
-    }
+  getId() {
+    return this.id;
   }
 
   getSearchUrl() {
@@ -74,59 +56,7 @@ export class FilterBarStore {
         value: filter.value
       }
     },this);
-    return enabledFilters.length > 0 ? 'q=' + JSON.stringify(enabledFilters) + '&' : '';
-  }
-
-  getBase64Query() {
-    var enabledFilters = Object.keys(this.getEnabled()).map(function(filterUid) {
-      var filter = this.getFilter(filterUid);
-      return {
-        uid: filterUid,
-        type: filter.type,
-        field: filter.field,
-        value: filter.value
-      }
-    },this);
-    enabledFilters = enabledFilters.length > 0 ? btoa(JSON.stringify(enabledFilters)): '';
-    console.log(enabledFilters);
-    return enabledFilters;
-  }
-
-  getQueryString() {
-    var enabledFilters = this.getEnabled();
-    var filter,
-        prefix,
-        query_object,
-        query_string = '';
-
-    for (var filterUid in enabledFilters) {
-      filter = enabledFilters[filterUid];
-      prefix = '';
-      prefix += 'q';
-      prefix += '[' + filter.type + ']';
-      query_object = {};
-      query_object[filter.field] = filter.value;
-
-      query_string += SharedUtils.serialize(query_object, prefix) + '&';
-    }
-    return query_string;
-  }
-
-  parseRawFilterList(rawFilterList) {
-    var rawFilter,
-        parsedFilterList = {};
-
-    for (var i = 0; i < rawFilterList.length; i++) {
-      rawFilter = rawFilterList[i];
-      parsedFilterList[rawFilter.getAttribute('data-uid')] = {
-        label: rawFilter.getAttribute('data-label'),
-        type: rawFilter.getAttribute('data-type'),
-        field: rawFilter.getAttribute('data-field'),
-        value: '',
-        enabled: false
-      };
-    }
-    return parsedFilterList;
+    return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : '';
   }
 
   /* Mutation Methods */

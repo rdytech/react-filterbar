@@ -8,6 +8,8 @@ import {LoadFiltersList} from './LoadFiltersList/LoadFiltersList.react';
 export class FilterBar extends React.Component {
   constructor(props) {
     super(props);
+    this.props.filterBarActor.applyFilters();
+
     this.filterBarActor = props.filterBarActor;
     this.filterBarStore = props.filterBarStore;
   }

@@ -1,3 +1,5 @@
+import * as SharedUtils from '../utils/SharedUtils';
+
 export class FilterBarActor {
   constructor(filterBarStore, tableStore) {
     this.filterBarStore = filterBarStore;
@@ -34,14 +36,15 @@ export class FilterBarActor {
   }
 
   applyFilters() {
+    var id = this.filterBarStore.getId();
     var searchUrl = this.filterBarStore.getSearchUrl();
-    var query = this.filterBarStore.getQuery();
-    var newUrl = searchUrl + "?" + query;
+    var queryObject = this.filterBarStore.getQuery();
+    var newUrl = searchUrl + "?q=" + queryObject + '&';
 
-    history.pushState({}, "", newUrl);
-    localStorage[window.location.pathname.replace(/\//g,'')] = window.location.search;
+    SharedUtils.updateUrl(id, 'filters', queryObject);
 
     this.tableStore.setUrl(newUrl);
+    this.tableStore.setCurrentPage(1);
     this.tableStore.fetchData();
   }
 
@@ -53,5 +56,7 @@ export class FilterBarActor {
     for (var filterUid in enabledFilters) {
       savedFiltersPacket.filters[filterUid] = enabledFilters[filterUid].value;
     }
+    console.log(savedFiltersPacket);
+    this.applyFilters();
   }
 }

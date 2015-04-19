@@ -1,32 +1,22 @@
 import * as SearchUtils from '../utils/SearchUtils';
 
 export class TableStore {
-  constructor(tableOptions) {
+  constructor(configuration) {
     this.CHANGE_EVENT = 'change';
     this.eventEmitter = new EventEmitter();
 
+    this.id = configuration.id;
     this.rows = [];
-    this.currentPage = 1;
+    this.currentPage = configuration.page || 1;
     this.totalPages = 1;
 
-    this.columnHeadings = this.parseRawColumnHeadingList(
-      tableOptions.configuration.querySelector('dl.columns').querySelectorAll('dt.column')
-    )
-
-    this.baseUrl = this.parseDataUrl(tableOptions.configuration.querySelector('dt.data-url').getAttribute('data-url'));
-    this.url = window.location.href;
+    this.columnHeadings = configuration.columns;
+    this.url = configuration.dataUrl + '?';
     this.fetchData();
   }
 
-  parseDataUrl(rawUrl) {
-    var parsedUrl = '';
-    if (rawUrl.indexOf('?') == -1) {
-      parsedUrl = rawUrl + '?';
-    } else {
-      return rawUrl;
-    }
-
-    return parsedUrl;
+  getId() {
+    return this.id;
   }
 
   setUrl(url) {
@@ -35,10 +25,6 @@ export class TableStore {
 
   getUrl() {
     return this.url;
-  }
-
-  getBaseUrl() {
-    return this.baseUrl;
   }
 
   fetchData() {
@@ -53,20 +39,6 @@ export class TableStore {
     this.currentPage = response.current_page;
     this.totalPages = response.total_pages;
     this.emitChange();
-  }
-
-  parseRawColumnHeadingList(rawColumnHeadingList) {
-    var rawColumnHeadingList,
-        rawColumn,
-        parsedColumnList = {};
-
-    for (var i = 0; i < rawColumnHeadingList.length; i++) {
-      rawColumn = rawColumnHeadingList[i];
-      parsedColumnList[rawColumn.getAttribute('data-field')] = {
-        heading: rawColumn.getAttribute('data-heading')
-      };
-    }
-    return parsedColumnList;
   }
 
   getColumnHeadings() {

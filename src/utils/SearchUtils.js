@@ -1,5 +1,5 @@
-var SharedUtils = require('./SharedUtils');
+import {ajaxGet} from './SharedUtils';
 
 export function search(url, success) {
-  SharedUtils.ajaxGet(url, 'json', success);
+  ajaxGet(url, 'json', success);
 }
