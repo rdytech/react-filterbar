@@ -6,12 +6,26 @@ export class FilterBarStore {
     this.eventEmitter = new EventEmitter();
 
     this.id = configuration.id;
+    this.persistent = configuration.persistent;
     this.url = configuration.searchUrl;
     this.searchUrl = configuration.searchUrl;
     this.saveSearchUrl = configuration.saveSearchUrl;
     this.savedSearchUrl = configuration.savedSearchUrl;
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.filters = configuration.filters;
+
+    var filter, filterUid;
+
+    for (var i = 0; i < Object.keys(this.filters).length; i++) {
+      filterUid = Object.keys(this.filters)[i];
+      filter = this.filters[filterUid];
+
+      if (filter.url) {
+        SharedUtils.ajaxGet(filter.url, 'json', function(filterUid) { return function(response) { this.updateFilter(filterUid, 'options', response) } }(filterUid).bind(this));
+      }
+    }
+
+    this.receieveSavedSearches();
   }
 
   getId() {
@@ -20,6 +34,18 @@ export class FilterBarStore {
 
   getSearchUrl() {
     return this.searchUrl;
+  }
+
+  getSaveSearchUrl() {
+    return this.saveSearchUrl;
+  }
+
+  getSavedSearches() {
+    return this.savedSearches;
+  }
+
+  getSavedSearch(searchId) {
+    return this.savedSearches[searchId];
   }
 
   getFilter(filterUid) {
@@ -60,6 +86,10 @@ export class FilterBarStore {
   }
 
   /* Mutation Methods */
+  receieveSavedSearches() {
+    SharedUtils.ajaxGet(this.savedSearchUrl, 'json', function(response) { this.savedSearches = response; this.emitChange() }.bind(this));
+  }
+
   disableAllFilters() {
     var enabledFilters = this.getEnabled();
 
@@ -81,8 +111,8 @@ export class FilterBarStore {
     this.emitChange();
   }
 
-  updateFilter(filterUid, value) {
-    this.filters[filterUid].value = value;
+  updateFilter(filterUid, propKey, propValue) {
+    this.filters[filterUid][propKey] = propValue;
     this.emitChange();
   }
 

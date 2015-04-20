@@ -1,10 +1,10 @@
-export class LoadFiltersListItem extends React.Component {
+export class SavedSearchesListItem extends React.Component {
   constructor(props) {
     super(props);
   }
 
   _onClick() {
-    this.props.filterBarActor.loadFilters(this.props.filters);
+    this.props.filterBarActor.loadSavedSearch(this.props.searchId);
   }
 
   render() {

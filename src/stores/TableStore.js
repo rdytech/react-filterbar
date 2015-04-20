@@ -11,7 +11,7 @@ export class TableStore {
     this.totalPages = 1;
 
     this.columnHeadings = configuration.columns;
-    this.url = configuration.dataUrl + '?';
+    this.url = configuration.dataUrl;
     this.fetchData();
   }
 
@@ -29,7 +29,7 @@ export class TableStore {
 
   fetchData() {
     SearchUtils.search(
-      this.url + `page=${this.currentPage}`,
+      this.url + `&page=${this.currentPage}`,
       this.setData.bind(this)
     );
   }

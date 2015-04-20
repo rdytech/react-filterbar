@@ -1,22 +1,11 @@
-var FilterBarStore = require('../../stores/FilterBarStore');
-var FilterBarActionCreators = require('../../actions/FilterBarActionCreators');
+export class DateInput extends React.Component {
+  constructor(props) {
+    super(props);
 
-function getStateFromStores(filterBarId, filterUid) {
-  return {
-    value: FilterBarStore.get(filterBarId, filterUid).value
-  };
-}
+    this.state = { value: this.props.filterBarActor.getFilter(this.props.filterUid).value || { from: null, to: null } };
+  }
 
-var DateInput = React.createClass({
-  getInitialState: function() {
-    return {
-      value: {
-        from: null,
-        to: null
-      }
-    };
-  },
-  _onChange: function(event) {
+  _onChange(event) {
     var newValue = this.state.value;
 
     if(event.type === 'dp') {
@@ -26,18 +15,20 @@ var DateInput = React.createClass({
     }
 
     this.setState({value: newValue});
-    FilterBarActionCreators.updateFilter(this.props.filterBarId, this.props.filterUid, newValue);
-  },
-  componentDidMount: function() {
+    this.props.filterBarActor.updateFilter(this.props.filterUid, 'value', newValue);
+  }
+
+  componentDidMount() {
     var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
     datePickerFrom.datetimepicker({format: 'DD-MM-YYYY'});
-    datePickerFrom.datetimepicker().on('dp.change',this._onChange);
+    datePickerFrom.datetimepicker().on('dp.change',this._onChange.bind(this));
 
     var datePickerTo = $(React.findDOMNode(this.refs.dateRangeTo));
     datePickerTo.datetimepicker({format: 'DD-MM-YYYY'});
-    datePickerTo.datetimepicker().on('dp.change',this._onChange);
-  },
-  render: function() {
+    datePickerTo.datetimepicker().on('dp.change',this._onChange.bind(this));
+  }
+
+  render() {
     return (
       <li>
         <div className="input-group datepicker dateRangeFrom" ref="dateRangeFrom">
@@ -47,8 +38,8 @@ var DateInput = React.createClass({
             data-date-format="DD/MM/YYYY"
             aria-required="true"
             placeholder="from"
-            onChange={this._onChange}
-            value={this.state.from}
+            onChange={this._onChange.bind(this)}
+            value={this.state.value.from}
           />
           <span className="input-group-addon">
             <span className="icon-calendar icon" aria-hidden="true">
@@ -65,8 +56,8 @@ var DateInput = React.createClass({
             data-date-format="DD/MM/YYYY"
             aria-required="true"
             placeholder="to"
-            onChange={this._onChange}
-            value={this.state.to}
+            onChange={this._onChange.bind(this)}
+            value={this.state.value.to}
           />
           <span className="input-group-addon">
             <span className="icon-calendar icon" aria-hidden="true">
@@ -79,6 +70,4 @@ var DateInput = React.createClass({
       </li>
     );
   }
-});
-
-module.exports = DateInput;
+}

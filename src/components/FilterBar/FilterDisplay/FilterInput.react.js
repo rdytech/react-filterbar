@@ -1,4 +1,6 @@
 import {TextInput} from './Inputs/TextInput.react';
+import {DateInput} from './Inputs/DateInput.react';
+import {SelectInput} from './Inputs/SelectInput.react';
 
 export class FilterInput extends React.Component {
   constructor(props) {
@@ -6,7 +8,6 @@ export class FilterInput extends React.Component {
 
     this.filterBarActor = props.filterBarActor;
     this.filterUid = props.filterUid;
-    this.filterKey = props.filterKey;
   }
 
   _onClick() {
@@ -14,47 +15,38 @@ export class FilterInput extends React.Component {
   }
 
   inputFactory() {
-    /*
-      inputFactory: function() {
-        var type = this.props.filter.type;
-        if (type == 'text' || type == 'id') {
-          return (
-            <TextInput
-              filterBarId={this.props.filterBarId}
-              filterUid={this.props.filterUid}
-            />
-          );
-        } else if (type == 'date') {
-          return (
-            <DateInput
-              filterBarId={this.props.filterBarId}
-              filterUid={this.props.filterUid}
-            />
-          );
-        } else if (type == 'select') {
-          return (
-            <SelectInput
-              filterBarId={this.props.filterBarId}
-              filterUid={this.props.filterUid}
-            />
-          );
-        } else if (type == 'age_select') {
-          return (
-            <AgeSelectInput
-              filterBarId={this.props.filterBarId}
-              filterUid={this.props.filterUid}
-            />
-          );
-        } else {
-          console.error("Not implemented yet!");
-        }
-    */
-    return (
-      <TextInput
-        filterBarActor={this.filterBarActor}
-        filterUid={this.filterUid}
-      />
-    );
+    var type = this.props.filter.type;
+    if (type == 'text' || type == 'id') {
+      return (
+        <TextInput
+          filterBarActor={this.filterBarActor}
+          filterUid={this.filterUid}
+        />
+      );
+    } else if (type == 'date') {
+      return (
+        <DateInput
+          filterBarActor={this.filterBarActor}
+          filterUid={this.props.filterUid}
+        />
+      );
+    } else if (type == 'select') {
+      return (
+        <SelectInput
+          filterBarActor={this.filterBarActor}
+          filterUid={this.props.filterUid}
+        />
+      );
+    } else if (type == 'age_select') {
+      return (
+        <AgeSelectInput
+          filterBarActor={this.filterBarActor}
+          filterUid={this.props.filterUid}
+        />
+      );
+    } else {
+      console.error("Not implemented yet!");
+    }
   }
 
   render() {

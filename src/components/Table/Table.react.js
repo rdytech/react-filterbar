@@ -43,7 +43,7 @@ export class Table extends React.Component {
           classes = 'active';
         }
         return (
-          <li className={classes}>
+          <li key={pageNumber} className={classes}>
             <a onClick={this._onClick.bind(this)}>{pageNumber}</a>
           </li>
         )

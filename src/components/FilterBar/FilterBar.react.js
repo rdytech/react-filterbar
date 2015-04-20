@@ -3,12 +3,11 @@ import {FilterDisplay} from './FilterDisplay/FilterDisplay.react';
 import {ApplyFiltersButton} from './ApplyFiltersButton.react';
 import {ClearFiltersButton} from './ClearFiltersButton.react';
 import {SaveFiltersButton} from './SaveFiltersButton.react';
-import {LoadFiltersList} from './LoadFiltersList/LoadFiltersList.react';
+import {SavedSearchesList} from './SavedSearchesList/SavedSearchesList.react';
 
 export class FilterBar extends React.Component {
   constructor(props) {
     super(props);
-    this.props.filterBarActor.applyFilters();
 
     this.filterBarActor = props.filterBarActor;
     this.filterBarStore = props.filterBarStore;
@@ -33,7 +32,9 @@ export class FilterBar extends React.Component {
             <SaveFiltersButton
               filterBarActor={this.filterBarActor}
             />
-            <LoadFiltersList
+            <SavedSearchesList
+              filterBarActor={this.filterBarActor}
+              filterBarStore={this.filterBarStore}
             />
           </div>
           <FilterDisplay

@@ -9,7 +9,7 @@ export class TextInput extends React.Component {
 
   _onChange(event) {
     this.setState({value: event.target.value});
-    this.filterBarActor.updateFilter(this.filterUid, event.target.value);
+    this.filterBarActor.updateFilter(this.filterUid, 'value', event.target.value);
   }
 
   render() {

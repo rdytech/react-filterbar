@@ -1,19 +1,41 @@
-export class LoadFiltersList extends React.Component {
+import {SavedSearchesListItem} from './SavedSearchesListItem.react';
+
+export class SavedSearchesList extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = this.getStateFromStores();
+    this.props.filterBarStore.addChangeListener(this._onChange.bind(this));
   }
 
   getStateFromStores() {
     return {
-    };
+      savedSearches: this.props.filterBarActor.getSavedSearches()
+    }
+  }
+
+  _onChange() {
+    this.setState(this.getStateFromStores());
   }
 
   render() {
-    var loadFiltersListItems = [];
     var buttonClass = 'btn btn-default dropdown-toggle';
-    if (loadFiltersListItems.length === 0) {
+
+    if (this.state.savedSearches.length === 0) {
       buttonClass += ' disabled'
     }
+
+    var savedSearches = this.state.savedSearches.map(function(savedSearch, index) {
+      return (
+        <SavedSearchesListItem
+          key={index}
+          searchId={index}
+          name={savedSearch.name}
+          filterBarActor={this.props.filterBarActor}
+        />
+      )
+    }, this);
+
     return (
       <div className="btn-group margin-bottom-sm">
         <div className="btn-group">
@@ -23,7 +45,7 @@ export class LoadFiltersList extends React.Component {
             <i className="icon icon-chevron-down" />
           </button>
           <ul className="dropdown-menu" role="menu">
-            {loadFiltersListItems}
+            {savedSearches}
           </ul>
         </div>
         <button type="button" className="btn btn-danger">

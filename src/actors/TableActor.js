@@ -1,7 +1,8 @@
 import * as SharedUtils from '../utils/SharedUtils';
 
 export class TableActor {
-  constructor(tableStore) {
+  constructor(filterBarStore, tableStore) {
+    this.filterBarStore = filterBarStore;
     this.tableStore = tableStore;
   }
 
@@ -26,7 +27,9 @@ export class TableActor {
     var currentUrl = this.tableStore.getUrl();
     var newUrl = currentUrl + 'page=' + page + '&';
 
-    SharedUtils.updateUrl(id, 'page', page);
+    if (this.filterBarStore.persistent) {
+      SharedUtils.updateUrl('page', page);
+    }
 
     this.tableStore.setCurrentPage(page);
     this.tableStore.fetchData();

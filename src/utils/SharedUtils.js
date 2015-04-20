@@ -30,16 +30,25 @@ export function ajaxGet(url, type, success, error) {
   xhr.send();
 }
 
-export function updateUrl(id, propKey, propValue) {
-  var searchObject = parseUrlSearchString(),
-      queryObject = {};
+export function ajaxPost(url, type, data, success, error) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', url, true);
+  xhr.responseType = type;
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("Accept", "application/json");
+  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  xhr.setRequestHeader("X_CSRF_TOKEN", document.querySelector('meta[name=csrf-token]').getAttribute('content'));
+  xhr.onload = function() {
+    var status = xhr.status;
+    var response = xhr.response;
+  };
+  xhr.send(JSON.stringify(data));
+}
 
-  if (searchObject.hasOwnProperty(id)) {
-    queryObject = JSON.parse(searchObject[id]);
-  }
+export function updateUrl(propKey, propValue) {
+  var searchObject = parseUrlSearchString();
 
-  queryObject[propKey] = propValue;
-  searchObject[id] = JSON.stringify(queryObject);
+  searchObject[propKey] = propValue;
 
   var newSearchString = '?' + createUrlSearchString(searchObject);
 
@@ -61,12 +70,14 @@ export function parseFilterBarConfiguration(filterBarConfiguration, id) {
       label: rawFilter.getAttribute('data-label'),
       type: rawFilter.getAttribute('data-type'),
       field: rawFilter.getAttribute('data-field'),
+      url: rawFilter.getAttribute('data-url'),
       value: '',
       enabled: false
     };
   }
 
   parsedFilterBarConfiguration.id = id;
+  parsedFilterBarConfiguration.persistent = filterBarConfiguration.querySelector('dt.persistent').getAttribute('data-persistent');
   parsedFilterBarConfiguration.searchUrl = filterBarConfiguration.querySelector('dt.search-url').getAttribute('data-url');
   parsedFilterBarConfiguration.saveSearchUrl = filterBarConfiguration.querySelector('dt.save-search-url').getAttribute('data-url');
   parsedFilterBarConfiguration.savedSearchUrl = filterBarConfiguration.querySelector('dt.saved-search-url').getAttribute('data-url');
@@ -87,7 +98,8 @@ export function parseTableConfiguration(tableConfiguration, id) {
   for (var i = 0; i < rawColumns.length; i++) {
     rawColumn = rawColumns[i];
     parsedColumns[rawColumn.getAttribute('data-field')] = {
-      heading: rawColumn.getAttribute('data-heading')
+      heading: rawColumn.getAttribute('data-heading'),
+      type: rawColumn.getAttribute('data-type')
     };
   }
 
