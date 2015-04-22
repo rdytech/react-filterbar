@@ -1,46 +1,34 @@
-var DateInput = React.createClass({
-  getInitialState: function() {
-    if (this.props.filter.value) {
-      return {
-        from: this.props.filter.value.from,
-        to: this.props.filter.value.to,
-      };
-    } else {
-      return {
-        from: '',
-        to: '',
-      };
-    }
-  },
-  onChange: function(event) {
-    var filter = $.extend(true,{},this.props.filter);
-    var value = filter.value || {};
+export class DateInput extends React.Component {
+  constructor(props) {
+    super(props);
 
-    var stateObject = this.state;
-    var date = event.date.format("DD-MM-YYYY");
-    if (event.target.classList.contains('dateRangeFrom')) {
-      stateObject.from = date;
-      value.from = date;
-    } else if (event.target.classList.contains('dateRangeTo')) {
-      stateObject.to = date;
-      value.to = date;
+    this.state = { value: this.props.filterBarActor.getFilter(this.props.filterUid).value || { from: null, to: null } };
+  }
+
+  _onChange(event) {
+    var newValue = this.state.value;
+
+    if(event.type === 'dp') {
+      newValue[event.target.querySelector('input').getAttribute('placeholder')] = event.target.querySelector('input').value;
+    } else if (event.type === 'input') {
+      newValue[event.target.getAttribute('placeholder')] = event.target.value;
     }
 
-    filter.value = value;
+    this.setState({value: newValue});
+    this.props.filterBarActor.updateFilter(this.props.filterUid, 'value', newValue);
+  }
 
-    this.setState(stateObject);
-    this.props.onChange(filter);
-  },
-  componentDidMount: function() {
+  componentDidMount() {
     var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
     datePickerFrom.datetimepicker({format: 'DD-MM-YYYY'});
-    datePickerFrom.datetimepicker().on('dp.change',this.onChange);
+    datePickerFrom.datetimepicker().on('dp.change',this._onChange.bind(this));
 
     var datePickerTo = $(React.findDOMNode(this.refs.dateRangeTo));
     datePickerTo.datetimepicker({format: 'DD-MM-YYYY'});
-    datePickerTo.datetimepicker().on('dp.change',this.onChange);
-  },
-  render: function() {
+    datePickerTo.datetimepicker().on('dp.change',this._onChange.bind(this));
+  }
+
+  render() {
     return (
       <li>
         <div className="input-group datepicker dateRangeFrom" ref="dateRangeFrom">
@@ -50,8 +38,8 @@ var DateInput = React.createClass({
             data-date-format="DD/MM/YYYY"
             aria-required="true"
             placeholder="from"
-            onChange={this.onChange}
-            value={this.state.from}
+            onChange={this._onChange.bind(this)}
+            value={this.state.value.from}
           />
           <span className="input-group-addon">
             <span className="icon-calendar icon" aria-hidden="true">
@@ -68,8 +56,8 @@ var DateInput = React.createClass({
             data-date-format="DD/MM/YYYY"
             aria-required="true"
             placeholder="to"
-            onChange={this.onChange}
-            value={this.state.to}
+            onChange={this._onChange.bind(this)}
+            value={this.state.value.to}
           />
           <span className="input-group-addon">
             <span className="icon-calendar icon" aria-hidden="true">
@@ -82,6 +70,4 @@ var DateInput = React.createClass({
       </li>
     );
   }
-});
-
-module.exports = DateInput;
+}
