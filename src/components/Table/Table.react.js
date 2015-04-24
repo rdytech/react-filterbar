@@ -22,10 +22,10 @@ export class Table extends React.Component {
   getStateFromStores() {
     return {
       columnHeadings: this.tableActor.getColumnHeadings(),
-      rows: this.tableActor.getRows(),
+      rows: this.tableStore.getRows(),
       currentPage: this.tableActor.getCurrentPage(),
       totalPages: this.tableActor.getTotalPages()
-    }
+    };
   }
 
   render() {
@@ -33,10 +33,18 @@ export class Table extends React.Component {
       return (
         <TableHeadingCell key={columnId} heading={this.state.columnHeadings[columnId].heading} />
       );
-    },this);
+    }, this);
 
     if (this.state.totalPages > 1) {
-      var pages = Array.apply(null, Array(this.state.totalPages)).map(function(_,i) {return i + 1});
+      var pages = Array.apply(
+        null,
+        Array(this.state.totalPages)
+      ).map(
+        function(_, i) {
+          return i + 1;
+        }
+      );
+
       var pagination = pages.map(function(pageNumber) {
         var classes = '';
         if (pageNumber === this.state.currentPage) {
@@ -46,25 +54,26 @@ export class Table extends React.Component {
           <li key={pageNumber} className={classes}>
             <a onClick={this._onClick.bind(this)}>{pageNumber}</a>
           </li>
-        )
-      },this);
+        );
+      }, this);
     }
 
     var rows = this.state.rows.map(function(row) {
-      var columns = Object.keys(row).map(function(columnId) {
-        return (
-          <td>
-            {row[columnId]}
-          </td>
-        );
-      },this);
+      var columns = Object.keys(row).map(
+        function(columnId) {
+          return (
+            <td>
+              {row[columnId]}
+            </td>
+          );
+        }, this);
 
       return (
         <tr>
           {columns}
         </tr>
       );
-    },this);
+    }, this);
 
     return (
       <div className='panel panel-responsive'>

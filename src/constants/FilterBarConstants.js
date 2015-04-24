@@ -1,8 +1,0 @@
-export const FilterBarConstants = {
-  ActionTypes: {
-    ENABLE_FILTER: 'ENABLE_FILTER',
-    DISABLE_FILTER: 'DISABLE_FILTER',
-    UPDATE_FILTER: 'UPDATE_FILTER',
-    APPLY_FILTERS: 'APPLY_FILTERS'
-  }
-}

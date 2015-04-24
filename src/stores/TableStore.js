@@ -45,6 +45,11 @@ export class TableStore {
     return this.columnHeadings;
   }
 
+  setRows(rows) {
+    this.rows = rows;
+    this.emitChange();
+  }
+
   getRows() {
     return this.rows;
   }
@@ -57,8 +62,18 @@ export class TableStore {
     return this.totalPages;
   }
 
+  setTotalPages(totalPages) {
+    this.totalPages = totalPages;
+  }
+
   setCurrentPage(page) {
     this.currentPage = page;
+  }
+
+  updateTable(tableStateObject) {
+    this.setRows(tableStateObject.results);
+    this.setCurrentPage(tableStateObject.current_page);
+    this.setTotalPages(tableStateObject.total_pages);
   }
 
   emitChange() {

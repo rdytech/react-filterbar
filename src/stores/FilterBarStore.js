@@ -1,4 +1,6 @@
-var SharedUtils = require('../utils/SharedUtils');
+import * as SharedUtils from '../utils/SharedUtils';
+
+import * as FilterClient from '../clients/FilterClient';
 
 export class FilterBarStore {
   constructor(configuration) {
@@ -21,7 +23,7 @@ export class FilterBarStore {
       filter = this.filters[filterUid];
 
       if (filter.url) {
-        SharedUtils.ajaxGet(filter.url, 'json', function(filterUid) { return function(response) { this.updateFilter(filterUid, 'options', response) } }(filterUid).bind(this));
+        FilterClient.updateFilterOptions(filter);
       }
     }
 
@@ -41,7 +43,7 @@ export class FilterBarStore {
   }
 
   getSavedSearches() {
-    return this.savedSearches;
+    return this.savedSearches || [];
   }
 
   getSavedSearch(searchId) {
@@ -49,7 +51,7 @@ export class FilterBarStore {
   }
 
   getFilter(filterUid) {
-    return this.filters[filterUid]
+    return this.filters[filterUid];
   }
 
   getDisabled() {
@@ -80,14 +82,21 @@ export class FilterBarStore {
         type: filter.type,
         field: filter.field,
         value: filter.value
-      }
-    },this);
+      };
+    }, this);
     return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : '';
   }
 
   /* Mutation Methods */
   receieveSavedSearches() {
-    SharedUtils.ajaxGet(this.savedSearchUrl, 'json', function(response) { this.savedSearches = response; this.emitChange() }.bind(this));
+    SharedUtils.ajaxGet(
+      this.savedSearchUrl,
+      'json',
+      function(response) {
+        this.savedSearches = response;
+        this.emitChange();
+      }.bind(this)
+    );
   }
 
   disableAllFilters() {

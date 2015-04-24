@@ -1,3 +1,5 @@
+import {SavedSearchStore} from '../stores/SavedSearchStore';
+
 import {FilterBarActor} from '../actors/FilterBarActor';
 import {TableActor} from '../actors/TableActor';
 
@@ -17,6 +19,8 @@ export class FilterableTable extends React.Component {
 
     this.tableActor = new TableActor(this.filterBarStore, this.tableStore);
     this.filterBarActor = new FilterBarActor(this.filterBarStore, this.tableStore);
+
+    this.savedSearchStore = new SavedSearchStore();
   }
 
   render() {

@@ -1,3 +1,4 @@
+require("harmonize")();
 var gulp = require('gulp');
 var browserify = require('browserify');
 var babelify = require('babelify');
@@ -21,8 +22,34 @@ var appFile = 'app.js';
 var appDistFile = appName + '.js';
 var appMinDistFile = appName + '.min.js';
 
+gulp.task('jest', function() {
+  return gulp.src('__tests__')
+    .pipe(jest({
+      "globals": {
+        "__DEV__": true
+      },
+      "scriptPreprocessor": "./preprocessor.js",
+      "testPathIgnorePatterns": [
+        "test_helper.js",
+        "preprocessor.js"
+      ],
+      "testFileExtensions": [
+        "js",
+        "react",
+        "jsx"
+      ],
+      "unmockedModulePathPatterns": [
+        "..//node_modules/react"
+      ]
+    }));
+});
+
+gulp.task('testWatch', function() {
+  gulp.watch([scriptsPath + '/**/*.*', './__tests__/**/*.*'], ['jest']);
+})
+
 gulp.task('watch', function() {
-  gulp.watch(scriptsPath + '/**/*.*', ['example','neptune']);
+  gulp.watch([scriptsPath + '/**/*.*', './__tests__/**/*.*'], ['example','neptune']);
 });
 
 gulp.task('example', function () {

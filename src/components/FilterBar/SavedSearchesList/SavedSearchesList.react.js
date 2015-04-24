@@ -10,8 +10,8 @@ export class SavedSearchesList extends React.Component {
 
   getStateFromStores() {
     return {
-      savedSearches: this.props.filterBarActor.getSavedSearches()
-    }
+      savedSearches: this.props.filterBarStore.getSavedSearches()
+    };
   }
 
   _onChange() {
@@ -22,7 +22,7 @@ export class SavedSearchesList extends React.Component {
     var buttonClass = 'btn btn-default dropdown-toggle';
 
     if (this.state.savedSearches.length === 0) {
-      buttonClass += ' disabled'
+      buttonClass += ' disabled';
     }
 
     var savedSearches = this.state.savedSearches.map(function(savedSearch, index) {
@@ -33,7 +33,7 @@ export class SavedSearchesList extends React.Component {
           name={savedSearch.name}
           filterBarActor={this.props.filterBarActor}
         />
-      )
+      );
     }, this);
 
     return (
