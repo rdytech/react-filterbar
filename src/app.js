@@ -1,19 +1,21 @@
-import {FilterableTable} from './components/FilterableTable.react';
+require("babel/polyfill");
 
-import {ConfigurationFactory} from './factories/ConfigurationFactory';
+import {FilterableTable} from "./components/FilterableTable.react";
 
-document.addEventListener('DOMContentLoaded', function(){
+import {ConfigurationFactory} from "./factories/ConfigurationFactory";
+
+document.addEventListener("DOMContentLoaded", function(){
   var configuration,
-      filterableTables = document.getElementsByClassName('react-filterable-table'),
+      filterableTables = document.getElementsByClassName("react-filterable-table"),
       filterableTableNode,
       htmlConfiguration,
       urlConfiguration;
 
   for (var i = 0; i < filterableTables.length; i++) {
     filterableTableNode = filterableTables[i];
-    htmlConfiguration = new ConfigurationFactory('html', filterableTableNode);
+    htmlConfiguration = new ConfigurationFactory("html", filterableTableNode);
     if (htmlConfiguration.filterBarConfiguration.persistent) {
-      urlConfiguration = new ConfigurationFactory('url');
+      urlConfiguration = new ConfigurationFactory("url");
     } else {
       urlConfiguration = {};
     }
@@ -24,8 +26,8 @@ document.addEventListener('DOMContentLoaded', function(){
       React.createElement(
         FilterableTable,
         {
-          filterbar: configuration.filterBarConfiguration,
-          table: configuration.tableConfiguration
+          filterBarConfiguration: configuration.filterBarConfiguration,
+          tableConfiguration: configuration.tableConfiguration
         }
       ),
       filterableTableNode

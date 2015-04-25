@@ -1,10 +1,10 @@
-import * as SharedUtils from '../utils/SharedUtils';
+import * as FilterClient from "../clients/FilterClient";
+import * as SearchClient from "../clients/SearchClient";
 
-import * as FilterClient from '../clients/FilterClient';
 
 export class FilterBarStore {
   constructor(configuration) {
-    this.CHANGE_EVENT = 'change';
+    this.CHANGE_EVENT = "change";
     this.eventEmitter = new EventEmitter();
 
     this.id = configuration.id;
@@ -12,22 +12,50 @@ export class FilterBarStore {
     this.url = configuration.searchUrl;
     this.searchUrl = configuration.searchUrl;
     this.saveSearchUrl = configuration.saveSearchUrl;
-    this.savedSearchUrl = configuration.savedSearchUrl;
+    this.savedSearchesUrl = configuration.savedSearchesUrl;
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.filters = configuration.filters;
 
-    var filter, filterUid;
+    this.setFilterOptions();
 
-    for (var i = 0; i < Object.keys(this.filters).length; i++) {
-      filterUid = Object.keys(this.filters)[i];
-      filter = this.filters[filterUid];
+    SearchClient.getSavedSearches(this.savedSearchesUrl, this.setSavedSearches.bind(this));
+  }
 
-      if (filter.url) {
-        FilterClient.updateFilterOptions(filter);
+  /*
+
+  enabledFilters
+  disabledFilters
+
+  */
+
+  *filterGenerator() {
+    for (var filterUid in this.filters) {
+      if (this.filters.hasOwnProperty(filterUid)) {
+        yield this.filters[filterUid];
       }
     }
+  }
 
-    this.receieveSavedSearches();
+  *enabledFilters() {
+    for (var filterUid in this.filters) {
+      if (this.filters.hasOwnProperty(filterUid) && this.filters[filterUid].enabled) {
+        yield this.filters[filterUid];
+      }
+    }
+  }
+
+  *disabledFilters() {
+    for (var filterUid in this.filters) {
+      if (this.filters.hasOwnProperty(filterUid) && !this.filters[filterUid].enabled) {
+        yield this.filters[filterUid];
+      }
+    }
+  }
+
+  setFilterOptions() {
+    for (var filter of this.filterGenerator()) {
+      FilterClient.updateFilterOptions(filter);
+    }
   }
 
   getId() {
@@ -40,6 +68,10 @@ export class FilterBarStore {
 
   getSaveSearchUrl() {
     return this.saveSearchUrl;
+  }
+
+  getSavedSearchesUrl() {
+    return this.savedSearchesUrl;
   }
 
   getSavedSearches() {
@@ -84,19 +116,12 @@ export class FilterBarStore {
         value: filter.value
       };
     }, this);
-    return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : '';
+    return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : "";
   }
 
-  /* Mutation Methods */
-  receieveSavedSearches() {
-    SharedUtils.ajaxGet(
-      this.savedSearchUrl,
-      'json',
-      function(response) {
-        this.savedSearches = response;
-        this.emitChange();
-      }.bind(this)
-    );
+  setSavedSearches(savedSearches) {
+    this.savedSearches = savedSearches;
+    this.emitChange();
   }
 
   disableAllFilters() {
@@ -110,13 +135,13 @@ export class FilterBarStore {
 
   disableFilter(filterUid) {
     this.filters[filterUid].enabled = false;
-    this.filters[filterUid].value = '';
+    this.filters[filterUid].value = "";
     this.emitChange();
   }
 
   enableFilter(filterUid, value) {
     this.filters[filterUid].enabled = true;
-    this.filters[filterUid].value = value || '';
+    this.filters[filterUid].value = value || "";
     this.emitChange();
   }
 

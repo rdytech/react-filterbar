@@ -1,14 +1,17 @@
 require("harmonize")();
-var gulp = require('gulp');
-var browserify = require('browserify');
+
 var babelify = require('babelify');
-var source = require('vinyl-source-stream');
-var jest = require('gulp-jest');
+var browserify = require('browserify');
 var debug = require('gulp-debug');
-var path = require('path');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
 var del = require('del');
+var gulp = require('gulp');
+var jest = require('gulp-jest');
+var path = require('path');
+var plumber = require('gulp-plumber');
+var rename = require('gulp-rename');
+var source = require('vinyl-source-stream');
+var uglify = require('gulp-uglify');
+var watch = require('gulp-watch');
 
 var package = require('./package.json');
 
@@ -48,8 +51,8 @@ gulp.task('testWatch', function() {
   gulp.watch([scriptsPath + '/**/*.*', './__tests__/**/*.*'], ['jest']);
 })
 
-gulp.task('watch', function() {
-  gulp.watch([scriptsPath + '/**/*.*', './__tests__/**/*.*'], ['example','neptune']);
+gulp.task('wneptune', function() {
+  gulp.watch([scriptsPath + '/**/*.*', './__tests__/**/*.*'], ['neptune']);
 });
 
 gulp.task('example', function () {

@@ -1,12 +1,4 @@
-var URI = require('URIjs');
-window.URI = URI;
-
-export function search(url, query, page, success) {
-  var url = URI(url)
-    .addSearch('q', query)
-    .addSearch('page', page);
-
-
+export function search(url, success) {
   $.ajax({
     url: url,
     type: "GET",
@@ -15,18 +7,25 @@ export function search(url, query, page, success) {
       success(data);
     },
     error: function(xhr, status, error) {
-      alert("Something went wrong, please contact support");
       console.error(xhr);
       console.error(status);
-      console.status(error);
+      console.error(error);
     }
   });
 }
 
-export function saveSearch() {
-  var response = '';
-
-  return response;
+export function saveSearch(url, payload) {
+  $.ajax({
+    url: url,
+    type: "POST",
+    data: payload,
+    dataType: "json",
+    error: function(xhr, status, error) {
+      console.error(xhr);
+      console.error(status);
+      console.error(error);
+    }
+  });
 }
 
 export function getSavedSearches(url, success) {
@@ -38,10 +37,9 @@ export function getSavedSearches(url, success) {
       success(data);
     },
     error: function(xhr, status, error) {
-      alert("Something went wrong, please contact support");
       console.error(xhr);
       console.error(status);
-      console.status(error);
+      console.error(error);
     }
   });
 }

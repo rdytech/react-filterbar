@@ -1,21 +1,28 @@
 export class FilterListOption extends React.Component {
   constructor(props) {
     super(props);
-    this.filterBarActor = props.filterBarActor;
-    this.filterUid = props.filterUid;
   }
 
-  _onClick() {
-    this.filterBarActor.enableFilter(this.filterUid);
+  onClick() {
+    this.context.filterBarActor.enableFilter(this.props.filterUid);
   }
 
   render() {
     return (
       <li>
-        <a onClick={this._onClick.bind(this)}>
-          {this.filterBarActor.getFilter(this.filterUid).label}
+        <a onClick={this.onClick.bind(this)}>
+          {this.props.label}
         </a>
       </li>
     );
   }
 }
+
+FilterListOption.propTypes = {
+  filterUid: React.PropTypes.string.isRequired,
+  label: React.PropTypes.string.isRequired
+};
+
+FilterListOption.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired
+};

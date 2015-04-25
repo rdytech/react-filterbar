@@ -3,17 +3,26 @@ export class SavedSearchesListItem extends React.Component {
     super(props);
   }
 
-  _onClick() {
-    this.props.filterBarActor.loadSavedSearch(this.props.searchId);
+  onClick() {
+    this.context.filterBarActor.loadSavedSearch(this.props.searchId);
   }
 
   render() {
-    return(
+    return (
       <li>
-        <a className="dynamic-text-filter" onClick={this._onClick.bind(this)}>
+        <a className="dynamic-text-filter" onClick={this.onClick.bind(this)}>
           {this.props.name}
         </a>
       </li>
     );
   }
 }
+
+SavedSearchesListItem.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  searchId: React.PropTypes.string.isRequired
+};
+
+SavedSearchesListItem.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired
+};

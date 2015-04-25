@@ -1,11 +1,11 @@
-import * as SearchClient from '../clients/SearchClient';
+import * as SearchClient from "../clients/SearchClient";
 
 export class SavedSearchStore {
   constructor() {
-    this.CHANGE_EVENT = 'change';
+    this.CHANGE_EVENT = "change";
     this.eventEmitter = new EventEmitter();
 
-    this.setSavedSearchUrl('/jobseekers/saved_searches');
+    this.setSavedSearchUrl("/jobseekers/saved_searches");
 
     SearchClient.getSavedSearches(this.getSavedSearchUrl(), this.setSavedSearches.bind(this));
   }

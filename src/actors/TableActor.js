@@ -1,4 +1,4 @@
-import * as SharedUtils from '../utils/SharedUtils';
+import * as SearchClient from "../clients/SearchClient";
 
 export class TableActor {
   constructor(filterBarStore, tableStore) {
@@ -6,32 +6,17 @@ export class TableActor {
     this.tableStore = tableStore;
   }
 
-  getColumnHeadings() {
-    return this.tableStore.getColumnHeadings();
-  }
-
-  getRows() {
-    return this.tableStore.getRows();
-  }
-
-  getCurrentPage() {
-    return this.tableStore.getCurrentPage();
-  }
-
-  getTotalPages() {
-    return this.tableStore.getTotalPages();
-  }
-
-  fetchPagedData(page) {
-    var id = this.tableStore.getId();
-    var currentUrl = this.tableStore.getUrl();
-    var newUrl = currentUrl + 'page=' + page + '&';
-
-    if (this.filterBarStore.persistent) {
-      SharedUtils.updateUrl('page', page);
+  fetchData(page) {
+    if (page !== undefined) {
+      this.tableStore.setCurrentPage(page);
     }
 
-    this.tableStore.setCurrentPage(page);
-    this.tableStore.fetchData();
+    var url = this.tableStore.getUrl();
+    SearchClient.search(url, this.tableStore.updateTable.bind(this.tableStore));
+
+    if (this.filterBarStore.persistent) {
+      history.pushState({}, "", window.location.origin + url);
+      localStorage[window.location.pathname.replace(/\//g, "")] = url.search();
+    }
   }
 }

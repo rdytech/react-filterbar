@@ -1,8 +1,12 @@
-import * as SearchUtils from '../utils/SearchUtils';
+var uri = require("URIjs");
+
+function changePage(url, page) {
+  return uri(url).removeSearch("page").addSearch("page", page);
+}
 
 export class TableStore {
   constructor(configuration) {
-    this.CHANGE_EVENT = 'change';
+    this.CHANGE_EVENT = "change";
     this.eventEmitter = new EventEmitter();
 
     this.id = configuration.id;
@@ -10,13 +14,8 @@ export class TableStore {
     this.currentPage = configuration.page || 1;
     this.totalPages = 1;
 
-    this.columnHeadings = configuration.columns;
+    this.columns = configuration.columns;
     this.url = configuration.dataUrl;
-    this.fetchData();
-  }
-
-  getId() {
-    return this.id;
   }
 
   setUrl(url) {
@@ -24,30 +23,15 @@ export class TableStore {
   }
 
   getUrl() {
-    return this.url;
+    return changePage(this.url, this.currentPage);
   }
 
-  fetchData() {
-    SearchUtils.search(
-      this.url + `&page=${this.currentPage}`,
-      this.setData.bind(this)
-    );
-  }
-
-  setData(response) {
-    this.rows = response.results;
-    this.currentPage = response.current_page;
-    this.totalPages = response.total_pages;
-    this.emitChange();
-  }
-
-  getColumnHeadings() {
-    return this.columnHeadings;
+  getColumns() {
+    return this.columns;
   }
 
   setRows(rows) {
     this.rows = rows;
-    this.emitChange();
   }
 
   getRows() {
@@ -74,6 +58,7 @@ export class TableStore {
     this.setRows(tableStateObject.results);
     this.setCurrentPage(tableStateObject.current_page);
     this.setTotalPages(tableStateObject.total_pages);
+    this.emitChange();
   }
 
   emitChange() {

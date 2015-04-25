@@ -1,19 +1,19 @@
-import * as SharedUtils from '../utils/SharedUtils';
+import * as SearchClient from "../clients/SearchClient";
+import * as URLHelper from "../helpers/URLHelper";
 
-import * as SearchClient from '../clients/SearchClient';
+function updateTable(tableStore) {
+  return function (tableStateObject) {
+    tableStore.setRows(tableStateObject.results);
+    tableStore.setCurrentPage(tableStateObject.current_page);
+    tableStore.setTotalPages(tableStateObject.total_pages);
+    tableStore.emitChange();
+  };
+}
 
 export class FilterBarActor {
   constructor(filterBarStore, tableStore) {
     this.filterBarStore = filterBarStore;
     this.tableStore = tableStore;
-  }
-
-  getSavedSearches() {
-    return this.filterBarStore.getSavedSearches() || [];
-  }
-
-  getFilter(filterUid) {
-    return this.filterBarStore.getFilter(filterUid);
   }
 
   enableFilter(filterUid, value) {
@@ -33,39 +33,36 @@ export class FilterBarActor {
     this.filterBarStore.updateFilter(filterUid, propKey, propValue);
   }
 
-  getEnabled() {
-    return this.filterBarStore.getEnabled();
-  }
-
-  getDisabled() {
-    return this.filterBarStore.getDisabled();
-  }
-
   applyFilters() {
-    var url = this.filterBarStore.getSearchUrl();
-    var query = this.filterBarStore.getQuery();
-    var page = this.tableStore.getCurrentPage();
+    var url = URLHelper.updateUrlSearch(
+                this.filterBarStore.getSearchUrl(),
+                "q",
+                this.filterBarStore.getQuery()
+              ).toString();
 
-    SearchClient.search(url, query, page, this.tableStore.updateTable.bind(this.tableStore));
+    this.tableStore.setUrl(url);
+    this.tableStore.setCurrentPage(1);
+
+    url = this.tableStore.getUrl();
+
+    SearchClient.search(url, updateTable(this.tableStore));
 
     if (this.filterBarStore.persistent) {
-      SharedUtils.updateUrl('q', query);
+      URLHelper.updateApplicationUrlState(url);
     }
   }
 
   loadSavedSearch(searchId) {
     this.disableAllFilters();
 
-    var tim = setTimeout(function() {
-      var savedSearch = this.filterBarStore.getSavedSearch(searchId);
-      var filters = JSON.parse(savedSearch.configuration);
+    var savedSearch = this.filterBarStore.getSavedSearch(searchId);
+    var filters = JSON.parse(savedSearch.configuration);
 
-      for (var filter in filters) {
-        this.enableFilter(filter, filters[filter]);
-      }
+    for (var filter in filters) {
+      this.enableFilter(filter, filters[filter]);
+    }
 
-      this.applyFilters();
-    }.bind(this), 1000);
+    this.applyFilters();
   }
 
   saveFilters(name) {
@@ -76,18 +73,9 @@ export class FilterBarActor {
     for (var filterUid in enabledFilters) {
       savedFiltersPacket.filters[filterUid] = enabledFilters[filterUid].value;
     }
-    SharedUtils.ajaxPost(this.filterBarStore.getSaveSearchUrl(), 'json', savedFiltersPacket);
+    var payload = {saved_search: savedFiltersPacket};
+    SearchClient.saveSearch(this.filterBarStore.getSavedSearchesUrl(), payload);
     this.applyFilters();
-  }
-
-  getOptionsFromServer(filterUid) {
-    var filter = this.getFilter(filterUid);
-
-    var url = filter.url;
-
-    SharedUtils.ajaxGet(url, 'json', function(response) {
-      this.updateFilter(filterUid, 'options', response);
-    }.bind(this));
   }
 }
 

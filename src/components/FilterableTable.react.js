@@ -1,40 +1,45 @@
-import {SavedSearchStore} from '../stores/SavedSearchStore';
+import {FilterBarActor} from "../actors/FilterBarActor";
+import {TableActor} from "../actors/TableActor";
 
-import {FilterBarActor} from '../actors/FilterBarActor';
-import {TableActor} from '../actors/TableActor';
+import {FilterBarStore} from "../stores/FilterBarStore";
+import {TableStore} from "../stores/TableStore";
 
-import {FilterBarStore} from '../stores/FilterBarStore';
-import {TableStore} from '../stores/TableStore';
-
-import {FilterBar} from './FilterBar/FilterBar.react';
-import {Table}  from './Table/Table.react';
+import {FilterBar} from "./FilterBar/FilterBar.react";
+import {Table} from "./Table/Table.react";
 
 export class FilterableTable extends React.Component {
   constructor(props) {
     super(props);
-    this.id = props.filterableTableId;
 
-    this.filterBarStore = new FilterBarStore(props.filterbar);
-    this.tableStore = new TableStore(props.table);
+    this.filterBarStore = new FilterBarStore(props.filterBarConfiguration);
+    this.tableStore = new TableStore(props.tableConfiguration);
 
-    this.tableActor = new TableActor(this.filterBarStore, this.tableStore);
     this.filterBarActor = new FilterBarActor(this.filterBarStore, this.tableStore);
+    this.tableActor = new TableActor(this.filterBarStore, this.tableStore);
+  }
 
-    this.savedSearchStore = new SavedSearchStore();
+  getChildContext() {
+    return {
+      filterBarStore: this.filterBarStore,
+      filterBarActor: this.filterBarActor,
+      tableStore: this.tableStore,
+      tableActor: this.tableActor
+    };
   }
 
   render() {
     return (
-      <div key={this.id}>
-        <FilterBar
-          filterBarActor={this.filterBarActor}
-          filterBarStore={this.filterBarStore}
-        />
-        <Table
-          tableActor={this.tableActor}
-          tableStore={this.tableStore}
-        />
+      <div>
+        <FilterBar />
+        <Table />
       </div>
     );
   }
 }
+
+FilterableTable.childContextTypes = {
+  filterBarStore: React.PropTypes.object,
+  filterBarActor: React.PropTypes.object,
+  tableStore: React.PropTypes.object,
+  tableActor: React.PropTypes.object
+};

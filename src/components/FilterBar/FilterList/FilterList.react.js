@@ -1,38 +1,38 @@
-import {FilterListOption} from './FilterListOption.react';
+import {FilterListOption} from "./FilterListOption.react";
 
 export class FilterList extends React.Component {
   constructor(props) {
     super(props);
-    this.filterBarActor = props.filterBarActor;
-    this.filterBarStore = props.filterBarStore;
 
-    this.filterBarStore.addChangeListener(this._onChange.bind(this));
-    this.state = this.getStateFromStores();
+    this.state = { filters: props.disabledFilters };
   }
 
-  _onChange() {
+  componentDidMount() {
+    this.context.filterBarStore.addChangeListener(this.onChange.bind(this));
+  }
+
+  onChange() {
     this.setState(this.getStateFromStores());
   }
 
   getStateFromStores() {
     return {
-      filters: this.filterBarActor.getDisabled()
-    }
+      filters: this.context.filterBarStore.getDisabled()
+    };
   }
 
   render() {
-    var filter = {};
     var optionKey = "";
     var filterOptions = Object.keys(this.state.filters).map(function(filterUid) {
-      optionKey = "option-"+filterUid;
+      optionKey = "option-" + filterUid;
       return (
         <FilterListOption
-          key={optionKey}
           filterUid={filterUid}
-          filterBarActor={this.filterBarActor}
+          key={optionKey}
+          label={this.state.filters[filterUid].label}
         />
       );
-    },this);
+    }, this);
     return (
       <div className="btn-group">
         <button className="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
@@ -47,3 +47,12 @@ export class FilterList extends React.Component {
     );
   }
 }
+
+FilterList.contextTypes = {
+  filterBarActor: React.PropTypes.object,
+  filterBarStore: React.PropTypes.object
+};
+
+FilterList.propTypes = {
+  disabledFilters: React.PropTypes.object.isRequired
+};

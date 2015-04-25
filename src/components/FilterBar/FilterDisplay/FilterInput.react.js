@@ -1,63 +1,26 @@
-import {TextInput} from './Inputs/TextInput.react';
-import {DateInput} from './Inputs/DateInput.react';
-import {SelectInput} from './Inputs/SelectInput.react';
+import {FilterInputFactory} from "./FilterInputFactory.react";
 
 export class FilterInput extends React.Component {
   constructor(props) {
     super(props);
-
-    this.filterBarActor = props.filterBarActor;
-    this.filterUid = props.filterUid;
   }
 
-  _onClick() {
-    this.filterBarActor.disableFilter(this.filterUid);
-  }
-
-  inputFactory() {
-    var type = this.props.filter.type;
-    if (type == 'text' || type == 'id') {
-      return (
-        <TextInput
-          filterBarActor={this.filterBarActor}
-          filterUid={this.filterUid}
-        />
-      );
-    } else if (type == 'date') {
-      return (
-        <DateInput
-          filterBarActor={this.filterBarActor}
-          filterUid={this.props.filterUid}
-        />
-      );
-    } else if (type == 'select') {
-      return (
-        <SelectInput
-          filterBarActor={this.filterBarActor}
-          filterUid={this.props.filterUid}
-        />
-      );
-    } else if (type == 'age_select') {
-      return (
-        <AgeSelectInput
-          filterBarActor={this.filterBarActor}
-          filterUid={this.props.filterUid}
-        />
-      );
-    } else {
-      console.error("Not implemented yet!");
-    }
+  onClick() {
+    this.context.filterBarActor.disableFilter(this.props.filterUid);
   }
 
   render() {
-    var inputs = this.inputFactory();
+    var inputs = new FilterInputFactory(this.props.type, this.props.value, this.props.filterUid);
     return (
       <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 filter">
         <ul className={this.filterKey}>
           <li>
-            <i onClick={this._onClick.bind(this)} className="btn btn-circle-primary btn-xs icon icon-close remove-filter" />
+            <i
+              className="btn btn-circle-primary btn-xs icon icon-close remove-filter"
+              onClick={this.onClick.bind(this)}
+            />
             <label>
-              {this.props.filter.label}
+              {this.props.label}
             </label>
           </li>
           {inputs}
@@ -66,3 +29,15 @@ export class FilterInput extends React.Component {
     );
   }
 }
+
+FilterInput.propTypes = {
+  filterUid: React.PropTypes.string.isRequired,
+  label: React.PropTypes.string.isRequired,
+  type: React.PropTypes.string.isRequired,
+  value: React.PropTypes.string.isRequired
+};
+
+FilterInput.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object.isRequired
+};

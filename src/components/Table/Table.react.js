@@ -1,100 +1,51 @@
-import {TableHeadingCell} from './TableHeadingCell.react';
+import {Body} from "./Body.react";
+import {HeadingRow} from "./HeadingRow.react";
+import {Pagination} from "./Pagination.react";
 
 export class Table extends React.Component {
   constructor(props) {
     super(props);
-
-    this.tableActor = props.tableActor;
-    this.tableStore = props.tableStore;
-
-    this.state = this.getStateFromStores();
-    this.tableStore.addChangeListener(this._onChange.bind(this));
+    this.state = {};
   }
 
-  _onChange() {
+  componentWillMount() {
+    this.context.tableActor.fetchData();
     this.setState(this.getStateFromStores());
+    this.context.tableStore.addChangeListener(this.onChange.bind(this));
   }
 
-  _onClick(event) {
-    this.tableActor.fetchPagedData(event.target.innerHTML);
+  onChange() {
+    this.setState(this.getStateFromStores());
   }
 
   getStateFromStores() {
     return {
-      columnHeadings: this.tableActor.getColumnHeadings(),
-      rows: this.tableStore.getRows(),
-      currentPage: this.tableActor.getCurrentPage(),
-      totalPages: this.tableActor.getTotalPages()
+      columnHeadings: this.context.tableStore.getColumns(),
+      rows: this.context.tableStore.getRows(),
+      currentPage: this.context.tableStore.getCurrentPage(),
+      totalPages: this.context.tableStore.getTotalPages()
     };
   }
 
   render() {
-    var columns = Object.keys(this.state.columnHeadings).map(function(columnId) {
-      return (
-        <TableHeadingCell key={columnId} heading={this.state.columnHeadings[columnId].heading} />
-      );
-    }, this);
-
-    if (this.state.totalPages > 1) {
-      var pages = Array.apply(
-        null,
-        Array(this.state.totalPages)
-      ).map(
-        function(_, i) {
-          return i + 1;
-        }
-      );
-
-      var pagination = pages.map(function(pageNumber) {
-        var classes = '';
-        if (pageNumber === this.state.currentPage) {
-          classes = 'active';
-        }
-        return (
-          <li key={pageNumber} className={classes}>
-            <a onClick={this._onClick.bind(this)}>{pageNumber}</a>
-          </li>
-        );
-      }, this);
-    }
-
-    var rows = this.state.rows.map(function(row) {
-      var columns = Object.keys(row).map(
-        function(columnId) {
-          return (
-            <td>
-              {row[columnId]}
-            </td>
-          );
-        }, this);
-
-      return (
-        <tr>
-          {columns}
-        </tr>
-      );
-    }, this);
+    var headings = this.state.columnHeadings;
 
     return (
-      <div className='panel panel-responsive'>
-        <div className='table-responsive'>
-          <table className='table table-hover table-striped'>
-            <thead>
-              <tr>
-                {columns}
-              </tr>
-            </thead>
-            <tbody>
-              {rows}
-            </tbody>
+      <div className="panel panel-responsive">
+        <div className="table-responsive">
+          <table className="table table-hover table-striped">
+            <HeadingRow cells={headings} />
+            <Body rows={this.state.rows} />
           </table>
-          <nav>
-            <ul className='pagination'>
-              {pagination}
-            </ul>
-          </nav>
+          <Pagination currentPage={this.state.currentPage} totalPages={this.state.totalPages} />
         </div>
       </div>
     );
   }
 }
+
+Table.contextTypes = {
+  tableActor: React.PropTypes.object.isRequired,
+  tableStore: React.PropTypes.object.isRequired
+};
+

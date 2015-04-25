@@ -1,37 +1,40 @@
-import {SavedSearchesListItem} from './SavedSearchesListItem.react';
+import {SavedSearchesListItem} from "./SavedSearchesListItem.react";
 
 export class SavedSearchesList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = this.getStateFromStores();
-    this.props.filterBarStore.addChangeListener(this._onChange.bind(this));
+    this.state = {};
+  }
+
+  componentWillMount() {
+    this.setState(this.getStateFromStores());
+    this.context.filterBarStore.addChangeListener(this.onChange.bind(this));
   }
 
   getStateFromStores() {
     return {
-      savedSearches: this.props.filterBarStore.getSavedSearches()
+      savedSearches: this.context.filterBarStore.getSavedSearches()
     };
   }
 
-  _onChange() {
+  onChange() {
     this.setState(this.getStateFromStores());
   }
 
   render() {
-    var buttonClass = 'btn btn-default dropdown-toggle';
+    var buttonClass = "btn btn-default dropdown-toggle";
 
     if (this.state.savedSearches.length === 0) {
-      buttonClass += ' disabled';
+      buttonClass += " disabled";
     }
 
     var savedSearches = this.state.savedSearches.map(function(savedSearch, index) {
       return (
         <SavedSearchesListItem
           key={index}
-          searchId={index}
           name={savedSearch.name}
-          filterBarActor={this.props.filterBarActor}
+          searchId={index}
         />
       );
     }, this);
@@ -39,7 +42,12 @@ export class SavedSearchesList extends React.Component {
     return (
       <div className="btn-group margin-bottom-sm">
         <div className="btn-group">
-          <button className={buttonClass} data-toggle="dropdown" type="button" aria-expanded="false">
+          <button
+            aria-expanded="false"
+            className={buttonClass}
+            data-toggle="dropdown"
+            type="button"
+          >
             <i className="icon icon-save" />
             Saved Searches
             <i className="icon icon-chevron-down" />
@@ -48,10 +56,12 @@ export class SavedSearchesList extends React.Component {
             {savedSearches}
           </ul>
         </div>
-        <button type="button" className="btn btn-danger">
-          <i className="icon icon-delete" />
-        </button>
       </div>
     );
   }
 }
+
+SavedSearchesList.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object.isRequired
+};

@@ -1,32 +1,33 @@
 export class SelectInput extends React.Component {
   constructor(props) {
-    super(props)
-    var filter = props.filterBarActor.getFilter(props.filterUid);
+    super(props);
 
-    this.state = { value: (filter.value || filter.options[0].value) };
-    this.props.filterBarActor.updateFilter(this.props.filterUid, 'value', this.state.value);
+    this.state = {value: props.value};
   }
 
-  _onChange(event) {
+  onSelect(event) {
     this.setState({value: event.target.value});
-    this.props.filterBarActor.updateFilter(this.props.filterUid, 'value', event.target.value);
+    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", event.target.value);
   }
 
   render() {
-    var options = this.props.filterBarActor.getFilter(this.props.filterUid).options || [];
+    var options = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
 
     options = options.map(function(option) {
       return (
-        <option value={option.value}>{option.label}</option>
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
       );
     }, this);
 
     return (
       <li>
         <select
-          className='form-control'
+          className="form-control"
+          onChange={this.onSelect.bind(this)}
           selected={this.state.value}
-          onChange={this._onChange.bind(this)}
+          value={this.state.value}
         >
           {options}
         </select>
@@ -34,3 +35,13 @@ export class SelectInput extends React.Component {
     );
   }
 }
+
+SelectInput.propTypes = {
+  filterUid: React.PropTypes.string.isRequired,
+  value: React.PropTypes.string.isRequired
+};
+
+SelectInput.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object.isRequired
+};

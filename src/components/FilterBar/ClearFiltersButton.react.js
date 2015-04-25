@@ -3,16 +3,20 @@ export class ClearFiltersButton extends React.Component {
     super(props);
   }
 
-  _onClick() {
-    this.props.filterBarActor.disableAllFilters();
+  onClick() {
+    this.context.filterBarActor.disableAllFilters();
   }
 
   render() {
     return (
-      <button className="btn btn-warning" onClick={this._onClick.bind(this)}>
+      <button className="btn btn-warning" onClick={this.onClick.bind(this)}>
         <i className="icon icon-delete" />
         Clear
       </button>
     );
   }
 }
+
+ClearFiltersButton.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired
+};
