@@ -8021,44 +8021,82 @@ var Pagination = exports.Pagination = (function (_React$Component) {
     _classCallCheck(this, Pagination);
 
     _get(Object.getPrototypeOf(Pagination.prototype), "constructor", this).call(this, props);
+    this.MAX_PAGE_LINKS = 11;
   }
 
   _inherits(Pagination, _React$Component);
 
   _createClass(Pagination, {
-    pages: {
-      value: function pages() {
-        if (this.props.totalPages > 1) {
-          return Array.apply(null, Array(this.props.totalPages)).map(function (_, i) {
-            return i + 1;
-          });
-        } else {
-          return [1];
-        }
+    goToFirstPage: {
+      value: function goToFirstPage() {
+        this.context.tableActor.fetchData(1);
       }
     },
-    onClick: {
-      value: function onClick(event) {
+    goToLastPage: {
+      value: function goToLastPage() {
+        this.context.tableActor.fetchData(this.props.totalPages);
+      }
+    },
+    goToPage: {
+      value: function goToPage(event) {
         this.context.tableActor.fetchData(event.target.innerHTML);
       }
     },
     render: {
       value: function render() {
-        var pageLinks = this.pages().map(function (pageNumber) {
-          var classes = "";
-          if (pageNumber === this.props.currentPage) {
+        var pageLinks = [];
+
+        pageLinks.push(React.createElement(
+          "li",
+          { key: "first" },
+          React.createElement(
+            "a",
+            { onClick: this.goToFirstPage.bind(this) },
+            "First"
+          )
+        ));
+
+        var lowestPageLink = 1,
+            highestPageLink = 1;
+
+        if (this.props.totalPages < this.MAX_PAGE_LINKS) {
+          lowestPageLink = 1;
+          highestPageLink = this.props.totalPages;
+        } else if (this.props.currentPage <= Math.floor(this.MAX_PAGE_LINKS / 2)) {
+          lowestPageLink = 1;
+          highestPageLink = this.MAX_PAGE_LINKS;
+        } else if (this.props.currentPage >= this.props.totalPages - Math.floor(this.MAX_PAGE_LINKS / 2)) {
+          lowestPageLink = this.props.totalPages - this.MAX_PAGE_LINKS;
+          highestPageLink = this.props.totalPages;
+        } else {
+          lowestPageLink = this.props.currentPage - Math.floor(this.MAX_PAGE_LINKS / 2);
+          highestPageLink = lowestPageLink + this.MAX_PAGE_LINKS;
+        }
+
+        for (var page = lowestPageLink, classes = ""; page <= highestPageLink; page++, classes = "") {
+          if (page === this.props.currentPage) {
             classes = "active";
           }
-          return React.createElement(
+          pageLinks.push(React.createElement(
             "li",
-            { className: classes, key: pageNumber },
+            { className: classes, key: page },
             React.createElement(
               "a",
-              { onClick: this.onClick.bind(this) },
-              pageNumber
+              { onClick: this.goToPage.bind(this) },
+              page
             )
-          );
-        }, this);
+          ));
+        }
+
+        pageLinks.push(React.createElement(
+          "li",
+          { key: "last" },
+          React.createElement(
+            "a",
+            { onClick: this.goToLastPage.bind(this) },
+            "Last"
+          )
+        ));
 
         return React.createElement(
           "nav",
@@ -8082,7 +8120,8 @@ Pagination.propTypes = {
 };
 
 Pagination.contextTypes = {
-  tableActor: React.PropTypes.object.isRequired
+  tableActor: React.PropTypes.object.isRequired,
+  tableStore: React.PropTypes.object.isRequired
 };
 
 },{}],115:[function(require,module,exports){
