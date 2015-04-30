@@ -44,7 +44,7 @@ Once bower:rails is installed, add the following lines to your Bowerfile:
 
 ```Ruby
 group :lib, :assets_path => "assets/static" do
-  asset "react-filterbar", '0.0.4', git: "git@github.com:jobready/react-filterbar"
+  asset "react-filterbar", '1.0.0', git: "git@github.com:jobready/react-filterbar"
   asset "react-fluxer", '0.0.3', git: "git@github.com:jobready/react-fluxer"
 end
 ```
