@@ -6514,12 +6514,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 function updateFilterOptions(filter) {
-  if (filter.url !== "") {
+  if (filter.url !== "" && filter.url !== undefined) {
     var url = filter.url;
 
     $.ajax({
       url: url,
       type: "GET",
+      cache: false,
       dataType: "json",
       success: function success(data) {
         filter.options = data;
@@ -6543,6 +6544,7 @@ function search(url, success) {
   $.ajax({
     url: url,
     type: "GET",
+    cache: false,
     dataType: "json",
     success: (function (_success) {
       var _successWrapper = function success(_x) {
@@ -6573,6 +6575,7 @@ function getSavedSearches(url, success) {
   $.ajax({
     url: url,
     type: "GET",
+    cache: false,
     dataType: "json",
     success: (function (_success) {
       var _successWrapper = function success(_x) {

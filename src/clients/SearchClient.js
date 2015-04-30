@@ -2,6 +2,7 @@ export function search(url, success) {
   $.ajax({
     url: url,
     type: "GET",
+    cache: false,
     dataType: "json",
     success: function(data) {
       success(data);
@@ -22,6 +23,7 @@ export function getSavedSearches(url, success) {
   $.ajax({
     url: url,
     type: "GET",
+    cache: false,
     dataType: "json",
     success: function(data) {
       success(data);
