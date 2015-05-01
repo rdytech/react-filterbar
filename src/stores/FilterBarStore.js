@@ -17,21 +17,15 @@ export class FilterBarStore {
 
     this.setFilterOptions();
 
-    SearchClient.getSavedSearches(this.savedSearchesUrl, this.setSavedSearches.bind(this));
-  }
-
-  *filterGenerator() {
-    for (var filterUid in this.filters) {
-      if (this.filters.hasOwnProperty(filterUid)) {
-        yield this.filters[filterUid];
-      }
+    if (this.savedSearchesUrl !== undefined) {
+      SearchClient.getSavedSearches(this.savedSearchesUrl, this.setSavedSearches.bind(this));
     }
   }
 
   *enabledFilters() {
     for (var filterUid in this.filters) {
       if (this.filters.hasOwnProperty(filterUid) && this.filters[filterUid].enabled) {
-        yield this.filters[filterUid];
+        yield [ filterUid, this.filters[filterUid] ];
       }
     }
   }
@@ -39,7 +33,7 @@ export class FilterBarStore {
   *disabledFilters() {
     for (var filterUid in this.filters) {
       if (this.filters.hasOwnProperty(filterUid) && !this.filters[filterUid].enabled) {
-        yield this.filters[filterUid];
+        yield [ filterUid, this.filters[filterUid] ];
       }
     }
   }

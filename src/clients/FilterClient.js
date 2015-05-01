@@ -1,10 +1,11 @@
 export function updateFilterOptions(filter) {
-  if (filter.url !== "") {
+  if (filter.url !== "" && filter.url !== undefined) {
     var url = filter.url;
 
     $.ajax({
       url: url,
       type: "GET",
+      cache: false,
       dataType: "json",
       success: function(data) {
         filter.options = data;

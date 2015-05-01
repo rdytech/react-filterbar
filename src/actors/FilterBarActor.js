@@ -66,15 +66,28 @@ export class FilterBarActor {
   }
 
   saveFilters(name) {
-    var enabledFilters = this.filterBarStore.getEnabled(),
-        savedFiltersPacket = {};
-    savedFiltersPacket.search_title = name;
-    savedFiltersPacket.filters = {};
-    for (var filterUid in enabledFilters) {
-      savedFiltersPacket.filters[filterUid] = enabledFilters[filterUid].value;
+    var savedSearchPacket = {
+      saved_search: {
+        filters: {},
+        search_title: name
+      }
+    };
+
+    for (var [filterUid, filter] of this.filterBarStore.enabledFilters()) {
+      savedSearchPacket.saved_search.filters[filterUid] = filter.value;
     }
-    var payload = {saved_search: savedFiltersPacket};
-    SearchClient.saveSearch(this.filterBarStore.getSavedSearchesUrl(), payload);
+
+    SearchClient.saveSearch(
+      this.filterBarStore.getSavedSearchesUrl(),
+      savedSearchPacket,
+      function() {
+        SearchClient.getSavedSearches(
+          this.filterBarStore.getSavedSearchesUrl(),
+          this.filterBarStore.setSavedSearches.bind(this.filterBarStore)
+        );
+      }.bind(this)
+    );
+
     this.applyFilters();
   }
 }

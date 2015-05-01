@@ -1,39 +1,64 @@
 export class Pagination extends React.Component {
   constructor(props) {
     super(props);
+    this.MAX_PAGE_LINKS = 11;
   }
 
-  pages() {
-    if (this.props.totalPages > 1) {
-      return Array.apply(
-        null,
-        Array(this.props.totalPages)
-      ).map(
-        function(_, i) {
-          return i + 1;
-        }
-      );
-    } else {
-      return [1];
-    }
+  goToFirstPage() {
+    this.context.tableActor.fetchData(1);
   }
 
-  onClick(event) {
+  goToLastPage() {
+    this.context.tableActor.fetchData(this.props.totalPages);
+  }
+
+  goToPage(event) {
     this.context.tableActor.fetchData(event.target.innerHTML);
   }
 
   render() {
-    var pageLinks = this.pages().map(function(pageNumber) {
-      var classes = "";
-      if (pageNumber === this.props.currentPage) {
+    var pageLinks = [];
+
+    pageLinks.push(
+      <li key="first">
+        <a onClick={this.goToFirstPage.bind(this)}>First</a>
+      </li>
+    );
+
+    var lowestPageLink = 1,
+        highestPageLink = 1;
+
+    if (this.props.totalPages < this.MAX_PAGE_LINKS) {
+      lowestPageLink = 1;
+      highestPageLink = this.props.totalPages;
+    } else if (this.props.currentPage <= Math.floor(this.MAX_PAGE_LINKS / 2)) {
+      lowestPageLink = 1;
+      highestPageLink = this.MAX_PAGE_LINKS;
+    } else if (this.props.currentPage >= this.props.totalPages - Math.floor(this.MAX_PAGE_LINKS / 2)) {
+      lowestPageLink = this.props.totalPages - this.MAX_PAGE_LINKS;
+      highestPageLink = this.props.totalPages;
+    } else {
+      lowestPageLink = this.props.currentPage - Math.floor(this.MAX_PAGE_LINKS / 2);
+      highestPageLink = lowestPageLink + this.MAX_PAGE_LINKS;
+    }
+
+    for (var page = lowestPageLink, classes = ""; page <= highestPageLink; page++, classes = "") {
+      if (page === this.props.currentPage) {
         classes = "active";
       }
-      return (
-        <li className={classes} key={pageNumber}>
-          <a onClick={this.onClick.bind(this)}>{pageNumber}</a>
+      pageLinks.push(
+        <li className={classes} key={page}>
+          <a onClick={this.goToPage.bind(this)}>{page}</a>
         </li>
       );
-    }, this);
+    }
+
+    pageLinks.push(
+      <li key="last">
+        <a onClick={this.goToLastPage.bind(this)}>Last</a>
+      </li>
+    );
+
 
     return (
       <nav>
@@ -51,5 +76,6 @@ Pagination.propTypes = {
 };
 
 Pagination.contextTypes = {
-  tableActor: React.PropTypes.object.isRequired
+  tableActor: React.PropTypes.object.isRequired,
+  tableStore: React.PropTypes.object.isRequired
 };

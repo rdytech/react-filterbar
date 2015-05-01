@@ -6361,6 +6361,8 @@ module.exports = require("babel-core/polyfill");
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
 
+var _slicedToArray = function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { var _arr = []; for (var _iterator = arr[Symbol.iterator](), _step; !(_step = _iterator.next()).done;) { _arr.push(_step.value); if (i && _arr.length === i) break; } return _arr; } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } };
+
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
@@ -6444,15 +6446,45 @@ var FilterBarActor = exports.FilterBarActor = (function () {
     },
     saveFilters: {
       value: function saveFilters(name) {
-        var enabledFilters = this.filterBarStore.getEnabled(),
-            savedFiltersPacket = {};
-        savedFiltersPacket.search_title = name;
-        savedFiltersPacket.filters = {};
-        for (var filterUid in enabledFilters) {
-          savedFiltersPacket.filters[filterUid] = enabledFilters[filterUid].value;
+        var savedSearchPacket = {
+          saved_search: {
+            filters: {},
+            search_title: name
+          }
+        };
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.filterBarStore.enabledFilters()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var _step$value = _slicedToArray(_step.value, 2);
+
+            var filterUid = _step$value[0];
+            var filter = _step$value[1];
+
+            savedSearchPacket.saved_search.filters[filterUid] = filter.value;
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"]) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
         }
-        var payload = { saved_search: savedFiltersPacket };
-        SearchClient.saveSearch(this.filterBarStore.getSavedSearchesUrl(), payload);
+
+        SearchClient.saveSearch(this.filterBarStore.getSavedSearchesUrl(), savedSearchPacket, (function () {
+          SearchClient.getSavedSearches(this.filterBarStore.getSavedSearchesUrl(), this.filterBarStore.setSavedSearches.bind(this.filterBarStore));
+        }).bind(this));
+
         this.applyFilters();
       }
     }
@@ -6514,12 +6546,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 function updateFilterOptions(filter) {
-  if (filter.url !== "") {
+  if (filter.url !== "" && filter.url !== undefined) {
     var url = filter.url;
 
     $.ajax({
       url: url,
       type: "GET",
+      cache: false,
       dataType: "json",
       success: function success(data) {
         filter.options = data;
@@ -6543,6 +6576,7 @@ function search(url, success) {
   $.ajax({
     url: url,
     type: "GET",
+    cache: false,
     dataType: "json",
     success: (function (_success) {
       var _successWrapper = function success(_x) {
@@ -6560,12 +6594,25 @@ function search(url, success) {
   });
 }
 
-function saveSearch(url, payload) {
+function saveSearch(url, payload, success) {
   $.ajax({
     url: url,
     type: "POST",
     data: payload,
-    dataType: "json"
+    dataType: "json",
+    success: (function (_success) {
+      var _successWrapper = function success() {
+        return _success.apply(this, arguments);
+      };
+
+      _successWrapper.toString = function () {
+        return _success.toString();
+      };
+
+      return _successWrapper;
+    })(function () {
+      success();
+    })
   });
 }
 
@@ -6573,6 +6620,7 @@ function getSavedSearches(url, success) {
   $.ajax({
     url: url,
     type: "GET",
+    cache: false,
     dataType: "json",
     success: (function (_success) {
       var _successWrapper = function success(_x) {
@@ -8018,44 +8066,82 @@ var Pagination = exports.Pagination = (function (_React$Component) {
     _classCallCheck(this, Pagination);
 
     _get(Object.getPrototypeOf(Pagination.prototype), "constructor", this).call(this, props);
+    this.MAX_PAGE_LINKS = 11;
   }
 
   _inherits(Pagination, _React$Component);
 
   _createClass(Pagination, {
-    pages: {
-      value: function pages() {
-        if (this.props.totalPages > 1) {
-          return Array.apply(null, Array(this.props.totalPages)).map(function (_, i) {
-            return i + 1;
-          });
-        } else {
-          return [1];
-        }
+    goToFirstPage: {
+      value: function goToFirstPage() {
+        this.context.tableActor.fetchData(1);
       }
     },
-    onClick: {
-      value: function onClick(event) {
+    goToLastPage: {
+      value: function goToLastPage() {
+        this.context.tableActor.fetchData(this.props.totalPages);
+      }
+    },
+    goToPage: {
+      value: function goToPage(event) {
         this.context.tableActor.fetchData(event.target.innerHTML);
       }
     },
     render: {
       value: function render() {
-        var pageLinks = this.pages().map(function (pageNumber) {
-          var classes = "";
-          if (pageNumber === this.props.currentPage) {
+        var pageLinks = [];
+
+        pageLinks.push(React.createElement(
+          "li",
+          { key: "first" },
+          React.createElement(
+            "a",
+            { onClick: this.goToFirstPage.bind(this) },
+            "First"
+          )
+        ));
+
+        var lowestPageLink = 1,
+            highestPageLink = 1;
+
+        if (this.props.totalPages < this.MAX_PAGE_LINKS) {
+          lowestPageLink = 1;
+          highestPageLink = this.props.totalPages;
+        } else if (this.props.currentPage <= Math.floor(this.MAX_PAGE_LINKS / 2)) {
+          lowestPageLink = 1;
+          highestPageLink = this.MAX_PAGE_LINKS;
+        } else if (this.props.currentPage >= this.props.totalPages - Math.floor(this.MAX_PAGE_LINKS / 2)) {
+          lowestPageLink = this.props.totalPages - this.MAX_PAGE_LINKS;
+          highestPageLink = this.props.totalPages;
+        } else {
+          lowestPageLink = this.props.currentPage - Math.floor(this.MAX_PAGE_LINKS / 2);
+          highestPageLink = lowestPageLink + this.MAX_PAGE_LINKS;
+        }
+
+        for (var page = lowestPageLink, classes = ""; page <= highestPageLink; page++, classes = "") {
+          if (page === this.props.currentPage) {
             classes = "active";
           }
-          return React.createElement(
+          pageLinks.push(React.createElement(
             "li",
-            { className: classes, key: pageNumber },
+            { className: classes, key: page },
             React.createElement(
               "a",
-              { onClick: this.onClick.bind(this) },
-              pageNumber
+              { onClick: this.goToPage.bind(this) },
+              page
             )
-          );
-        }, this);
+          ));
+        }
+
+        pageLinks.push(React.createElement(
+          "li",
+          { key: "last" },
+          React.createElement(
+            "a",
+            { onClick: this.goToLastPage.bind(this) },
+            "Last"
+          )
+        ));
 
         return React.createElement(
           "nav",
@@ -8079,7 +8165,8 @@ Pagination.propTypes = {
 };
 
 Pagination.contextTypes = {
-  tableActor: React.PropTypes.object.isRequired
+  tableActor: React.PropTypes.object.isRequired,
+  tableStore: React.PropTypes.object.isRequired
 };
 
 },{}],115:[function(require,module,exports){
@@ -8224,16 +8311,18 @@ var FilterBarStore = exports.FilterBarStore = (function () {
 
     this.setFilterOptions();
 
-    SearchClient.getSavedSearches(this.savedSearchesUrl, this.setSavedSearches.bind(this));
+    if (this.savedSearchesUrl !== undefined) {
+      SearchClient.getSavedSearches(this.savedSearchesUrl, this.setSavedSearches.bind(this));
+    }
   }
 
   _createClass(FilterBarStore, {
-    filterGenerator: {
-      value: regeneratorRuntime.mark(function filterGenerator() {
+    enabledFilters: {
+      value: regeneratorRuntime.mark(function enabledFilters() {
         var _this = this;
 
         var filterUid;
-        return regeneratorRuntime.wrap(function filterGenerator$(context$2$0) {
+        return regeneratorRuntime.wrap(function enabledFilters$(context$2$0) {
           while (1) switch (context$2$0.prev = context$2$0.next) {
             case 0:
               context$2$0.t0 = regeneratorRuntime.keys(_this.filters);
@@ -8246,50 +8335,13 @@ var FilterBarStore = exports.FilterBarStore = (function () {
 
               filterUid = context$2$0.t1.value;
 
-              if (!_this.filters.hasOwnProperty(filterUid)) {
-                context$2$0.next = 6;
-                break;
-              }
-
-              context$2$0.next = 6;
-              return _this.filters[filterUid];
-
-            case 6:
-              context$2$0.next = 1;
-              break;
-
-            case 8:
-            case "end":
-              return context$2$0.stop();
-          }
-        }, filterGenerator, this);
-      })
-    },
-    enabledFilters: {
-      value: regeneratorRuntime.mark(function enabledFilters() {
-        var _this = this;
-
-        var filterUid;
-        return regeneratorRuntime.wrap(function enabledFilters$(context$2$0) {
-          while (1) switch (context$2$0.prev = context$2$0.next) {
-            case 0:
-              context$2$0.t2 = regeneratorRuntime.keys(_this.filters);
-
-            case 1:
-              if ((context$2$0.t3 = context$2$0.t2()).done) {
-                context$2$0.next = 8;
-                break;
-              }
-
-              filterUid = context$2$0.t3.value;
-
               if (!(_this.filters.hasOwnProperty(filterUid) && _this.filters[filterUid].enabled)) {
                 context$2$0.next = 6;
                 break;
               }
 
               context$2$0.next = 6;
-              return _this.filters[filterUid];
+              return [filterUid, _this.filters[filterUid]];
 
             case 6:
               context$2$0.next = 1;
@@ -8310,15 +8362,15 @@ var FilterBarStore = exports.FilterBarStore = (function () {
         return regeneratorRuntime.wrap(function disabledFilters$(context$2$0) {
           while (1) switch (context$2$0.prev = context$2$0.next) {
             case 0:
-              context$2$0.t4 = regeneratorRuntime.keys(_this.filters);
+              context$2$0.t2 = regeneratorRuntime.keys(_this.filters);
 
             case 1:
-              if ((context$2$0.t5 = context$2$0.t4()).done) {
+              if ((context$2$0.t3 = context$2$0.t2()).done) {
                 context$2$0.next = 8;
                 break;
               }
 
-              filterUid = context$2$0.t5.value;
+              filterUid = context$2$0.t3.value;
 
               if (!(_this.filters.hasOwnProperty(filterUid) && !_this.filters[filterUid].enabled)) {
                 context$2$0.next = 6;
@@ -8326,7 +8378,7 @@ var FilterBarStore = exports.FilterBarStore = (function () {
               }
 
               context$2$0.next = 6;
-              return _this.filters[filterUid];
+              return [filterUid, _this.filters[filterUid]];
 
             case 6:
               context$2$0.next = 1;
@@ -8347,15 +8399,15 @@ var FilterBarStore = exports.FilterBarStore = (function () {
         return regeneratorRuntime.wrap(function selectFilters$(context$2$0) {
           while (1) switch (context$2$0.prev = context$2$0.next) {
             case 0:
-              context$2$0.t6 = regeneratorRuntime.keys(_this.filters);
+              context$2$0.t4 = regeneratorRuntime.keys(_this.filters);
 
             case 1:
-              if ((context$2$0.t7 = context$2$0.t6()).done) {
+              if ((context$2$0.t5 = context$2$0.t4()).done) {
                 context$2$0.next = 8;
                 break;
               }
 
-              filterUid = context$2$0.t7.value;
+              filterUid = context$2$0.t5.value;
 
               if (!(_this.filters.hasOwnProperty(filterUid) && _this.filters[filterUid].url !== null)) {
                 context$2$0.next = 6;
