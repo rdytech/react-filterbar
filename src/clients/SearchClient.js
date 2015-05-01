@@ -10,12 +10,15 @@ export function search(url, success) {
   });
 }
 
-export function saveSearch(url, payload) {
+export function saveSearch(url, payload, success) {
   $.ajax({
     url: url,
     type: "POST",
     data: payload,
-    dataType: "json"
+    dataType: "json",
+    success: function() {
+      success();
+    }
   });
 }
 
