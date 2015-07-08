@@ -21,10 +21,11 @@ function walk(node) {
 
 function updateConfigurationWithUrlOptions(configuration) {
   var url = uri(window.location),
-      searchObject = url.search(true);
+      searchObject = url.search(true)
+      storageKey = window.location.pathname.replace(/\//g, "");
 
-  if (Object.keys(searchObject).length === 0) {
-    history.pushState({}, "", localStorage[window.location.pathname.replace(/\//g, "")]);
+  if (Object.keys(searchObject).length === 0 && localStorage[storageKey] !== undefined) {
+    history.pushState({}, "", localStorage[storageKey]);
     url = uri(window.location);
   }
 
