@@ -1,0 +1,61 @@
+!!!
+
+%head
+  %link{:href=>"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css", :rel=>"stylesheet"}
+  %script{:src=>"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"}
+  %script{:src=>"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"}
+  %script{:src=>"/js/react-fluxer.js"}
+  %script{:src=>"/js/react-bootstrap.js"}
+  %script{:src=>"/js/react-filterbar.js"}
+
+%body
+  %section.content-wrapper
+    %div.row.margin-top-lg
+      %div.col-lg-12.col-md-12.col-sm-12.col-xs-12.margin-bottom-sm
+        %div.react-filterable-table
+          %dl.filterBarConfiguration
+            %dt.persistent{ data: { value: 'true' } }
+            %dt.search-url{ data: { value: '/' } }
+            %dt.save-search-url{ data: { value: '/saved_searches' } }
+            %dt.saved-searches-url{ data: { value: '/saved_searches' } }
+            %dl.filters
+              %dl.author
+                %dt.field{ data: { value: "author" } }
+                %dt.type{ data: { value: "text" } }
+                %dt.label{ data: { value: "Author" } }
+              %dl.title
+                %dt.field{ data: { value: "title" } }
+                %dt.type{ data: { value: "text" } }
+                %dt.label{ data: { value: "Title" } }
+              %dl.id
+                %dt.field{ data: { value: "id" } }
+                %dt.type{ data: { value: "id" } }
+                %dt.label{ data: { value: "Book ID" } }
+              %dl.published
+                %dt.field{ data: { value: "published" } }
+                %dt.type{ data: { value: "date" } }
+                %dt.label{ data: { value: "Published On" } }
+              %dl.rating
+                %dt.field{ data: { value: "rating" } }
+                %dt.type{ data: { value: "select" } }
+                %dt.label{ data: { value: "Rating" } }
+                %dt.url{ data: { value: "/rating" } }
+
+          %dl.tableConfiguration
+            %dt.data-url{ data: { value: "/" } }
+            %dl.columns
+              %dl.author
+                %dt.heading{ data: { value: "Author" } }
+                %dt.field{ data: { value: "author" } }
+              %dl.title
+                %dt.heading{ data: { value: "Title" } }
+                %dt.field{ data: { value: "title" } }
+              %dl.id
+                %dt.heading{ data: { value: "Book Id" } }
+                %dt.field{ data: { value: "id" } }
+              %dl.published_on
+                %dt.heading{ data: { value: "Published On" } }
+                %dt.field{ data: { value: "published_on" } }
+              %dl.rating
+                %dt.heading{ data: { value: "Rating" } }
+                %dt.field{ data: { value: "rating" } }

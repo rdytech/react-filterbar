@@ -25,6 +25,22 @@ var appFile = 'app.js';
 var appDistFile = appName + '.js';
 var appMinDistFile = appName + '.min.js';
 
+gulp.task('dev', function() {
+  browserify({
+    entries: './src/' + appFile,
+    extensions: ['.js'],
+    debug: true
+  })
+  .transform(babelify)
+  .bundle()
+  .pipe(source(appDistFile))
+  .pipe(gulp.dest('example/public/js'));
+})
+
+gulp.task('devloop', function() {
+  gulp.watch([scriptsPath + '/**/*.*'], ['dev']);
+})
+
 gulp.task('jest', function() {
   return gulp.src('__tests__')
     .pipe(jest({
