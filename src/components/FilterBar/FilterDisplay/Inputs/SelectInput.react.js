@@ -1,8 +1,16 @@
 export class SelectInput extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    this.state = {value: props.value};
+    const options = context.filterBarStore.getFilter(this.props.filterUid).options;
+    const passedValue = props.value;
+
+    if (passedValue === "" || passedValue === undefined) {
+      this.state = {value: options[0].value};
+      context.filterBarActor.updateFilter(props.filterUid, "value", options[0].value);
+    } else {
+      this.state = {value: passedValue};
+    }
   }
 
   onSelect(event) {

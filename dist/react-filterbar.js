@@ -7899,12 +7899,20 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var SelectInput = exports.SelectInput = (function (_React$Component) {
-  function SelectInput(props) {
+  function SelectInput(props, context) {
     _classCallCheck(this, SelectInput);
 
-    _get(Object.getPrototypeOf(SelectInput.prototype), "constructor", this).call(this, props);
+    _get(Object.getPrototypeOf(SelectInput.prototype), "constructor", this).call(this, props, context);
 
-    this.state = { value: props.value };
+    var options = context.filterBarStore.getFilter(this.props.filterUid).options;
+    var passedValue = props.value;
+
+    if (passedValue === "" || passedValue === undefined) {
+      this.state = { value: options[0].value };
+      context.filterBarActor.updateFilter(props.filterUid, "value", options[0].value);
+    } else {
+      this.state = { value: passedValue };
+    }
   }
 
   _inherits(SelectInput, _React$Component);
