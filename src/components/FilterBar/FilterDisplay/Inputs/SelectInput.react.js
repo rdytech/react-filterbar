@@ -1,8 +1,16 @@
 export class SelectInput extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {value: props.value};
+  }
+
+  componentDidMount() {
+    const options = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
+    if (!this.state.value && options.length > 0) {
+      this.setState({value: options[0].value})
+      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", options[0].value);
+    }
   }
 
   onSelect(event) {
@@ -11,9 +19,8 @@ export class SelectInput extends React.Component {
   }
 
   render() {
-    var options = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
-
-    options = options.map(function(option) {
+    const optionList = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
+    let options = optionList.map(function(option) {
       return (
         <option key={option.value} value={option.value}>
           {option.label}

@@ -7899,10 +7899,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var SelectInput = exports.SelectInput = (function (_React$Component) {
-  function SelectInput(props) {
+  function SelectInput(props, context) {
     _classCallCheck(this, SelectInput);
 
-    _get(Object.getPrototypeOf(SelectInput.prototype), "constructor", this).call(this, props);
+    _get(Object.getPrototypeOf(SelectInput.prototype), "constructor", this).call(this, props, context);
 
     this.state = { value: props.value };
   }
@@ -7910,6 +7910,15 @@ var SelectInput = exports.SelectInput = (function (_React$Component) {
   _inherits(SelectInput, _React$Component);
 
   _createClass(SelectInput, {
+    componentDidMount: {
+      value: function componentDidMount() {
+        var options = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
+        if (!this.state.value && options.length > 0) {
+          this.setState({ value: options[0].value });
+          this.context.filterBarActor.updateFilter(this.props.filterUid, "value", options[0].value);
+        }
+      }
+    },
     onSelect: {
       value: function onSelect(event) {
         this.setState({ value: event.target.value });
@@ -7918,9 +7927,8 @@ var SelectInput = exports.SelectInput = (function (_React$Component) {
     },
     render: {
       value: function render() {
-        var options = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
-
-        options = options.map(function (option) {
+        var optionList = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
+        var options = optionList.map(function (option) {
           return React.createElement(
             "option",
             { key: option.value, value: option.value },
