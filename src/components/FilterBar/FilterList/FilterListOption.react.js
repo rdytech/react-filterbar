@@ -10,7 +10,7 @@ export class FilterListOption extends React.Component {
   render() {
     return (
       <li>
-        <a onClick={this.onClick.bind(this)}>
+        <a onClick={this.onClick.bind(this)} style={ {cursor: "pointer"} }>
           {this.props.label}
         </a>
       </li>

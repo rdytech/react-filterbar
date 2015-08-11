@@ -19,11 +19,6 @@ export class FilterBar extends React.Component {
               disabledFilters={this.context.filterBarStore.getDisabled()}
             />
 
-            <button className="btn btn-default disabled" type="button" >
-              <i className="icon icon-download" />
-              Export CSV
-            </button>
-
             <ApplyFiltersButton
               filterBarActor={this.context.filterBarActor}
             />

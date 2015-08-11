@@ -21,7 +21,7 @@ export class Pagination extends React.Component {
 
     pageLinks.push(
       <li key="first">
-        <a onClick={this.goToFirstPage.bind(this)}>First</a>
+        <a onClick={this.goToFirstPage.bind(this)} style={ {cursor: "pointer"} }>First</a>
       </li>
     );
 
@@ -48,14 +48,14 @@ export class Pagination extends React.Component {
       }
       pageLinks.push(
         <li className={classes} key={page}>
-          <a onClick={this.goToPage.bind(this)}>{page}</a>
+          <a onClick={this.goToPage.bind(this)} style={ {cursor: "pointer"} } >{page}</a>
         </li>
       );
     }
 
     pageLinks.push(
       <li key="last">
-        <a onClick={this.goToLastPage.bind(this)}>Last</a>
+        <a onClick={this.goToLastPage.bind(this)} style={ {cursor: "pointer"} }>Last</a>
       </li>
     );
 

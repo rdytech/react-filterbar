@@ -10,7 +10,7 @@ export class SavedSearchesListItem extends React.Component {
   render() {
     return (
       <li>
-        <a className="dynamic-text-filter" onClick={this.onClick.bind(this)}>
+        <a className="dynamic-text-filter" onClick={this.onClick.bind(this)} style={ {cursor: "pointer"} }>
           {this.props.name}
         </a>
       </li>
