@@ -7512,12 +7512,6 @@ var FilterBar = exports.FilterBar = (function (_React$Component) {
               React.createElement(FilterList, {
                 disabledFilters: this.context.filterBarStore.getDisabled()
               }),
-              React.createElement(
-                "button",
-                { className: "btn btn-default disabled", type: "button" },
-                React.createElement("i", { className: "icon icon-download" }),
-                "Export CSV"
-              ),
               React.createElement(ApplyFiltersButton, {
                 filterBarActor: this.context.filterBarActor
               }),
@@ -8178,7 +8172,7 @@ var FilterListOption = exports.FilterListOption = (function (_React$Component) {
           null,
           React.createElement(
             "a",
-            { onClick: this.onClick.bind(this) },
+            { onClick: this.onClick.bind(this), style: { cursor: "pointer" } },
             this.props.label
           )
         );
@@ -8421,7 +8415,7 @@ var SavedSearchesListItem = exports.SavedSearchesListItem = (function (_React$Co
           null,
           React.createElement(
             "a",
-            { className: "dynamic-text-filter", onClick: this.onClick.bind(this) },
+            { className: "dynamic-text-filter", onClick: this.onClick.bind(this), style: { cursor: "pointer" } },
             this.props.name
           )
         );
@@ -8829,7 +8823,7 @@ var Pagination = exports.Pagination = (function (_React$Component) {
           { key: "first" },
           React.createElement(
             "a",
-            { onClick: this.goToFirstPage.bind(this) },
+            { onClick: this.goToFirstPage.bind(this), style: { cursor: "pointer" } },
             "First"
           )
         ));
@@ -8860,7 +8854,7 @@ var Pagination = exports.Pagination = (function (_React$Component) {
             { className: classes, key: page },
             React.createElement(
               "a",
-              { onClick: this.goToPage.bind(this) },
+              { onClick: this.goToPage.bind(this), style: { cursor: "pointer" } },
               page
             )
           ));
@@ -8871,7 +8865,7 @@ var Pagination = exports.Pagination = (function (_React$Component) {
           { key: "last" },
           React.createElement(
             "a",
-            { onClick: this.goToLastPage.bind(this) },
+            { onClick: this.goToLastPage.bind(this), style: { cursor: "pointer" } },
             "Last"
           )
         ));
