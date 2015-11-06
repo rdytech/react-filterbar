@@ -78,7 +78,7 @@ Follow the [tutorial](docs/tutorial-v1.md).
 
 The library will run a script on any page it is included that looks through the DOM for any nodes with the class 'react-filterable-table'.
 
-The following haml snippet is an example of the code to include on your html page to render a filterable table. For a more in depth API description, please see the [API Documentation](docs/api-v1.md).
+The following haml snippet is an example of the code to include on your html page to render a filterable table. For a more in depth API description, please see the [API Documentation](docs/API-V1.md).
 
 ```HAML
 %div.react-filterable-table
@@ -116,6 +116,7 @@ The following haml snippet is an example of the code to include on your html pag
       %dl.Title
         %dt.heading{  :data => { value: "Title" } }
         %dt.field{    :data => { value: "title" } }
+        %dt.sortable{ :data => { value: "title" } }
       %dl.actions
         %dt.heading{ :data => { value: "Actions" } }
         %dt.field{ :data => { value: "actions" } }
