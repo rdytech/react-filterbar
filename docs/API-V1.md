@@ -39,6 +39,7 @@ An example usage of the configuration API is:
       %dl.Title
         %dt.heading{  data:  { value: "Title" } }
         %dt.field{    data:  { value: "title" } }
+        %dt.sortable{ data:  { value: "title" } }
       %dl.actions
         %dt.heading{ data:  { value: "Actions" } }
         %dt.field{ data:  { value: "actions" } }
@@ -161,6 +162,12 @@ The field in the results API that the column contains. This contract is defined 
 This is an optional field. It is used to indicate that the results being sent are html. If it isn't present, the data in the column will be plain text. If a value is set, it will run it through an html parser and render it. This is unsafe, so you must be sure that the data being passed in is clean.
 
 *Allowed Values*: [null, 'html'].
+
+###### dt.sortable
+
+This is an optional field. It is used to indicate that the data in the column is sortable and should specify an identifier the API should sort on. If a value is set, it will allow the column to be sorted by clicking on the heading cell, with each click reversing the order of results.
+
+*Allowed Values*: [null, string].
 
 ## Table Results API
 

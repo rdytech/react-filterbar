@@ -60,6 +60,10 @@ class Server < Sinatra::Base
       json_books
     )
 
+    if params[:order] && order = params[:order].first.collect(&:to_sym)
+      book_list.sort_by!(&order.shift) && order.shift == :desc && book_list.reverse!
+    end
+
     total_pages = 1 + book_list.length / 25
     total_pages -= 1 if book_list.length % 25 == 0
 
