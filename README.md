@@ -98,17 +98,18 @@ The following haml snippet is an example of the code to include on your html pag
         %dt.field{  :data => { value: "Author" } }
         %dt.type{   :data => { value: "text" } }
         %dt.label{  :data => { value: "Author" } }
-        %dt.url{    :data => { value: "" } }
       %dl.isbn
         %dt.field{  :data => { value: "isbn" } }
         %dt.type{   :data => { value: "id" } }
         %dt.label{  :data => { value: "ISBN" } }
-        %dt.url{    :data => { value: "" } }
       %dl.published_date
         %dt.field{  :data => { value: "published_date" } }
         %dt.type{   :data => { value: "date" } }
         %dt.label{  :data => { value: "Published Date" } }
-        %dt.url{    :data => { value: "" } }
+      %dl.rating
+        %dt.field{  :data => { value: "rating" } }
+        %dt.type{   :data => { value: "range" } }
+        %dt.label{  :data => { value: "Rating" } }
 
   %dl.tableConfiguration
     %dt.data-url{ :data => { value: '/books' } }

@@ -32,6 +32,10 @@ An example usage of the configuration API is:
         %dt.field{  data:  { value: "published_date" } }
         %dt.type{   data:  { value: "date" } }
         %dt.label{  data:  { value: "Published Date" } }
+      %dl.rating
+        %dt.field{  data:  { value: "rating" } }
+        %dt.type{   data:  { value: "range" } }
+        %dt.label{  data:  { value: "Rating" } }
 
   %dl.tableConfiguration
     %dt.data-url{ data:  { value: '/books' } }
@@ -113,7 +117,9 @@ This is the type of the filter, used on the server to structure the query.
 
 * **select**: a dropdown selection box
 
-*Allowed Values*: ['text', 'id', 'date', 'select'], must be one of these.
+* **range**: a from, to text input
+
+*Allowed Values*: ['text', 'id', 'date', 'select', 'range'], must be one of these.
 
 ###### dt.label
 

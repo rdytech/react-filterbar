@@ -11,13 +11,13 @@ class Server < Sinatra::Base
     end
   end
 
-  get '/rating' do
+  get '/authors' do
     respond_to do |format|
       format.json do
-        (0..50).to_a.map { |e| e / 10.0 }.select { |e| e % 0.5 == 0 }.map do |rating|
+        (1..99).collect do |n|
           {
-            value: rating.to_s,
-            label: rating.to_s
+            label: "Author #{n}",
+            value: "Author #{n}",
           }
         end.to_json
       end
@@ -32,10 +32,27 @@ class Server < Sinatra::Base
   end
 
   def search(needle, haystack)
-    return haystack.select { |hay| hay.send(needle["field"]).to_s == needle["value"] } if (needle["type"] == "id" || needle["type"] == "select")
-    return haystack.select { |hay| hay.send(needle["field"]).to_s =~ Regexp.new(".*#{needle["value"]}.*") } if needle["type"] == "text"
-    return haystack.select { |hay| hay.send(needle["field"]) =~ Regexp.new(".*#{needle["value"]}.*") } if needle["type"] == "date"
-    []
+    field, type, value = needle.values_at(*%w(field type value))
+    case type.to_sym
+    when :date
+      haystack.select do |hay|
+        (Date.parse(value["from"])..Date.parse(value["to"])) === hay.send(field)
+      end
+    when :id, :select
+      haystack.select do |hay|
+        hay.send(field).to_s == value
+      end
+    when :range
+      haystack.select do |hay|
+        (value["from"].to_f..value["to"].to_f) === hay.send(field)
+      end
+    when :text
+      haystack.select do |hay|
+        hay.send(field).to_s.include?(value)
+      end
+    else
+      []
+    end
   end
 
   def build_response(params)
@@ -50,7 +67,7 @@ class Server < Sinatra::Base
         book["author"],
         book["title"],
         book["id"],
-        book["published_on"],
+        Date.parse(book["published_on"]),
         book["rating"]
       )
     end

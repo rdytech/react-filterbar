@@ -21,8 +21,9 @@
             %dl.filters
               %dl.author
                 %dt.field{ data: { value: "author" } }
-                %dt.type{ data: { value: "text" } }
+                %dt.type{ data: { value: "select" } }
                 %dt.label{ data: { value: "Author" } }
+                %dt.url{ data: { value: "/authors" } }
               %dl.title
                 %dt.field{ data: { value: "title" } }
                 %dt.type{ data: { value: "text" } }
@@ -32,14 +33,13 @@
                 %dt.type{ data: { value: "id" } }
                 %dt.label{ data: { value: "Book ID" } }
               %dl.published
-                %dt.field{ data: { value: "published" } }
+                %dt.field{ data: { value: "published_on" } }
                 %dt.type{ data: { value: "date" } }
                 %dt.label{ data: { value: "Published On" } }
               %dl.rating
                 %dt.field{ data: { value: "rating" } }
-                %dt.type{ data: { value: "select" } }
+                %dt.type{ data: { value: "range" } }
                 %dt.label{ data: { value: "Rating" } }
-                %dt.url{ data: { value: "/rating" } }
 
           %dl.tableConfiguration
             %dt.data-url{ data: { value: "/" } }

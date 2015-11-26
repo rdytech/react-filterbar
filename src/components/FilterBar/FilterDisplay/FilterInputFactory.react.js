@@ -1,6 +1,7 @@
 import {TextInput} from "./Inputs/TextInput.react";
 import {DateInput} from "./Inputs/DateInput.react";
 import {SelectInput} from "./Inputs/SelectInput.react";
+import {RangeInput} from "./Inputs/RangeInput.react";
 
 export function FilterInputFactory(type, value, uid, key) {
   // Janky way to ensure uniqueness of the input, so that it re-renders the
@@ -13,7 +14,8 @@ export function FilterInputFactory(type, value, uid, key) {
     text: React.createElement(TextInput, propObject),
     id: React.createElement(TextInput, propObject),
     date: React.createElement(DateInput, propObject),
-    select: React.createElement(SelectInput, propObject)
+    select: React.createElement(SelectInput, propObject),
+    range: React.createElement(RangeInput, propObject)
   };
 
   if (inputs.hasOwnProperty(type)) {
