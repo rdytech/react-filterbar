@@ -6,6 +6,7 @@ function updateTable(tableStore) {
     tableStore.setRows(tableStateObject.results);
     tableStore.setCurrentPage(tableStateObject.current_page);
     tableStore.setTotalPages(tableStateObject.total_pages);
+    tableStore.setSelectedValues(tableStateObject.selectedValues);
     tableStore.emitChange();
   };
 }
@@ -42,6 +43,7 @@ export class FilterBarActor {
 
     this.tableStore.setUrl(url);
     this.tableStore.setCurrentPage(1);
+    this.tableStore.setSelectedValues([]);
 
     url = this.tableStore.getUrl();
 

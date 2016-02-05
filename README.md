@@ -126,7 +126,16 @@ The following haml snippet is an example of the code to include on your html pag
 
 ## Development
 
-*Coming soon*
+### Starting the Example Application
+
+In order to view the changes that you make for the React Filterbar, there is an
+example Sinatra application that has been provided. Follow this procedure to start
+up the application.
+
+1. Navigate to the example folder within the repository.
+2. Run bundle install to install all required gems
+3. Run bundle exec shotgun config.ru to start the application.
+4. Navigate to http://127.0.0.1:9393/ within your browser.
 
 ## Common Problems / Bugs
 

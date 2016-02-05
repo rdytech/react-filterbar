@@ -14,6 +14,8 @@ export class TableStore {
     this.totalPages = 1;
     this.columns = configuration.columns;
     this.url = configuration.dataUrl;
+    this.selectColumn = configuration.selectColumn;
+    this.selectedValues = [];
   }
 
   setUrl(url) {
@@ -44,12 +46,24 @@ export class TableStore {
     return this.totalPages;
   }
 
+  getSelectColumn() {
+    return this.selectColumn;
+  }
+
   setTotalPages(totalPages) {
     this.totalPages = totalPages;
   }
 
   setCurrentPage(page) {
     this.currentPage = page;
+  }
+
+  setSelectedValues(selectedValues) {
+    this.selectedValues = selectedValues;
+  }
+
+  getSelectedValues() {
+    return this.selectedValues;
   }
 
   updateTable(tableStateObject) {

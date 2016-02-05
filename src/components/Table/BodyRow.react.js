@@ -1,8 +1,19 @@
 import {BodyCell} from "./BodyCell.react";
+import {BodySelectable} from "./BodySelectable.react";
 
 export class BodyRow extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  displaySelectableColumn() {
+    if (this.context.tableStore.getSelectColumn() !== undefined) {
+      var selectValue = this.props.cells[this.context.tableStore.getSelectColumn()];
+      var referenceValue = "select" + selectValue;
+      return(
+        <BodySelectable value={selectValue} index={this.props.key} />
+      )
+    }
   }
 
   render() {
@@ -18,8 +29,11 @@ export class BodyRow extends React.Component {
       );
     }, this);
 
+    var displaySelectableColumn = this.displaySelectableColumn();
+
     return (
       <tr>
+        {displaySelectableColumn}
         {cells}
       </tr>
     );
@@ -27,7 +41,8 @@ export class BodyRow extends React.Component {
 }
 
 BodyRow.propTypes = {
-  cells: React.PropTypes.object.isRequired
+  cells: React.PropTypes.object.isRequired,
+  displaySelectableColumn: React.PropTypes.object.isRequired
 };
 
 BodyRow.contextTypes = {

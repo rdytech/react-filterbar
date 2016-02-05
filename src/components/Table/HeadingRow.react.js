@@ -1,8 +1,17 @@
 import {HeadingCell} from "./HeadingCell.react";
+import {HeadingSelectable} from "./HeadingSelectable.react";
 
 export class HeadingRow extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  displaySelectableColumn() {
+    if (this.context.tableStore.getSelectColumn() !== undefined) {
+      return(
+        <HeadingSelectable />
+      )
+    }
   }
 
   render() {
@@ -16,9 +25,13 @@ export class HeadingRow extends React.Component {
         />
       );
     }, this);
+
+    var displaySelectableColumn = this.displaySelectableColumn();
+
     return (
       <thead>
         <tr>
+          {displaySelectableColumn}
           {cells}
         </tr>
       </thead>

@@ -7,7 +7,8 @@ export class Table extends React.Component {
     super(props);
     this.state = {
       currentPage: 1,
-      totalPages: 1
+      totalPages: 1,
+      selectedValues: []
     };
   }
 
@@ -26,7 +27,9 @@ export class Table extends React.Component {
       columnHeadings: this.context.tableStore.getColumns(),
       rows: this.context.tableStore.getRows(),
       currentPage: this.context.tableStore.getCurrentPage(),
-      totalPages: this.context.tableStore.getTotalPages()
+      totalPages: this.context.tableStore.getTotalPages(),
+      selectColumn: this.context.tableStore.getSelectColumn(),
+      selectedValues: this.context.tableStore.getSelectedValues()
     };
   }
 
