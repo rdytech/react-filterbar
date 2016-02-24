@@ -1,4 +1,4 @@
-import {HeadingCell} from "./HeadingCell.react";
+import {HeadingCell} from "../Shared/HeadingCell.react";
 
 export class HeadingRow extends React.Component {
   constructor(props) {

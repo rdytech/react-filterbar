@@ -76,6 +76,6 @@ Pagination.propTypes = {
 };
 
 Pagination.contextTypes = {
-  tableActor: React.PropTypes.object.isRequired,
-  tableStore: React.PropTypes.object.isRequired
+  tableStore: React.PropTypes.object,
+  tableActor: React.PropTypes.object
 };

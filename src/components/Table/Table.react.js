@@ -1,6 +1,6 @@
 import {Body} from "./Body.react";
 import {HeadingRow} from "./HeadingRow.react";
-import {Pagination} from "./Pagination.react";
+import {Pagination} from "../Shared/Pagination.react";
 
 export class Table extends React.Component {
   constructor(props) {

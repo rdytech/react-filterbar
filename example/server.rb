@@ -11,6 +11,13 @@ class Server < Sinatra::Base
     end
   end
 
+  get '/jobs_board' do
+    respond_to do |format|
+      format.json { build_response(params) }
+      format.html { haml :jobs_board  }
+    end
+  end
+
   get '/authors' do
     respond_to do |format|
       format.json do

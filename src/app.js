@@ -2,6 +2,7 @@ require("babel/polyfill");
 var uri = require("URIjs");
 
 import {FilterableTable} from "./components/FilterableTable.react";
+import {FilterableJobsBoard} from "./components/FilterableJobsBoard.react";
 
 function walk(node) {
   var nodeObject = {};
@@ -19,9 +20,12 @@ function walk(node) {
   return nodeObject;
 }
 
-function updateConfigurationWithUrlOptions(configuration) {
-  var url = uri(window.location),
-      searchObject = url.search(true),
+function windowUrl() {
+  return uri(window.location);
+}
+
+function dataUrlGenerator(url) {
+  var searchObject = url.search(true),
       storageKey = window.location.pathname.replace(/\//g, "");
 
   if (Object.keys(searchObject).length === 0 && localStorage[storageKey] !== undefined) {
@@ -37,16 +41,32 @@ function updateConfigurationWithUrlOptions(configuration) {
     url.addSearch("page", 1);
   }
 
-  configuration.tableConfiguration.dataUrl = url.pathname() + url.search();
-  configuration.tableConfiguration.page = Number(url.query(true).page);
+  return url.pathname() + url.search();
+}
 
-  if (url.query(true).q !== "") {
-    for (var filter of JSON.parse(url.query(true).q)) {
+function configureFilterbar(configuration) {
+  if (windowUrl().query(true).q !== "") {
+    for (var filter of JSON.parse(windowUrl().query(true).q)) {
       configuration.filterBarConfiguration.filters[filter.uid].enabled = true;
       configuration.filterBarConfiguration.filters[filter.uid].value = filter.value;
     }
   }
+  return configuration;
+}
 
+function updateConfigurationWithUrlOptions(configuration) {
+  configuration.tableConfiguration.dataUrl = dataUrlGenerator(windowUrl());
+  configuration.tableConfiguration.page = Number(windowUrl().query(true).page);
+
+  configuration = configureFilterbar(configuration);
+  return configuration;
+}
+
+function updateJobsBoardConfiguration(configuration) {
+  configuration.jobsBoardConfiguration.dataUrl = dataUrlGenerator(windowUrl());
+  configuration.jobsBoardConfiguration.page = Number(windowUrl().query(true).page);
+
+  configuration = configureFilterbar(configuration);
   return configuration;
 }
 
@@ -56,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   configuration = walk(filterableTableNode);
   configuration = updateConfigurationWithUrlOptions(configuration);
+  
 
   React.render(
     React.createElement(
@@ -66,5 +87,25 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     ),
     filterableTableNode
+  );
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+  var configuration = {},
+      filterableJobsBoardNode = document.getElementsByClassName("react-filterable-jobs-board")[0];
+
+  configuration = walk(filterableJobsBoardNode);
+  configuration = updateJobsBoardConfiguration(configuration);
+  
+
+  React.render(
+    React.createElement(
+      FilterableJobsBoard,
+      {
+        filterBarConfiguration: configuration.filterBarConfiguration,
+        jobsBoardConfiguration: configuration.jobsBoardConfiguration
+      }
+    ),
+    filterableJobsBoardNode
   );
 });
