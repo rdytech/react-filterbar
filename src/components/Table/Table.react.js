@@ -1,4 +1,5 @@
 import {Body} from "./Body.react";
+import {TableCaption} from "./TableCaption.react";
 import {HeadingRow} from "./HeadingRow.react";
 import {Pagination} from "./Pagination.react";
 
@@ -26,17 +27,20 @@ export class Table extends React.Component {
       columnHeadings: this.context.tableStore.getColumns(),
       rows: this.context.tableStore.getRows(),
       currentPage: this.context.tableStore.getCurrentPage(),
-      totalPages: this.context.tableStore.getTotalPages()
+      totalPages: this.context.tableStore.getTotalPages(),
+      tableCaption: this.context.tableStore.getTableCaption()
     };
   }
 
   render() {
     var headings = this.state.columnHeadings;
+    var tableCaption = this.state.tableCaption;
 
     return (
       <div className="panel panel-responsive">
         <div className="table-responsive">
           <table className="table table-hover table-striped">
+            <TableCaption value={tableCaption} />
             <HeadingRow cells={headings} />
             <Body rows={this.state.rows} />
           </table>

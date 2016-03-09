@@ -93,6 +93,7 @@ class Server < Sinatra::Base
     {
       current_page: page,
       total_pages: total_pages,
+      table_caption: book_list.length.to_s + ' books',
       results: books.map { |book| book.to_h }
     }.to_json
   end
