@@ -80,7 +80,7 @@ gulp.task('example', function () {
   .transform(babelify)
   .bundle()
   .pipe(source(appDistFile))
-  .pipe(gulp.dest('dist/'));
+  .pipe(gulp.dest('example/public/js'));
 });
 
 gulp.task('neptune', function() {

@@ -44,6 +44,10 @@ export class TableStore {
     return this.totalPages;
   }
 
+  getTableCaption() {
+    return this.tableCaption;
+  }
+
   setTotalPages(totalPages) {
     this.totalPages = totalPages;
   }
@@ -52,10 +56,15 @@ export class TableStore {
     this.currentPage = page;
   }
 
+  setTableCaption(tableCaption) {
+    this.tableCaption = tableCaption;
+  }
+
   updateTable(tableStateObject) {
     this.setRows(tableStateObject.results);
     this.setCurrentPage(tableStateObject.current_page);
     this.setTotalPages(tableStateObject.total_pages);
+    this.setTableCaption(tableStateObject.table_caption);
     this.emitChange();
   }
 

@@ -6,6 +6,7 @@ function updateTable(tableStore) {
     tableStore.setRows(tableStateObject.results);
     tableStore.setCurrentPage(tableStateObject.current_page);
     tableStore.setTotalPages(tableStateObject.total_pages);
+    tableStore.setTableCaption(tableStateObject.table_caption);
     tableStore.emitChange();
   };
 }
