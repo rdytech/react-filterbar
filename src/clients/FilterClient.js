@@ -9,7 +9,7 @@ export function updateFilterOptions(filter) {
       dataType: "json",
       success: function(data) {
         filter.options = data;
-        filter.value = filter.value || filter.options[0].value;
+        filter.value = filter.value || filter.default || filter.options[0].value;
       }
     });
   }

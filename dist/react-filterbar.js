@@ -7846,7 +7846,7 @@ function updateFilterOptions(filter) {
       dataType: "json",
       success: function success(data) {
         filter.options = data;
-        filter.value = filter.value || filter.options[0].value;
+        filter.value = filter.value || filter["default"] || filter.options[0].value;
       }
     });
   }
@@ -8566,10 +8566,20 @@ var SelectInput = exports.SelectInput = (function (_React$Component) {
   _createClass(SelectInput, {
     componentDidMount: {
       value: function componentDidMount() {
-        var options = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
-        if (!this.state.value && options.length > 0) {
-          this.setState({ value: options[0].value });
-          this.context.filterBarActor.updateFilter(this.props.filterUid, "value", options[0].value);
+        var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
+        var options = filter.options || [];
+
+        if (filter["default"]) {
+          var defaultValue = filter["default"];
+        } else if (options.length > 0) {
+          var defaultValue = options[0].value;
+        } else {
+          var defaultValue = null;
+        }
+
+        if (!this.state.value && defaultValue) {
+          this.setState({ value: defaultValue });
+          this.context.filterBarActor.updateFilter(this.props.filterUid, "value", defaultValue);
         }
       }
     },

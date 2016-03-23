@@ -6,10 +6,20 @@ export class SelectInput extends React.Component {
   }
 
   componentDidMount() {
-    const options = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
-    if (!this.state.value && options.length > 0) {
-      this.setState({value: options[0].value})
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", options[0].value);
+    var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
+    const options = filter.options || [];
+
+    if (filter.default) {
+      var defaultValue = filter.default;
+    } else if (options.length > 0) {
+      var defaultValue = options[0].value;
+    } else {
+      var defaultValue = null;
+    }
+
+    if (!this.state.value && defaultValue) {
+      this.setState({value: defaultValue})
+      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", defaultValue);
     }
   }
 
