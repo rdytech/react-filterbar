@@ -90,10 +90,11 @@ The following haml snippet is an example of the code to include on your html pag
     %dt.export-results-url{ :data => { value: '/books/export' } }
     %dl.filters
       %dl.genre
-        %dt.field{  :data => { value: "genre" } }
-        %dt.type{   :data => { value: "select" } }
-        %dt.label{  :data => { value: "Genre" } }
-        %dt.url{    :data => { value: "/books/filters/genres" } }
+        %dt.field{   :data => { value: "genre" } }
+        %dt.type{    :data => { value: "select" } }
+        %dt.label{   :data => { value: "Genre" } }
+        %dt.url{     :data => { value: "/books/filters/genres" } }
+        %dt.default{ :data => { value: "mystery" } }
       %dl.author
         %dt.field{  :data => { value: "Author" } }
         %dt.type{   :data => { value: "text" } }

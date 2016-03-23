@@ -16,10 +16,11 @@ An example usage of the configuration API is:
     %dt.export-results-url{ data:  { value: '/books/export' } }
     %dl.filters
       %dl.genre
-        %dt.field{  data:  { value: "genre" } }
-        %dt.type{   data:  { value: "select" } }
-        %dt.label{  data:  { value: "Genre" } }
-        %dt.url{    data:  { value: "/books/filters/genres" } }
+        %dt.field{   data:  { value: "genre" } }
+        %dt.type{    data:  { value: "select" } }
+        %dt.label{   data:  { value: "Genre" } }
+        %dt.url{     data:  { value: "/books/filters/genres" } }
+        %dt.default{ data => { value: "mystery" } }
       %dl.author
         %dt.field{  data:  { value: "Author" } }
         %dt.type{   data:  { value: "text" } }
@@ -130,6 +131,10 @@ The label to show in the filter dropdown list, and when the filter is displayed.
 ###### dt.url
 
 This is only a required field for a select type. This is the endpoint to hit to get the options to fill the select. This API contract is defined at [Filter Options API](#filter-options-api).
+
+###### dt.default
+
+This is an optional field for a select type. If the field is present, the input will be preselected with the value from that field.
 
 *Allowed Values*: ['/resource', '://fqdn/resource']
 
