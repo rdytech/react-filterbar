@@ -7783,7 +7783,7 @@ var FilterBarActor = exports.FilterBarActor = (function () {
   return FilterBarActor;
 })();
 
-},{"../clients/SearchClient":201,"../helpers/URLHelper":226}],199:[function(require,module,exports){
+},{"../clients/SearchClient":201,"../helpers/URLHelper":227}],199:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
@@ -9180,7 +9180,7 @@ FilterableTable.childContextTypes = {
   tableActor: React.PropTypes.object
 };
 
-},{"../actors/FilterBarActor":198,"../actors/TableActor":199,"../stores/FilterBarStore":227,"../stores/TableStore":228,"./FilterBar/FilterBar.react":204,"./Table/Table.react":224}],218:[function(require,module,exports){
+},{"../actors/FilterBarActor":198,"../actors/TableActor":199,"../stores/FilterBarStore":228,"../stores/TableStore":229,"./FilterBar/FilterBar.react":204,"./Table/Table.react":224}],218:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9607,6 +9607,8 @@ Pagination.contextTypes = {
 },{}],224:[function(require,module,exports){
 "use strict";
 
+var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
+
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -9627,6 +9629,8 @@ var HeadingRow = require("./HeadingRow.react").HeadingRow;
 
 var Pagination = require("./Pagination.react").Pagination;
 
+var TableEvent = _interopRequireWildcard(require("../../events/TableEvent"));
+
 var Table = exports.Table = (function (_React$Component) {
   function Table(props) {
     _classCallCheck(this, Table);
@@ -9646,6 +9650,11 @@ var Table = exports.Table = (function (_React$Component) {
         this.context.tableActor.fetchData();
         this.setState(this.getStateFromStores());
         this.context.tableStore.addChangeListener(this.onChange.bind(this));
+      }
+    },
+    componentDidUpdate: {
+      value: function componentDidUpdate() {
+        TableEvent.tableUpdated();
       }
     },
     onChange: {
@@ -9697,7 +9706,7 @@ Table.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{"./Body.react":218,"./HeadingRow.react":222,"./Pagination.react":223,"./TableCaption.react":225}],225:[function(require,module,exports){
+},{"../../events/TableEvent":226,"./Body.react":218,"./HeadingRow.react":222,"./Pagination.react":223,"./TableCaption.react":225}],225:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9745,6 +9754,20 @@ var TableCaption = exports.TableCaption = (function (_React$Component) {
 },{}],226:[function(require,module,exports){
 "use strict";
 
+exports.tableUpdated = tableUpdated;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function tableUpdated() {
+  var event = document.createEvent("Event");
+  event.initEvent("react-filterbar:table-updated", true, true);
+  document.dispatchEvent(event);
+}
+
+},{}],227:[function(require,module,exports){
+"use strict";
+
 exports.updateApplicationUrlState = updateApplicationUrlState;
 exports.updateUrlSearch = updateUrlSearch;
 Object.defineProperty(exports, "__esModule", {
@@ -9761,7 +9784,7 @@ function updateUrlSearch(url, field, value) {
   return uri(url).removeSearch(field).addSearch(field, value);
 }
 
-},{"URIjs":4}],227:[function(require,module,exports){
+},{"URIjs":4}],228:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
@@ -10068,7 +10091,7 @@ var FilterBarStore = exports.FilterBarStore = (function () {
   return FilterBarStore;
 })();
 
-},{"../clients/FilterClient":200,"../clients/SearchClient":201}],228:[function(require,module,exports){
+},{"../clients/FilterClient":200,"../clients/SearchClient":201}],229:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
