@@ -125,6 +125,20 @@ The following haml snippet is an example of the code to include on your html pag
         %dt.type{ :data => { value: "html" } }
 ```
 
+## Events
+
+The React filterbar will trigger an event named 'react-filterbar:table-updated' against the document object whenever.
+
+To execute Javascript code whenver the table is updated, follow the below example:
+
+```
+document.addEventListener('react-filterbar:table-updated', function() {
+  // do something....
+});
+```
+
+the data is updated.
+
 ## Development
 
 *Coming soon*

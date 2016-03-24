@@ -2,6 +2,7 @@ import {Body} from "./Body.react";
 import {TableCaption} from "./TableCaption.react";
 import {HeadingRow} from "./HeadingRow.react";
 import {Pagination} from "./Pagination.react";
+import * as TableEvent from "../../events/TableEvent";
 
 export class Table extends React.Component {
   constructor(props) {
@@ -16,6 +17,10 @@ export class Table extends React.Component {
     this.context.tableActor.fetchData();
     this.setState(this.getStateFromStores());
     this.context.tableStore.addChangeListener(this.onChange.bind(this));
+  }
+
+  componentDidUpdate() {
+    TableEvent.tableUpdated();
   }
 
   onChange() {
