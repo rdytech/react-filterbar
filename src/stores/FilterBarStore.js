@@ -1,4 +1,3 @@
-import * as FilterClient from "../clients/FilterClient";
 import * as SearchClient from "../clients/SearchClient";
 
 export class FilterBarStore {
@@ -14,8 +13,6 @@ export class FilterBarStore {
     this.savedSearchesUrl = configuration.savedSearchesUrl;
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.filters = configuration.filters;
-
-    this.setFilterOptions();
 
     if (this.savedSearchesUrl !== undefined) {
       SearchClient.getSavedSearches(this.savedSearchesUrl, this.setSavedSearches.bind(this));
@@ -43,12 +40,6 @@ export class FilterBarStore {
       if (this.filters.hasOwnProperty(filterUid) && this.filters[filterUid].url !== null) {
         yield this.filters[filterUid];
       }
-    }
-  }
-
-  setFilterOptions() {
-    for (var filter of this.selectFilters()) {
-      FilterClient.updateFilterOptions(filter);
     }
   }
 

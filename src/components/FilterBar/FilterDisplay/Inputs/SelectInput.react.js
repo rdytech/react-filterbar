@@ -2,11 +2,17 @@ export class SelectInput extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {value: props.value};
+    this.state = {value: props.value, options: []};
   }
 
   componentDidMount() {
     var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
+
+    $.get(filter.url, function (data) {
+      filter.options = data;
+      this.setState({options: options})
+    }.bind(this));
+
     const options = filter.options || [];
 
     if (filter.default) {
