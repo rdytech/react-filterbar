@@ -9,8 +9,22 @@ export class FilterInput extends React.Component {
     this.context.filterBarActor.disableFilter(this.props.filterUid);
   }
 
+  objectProperties() {
+    var key = Date.now();
+    return(
+      {
+        filterUid: this.props.filterUid,
+        key: key,
+        value: this.props.value,
+        type: this.props.type,
+        operator: this.props.operator || 'gte'
+      }
+    );
+  }
+
   render() {
-    var inputs = new FilterInputFactory(this.props.type, this.props.value, this.props.filterUid);
+    var propObject = this.objectProperties();
+    var inputs = new FilterInputFactory(propObject);
     return (
       <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 filter">
         <ul className={this.filterKey}>

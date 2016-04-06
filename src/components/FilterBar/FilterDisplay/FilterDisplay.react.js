@@ -32,6 +32,7 @@ export class FilterDisplay extends React.Component {
           label={filter.label}
           type={filter.type}
           value={filter.value}
+          operator={filter.operator}
         />
       );
     }, this);
