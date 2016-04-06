@@ -107,6 +107,11 @@ The following haml snippet is an example of the code to include on your html pag
         %dt.field{  :data => { value: "published_date" } }
         %dt.type{   :data => { value: "date" } }
         %dt.label{  :data => { value: "Published Date" } }
+      %dl.published_date_time_to
+        %dt.field{ data: { value: "published_date_time_min" } }
+        %dt.type{ data: { value: "single_datetime" } }
+        %dt.operator{ data: { value: "lte" } }
+        %dt.label{ data: { value: "Published Up Until" } }
       %dl.rating
         %dt.field{  :data => { value: "rating" } }
         %dt.type{   :data => { value: "range" } }
@@ -124,6 +129,8 @@ The following haml snippet is an example of the code to include on your html pag
         %dt.field{ :data => { value: "actions" } }
         %dt.type{ :data => { value: "html" } }
 ```
+
+NOTE: The operator field in the Filter has currently only been implemented within the SingleDateTime input component. This can be extended for use in other filter at a later stage.
 
 ## Events
 
