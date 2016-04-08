@@ -17,7 +17,7 @@ export class FilterInput extends React.Component {
         key: key,
         value: this.props.value,
         type: this.props.type,
-        operator: this.props.operator || 'gte'
+        operator: this.props.operator
       }
     );
   }

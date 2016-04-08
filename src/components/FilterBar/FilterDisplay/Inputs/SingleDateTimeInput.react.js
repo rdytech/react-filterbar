@@ -17,7 +17,7 @@ export class SingleDateTimeInput extends React.Component {
     if(event.type === "dp") {
       newValue[this.props.operator] = event.target.querySelector("input").value;
     } else if (event.type === "input") {
-      newValue[newValue] = event.target.value;
+      newValue[this.props.operator] = event.target.value;
     }
 
     this.setState({ value: newValue });
