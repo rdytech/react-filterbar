@@ -8222,7 +8222,7 @@ var FilterInput = exports.FilterInput = (function (_React$Component) {
           key: key,
           value: this.props.value,
           type: this.props.type,
-          operator: this.props.operator || "gte"
+          operator: this.props.operator
         };
       }
     },
@@ -8666,7 +8666,7 @@ var SingleDateTimeInput = exports.SingleDateTimeInput = (function (_React$Compon
         if (event.type === "dp") {
           newValue[this.props.operator] = event.target.querySelector("input").value;
         } else if (event.type === "input") {
-          newValue[newValue] = event.target.value;
+          newValue[this.props.operator] = event.target.value;
         }
 
         this.setState({ value: newValue });
