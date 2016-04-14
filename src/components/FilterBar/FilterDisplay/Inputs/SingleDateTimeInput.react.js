@@ -29,7 +29,7 @@ export class SingleDateTimeInput extends React.Component {
 
   componentDidMount() {
     var dateTimePicker = $(React.findDOMNode(this.refs.singleDateTimeValue));
-    dateTimePicker.datetimepicker({format: 'DD/MM/YYYY hh:mm A'});
+    dateTimePicker.datetimepicker({ locale: 'en-au' });
     dateTimePicker.datetimepicker().on("dp.change", this.onChange.bind(this));
   }
 
