@@ -36,10 +36,8 @@ export class FilterBarActor {
 
   applyFilters() {
     var url = URLHelper.updateUrlSearch(
-                this.filterBarStore.getSearchUrl(),
-                "q",
-                this.filterBarStore.getQuery()
-              ).toString();
+        this.filterBarStore.getSearchUrl(), "q", this.filterBarStore.getQuery()
+    ).toString();
 
     this.tableStore.setUrl(url);
     this.tableStore.setCurrentPage(1);
@@ -50,6 +48,16 @@ export class FilterBarActor {
 
     if (this.filterBarStore.persistent) {
       URLHelper.updateApplicationUrlState(url);
+    }
+  }
+
+  exportResults() {
+    var url = URLHelper.updateUrlSearch(
+        this.filterBarStore.getExportResultsUrl(), "q", this.filterBarStore.getQuery()
+    ).toString();
+
+    if (this.filterBarStore.persistent) {
+      URLHelper.redirectUrl(url);
     }
   }
 
