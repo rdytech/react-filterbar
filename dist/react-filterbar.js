@@ -8355,11 +8355,11 @@ var DateInput = exports.DateInput = (function (_React$Component) {
     componentDidMount: {
       value: function componentDidMount() {
         var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
-        datePickerFrom.datetimepicker({ format: "DD-MM-YYYY" });
+        datePickerFrom.datetimepicker({ locale: "en-au", format: "L" });
         datePickerFrom.datetimepicker().on("dp.change", this.onChange.bind(this));
 
         var datePickerTo = $(React.findDOMNode(this.refs.dateRangeTo));
-        datePickerTo.datetimepicker({ format: "DD-MM-YYYY" });
+        datePickerTo.datetimepicker({ locale: "en-au", format: "L" });
         datePickerTo.datetimepicker().on("dp.change", this.onChange.bind(this));
       }
     },
@@ -8680,7 +8680,7 @@ var SingleDateTimeInput = exports.SingleDateTimeInput = (function (_React$Compon
     componentDidMount: {
       value: function componentDidMount() {
         var dateTimePicker = $(React.findDOMNode(this.refs.singleDateTimeValue));
-        dateTimePicker.datetimepicker({ format: "DD/MM/YYYY hh:mm A" });
+        dateTimePicker.datetimepicker({ locale: "en-au" });
         dateTimePicker.datetimepicker().on("dp.change", this.onChange.bind(this));
       }
     },
