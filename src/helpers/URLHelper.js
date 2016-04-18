@@ -8,3 +8,7 @@ export function updateApplicationUrlState(url) {
 export function updateUrlSearch(url, field, value) {
   return uri(url).removeSearch(field).addSearch(field, value);
 }
+
+export function redirectUrl(url) {
+    window.location.href = url;
+}

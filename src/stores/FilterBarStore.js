@@ -59,6 +59,10 @@ export class FilterBarStore {
     return this.savedSearchesUrl;
   }
 
+  getExportResultsUrl() {
+    return this.exportResultsUrl;
+  }
+
   getSavedSearches() {
     return this.savedSearches || [];
   }

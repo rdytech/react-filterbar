@@ -40,7 +40,6 @@ export class SavedSearchesList extends React.Component {
     }, this);
 
     return (
-      <div className="btn-group margin-bottom-sm">
         <div className="btn-group">
           <button
             aria-expanded="false"
@@ -56,7 +55,6 @@ export class SavedSearchesList extends React.Component {
             {savedSearches}
           </ul>
         </div>
-      </div>
     );
   }
 }
