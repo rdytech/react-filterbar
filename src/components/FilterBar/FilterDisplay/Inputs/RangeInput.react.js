@@ -49,7 +49,7 @@ export class RangeInput extends React.Component {
 
 RangeInput.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
-  value: React.PropTypes.string.isRequired
+  value: React.PropTypes.node.isRequired
 };
 
 RangeInput.contextTypes = {

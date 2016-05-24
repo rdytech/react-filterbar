@@ -48,7 +48,7 @@ FilterInput.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,
-  value: React.PropTypes.string.isRequired
+  value: React.PropTypes.node.isRequired
 };
 
 FilterInput.contextTypes = {

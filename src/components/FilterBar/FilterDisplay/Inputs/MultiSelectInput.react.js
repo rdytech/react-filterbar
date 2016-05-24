@@ -1,4 +1,4 @@
-export class SelectInput extends React.Component {
+export class MultiSelectInput extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -17,21 +17,26 @@ export class SelectInput extends React.Component {
 
     if (filter.default) {
       var defaultValue = filter.default;
-    } else if (options.length > 0) {
-      var defaultValue = options[0].value;
     } else {
-      var defaultValue = null;
+      var defaultValue = [];
     }
 
     if (!this.state.value && defaultValue) {
-      this.setState({value: defaultValue})
+      this.setState({ value: defaultValue })
       this.context.filterBarActor.updateFilter(this.props.filterUid, "value", defaultValue);
     }
   }
 
+  componentDidUpdate() {
+    var multiSelectInput = $(React.findDOMNode(this.refs.reactMultiSelect));
+    multiSelectInput.select2();
+    multiSelectInput.on('change', this.onSelect.bind(this));
+  }
+
   onSelect(event) {
-    this.setState({value: event.target.value});
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", event.target.value);
+    var multiSelectInput = $(React.findDOMNode(this.refs.reactMultiSelect));
+    this.setState({value: multiSelectInput.val()});
+    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", multiSelectInput.val());
   }
 
   render() {
@@ -49,8 +54,10 @@ export class SelectInput extends React.Component {
         <select
           className="form-control"
           onChange={this.onSelect.bind(this)}
+          multiple="multiple"
           selected={this.state.value}
           value={this.state.value}
+          ref="reactMultiSelect"
         >
           {options}
         </select>
@@ -59,12 +66,12 @@ export class SelectInput extends React.Component {
   }
 }
 
-SelectInput.propTypes = {
+MultiSelectInput.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
   value: React.PropTypes.node.isRequired
 };
 
-SelectInput.contextTypes = {
+MultiSelectInput.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired,
   filterBarStore: React.PropTypes.object.isRequired
 };

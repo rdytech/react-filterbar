@@ -60,7 +60,7 @@ export class SingleDateTimeInput extends React.Component {
 
 SingleDateTimeInput.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
-  value: React.PropTypes.string.isRequired
+  value: React.PropTypes.node.isRequired
 };
 
 SingleDateTimeInput.contextTypes = {

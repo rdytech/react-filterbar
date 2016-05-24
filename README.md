@@ -112,6 +112,12 @@ The following haml snippet is an example of the code to include on your html pag
         %dt.type{ data: { value: "single_datetime" } }
         %dt.operator{ data: { value: "lte" } }
         %dt.label{ data: { value: "Published Up Until" } }
+      %dl.type
+        %dt.field{   :data => { value: "type" } }
+        %dt.type{    :data => { value: "multi_select" } }
+        %dt.label{   :data => { value: "Type" } }
+        %dt.url{     :data => { value: "/books/filters/types" } }
+        %dt.default{ :data => { value: "paperback" } }
       %dl.rating
         %dt.field{  :data => { value: "rating" } }
         %dt.type{   :data => { value: "range" } }
@@ -131,6 +137,8 @@ The following haml snippet is an example of the code to include on your html pag
 ```
 
 NOTE: The operator field in the Filter has currently only been implemented within the SingleDateTime input component. This can be extended for use in other filter at a later stage.
+
+NOTE: The multi_select component can only be used if the select2 jQuery library version 3.5.2 has already been installed within your project.
 
 ## Events
 
