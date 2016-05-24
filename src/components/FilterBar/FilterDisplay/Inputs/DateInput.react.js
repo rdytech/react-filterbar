@@ -77,7 +77,7 @@ export class DateInput extends React.Component {
 
 DateInput.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
-  value: React.PropTypes.string.isRequired
+  value: React.PropTypes.node.isRequired
 };
 
 DateInput.contextTypes = {

@@ -44,7 +44,7 @@ export class TextInput extends React.Component {
 
 TextInput.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
-  value: React.PropTypes.string.isRequired
+  value: React.PropTypes.node.isRequired
 };
 
 TextInput.contextTypes = {
