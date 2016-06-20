@@ -8,25 +8,20 @@ export class SelectInput extends React.Component {
   componentDidMount() {
     var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
 
-    $.get(filter.url, function (data) {
-      filter.options = data;
-      this.setState({options: options})
+    this.serverRequest = $.get(filter.url, function (data) {
+      var defaultValue = this.state.value || filter.default || (data[0] || {}).value || null;
+
+      this.setState({options: data});
+
+      if (defaultValue) {
+        this.setState({value: defaultValue});
+        filter.value = defaultValue;
+      }
     }.bind(this));
+  }
 
-    const options = filter.options || [];
-
-    if (filter.default) {
-      var defaultValue = filter.default;
-    } else if (options.length > 0) {
-      var defaultValue = options[0].value;
-    } else {
-      var defaultValue = null;
-    }
-
-    if (!this.state.value && defaultValue) {
-      this.setState({value: defaultValue})
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", defaultValue);
-    }
+  componentWillUnmount() {
+    this.serverRequest.abort();
   }
 
   onSelect(event) {
@@ -35,7 +30,7 @@ export class SelectInput extends React.Component {
   }
 
   render() {
-    const optionList = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
+    const optionList = this.state.options || [];
     let options = optionList.map(function(option) {
       return (
         <option key={option.value} value={option.value}>
