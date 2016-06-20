@@ -8731,25 +8731,21 @@ var SelectInput = exports.SelectInput = (function (_React$Component) {
       value: function componentDidMount() {
         var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
 
-        $.get(filter.url, (function (data) {
-          filter.options = data;
-          this.setState({ options: options });
+        this.serverRequest = $.get(filter.url, (function (data) {
+          var defaultValue = this.state.value || filter["default"] || (data[0] || {}).value || null;
+
+          this.setState({ options: data });
+
+          if (defaultValue) {
+            this.setState({ value: defaultValue });
+            filter.value = defaultValue;
+          }
         }).bind(this));
-
-        var options = filter.options || [];
-
-        if (filter["default"]) {
-          var defaultValue = filter["default"];
-        } else if (options.length > 0) {
-          var defaultValue = options[0].value;
-        } else {
-          var defaultValue = null;
-        }
-
-        if (!this.state.value && defaultValue) {
-          this.setState({ value: defaultValue });
-          this.context.filterBarActor.updateFilter(this.props.filterUid, "value", defaultValue);
-        }
+      }
+    },
+    componentWillUnmount: {
+      value: function componentWillUnmount() {
+        this.serverRequest.abort();
       }
     },
     onSelect: {
@@ -8760,7 +8756,7 @@ var SelectInput = exports.SelectInput = (function (_React$Component) {
     },
     render: {
       value: function render() {
-        var optionList = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
+        var optionList = this.state.options || [];
         var options = optionList.map(function (option) {
           return React.createElement(
             "option",
