@@ -9,7 +9,9 @@ export class SelectInput extends React.Component {
     var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
 
     this.serverRequest = $.get(filter.url, function (data) {
-      var defaultValue = this.state.value || filter.default || (data[0] || {}).value || null;
+      var defaultValue = this.stringValueOf(this.state.value) ||
+                         this.stringValueOf(filter.default) ||
+                         this.stringValueOf((data[0] || {}).value);
 
       this.setState({options: data});
 
@@ -22,6 +24,14 @@ export class SelectInput extends React.Component {
 
   componentWillUnmount() {
     this.serverRequest.abort();
+  }
+
+  stringValueOf(value) {
+    if (typeof value !== 'undefined' && value !== null) {
+      return String(value);
+    }
+
+    return null;
   }
 
   onSelect(event) {
