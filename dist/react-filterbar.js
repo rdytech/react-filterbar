@@ -8732,7 +8732,7 @@ var SelectInput = exports.SelectInput = (function (_React$Component) {
         var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
 
         this.serverRequest = $.get(filter.url, (function (data) {
-          var defaultValue = this.state.value || filter["default"] || (data[0] || {}).value || null;
+          var defaultValue = this.stringValueOf(this.state.value) || this.stringValueOf(filter["default"]) || this.stringValueOf((data[0] || {}).value);
 
           this.setState({ options: data });
 
@@ -8746,6 +8746,15 @@ var SelectInput = exports.SelectInput = (function (_React$Component) {
     componentWillUnmount: {
       value: function componentWillUnmount() {
         this.serverRequest.abort();
+      }
+    },
+    stringValueOf: {
+      value: function stringValueOf(value) {
+        if (typeof value !== "undefined" && value !== null) {
+          return String(value);
+        }
+
+        return null;
       }
     },
     onSelect: {
