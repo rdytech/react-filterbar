@@ -2,6 +2,7 @@ require("babel/polyfill");
 var uri = require("URIjs");
 
 import {FilterableTable} from "./components/FilterableTable.react";
+import {FilterVerificator} from "./helpers/FilterVerificator";
 
 function walk(node) {
   var nodeObject = {};
@@ -29,8 +30,10 @@ function updateConfigurationWithUrlOptions(configuration) {
     url = uri(window.location);
   }
 
-  if (!url.hasSearch("q")) {
-    url.addSearch("q", "");
+  var verifiedFilters = new FilterVerificator(configuration).verify();
+
+  if (!verifiedFilters || !url.hasSearch("q")) {
+    url.setSearch("q", "");
   }
 
   if (!url.hasSearch("page")) {
@@ -42,8 +45,12 @@ function updateConfigurationWithUrlOptions(configuration) {
 
   if (url.query(true).q !== "") {
     for (var filter of JSON.parse(url.query(true).q)) {
-      configuration.filterBarConfiguration.filters[filter.uid].enabled = true;
-      configuration.filterBarConfiguration.filters[filter.uid].value = filter.value;
+      var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
+
+      if (configFilter) {
+        configFilter.enabled = true;
+        configFilter.value = filter.value;
+      }
     }
   }
 

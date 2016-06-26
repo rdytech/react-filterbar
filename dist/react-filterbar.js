@@ -6,6 +6,8 @@ var uri = require("URIjs");
 
 var FilterableTable = require("./components/FilterableTable.react").FilterableTable;
 
+var FilterVerificator = require("./helpers/FilterVerificator").FilterVerificator;
+
 function walk(node) {
   var nodeObject = {};
 
@@ -32,8 +34,10 @@ function updateConfigurationWithUrlOptions(configuration) {
     url = uri(window.location);
   }
 
-  if (!url.hasSearch("q")) {
-    url.addSearch("q", "");
+  var verifiedFilters = new FilterVerificator(configuration).verify();
+
+  if (!verifiedFilters || !url.hasSearch("q")) {
+    url.setSearch("q", "");
   }
 
   if (!url.hasSearch("page")) {
@@ -52,8 +56,12 @@ function updateConfigurationWithUrlOptions(configuration) {
       for (var _iterator = JSON.parse(url.query(true).q)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var filter = _step.value;
 
-        configuration.filterBarConfiguration.filters[filter.uid].enabled = true;
-        configuration.filterBarConfiguration.filters[filter.uid].value = filter.value;
+        var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
+
+        if (configFilter) {
+          configFilter.enabled = true;
+          configFilter.value = filter.value;
+        }
       }
     } catch (err) {
       _didIteratorError = true;
@@ -87,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }), filterableTableNode);
 });
 
-},{"./components/FilterableTable.react":219,"URIjs":4,"babel/polyfill":196}],2:[function(require,module,exports){
+},{"./components/FilterableTable.react":219,"./helpers/FilterVerificator":229,"URIjs":4,"babel/polyfill":196}],2:[function(require,module,exports){
 /*!
  * URI.js - Mutating URLs
  * IPv6 Support
@@ -7792,7 +7800,7 @@ var FilterBarActor = exports.FilterBarActor = (function () {
   return FilterBarActor;
 })();
 
-},{"../clients/SearchClient":200,"../helpers/URLHelper":229}],199:[function(require,module,exports){
+},{"../clients/SearchClient":200,"../helpers/URLHelper":230}],199:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
@@ -9454,7 +9462,7 @@ FilterableTable.childContextTypes = {
   tableActor: React.PropTypes.object
 };
 
-},{"../actors/FilterBarActor":198,"../actors/TableActor":199,"../stores/FilterBarStore":230,"../stores/TableStore":231,"./FilterBar/FilterBar.react":204,"./Table/Table.react":226}],220:[function(require,module,exports){
+},{"../actors/FilterBarActor":198,"../actors/TableActor":199,"../stores/FilterBarStore":231,"../stores/TableStore":232,"./FilterBar/FilterBar.react":204,"./Table/Table.react":226}],220:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10042,6 +10050,92 @@ function tableUpdated() {
 },{}],229:[function(require,module,exports){
 "use strict";
 
+var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var uri = require("URIjs");
+
+var FilterVerificator = exports.FilterVerificator = (function () {
+  function FilterVerificator(configuration) {
+    _classCallCheck(this, FilterVerificator);
+
+    this.configurationFilters = configuration.filterBarConfiguration.filters;
+    this.urlFiltersJson = uri(window.location).query(true).q;
+  }
+
+  _createClass(FilterVerificator, {
+    verify: {
+      value: function verify() {
+        if (this.urlFiltersJson == "") {
+          return true;
+        }
+
+        var urlFilters = JSON.parse(this.urlFiltersJson),
+            configurationMap = this.configurationFiltersMap();
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = urlFilters[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var filter = _step.value;
+
+            var signature = this.filterSignature(filter.uid, filter);
+
+            if (typeof configurationMap[signature] === "undefined") {
+              return false;
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"]) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        return true;
+      }
+    },
+    configurationFiltersMap: {
+      value: function configurationFiltersMap() {
+        var map = {};
+
+        Object.keys(this.configurationFilters).map((function (filterUid) {
+          var filter = this.configurationFilters[filterUid],
+              signature = this.filterSignature(filterUid, filter);
+
+          map[signature] = true;
+        }).bind(this));
+
+        return map;
+      }
+    },
+    filterSignature: {
+      value: function filterSignature(uid, filter) {
+        return [uid, filter.type, filter.field].join(",");
+      }
+    }
+  });
+
+  return FilterVerificator;
+})();
+
+},{"URIjs":4}],230:[function(require,module,exports){
+"use strict";
+
 exports.updateApplicationUrlState = updateApplicationUrlState;
 exports.updateUrlSearch = updateUrlSearch;
 exports.redirectUrl = redirectUrl;
@@ -10063,7 +10157,7 @@ function redirectUrl(url) {
   window.location.href = url;
 }
 
-},{"URIjs":4}],230:[function(require,module,exports){
+},{"URIjs":4}],231:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
@@ -10108,15 +10202,15 @@ var FilterBarStore = exports.FilterBarStore = (function () {
         return regeneratorRuntime.wrap(function enabledFilters$(context$2$0) {
           while (1) switch (context$2$0.prev = context$2$0.next) {
             case 0:
-              context$2$0.t0 = regeneratorRuntime.keys(_this.filters);
+              context$2$0.t6 = regeneratorRuntime.keys(_this.filters);
 
             case 1:
-              if ((context$2$0.t1 = context$2$0.t0()).done) {
+              if ((context$2$0.t7 = context$2$0.t6()).done) {
                 context$2$0.next = 8;
                 break;
               }
 
-              filterUid = context$2$0.t1.value;
+              filterUid = context$2$0.t7.value;
 
               if (!(_this.filters.hasOwnProperty(filterUid) && _this.filters[filterUid].enabled)) {
                 context$2$0.next = 6;
@@ -10145,15 +10239,15 @@ var FilterBarStore = exports.FilterBarStore = (function () {
         return regeneratorRuntime.wrap(function disabledFilters$(context$2$0) {
           while (1) switch (context$2$0.prev = context$2$0.next) {
             case 0:
-              context$2$0.t2 = regeneratorRuntime.keys(_this.filters);
+              context$2$0.t8 = regeneratorRuntime.keys(_this.filters);
 
             case 1:
-              if ((context$2$0.t3 = context$2$0.t2()).done) {
+              if ((context$2$0.t9 = context$2$0.t8()).done) {
                 context$2$0.next = 8;
                 break;
               }
 
-              filterUid = context$2$0.t3.value;
+              filterUid = context$2$0.t9.value;
 
               if (!(_this.filters.hasOwnProperty(filterUid) && !_this.filters[filterUid].enabled)) {
                 context$2$0.next = 6;
@@ -10182,15 +10276,15 @@ var FilterBarStore = exports.FilterBarStore = (function () {
         return regeneratorRuntime.wrap(function selectFilters$(context$2$0) {
           while (1) switch (context$2$0.prev = context$2$0.next) {
             case 0:
-              context$2$0.t4 = regeneratorRuntime.keys(_this.filters);
+              context$2$0.t10 = regeneratorRuntime.keys(_this.filters);
 
             case 1:
-              if ((context$2$0.t5 = context$2$0.t4()).done) {
+              if ((context$2$0.t11 = context$2$0.t10()).done) {
                 context$2$0.next = 8;
                 break;
               }
 
-              filterUid = context$2$0.t5.value;
+              filterUid = context$2$0.t11.value;
 
               if (!(_this.filters.hasOwnProperty(filterUid) && _this.filters[filterUid].url !== null)) {
                 context$2$0.next = 6;
@@ -10343,7 +10437,7 @@ var FilterBarStore = exports.FilterBarStore = (function () {
   return FilterBarStore;
 })();
 
-},{"../clients/SearchClient":200}],231:[function(require,module,exports){
+},{"../clients/SearchClient":200}],232:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
