@@ -10070,7 +10070,7 @@ var FilterVerificator = exports.FilterVerificator = (function () {
   _createClass(FilterVerificator, {
     verify: {
       value: function verify() {
-        if (this.urlFiltersJson == "") {
+        if (!this.urlFiltersJson) {
           return true;
         }
 
