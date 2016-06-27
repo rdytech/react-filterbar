@@ -75,6 +75,10 @@ export class FilterBarStore {
     return this.filters[filterUid];
   }
 
+  getFilters() {
+    return this.filters;
+  }
+
   getDisabled() {
     var disabledFilters = {};
     for (var filterUid in this.filters) {

@@ -1,5 +1,6 @@
 import * as SearchClient from "../clients/SearchClient";
 import * as URLHelper from "../helpers/URLHelper";
+import {FilterVerificator} from "../helpers/FilterVerificator";
 
 function updateTable(tableStore) {
   return function (tableStateObject) {
@@ -67,11 +68,23 @@ export class FilterBarActor {
     var savedSearch = this.filterBarStore.getSavedSearch(searchId);
     var filters = JSON.parse(savedSearch.configuration);
 
-    for (var filter in filters) {
-      this.enableFilter(filter, filters[filter]);
-    }
+    if (this.verifySavedFilters(filters)) {
+      for (var filter in filters) {
+        this.enableFilter(filter, filters[filter]);
+      }
 
-    this.applyFilters();
+      this.applyFilters();
+    } else {
+      this.deleteSavedSearch(searchId);
+    }
+  }
+
+  verifySavedFilters(filters) {
+    var filtersArr = Object.keys(filters)
+                      .map(function(name) {
+                        return { field: name }
+                      });
+    return new FilterVerificator(this.filterBarStore.getFilters(), filtersArr).verify();
   }
 
   saveFilters(name) {
@@ -89,15 +102,34 @@ export class FilterBarActor {
     SearchClient.saveSearch(
       this.filterBarStore.getSavedSearchesUrl(),
       savedSearchPacket,
-      function() {
-        SearchClient.getSavedSearches(
-          this.filterBarStore.getSavedSearchesUrl(),
-          this.filterBarStore.setSavedSearches.bind(this.filterBarStore)
-        );
-      }.bind(this)
+      this.reloadSavedSearches.bind(this)
     );
 
     this.applyFilters();
+  }
+
+  deleteSavedSearch(searchId) {
+    var savedSearch = this.filterBarStore.getSavedSearch(searchId);
+
+    if (!savedSearch.url) {
+      return;
+    }
+
+    var confirmation = confirm('Unfortunately one of the filters cannot be applied anymore. Remove the saved search?');
+    
+    if (confirmation) {
+      SearchClient.deleteSearch(
+        savedSearch.url,
+        this.reloadSavedSearches.bind(this)
+      );
+    }
+  }
+
+  reloadSavedSearches() {
+    SearchClient.getSavedSearches(
+      this.filterBarStore.getSavedSearchesUrl(),
+      this.filterBarStore.setSavedSearches.bind(this.filterBarStore)
+    );
   }
 }
 

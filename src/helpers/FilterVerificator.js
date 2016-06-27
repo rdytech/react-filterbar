@@ -1,45 +1,38 @@
 var uri = require("URIjs");
 
 export class FilterVerificator {
-  constructor(configuration) {
-    this.configurationFilters = configuration.filterBarConfiguration.filters;
-    this.urlFiltersJson = uri(window.location).query(true).q;
+  constructor(configurationFilters, filtersToApply = null) {
+    this.configurationFilters = configurationFilters;
+    this.filtersToApply = filtersToApply || this.urlFilters();
   }
 
   verify() {
-    if (this.urlFiltersJson == '') {
-      return true;
-    }
-
-    var urlFilters = JSON.parse(this.urlFiltersJson),
-        configurationMap = this.configurationFiltersMap();
-
-    for (var filter of urlFilters) {
-      var signature = this.filterSignature(filter.uid, filter);
-      
-      if (typeof configurationMap[signature] === 'undefined') {
-        return false;
-      }
-    }
-
-    return true;
+    return Object.keys(this.filtersToApply)
+            .every(function(i) {
+              return this.validateFilter(this.filtersToApply[i]);
+            }.bind(this));
   }
 
-  configurationFiltersMap() {
-    var map = {};
-
-    Object.keys(this.configurationFilters).map(function(filterUid) {
-      var filter = this.configurationFilters[filterUid],
-          signature = this.filterSignature(filterUid, filter);
-      
-      map[signature] = true;
-    }.bind(this));
-
-    return map;
+  validateFilter(appliedFilter) {
+    return Object.keys(this.configurationFilters)
+            .some(function(filterUid) {
+              var confFilter = this.configurationFilters[filterUid];
+              return (
+                this.validateFilterProperties(appliedFilter.field, confFilter.field) &&
+                this.validateFilterProperties(appliedFilter.type, confFilter.type) &&
+                this.validateFilterProperties(appliedFilter.uid, filterUid)
+              );
+            }.bind(this));
   }
 
-  filterSignature(uid, filter) {
-    return [uid, filter.type, filter.field].join(',');
+  validateFilterProperties(appliedFilterProperty, confFilterProperty) {
+    return (typeof appliedFilterProperty == 'undefined' ||
+                   appliedFilterProperty == confFilterProperty);
+  }
+
+  urlFilters() {
+    var urlFiltersJson = uri(window.location).query(true).q;
+    return urlFiltersJson && JSON.parse(urlFiltersJson) || {};
   }
 }
 

@@ -30,7 +30,7 @@ function updateConfigurationWithUrlOptions(configuration) {
     url = uri(window.location);
   }
 
-  var verifiedFilters = new FilterVerificator(configuration).verify();
+  var verifiedFilters = new FilterVerificator(configuration.filterBarConfiguration.filters).verify();
 
   if (!verifiedFilters || !url.hasSearch("q")) {
     url.setSearch("q", "");
