@@ -7,7 +7,7 @@ export class FilterVerificator {
   }
 
   verify() {
-    if (this.urlFiltersJson == '') {
+    if (!this.urlFiltersJson) {
       return true;
     }
 
