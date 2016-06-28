@@ -7815,7 +7815,7 @@ var FilterBarActor = exports.FilterBarActor = (function () {
           return;
         }
 
-        var confirmation = confirm("Unfortunately one of the filters cannot be applied anymore. Remove the saved search?");
+        var confirmation = confirm("One of the filters in this saved search cannot be applied anymore. Remove saved search?");
 
         if (confirmation) {
           SearchClient.deleteSearch(savedSearch.url, this.reloadSavedSearches.bind(this));
