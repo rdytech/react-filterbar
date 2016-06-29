@@ -7760,7 +7760,7 @@ var FilterBarActor = exports.FilterBarActor = (function () {
     verifySavedFilters: {
       value: function verifySavedFilters(filters) {
         var filtersArr = Object.keys(filters).map(function (name) {
-          return { field: name };
+          return { uid: name };
         });
         return new FilterVerificator(this.filterBarStore.getFilters(), filtersArr).verify();
       }
