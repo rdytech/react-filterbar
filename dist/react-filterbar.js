@@ -34,7 +34,7 @@ function updateConfigurationWithUrlOptions(configuration) {
     url = uri(window.location);
   }
 
-  var verifiedFilters = new FilterVerificator(configuration).verify();
+  var verifiedFilters = new FilterVerificator(configuration.filterBarConfiguration.filters).verify();
 
   if (!verifiedFilters || !url.hasSearch("q")) {
     url.setSearch("q", "");
@@ -7672,6 +7672,8 @@ var SearchClient = _interopRequireWildcard(require("../clients/SearchClient"));
 
 var URLHelper = _interopRequireWildcard(require("../helpers/URLHelper"));
 
+var FilterVerificator = require("../helpers/FilterVerificator").FilterVerificator;
+
 function updateTable(tableStore) {
   return function (tableStateObject) {
     tableStore.setRows(tableStateObject.results);
@@ -7744,11 +7746,23 @@ var FilterBarActor = exports.FilterBarActor = (function () {
         var savedSearch = this.filterBarStore.getSavedSearch(searchId);
         var filters = JSON.parse(savedSearch.configuration);
 
-        for (var filter in filters) {
-          this.enableFilter(filter, filters[filter]);
-        }
+        if (this.verifySavedFilters(filters)) {
+          for (var filter in filters) {
+            this.enableFilter(filter, filters[filter]);
+          }
 
-        this.applyFilters();
+          this.applyFilters();
+        } else {
+          this.deleteSavedSearch(searchId);
+        }
+      }
+    },
+    verifySavedFilters: {
+      value: function verifySavedFilters(filters) {
+        var filtersArr = Object.keys(filters).map(function (name) {
+          return { field: name };
+        });
+        return new FilterVerificator(this.filterBarStore.getFilters(), filtersArr).verify();
       }
     },
     saveFilters: {
@@ -7788,11 +7802,29 @@ var FilterBarActor = exports.FilterBarActor = (function () {
           }
         }
 
-        SearchClient.saveSearch(this.filterBarStore.getSavedSearchesUrl(), savedSearchPacket, (function () {
-          SearchClient.getSavedSearches(this.filterBarStore.getSavedSearchesUrl(), this.filterBarStore.setSavedSearches.bind(this.filterBarStore));
-        }).bind(this));
+        SearchClient.saveSearch(this.filterBarStore.getSavedSearchesUrl(), savedSearchPacket, this.reloadSavedSearches.bind(this));
 
         this.applyFilters();
+      }
+    },
+    deleteSavedSearch: {
+      value: function deleteSavedSearch(searchId) {
+        var savedSearch = this.filterBarStore.getSavedSearch(searchId);
+
+        if (!savedSearch.url) {
+          return;
+        }
+
+        var confirmation = confirm("One of the filters in this saved search cannot be applied anymore. Remove saved search?");
+
+        if (confirmation) {
+          SearchClient.deleteSearch(savedSearch.url, this.reloadSavedSearches.bind(this));
+        }
+      }
+    },
+    reloadSavedSearches: {
+      value: function reloadSavedSearches() {
+        SearchClient.getSavedSearches(this.filterBarStore.getSavedSearchesUrl(), this.filterBarStore.setSavedSearches.bind(this.filterBarStore));
       }
     }
   });
@@ -7800,7 +7832,7 @@ var FilterBarActor = exports.FilterBarActor = (function () {
   return FilterBarActor;
 })();
 
-},{"../clients/SearchClient":200,"../helpers/URLHelper":230}],199:[function(require,module,exports){
+},{"../clients/SearchClient":200,"../helpers/FilterVerificator":229,"../helpers/URLHelper":230}],199:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
@@ -7850,6 +7882,7 @@ var TableActor = exports.TableActor = (function () {
 exports.search = search;
 exports.saveSearch = saveSearch;
 exports.getSavedSearches = getSavedSearches;
+exports.deleteSearch = deleteSearch;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -7916,6 +7949,28 @@ function getSavedSearches(url, success) {
       return _successWrapper;
     })(function (data) {
       success(data);
+    })
+  });
+}
+
+function deleteSearch(url, success) {
+  $.ajax({
+    url: url,
+    method: "POST",
+    data: { _method: "DELETE" },
+    dataType: "json",
+    success: (function (_success) {
+      var _successWrapper = function success() {
+        return _success.apply(this, arguments);
+      };
+
+      _successWrapper.toString = function () {
+        return _success.toString();
+      };
+
+      return _successWrapper;
+    })(function () {
+      success();
     })
   });
 }
@@ -10060,72 +10115,40 @@ Object.defineProperty(exports, "__esModule", {
 var uri = require("URIjs");
 
 var FilterVerificator = exports.FilterVerificator = (function () {
-  function FilterVerificator(configuration) {
+  function FilterVerificator(configurationFilters) {
+    var filtersToApply = arguments[1] === undefined ? null : arguments[1];
+
     _classCallCheck(this, FilterVerificator);
 
-    this.configurationFilters = configuration.filterBarConfiguration.filters;
-    this.urlFiltersJson = uri(window.location).query(true).q;
+    this.configurationFilters = configurationFilters;
+    this.filtersToApply = filtersToApply || this.urlFilters();
   }
 
   _createClass(FilterVerificator, {
     verify: {
       value: function verify() {
-        if (!this.urlFiltersJson) {
-          return true;
-        }
-
-        var urlFilters = JSON.parse(this.urlFiltersJson),
-            configurationMap = this.configurationFiltersMap();
-
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = urlFilters[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var filter = _step.value;
-
-            var signature = this.filterSignature(filter.uid, filter);
-
-            if (typeof configurationMap[signature] === "undefined") {
-              return false;
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"]) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        return true;
-      }
-    },
-    configurationFiltersMap: {
-      value: function configurationFiltersMap() {
-        var map = {};
-
-        Object.keys(this.configurationFilters).map((function (filterUid) {
-          var filter = this.configurationFilters[filterUid],
-              signature = this.filterSignature(filterUid, filter);
-
-          map[signature] = true;
+        return Object.keys(this.filtersToApply).every((function (i) {
+          return this.validateFilter(this.filtersToApply[i]);
         }).bind(this));
-
-        return map;
       }
     },
-    filterSignature: {
-      value: function filterSignature(uid, filter) {
-        return [uid, filter.type, filter.field].join(",");
+    validateFilter: {
+      value: function validateFilter(appliedFilter) {
+        return Object.keys(this.configurationFilters).some((function (filterUid) {
+          var confFilter = this.configurationFilters[filterUid];
+          return this.validateFilterProperties(appliedFilter.field, confFilter.field) && this.validateFilterProperties(appliedFilter.type, confFilter.type) && this.validateFilterProperties(appliedFilter.uid, filterUid);
+        }).bind(this));
+      }
+    },
+    validateFilterProperties: {
+      value: function validateFilterProperties(appliedFilterProperty, confFilterProperty) {
+        return typeof appliedFilterProperty == "undefined" || appliedFilterProperty == confFilterProperty;
+      }
+    },
+    urlFilters: {
+      value: function urlFilters() {
+        var urlFiltersJson = uri(window.location).query(true).q;
+        return urlFiltersJson && JSON.parse(urlFiltersJson) || {};
       }
     }
   });
@@ -10343,6 +10366,11 @@ var FilterBarStore = exports.FilterBarStore = (function () {
     getFilter: {
       value: function getFilter(filterUid) {
         return this.filters[filterUid];
+      }
+    },
+    getFilters: {
+      value: function getFilters() {
+        return this.filters;
       }
     },
     getDisabled: {
