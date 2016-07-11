@@ -38,4 +38,3 @@ export class SavedSearchStore {
     this.eventEmitter.removeListener(this.CHANGE_EVENT, callback);
   }
 }
-
