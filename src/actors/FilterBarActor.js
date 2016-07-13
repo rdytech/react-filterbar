@@ -8,6 +8,7 @@ function updateTable(tableStore) {
     tableStore.setCurrentPage(tableStateObject.current_page);
     tableStore.setTotalPages(tableStateObject.total_pages);
     tableStore.setTableCaption(tableStateObject.table_caption);
+    tableStore.clearSelectedRows();
     tableStore.emitChange();
   };
 }
@@ -116,7 +117,7 @@ export class FilterBarActor {
     }
 
     var confirmation = confirm('One of the filters in this saved search cannot be applied anymore. Remove saved search?');
-    
+
     if (confirmation) {
       SearchClient.deleteSearch(
         savedSearch.url,
@@ -132,4 +133,3 @@ export class FilterBarActor {
     );
   }
 }
-

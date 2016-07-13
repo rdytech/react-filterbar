@@ -125,6 +125,7 @@ The following haml snippet is an example of the code to include on your html pag
 
   %dl.tableConfiguration
     %dt.data-url{ :data => { value: '/books' } }
+    %dt.selectable{ data: { value: "id"} }
     %dl.columns
       %dl.Title
         %dt.heading{  :data => { value: "Title" } }
@@ -139,6 +140,8 @@ The following haml snippet is an example of the code to include on your html pag
 NOTE: The operator field in the Filter has currently only been implemented within the SingleDateTime input component. This can be extended for use in other filter at a later stage.
 
 NOTE: The multi_select component can only be used if the select2 jQuery library version 3.5.2 has already been installed within your project.
+
+NOTE: The selectable element under tableConfiguration is optional. This is to notify the filterbar that you are enabling select checkboxes on the first row. The data value inside this element has to be a unique identifier for each record. This unique identifier value will be assigned as the value for each checkbox so that when selected this value is added to the selected values list within the current filterbar state.
 
 ## Events
 

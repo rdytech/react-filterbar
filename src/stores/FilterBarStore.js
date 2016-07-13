@@ -1,4 +1,4 @@
-import * as SearchClient from "../clients/SearchClient";
+import {getSavedSearches} from "../clients/SearchClient";
 
 export class FilterBarStore {
   constructor(configuration) {
@@ -15,7 +15,7 @@ export class FilterBarStore {
     this.filters = configuration.filters;
 
     if (this.savedSearchesUrl !== undefined) {
-      SearchClient.getSavedSearches(this.savedSearchesUrl, this.setSavedSearches.bind(this));
+      getSavedSearches(this.savedSearchesUrl, this.setSavedSearches.bind(this));
     }
   }
 

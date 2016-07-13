@@ -14,6 +14,8 @@ export class TableStore {
     this.totalPages = 1;
     this.columns = configuration.columns;
     this.url = configuration.dataUrl;
+    this.selectable = configuration.selectable;
+    this.selectedRows = [];
   }
 
   setUrl(url) {
@@ -36,6 +38,12 @@ export class TableStore {
     return this.rows;
   }
 
+  getSelectableValuesFromRows() {
+    return this.rows.map(function(row) {
+      return row[this.selectable].toString()
+    }, this);
+  }
+
   getCurrentPage() {
     return this.currentPage;
   }
@@ -46,6 +54,65 @@ export class TableStore {
 
   getTableCaption() {
     return this.tableCaption;
+  }
+
+  getSelectableColumn() {
+    return this.selectable;
+  }
+
+  getSelectedRows() {
+    return this.selectedRows;
+  }
+
+  clearSelectedRows() {
+    this.selectedRows = [];
+  }
+
+  pushAllValuesToSelectedRows() {
+    this.rows.forEach(function(row) {
+      this.pushValueToSelectedRows(row[this.selectable].toString());
+    }, this);
+  }
+
+  removeAllValuesFromSelectedRows() {
+    this.rows.forEach(function(row) {
+      this.removeFromSelectedRows(row[this.selectable].toString());
+    }, this);
+  }
+
+  pushValueToSelectedRows(value) {
+    var indexOfValue = this.selectedRows.indexOf(value);
+    if (indexOfValue == -1) {
+      this.selectedRows.push(value);
+    }
+  }
+
+  removeFromSelectedRows(value) {
+    var indexOfValue = this.selectedRows.indexOf(value);
+    if (indexOfValue > -1) {
+      this.selectedRows.splice(indexOfValue, 1);
+    }
+  }
+
+  valueInSelectedRows(value) {
+    return this.selectedRows.indexOf(value) > -1;
+  }
+
+  allSelectableValuesInSelectedRows() {
+    if (this.getSelectableValuesFromRows().length > 0) {
+      return this.getSelectableValuesFromRows().every(this.isInSelectedRows, this);
+    }
+    else {
+      return false;
+    }
+  }
+
+  isInSelectedRows(element) {
+    return this.selectedRows.includes(element);
+  }
+
+  setSelectedRows(selectedRows) {
+    this.selectedRows = selectedRows;
   }
 
   setTotalPages(totalPages) {
