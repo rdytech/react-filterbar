@@ -20,7 +20,7 @@ function walk(node) {
   return nodeObject;
 }
 
-function updateConfigurationWithUrlOptions(configuration) {
+function setupConfiguration(configuration) {
   var url = uri(window.location),
       searchObject = url.search(true),
       storageKey = window.location.pathname.replace(/\//g, "");
@@ -54,6 +54,14 @@ function updateConfigurationWithUrlOptions(configuration) {
     }
   }
 
+  if (configuration.batchActionsConfiguration === undefined) {
+    configuration.batchActionsConfiguration = { actions: [] };
+    configuration.tableConfiguration.selectable = undefined;
+  }
+  else {
+    configuration.tableConfiguration.selectable = configuration.batchActionsConfiguration.selectable;
+  }
+
   return configuration;
 }
 
@@ -62,14 +70,15 @@ document.addEventListener("DOMContentLoaded", function(){
       filterableTableNode = document.getElementsByClassName("react-filterable-table")[0];
 
   configuration = walk(filterableTableNode);
-  configuration = updateConfigurationWithUrlOptions(configuration);
+  configuration = setupConfiguration(configuration);
 
   React.render(
     React.createElement(
       FilterableTable,
       {
         filterBarConfiguration: configuration.filterBarConfiguration,
-        tableConfiguration: configuration.tableConfiguration
+        tableConfiguration: configuration.tableConfiguration,
+        batchActionsConfiguration: configuration.batchActionsConfiguration
       }
     ),
     filterableTableNode
