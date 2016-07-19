@@ -5,6 +5,7 @@ import {ExportResultsButton} from "./ExportResultsButton.react";
 import {ClearFiltersButton} from "./ClearFiltersButton.react";
 import {SaveFiltersButton} from "./SaveFiltersButton.react";
 import {SavedSearchesList} from "./SavedSearchesList/SavedSearchesList.react";
+import {BatchActionsList} from "./BatchActionsList/BatchActionsList.react";
 
 export class FilterBar extends React.Component {
   constructor(props) {
@@ -40,6 +41,8 @@ export class FilterBar extends React.Component {
             <ExportResultsButton
               filterBarActor={this.context.filterBarActor}
             />
+
+            <BatchActionsList />
           </div>
 
           <FilterDisplay
@@ -54,5 +57,7 @@ export class FilterBar extends React.Component {
 
 FilterBar.contextTypes = {
   filterBarActor: React.PropTypes.object,
-  filterBarStore: React.PropTypes.object
+  filterBarStore: React.PropTypes.object,
+  tableStore: React.PropTypes.object,
+  batchActionsStore: React.PropTypes.object
 };

@@ -125,7 +125,6 @@ The following haml snippet is an example of the code to include on your html pag
 
   %dl.tableConfiguration
     %dt.data-url{ :data => { value: '/books' } }
-    %dt.selectable{ data: { value: "id"} }
     %dl.columns
       %dl.Title
         %dt.heading{  :data => { value: "Title" } }
@@ -135,13 +134,20 @@ The following haml snippet is an example of the code to include on your html pag
         %dt.heading{ :data => { value: "Actions" } }
         %dt.field{ :data => { value: "actions" } }
         %dt.type{ :data => { value: "html" } }
+
+  %dl.batchActionsConfiguration
+    %dt.selectable{ data: { value: "title"} }
+    %dl.actions
+      %dl.mark_as_favourite
+        %dt.label{ data: { value: 'Mark As Favourite' } }
+        %dt.url{ data: { value: "/mark/as/favourite/path" } }
 ```
 
 NOTE: The operator field in the Filter has currently only been implemented within the SingleDateTime input component. This can be extended for use in other filter at a later stage.
 
 NOTE: The multi_select component can only be used if the select2 jQuery library version 3.5.2 has already been installed within your project.
 
-NOTE: The selectable element under tableConfiguration is optional. This is to notify the filterbar that you are enabling select checkboxes on the first row. The data value inside this element has to be a unique identifier for each record. This unique identifier value will be assigned as the value for each checkbox so that when selected this value is added to the selected values list within the current filterbar state.
+NOTE: The batchActionsConfiguration element is used to both enable the checkboxes column on the filterbar as well as define the actions that will be visible to the user for batch processing. The data value inside the selectable element has to be a unique identifier for each record. This unique identifier value will be assigned as the value for each checkbox so that when selected this value is added to the selected values list within the current filterbar state. Each element under actions will need a unique name and within these, the label and the URL to be called for batch processing will need to be defined.
 
 ## Events
 
