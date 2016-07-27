@@ -58,7 +58,7 @@ export class BatchActionsList extends React.Component {
           data-toggle="dropdown"
           type="button"
         >
-          Batch Actions
+          Bulk Actions
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">
