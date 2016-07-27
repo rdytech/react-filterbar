@@ -209,10 +209,43 @@ The dt.url filter endpoint expects to receive JSON documents containing an array
 ```javascript
 [
   {
-    value: VALUE,
-    label: LABEL
+    "value": VALUE,
+    "label": LABEL
   },
   ...
+]
+```
+
+To group the dropdown options use the following form:
+
+```javascript
+[
+  {
+    "group": "Group Name 1",
+    "options": [
+      {
+        "value": VALUE,
+        "label": LABEL
+      },
+      {
+        "value": VALUE,
+        "label": LABEL
+      }
+    ]
+  },
+  {
+    "group": "Group Name 2",
+    "options": [
+      {
+        "value": VALUE,
+        "label": LABEL
+      },
+      {
+        "value": VALUE,
+        "label": LABEL
+      }
+    ]
+  }
 ]
 ```
 
