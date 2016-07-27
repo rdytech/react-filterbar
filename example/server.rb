@@ -24,6 +24,27 @@ class Server < Sinatra::Base
     end
   end
 
+  get '/authors_by_genres' do
+    respond_to do |format|
+      format.json do
+        %w(Fiction History Business).map.with_index do |genre, i|
+          range = (i * 33)..((i + 1) * 33)
+          options = range.map do |n|
+                      {
+                        label: "Author #{n}",
+                        value: "Author #{n}"
+                      }
+                    end
+
+          {
+            group: genre,
+            options: options
+          }
+        end.to_json
+      end
+    end
+  end
+
   def loop_over_queries(queries, haystack)
     return haystack if queries == []
     return [] if haystack == [] || haystack == nil

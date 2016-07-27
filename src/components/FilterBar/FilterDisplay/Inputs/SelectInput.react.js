@@ -8,10 +8,11 @@ export class SelectInput extends React.Component {
   componentDidMount() {
     var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
 
-    this.serverRequest = $.get(filter.url, function (data) {
-      var defaultValue = this.stringValueOf(this.state.value) ||
+    this.serverRequest = $.get(filter.url, data => {
+      var firstOption = (data['options'] || data)[0] || {},
+          defaultValue = this.stringValueOf(this.state.value) ||
                          this.stringValueOf(filter.default) ||
-                         this.stringValueOf((data[0] || {}).value);
+                         this.stringValueOf(firstOption.value);
 
       this.setState({options: data});
 
@@ -19,7 +20,7 @@ export class SelectInput extends React.Component {
         this.setState({value: defaultValue});
         filter.value = defaultValue;
       }
-    }.bind(this));
+    });
   }
 
   componentWillUnmount() {
@@ -39,15 +40,32 @@ export class SelectInput extends React.Component {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", event.target.value);
   }
 
+  displayOption(option) {
+    return (
+      <option key={option.value} value={option.value}>
+        {option.label}
+      </option>
+    );
+  }
+
+  displayOptGroup(group) {
+    let optGroupOptions = group.options.map(option => {
+      return this.displayOption(option);
+    });
+
+    return (
+      <optgroup label={group.group}>
+        {optGroupOptions}
+      </optgroup>
+    );
+  }
+
   render() {
     const optionList = this.state.options || [];
-    let options = optionList.map(function(option) {
-      return (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      );
-    }, this);
+
+    let options = optionList.map(option => {
+      return option.group ? this.displayOptGroup(option) : this.displayOption(option);
+    });
 
     return (
       <li>

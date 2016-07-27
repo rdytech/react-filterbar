@@ -9,13 +9,15 @@ def random_book
   published_on = Date.today - rand(1000)
   id = rand(10000000000000)
   rating = (0..50).to_a.map { |e| e / 10.0 }.select { |e| e % 0.5 == 0 }.sample
+  genre = %w(Fiction History Business).sample
 
   {
     author: author,
     title: title,
     published_on: published_on,
     id: id,
-    rating: rating
+    rating: rating,
+    genre: genre
   }
 end
 
