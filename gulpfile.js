@@ -95,11 +95,8 @@ gulp.task('neptune', function() {
   .pipe(gulp.dest('/Users/dinushab/code/rails_projects/neptune/vendor/assets/bower_components/react-filterbar/dist'));
 });
 
-gulp.task('build', function () {
-  del('dist/*.js', function(err, deletedFiles) {
-    console.log("Files deleted:",deletedFiles.join(', '));
-  });
-  browserify({
+gulp.task('build', ['delete'], function () {
+  return browserify({
     entries: './src/' + appFile,
     extensions: ['.js'],
   })
@@ -110,11 +107,17 @@ gulp.task('build', function () {
 });
 
 gulp.task('compress', ['build'], function() {
-  gulp.src('dist/' + appDistFile)
+  return gulp.src('dist/' + appDistFile)
   .pipe(uglify())
   .pipe(rename(appMinDistFile))
   .pipe(gulp.dest('dist'));
 });
 
+gulp.task('delete', function() {
+  return del('dist/*.js', function(err, deletedFiles) {
+    console.log("Files deleted:",deletedFiles.join(', '));
+  });
+});
+
 gulp.task('default',['example','neptune','watch']);
-gulp.task('dist', ['build', 'compress']);
+gulp.task('dist', ['compress']);
