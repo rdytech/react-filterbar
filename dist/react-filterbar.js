@@ -8117,7 +8117,7 @@ var BatchActionsList = exports.BatchActionsList = (function (_React$Component) {
               "data-toggle": "dropdown",
               type: "button"
             },
-            "Batch Actions",
+            "Bulk Actions",
             React.createElement("i", { className: "icon icon-chevron-down" })
           ),
           React.createElement(
