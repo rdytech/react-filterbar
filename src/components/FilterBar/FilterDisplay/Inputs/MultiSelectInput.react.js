@@ -1,46 +1,53 @@
 export class MultiSelectInput extends React.Component {
   constructor(props, context) {
     super(props, context);
-
-    this.state = {value: props.value, options: []};
+    this.state =  {
+      value: this.props.value === '' ? this.getDefaultValue() : this.props.value,
+      options: []
+    }
   }
 
   componentDidMount() {
-    var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
+    let filter = this.getFilterFromFilterBarStore();
+    this.serverRequest = $.get(filter.url, data => {
+      this.setState({ options: data });
+      filter.value = this.state.value;
+    });
+  }
 
-    $.get(filter.url, function (data) {
-      filter.options = data;
-      this.setState({options: options})
-    }.bind(this));
-
-    const options = filter.options || [];
-
-    if (filter.default) {
-      var defaultValue = filter.default;
-    } else {
-      var defaultValue = [];
-    }
-
-    if (!this.state.value && defaultValue) {
-      this.setState({ value: defaultValue })
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", defaultValue);
-    }
+  getFilterFromFilterBarStore() {
+    return(this.context.filterBarStore.getFilter(this.props.filterUid));
   }
 
   componentDidUpdate() {
-    var multiSelectInput = $(React.findDOMNode(this.refs.reactMultiSelect));
+    let multiSelectInput = $(React.findDOMNode(this.refs.reactMultiSelect));
     multiSelectInput.select2();
     multiSelectInput.on('change', this.onSelect.bind(this));
   }
 
+  componentWillUnmount() {
+    this.serverRequest.abort();
+  }
+
+  getDefaultValue() {
+    let filter = this.getFilterFromFilterBarStore();
+    return([filter.default]);
+  }
+
   onSelect(event) {
-    var multiSelectInput = $(React.findDOMNode(this.refs.reactMultiSelect));
-    this.setState({value: multiSelectInput.val()});
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", multiSelectInput.val());
+    let selectedValues = [];
+    let targetOptions = event.target.options
+    for (let i = 0; i < targetOptions.length; i++) {
+      if (targetOptions[i].selected) {
+        selectedValues.push(targetOptions[i].value);
+      }
+    }
+    this.setState({ value: selectedValues });
+    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", selectedValues);
   }
 
   render() {
-    const optionList = this.context.filterBarStore.getFilter(this.props.filterUid).options || [];
+    let optionList = this.state.options;
     let options = optionList.map(function(option) {
       return (
         <option key={option.value} value={option.value}>
@@ -53,7 +60,6 @@ export class MultiSelectInput extends React.Component {
       <li>
         <select
           className="form-control"
-          onChange={this.onSelect.bind(this)}
           multiple="multiple"
           selected={this.state.value}
           value={this.state.value}
