@@ -27,6 +27,13 @@ export class TextInput extends React.Component {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
   }
 
+  onKeyPress(event) {
+    if (event.charCode == 13) { // enter
+      this.onBlur();
+      this.context.filterBarActor.applyFilters();
+    }
+  }
+
   render() {
     return (
       <li>
@@ -34,6 +41,7 @@ export class TextInput extends React.Component {
           className="form-control"
           onBlur={this.onBlur.bind(this)}
           onChange={this.onChange.bind(this)}
+          onKeyPress={this.onKeyPress.bind(this)}
           type="text"
           value={this.state.value}
         />

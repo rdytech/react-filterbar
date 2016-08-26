@@ -27,6 +27,13 @@ export class SingleDateTimeInput extends React.Component {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
   }
 
+  onKeyPress(event) {
+    if (event.charCode == 13) { // enter
+      this.onBlur();
+      this.context.filterBarActor.applyFilters();
+    }
+  }
+
   componentDidMount() {
     var dateTimePicker = $(React.findDOMNode(this.refs.singleDateTimeValue));
     dateTimePicker.datetimepicker({ locale: 'en-au' });
@@ -43,6 +50,7 @@ export class SingleDateTimeInput extends React.Component {
             data-date-format="DD/MM/YYYY hh:mm A"
             onBlur={this.onBlur.bind(this)}
             onChange={this.onChange.bind(this)}
+            onKeyPress={this.onKeyPress.bind(this)}
             type="text"
             value={this.state.value[this.props.operator]}
           />

@@ -8654,6 +8654,15 @@ var DateInput = exports.DateInput = (function (_React$Component) {
         this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
       }
     },
+    onKeyPress: {
+      value: function onKeyPress(event) {
+        if (event.charCode == 13) {
+          // enter
+          this.onBlur();
+          this.context.filterBarActor.applyFilters();
+        }
+      }
+    },
     componentDidMount: {
       value: function componentDidMount() {
         var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
@@ -8679,6 +8688,7 @@ var DateInput = exports.DateInput = (function (_React$Component) {
               "data-date-format": "DD/MM/YYYY",
               onBlur: this.onBlur.bind(this),
               onChange: this.onChange.bind(this),
+              onKeyPress: this.onKeyPress.bind(this),
               placeholder: "from",
               type: "text",
               value: this.state.value.from
@@ -8703,6 +8713,7 @@ var DateInput = exports.DateInput = (function (_React$Component) {
               "data-date-format": "DD/MM/YYYY",
               onBlur: this.onBlur.bind(this),
               onChange: this.onChange.bind(this),
+              onKeyPress: this.onKeyPress.bind(this),
               placeholder: "to",
               type: "text",
               value: this.state.value.to
@@ -8812,6 +8823,15 @@ var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
         this.context.filterBarActor.updateFilter(this.props.filterUid, "value", selectedValues);
       }
     },
+    onKeyPress: {
+      value: function onKeyPress(event) {
+        if (event.charCode == 13) {
+          // enter
+          this.onSelect(event);
+          this.context.filterBarActor.applyFilters();
+        }
+      }
+    },
     render: {
       value: function render() {
         var optionList = this.state.options;
@@ -8831,6 +8851,7 @@ var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
             {
               className: "form-control",
               multiple: "multiple",
+              onKeyPress: this.onKeyPress.bind(this),
               selected: this.state.value,
               value: this.state.value,
               ref: "reactMultiSelect"
@@ -8898,6 +8919,15 @@ var RangeInput = exports.RangeInput = (function (_React$Component) {
         this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
       }
     },
+    onKeyPress: {
+      value: function onKeyPress(event) {
+        if (event.charCode == 13) {
+          // enter
+          this.onBlur();
+          this.context.filterBarActor.applyFilters();
+        }
+      }
+    },
     render: {
       value: function render() {
         return React.createElement(
@@ -8913,6 +8943,7 @@ var RangeInput = exports.RangeInput = (function (_React$Component) {
                 className: "form-control",
                 onBlur: this.onBlur.bind(this),
                 onChange: this.onChange.bind(this),
+                onKeyPress: this.onKeyPress.bind(this),
                 placeholder: "from",
                 value: this.state.value.from
               })
@@ -8924,6 +8955,7 @@ var RangeInput = exports.RangeInput = (function (_React$Component) {
                 className: "form-control",
                 onBlur: this.onBlur.bind(this),
                 onChange: this.onChange.bind(this),
+                onKeyPress: this.onKeyPress.bind(this),
                 placeholder: "to",
                 value: this.state.value.to
               })
@@ -9013,6 +9045,15 @@ var SelectInput = exports.SelectInput = (function (_React$Component) {
         this.context.filterBarActor.updateFilter(this.props.filterUid, "value", event.target.value);
       }
     },
+    onKeyPress: {
+      value: function onKeyPress(event) {
+        if (event.charCode == 13) {
+          // enter
+          this.onSelect(event);
+          this.context.filterBarActor.applyFilters();
+        }
+      }
+    },
     displayOption: {
       value: function displayOption(option) {
         return React.createElement(
@@ -9055,6 +9096,7 @@ var SelectInput = exports.SelectInput = (function (_React$Component) {
             {
               className: "form-control",
               onChange: this.onSelect.bind(this),
+              onKeyPress: this.onKeyPress.bind(this),
               selected: this.state.value,
               value: this.state.value
             },
@@ -9129,6 +9171,15 @@ var SingleDateTimeInput = exports.SingleDateTimeInput = (function (_React$Compon
         this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
       }
     },
+    onKeyPress: {
+      value: function onKeyPress(event) {
+        if (event.charCode == 13) {
+          // enter
+          this.onBlur();
+          this.context.filterBarActor.applyFilters();
+        }
+      }
+    },
     componentDidMount: {
       value: function componentDidMount() {
         var dateTimePicker = $(React.findDOMNode(this.refs.singleDateTimeValue));
@@ -9150,6 +9201,7 @@ var SingleDateTimeInput = exports.SingleDateTimeInput = (function (_React$Compon
               "data-date-format": "DD/MM/YYYY hh:mm A",
               onBlur: this.onBlur.bind(this),
               onChange: this.onChange.bind(this),
+              onKeyPress: this.onKeyPress.bind(this),
               type: "text",
               value: this.state.value[this.props.operator]
             }),
@@ -9237,6 +9289,15 @@ var TextInput = exports.TextInput = (function (_React$Component) {
         this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
       }
     },
+    onKeyPress: {
+      value: function onKeyPress(event) {
+        if (event.charCode == 13) {
+          // enter
+          this.onBlur();
+          this.context.filterBarActor.applyFilters();
+        }
+      }
+    },
     render: {
       value: function render() {
         return React.createElement(
@@ -9246,6 +9307,7 @@ var TextInput = exports.TextInput = (function (_React$Component) {
             className: "form-control",
             onBlur: this.onBlur.bind(this),
             onChange: this.onChange.bind(this),
+            onKeyPress: this.onKeyPress.bind(this),
             type: "text",
             value: this.state.value
           })

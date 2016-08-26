@@ -46,6 +46,13 @@ export class MultiSelectInput extends React.Component {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", selectedValues);
   }
 
+  onKeyPress(event) {
+    if (event.charCode == 13) { // enter
+      this.onSelect(event);
+      this.context.filterBarActor.applyFilters();
+    }
+  }
+
   render() {
     let optionList = this.state.options;
     let options = optionList.map(function(option) {
@@ -61,6 +68,7 @@ export class MultiSelectInput extends React.Component {
         <select
           className="form-control"
           multiple="multiple"
+          onKeyPress={this.onKeyPress.bind(this)}
           selected={this.state.value}
           value={this.state.value}
           ref="reactMultiSelect"

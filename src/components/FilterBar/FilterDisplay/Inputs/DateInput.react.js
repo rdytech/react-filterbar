@@ -21,6 +21,13 @@ export class DateInput extends React.Component {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
   }
 
+  onKeyPress(event) {
+    if (event.charCode == 13) { // enter
+      this.onBlur();
+      this.context.filterBarActor.applyFilters();
+    }
+  }
+
   componentDidMount() {
     var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
     datePickerFrom.datetimepicker({ locale: 'en-au', format: 'L' });
@@ -41,6 +48,7 @@ export class DateInput extends React.Component {
             data-date-format="DD/MM/YYYY"
             onBlur={this.onBlur.bind(this)}
             onChange={this.onChange.bind(this)}
+            onKeyPress={this.onKeyPress.bind(this)}
             placeholder="from"
             type="text"
             value={this.state.value.from}
@@ -59,6 +67,7 @@ export class DateInput extends React.Component {
             data-date-format="DD/MM/YYYY"
             onBlur={this.onBlur.bind(this)}
             onChange={this.onChange.bind(this)}
+            onKeyPress={this.onKeyPress.bind(this)}
             placeholder="to"
             type="text"
             value={this.state.value.to}

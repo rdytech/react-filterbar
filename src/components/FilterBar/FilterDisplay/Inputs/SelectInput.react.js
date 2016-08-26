@@ -40,6 +40,13 @@ export class SelectInput extends React.Component {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", event.target.value);
   }
 
+  onKeyPress(event) {
+    if (event.charCode == 13) { // enter
+      this.onSelect(event);
+      this.context.filterBarActor.applyFilters();
+    }
+  }
+
   displayOption(option) {
     return (
       <option key={option.value} value={option.value}>
@@ -72,6 +79,7 @@ export class SelectInput extends React.Component {
         <select
           className="form-control"
           onChange={this.onSelect.bind(this)}
+          onKeyPress={this.onKeyPress.bind(this)}
           selected={this.state.value}
           value={this.state.value}
         >
