@@ -1,4 +1,6 @@
-export class DateInput extends React.Component {
+import {TextInputBase} from './TextInputBase.react';
+
+export class DateInput extends TextInputBase {
   constructor(props) {
     super(props);
 
@@ -19,13 +21,6 @@ export class DateInput extends React.Component {
 
   onBlur() {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
-  }
-
-  onKeyPress(event) {
-    if (event.charCode == 13) { // enter
-      this.onBlur();
-      this.context.filterBarActor.applyFilters();
-    }
   }
 
   componentDidMount() {

@@ -1,4 +1,6 @@
-export class MultiSelectInput extends React.Component {
+import {SelectInputBase} from './SelectInputBase.react';
+
+export class MultiSelectInput extends SelectInputBase {
   constructor(props, context) {
     super(props, context);
     this.state =  {
@@ -44,13 +46,6 @@ export class MultiSelectInput extends React.Component {
     }
     this.setState({ value: selectedValues });
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", selectedValues);
-  }
-
-  onKeyPress(event) {
-    if (event.charCode == 13) { // enter
-      this.onSelect(event);
-      this.context.filterBarActor.applyFilters();
-    }
   }
 
   render() {

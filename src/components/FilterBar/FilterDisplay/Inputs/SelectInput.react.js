@@ -1,4 +1,6 @@
-export class SelectInput extends React.Component {
+import {SelectInputBase} from './SelectInputBase.react';
+
+export class SelectInput extends SelectInputBase {
   constructor(props, context) {
     super(props, context);
 
@@ -38,13 +40,6 @@ export class SelectInput extends React.Component {
   onSelect(event) {
     this.setState({value: event.target.value});
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", event.target.value);
-  }
-
-  onKeyPress(event) {
-    if (event.charCode == 13) { // enter
-      this.onSelect(event);
-      this.context.filterBarActor.applyFilters();
-    }
   }
 
   displayOption(option) {
