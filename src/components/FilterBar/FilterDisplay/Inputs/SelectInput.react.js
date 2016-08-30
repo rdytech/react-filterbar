@@ -1,4 +1,6 @@
-export class SelectInput extends React.Component {
+import {SelectInputBase} from './SelectInputBase.react';
+
+export class SelectInput extends SelectInputBase {
   constructor(props, context) {
     super(props, context);
 
@@ -72,6 +74,7 @@ export class SelectInput extends React.Component {
         <select
           className="form-control"
           onChange={this.onSelect.bind(this)}
+          onKeyPress={this.onKeyPress.bind(this)}
           selected={this.state.value}
           value={this.state.value}
         >

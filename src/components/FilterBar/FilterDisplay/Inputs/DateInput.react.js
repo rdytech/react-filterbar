@@ -1,4 +1,6 @@
-export class DateInput extends React.Component {
+import {TextInputBase} from './TextInputBase.react';
+
+export class DateInput extends TextInputBase {
   constructor(props) {
     super(props);
 
@@ -41,6 +43,7 @@ export class DateInput extends React.Component {
             data-date-format="DD/MM/YYYY"
             onBlur={this.onBlur.bind(this)}
             onChange={this.onChange.bind(this)}
+            onKeyPress={this.onKeyPress.bind(this)}
             placeholder="from"
             type="text"
             value={this.state.value.from}
@@ -59,6 +62,7 @@ export class DateInput extends React.Component {
             data-date-format="DD/MM/YYYY"
             onBlur={this.onBlur.bind(this)}
             onChange={this.onChange.bind(this)}
+            onKeyPress={this.onKeyPress.bind(this)}
             placeholder="to"
             type="text"
             value={this.state.value.to}

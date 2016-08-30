@@ -1,4 +1,6 @@
-export class MultiSelectInput extends React.Component {
+import {SelectInputBase} from './SelectInputBase.react';
+
+export class MultiSelectInput extends SelectInputBase {
   constructor(props, context) {
     super(props, context);
     this.state =  {
@@ -61,6 +63,7 @@ export class MultiSelectInput extends React.Component {
         <select
           className="form-control"
           multiple="multiple"
+          onKeyPress={this.onKeyPress.bind(this)}
           selected={this.state.value}
           value={this.state.value}
           ref="reactMultiSelect"
