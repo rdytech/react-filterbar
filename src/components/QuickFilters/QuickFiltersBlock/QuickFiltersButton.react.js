@@ -10,9 +10,9 @@ export class QuickFiltersButton extends React.Component {
 
   render() {
     return (
-      <button className="btn btn-default" type="button">
-        {this.state.label}
-      </button>
+      <label className="btn btn-primary">
+        <input type="radio" autocomplete="off"/> {this.state.label}
+      </label>
     );
   }
 }

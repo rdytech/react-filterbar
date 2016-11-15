@@ -13,7 +13,7 @@ export class QuickFiltersBlock extends React.Component {
       );
     }, this);
     return (
-      <div className="btn-group">
+      <div className="btn-group" data-toggle="buttons">
         {buttons}
       </div>
     );
