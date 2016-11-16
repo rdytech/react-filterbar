@@ -13,7 +13,7 @@ export class QuickFilters extends React.Component {
       );
     }, this);
     return (
-      <div>
+      <div className="quick-filters">
         {filterBlocks}
       </div>
     );
