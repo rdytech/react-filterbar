@@ -29,6 +29,7 @@ export class FilterBarActor {
 
   disableAllFilters() {
     this.filterBarStore.disableAllFilters();
+    this.filterBarStore.deactivateAllQuickFilterButtons();
     this.applyFilters();
   }
 

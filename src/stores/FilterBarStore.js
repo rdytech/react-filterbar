@@ -127,6 +127,24 @@ export class FilterBarStore {
     this.emitChange();
   }
 
+  deactivateAllQuickFilterButtons() {
+    var quickFilterBlocks = this.quickFilters;
+
+    for (var blockFilterUid in quickFilterBlocks) {
+      var quickFilterButtons = this.quickFilters[blockFilterUid];
+
+      for (var buttonFilterUid in quickFilterButtons) {
+        this.deactivateQuickFilterButton(blockFilterUid, buttonFilterUid )
+      }
+    }
+    this.emitChange();
+  }
+
+  deactivateQuickFilterButton(blockFilterUid, buttonFilterUid) {
+    this.quickFilters[blockFilterUid][buttonFilterUid].active = '';
+    this.emitChange();
+  }
+
   disableFilter(filterUid) {
     this.filters[filterUid].enabled = false;
     this.filters[filterUid].value = "";
