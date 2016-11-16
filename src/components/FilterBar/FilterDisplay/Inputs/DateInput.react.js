@@ -23,16 +23,12 @@ export class DateInput extends React.Component {
 
   componentDidMount() {
     var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
-    if (datePickerFrom.datetimepicker !== undefined) {
-      datePickerFrom.datetimepicker({ locale: 'en-au', format: 'L' });
-      datePickerFrom.datetimepicker().on("dp.change", this.onChange.bind(this));
-    }
+    datePickerFrom.datetimepicker({ locale: 'en-au', format: 'L' });
+    datePickerFrom.datetimepicker().on("dp.change", this.onChange.bind(this));
 
     var datePickerTo = $(React.findDOMNode(this.refs.dateRangeTo));
-    if (datePickerTo.datetimepicker !== undefined) {
-      datePickerTo.datetimepicker({ locale: 'en-au', format: 'L' });
-      datePickerTo.datetimepicker().on("dp.change", this.onChange.bind(this));
-    }
+    datePickerTo.datetimepicker({ locale: 'en-au', format: 'L' });
+    datePickerTo.datetimepicker().on("dp.change", this.onChange.bind(this));
   }
 
   render() {
