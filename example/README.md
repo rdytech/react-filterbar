@@ -10,9 +10,16 @@ git clone https://github.com/jobready/react-filterbar.git
 
 * move to the example dir and run bundle install
 ```
-cd      react-filterbar/example/
+cd react-filterbar/example/
 bundle install
 ```
+
+* optionally reset the example data so date filters make sense
+```
+cd react-filterbar/example/
+ruby generate_books.rb
+```
+
 
 * start the Sinatra Rack server on port 4567
 ```

@@ -69,17 +69,17 @@
                     %dl.published
                       %dt.value{ data: { value:  { from: '2016-11-15', to: '2016-11-15' } } }
                       %dt.filter{ data: { value:  'published'} }
-                %dl.before-today-button
-                  %dt.label{ data: { value:  'Before Today'} }
-                  %dl.filters
-                    %dl.published
-                      %dt.value{ data: { value: { from: '2016-11-14', to: '2016-11-14' } } }
-                      %dt.filter{ data: { value:  'published'} }
                 %dl.this-month-button
                   %dt.label{ data: { value:  'This Month'} }
                   %dl.filters
                     %dl.published
                       %dt.value{ data: { value: { from: '2016-11-01', to: '2016-11-30' } } }
+                      %dt.filter{ data: { value:  'published'} }
+                %dl.last-month-button
+                  %dt.label{ data: { value:  'Last Month'} }
+                  %dl.filters
+                    %dl.published
+                      %dt.value{ data: { value: { from: '2016-10-01', to: '2016-10-30' } } }
                       %dt.filter{ data: { value:  'published'} }
 
               %dl.published-author-block
