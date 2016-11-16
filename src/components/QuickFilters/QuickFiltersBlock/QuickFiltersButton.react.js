@@ -2,11 +2,8 @@ export class QuickFiltersButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      label: this.props.filter.label,
-      value: this.props.filter.value,
-      valueFrom: this.props.filter.valueFrom,
-      valueTo: this.props.filter.valueTo,
-      filterName: this.props.filter.filter,
+      label: this.props.filters.label,
+      filters: this.props.filters.filters
     };
   }
 
@@ -29,7 +26,12 @@ export class QuickFiltersButton extends React.Component {
   }
 
   applyFilter() {
-    this.context.filterBarActor.applyQuickFilter(this.state.filterName, this.state.value, this.state.valueFrom, this.state.valueTo);
+    Object.keys(this.state.filters).map(function(filter) {
+      var value = this.state.filters[filter].value;
+      var filterName = this.state.filters[filter].filter;
+
+      this.context.filterBarActor.applyQuickFilter(filterName, value);
+    }, this);
   }
 
   render() {

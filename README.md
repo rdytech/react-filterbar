@@ -123,29 +123,58 @@ The following haml snippet is an example of the code to include on your html pag
         %dt.type{   :data => { value: "range" } }
         %dt.label{  :data => { value: "Rating" } }
     %dl.quick-filters
-      %dl.author
-        %dl.mine
+      %dl.author-block
+        %dl.mine-button
           %dt.label{ data: { value:  'Mine'} }
-          %dt.value{ data: { value:  'Author 1'} }
-          %dt.filter{ data: { value:  'author'} }
-        %dl.yours
+          %dl.filters
+            %dl.author
+              %dt.value{ data: { value:  'Author 1'} }
+              %dt.filter{ data: { value:  'author'} }
+        %dl.yours-button
           %dt.label{ data: { value:  'Yours'} }
-          %dt.value{ data: { value:  'Author 2'} }
-          %dt.filter{ data: { value:  'author'} }
-      %dl.published
-        %dl.today
+          %dl.filters
+            %dl.author
+              %dt.value{ data: { value:  'Author 2'} }
+              %dt.filter{ data: { value:  'author'} }
+      %dl.published-block
+        %dl.today-button
           %dt.label{ data: { value:  'Today'} }
-          %dt.value{ data: { value:  '2016-11-15'} }
-          %dt.filter{ data: { value:  'published'} }
-        %dl.before-today
+          %dl.filters
+            %dl.published
+              %dt.value{ data: { value:  { from: '2016-11-15', to: '2016-11-15' } } }
+              %dt.filter{ data: { value:  'published'} }
+        %dl.before-today-button
           %dt.label{ data: { value:  'Before Today'} }
-          %dt.value-from{ data: { value: '2016-11-14'} }
-          %dt.filter{ data: { value:  'published'} }
-        %dl.this-month
+          %dl.filters
+            %dl.published
+              %dt.value{ data: { value: { from: '2016-11-14', to: '2016-11-14' } } }
+              %dt.filter{ data: { value:  'published'} }
+        %dl.this-month-button
           %dt.label{ data: { value:  'This Month'} }
-          %dt.value-from{ data: { value: '2016-11-01' } }
-          %dt.value-to{ data: { value:  '2016-11-30' } }
-          %dt.filter{ data: { value:  'published'} }
+          %dl.filters
+            %dl.published
+              %dt.value{ data: { value: { from: '2016-11-01', to: '2016-11-30' } } }
+              %dt.filter{ data: { value:  'published'} }
+
+      %dl.published-author-block
+        %dl.today-me-button
+          %dt.label{ data: { value:  'Today by Me'} }
+          %dl.filters
+            %dl.published
+              %dt.value{ data: { value:  { from: '2016-11-15', to: '2016-11-15' } } }
+              %dt.filter{ data: { value:  'published'} }
+            %dl.author
+              %dt.value{ data: { value:  'Author 1'} }
+              %dt.filter{ data: { value:  'author'} }
+        %dl.today-you-button
+          %dt.label{ data: { value:  'Today by You'} }
+          %dl.filters
+            %dl.published
+              %dt.value{ data: { value:  { from: '2016-11-15', to: '2016-11-15' } } }
+              %dt.filter{ data: { value:  'published'} }
+            %dl.author
+              %dt.value{ data: { value:  'Author 2'} }
+              %dt.filter{ data: { value:  'author'} }
 
   %dl.tableConfiguration
     %dt.data-url{ :data => { value: '/books' } }

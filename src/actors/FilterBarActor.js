@@ -53,11 +53,9 @@ export class FilterBarActor {
     }
   }
 
-  applyQuickFilter(filterName, value, valueFrom, valueTo) {
+  applyQuickFilter(filterName, value) {
     console.log(filterName);
     console.log(value);
-    console.log(valueFrom);
-    console.log(valueTo);
   }
 
   exportResults() {

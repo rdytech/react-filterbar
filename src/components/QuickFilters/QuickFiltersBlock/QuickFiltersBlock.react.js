@@ -9,7 +9,7 @@ export class QuickFiltersBlock extends React.Component {
     var filters = this.props.filters;
     var buttons = Object.keys(filters).map(function(filter) {
       return (
-        <QuickFiltersButton filter={filters[filter]}/>
+        <QuickFiltersButton filters={filters[filter]}/>
       );
     }, this);
     return (
