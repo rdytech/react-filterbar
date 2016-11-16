@@ -53,6 +53,13 @@ export class FilterBarActor {
     }
   }
 
+  applyQuickFilter(filterName, value, valueFrom, valueTo) {
+    console.log(filterName);
+    console.log(value);
+    console.log(valueFrom);
+    console.log(valueTo);
+  }
+
   exportResults() {
     var url = URLHelper.updateUrlSearch(
         this.filterBarStore.getExportResultsUrl(), "q", this.filterBarStore.getQuery()
