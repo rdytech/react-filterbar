@@ -8672,12 +8672,16 @@ var DateInput = exports.DateInput = (function (_React$Component) {
     componentDidMount: {
       value: function componentDidMount() {
         var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
-        datePickerFrom.datetimepicker({ locale: "en-au", format: "L" });
-        datePickerFrom.datetimepicker().on("dp.change", this.onChange.bind(this));
+        if (datePickerFrom.datetimepicker !== undefined) {
+          datePickerFrom.datetimepicker({ locale: "en-au", format: "L" });
+          datePickerFrom.datetimepicker().on("dp.change", this.onChange.bind(this));
+        }
 
         var datePickerTo = $(React.findDOMNode(this.refs.dateRangeTo));
-        datePickerTo.datetimepicker({ locale: "en-au", format: "L" });
-        datePickerTo.datetimepicker().on("dp.change", this.onChange.bind(this));
+        if (datePickerTo.datetimepicker !== undefined) {
+          datePickerTo.datetimepicker({ locale: "en-au", format: "L" });
+          datePickerTo.datetimepicker().on("dp.change", this.onChange.bind(this));
+        }
       }
     },
     render: {
@@ -9731,8 +9735,8 @@ var FilterableTable = exports.FilterableTable = (function (_React$Component) {
         return React.createElement(
           "div",
           null,
-          React.createElement(FilterBar, null),
           React.createElement(QuickFilters, null),
+          React.createElement(FilterBar, null),
           React.createElement(Table, null)
         );
       }
@@ -9874,26 +9878,6 @@ var QuickFiltersButton = exports.QuickFiltersButton = (function (_React$Componen
   _createClass(QuickFiltersButton, {
     onClick: {
       value: function onClick(e) {
-        var radio = e.currentTarget.firstChild;
-        var alreadyChecked = radio.dataset.checked === "true";
-        var children = e.currentTarget.parentElement.children;
-
-        if (alreadyChecked) {
-          e.stopPropagation();
-        } else {
-          for (var index in children) {
-            if (children.hasOwnProperty(index)) {
-              children[index].firstChild.dataset.checked = false;
-            }
-          }
-          radio.dataset.checked = true;
-          this.applyFilter();
-        }
-      }
-    },
-    applyFilter: {
-      value: function applyFilter() {
-        this.context.filterBarActor.disableAllFilters();
         Object.keys(this.state.filters).map(function (filter) {
           var value = this.state.filters[filter].value;
           var filterName = this.state.filters[filter].filter;
@@ -9907,7 +9891,7 @@ var QuickFiltersButton = exports.QuickFiltersButton = (function (_React$Componen
         var buttonName = "quick_filter_" + this.state.filterName;
         return React.createElement(
           "label",
-          { className: "btn btn-primary quick-filters-button", onClick: this.onClick.bind(this) },
+          { className: "btn btn-primary btn-xs quick-filters-button", onClick: this.onClick.bind(this) },
           React.createElement("input", { type: "radio", name: buttonName }),
           " ",
           this.state.label

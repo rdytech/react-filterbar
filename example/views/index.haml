@@ -102,6 +102,25 @@
                       %dt.value{ data: { value:  'Author 2'} }
                       %dt.filter{ data: { value:  'author'} }
 
+              %dl.rating-block
+                %dl.zero-to-two-button
+                  %dt.label{ data: { value:  'Rating 0-2'} }
+                  %dl.filters
+                    %dl.rating
+                      %dt.value{ data: { value:  { from: '0', to: '2' } } }
+                      %dt.filter{ data: { value:  'rating'} }
+                %dl.three-to-five-button
+                  %dt.label{ data: { value:  '3-4'} }
+                  %dl.filters
+                    %dl.rating
+                      %dt.value{ data: { value:  { from: '3', to: '4' } } }
+                      %dt.filter{ data: { value:  'rating'} }
+                %dl.five-and-up-button
+                  %dt.label{ data: { value:  '5 and above'} }
+                  %dl.filters
+                    %dl.rating
+                      %dt.value{ data: { value:  { from: '5', to: '' } } }
+                      %dt.filter{ data: { value:  'rating'} }
 
           %dl.tableConfiguration
             %dt.data-url{ data: { value: "/" } }

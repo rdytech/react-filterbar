@@ -3,6 +3,7 @@
 ## General Information
 
 A ReactJS implementation of the new Jobready Filterbar widget. This implmentation is intended to function as a drop in widget in any of our applications.
+A example sinatra application, usefull for developing, can be found in the example dir. see https://github.com/jobready/react-filterbar/tree/develop/example/README.md
 
 ## Dependencies
 
@@ -44,8 +45,11 @@ Once bower:rails is installed, add the following lines to your Bowerfile:
 
 ```Ruby
 group :lib, :assets_path => "assets/static" do
-  asset "react-filterbar", '1.0.1', git: "git@github.com:jobready/react-filterbar"
-  asset "react-fluxer", '0.0.3', git: "git@github.com:jobready/react-fluxer"
+  asset "react-filterbar", '1.7.3', git: "git@github.com:jobready/react-filterbar"
+  asset "react-fluxer", git: "git@github.com:jobready/react-fluxer"
+
+  # for local development and testing reference your file system with desired commit sha
+  # asset "react-filterbar", "1.7.3", "/Users/jonathonb/proj/react-filterbar#e2b2d129baee2cfd0fc22907f58a004329ed383c"
 end
 ```
 
@@ -218,7 +222,11 @@ the data is updated.
 
 ## Development
 
-*Coming soon*
+* development within the react-filterbar repo can be performed using the example application included. see /example
+
+## Deployment
+run the following to deploy 
+gulp dist
 
 ## Common Problems / Bugs
 

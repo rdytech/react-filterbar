@@ -34,8 +34,8 @@ export class FilterableTable extends React.Component {
   render() {
     return (
       <div>
-        <FilterBar />
         <QuickFilters />
+        <FilterBar />
         <Table />
       </div>
     );
