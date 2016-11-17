@@ -1,6 +1,4 @@
-import {TextInputBase} from './TextInputBase.react';
-
-export class TextInput extends TextInputBase {
+export class TextInput extends React.Component {
   constructor(props) {
     super(props);
 
@@ -36,7 +34,6 @@ export class TextInput extends TextInputBase {
           className="form-control"
           onBlur={this.onBlur.bind(this)}
           onChange={this.onChange.bind(this)}
-          onKeyPress={this.onKeyPress.bind(this)}
           type="text"
           value={this.state.value}
         />

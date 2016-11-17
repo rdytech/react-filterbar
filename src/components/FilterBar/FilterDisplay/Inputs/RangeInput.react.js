@@ -1,6 +1,4 @@
-import {TextInputBase} from './TextInputBase.react';
-
-export class RangeInput extends TextInputBase {
+export class RangeInput extends React.Component {
   constructor(props) {
     super(props);
 
@@ -30,7 +28,6 @@ export class RangeInput extends TextInputBase {
               className="form-control"
               onBlur={this.onBlur.bind(this)}
               onChange={this.onChange.bind(this)}
-              onKeyPress={this.onKeyPress.bind(this)}
               placeholder="from"
               value={this.state.value.from}
             />
@@ -40,7 +37,6 @@ export class RangeInput extends TextInputBase {
               className="form-control"
               onBlur={this.onBlur.bind(this)}
               onChange={this.onChange.bind(this)}
-              onKeyPress={this.onKeyPress.bind(this)}
               placeholder="to"
               value={this.state.value.to}
             />

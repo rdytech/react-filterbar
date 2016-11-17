@@ -1,6 +1,4 @@
-import {TextInputBase} from './TextInputBase.react';
-
-export class SingleDateTimeInput extends TextInputBase {
+export class SingleDateTimeInput extends React.Component {
   constructor(props) {
     super(props);
 
@@ -45,7 +43,6 @@ export class SingleDateTimeInput extends TextInputBase {
             data-date-format="DD/MM/YYYY hh:mm A"
             onBlur={this.onBlur.bind(this)}
             onChange={this.onChange.bind(this)}
-            onKeyPress={this.onKeyPress.bind(this)}
             type="text"
             value={this.state.value[this.props.operator]}
           />
