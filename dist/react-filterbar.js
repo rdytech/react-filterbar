@@ -7750,6 +7750,10 @@ var FilterBarActor = exports.FilterBarActor = (function () {
     },
     applyQuickFilter: {
       value: function applyQuickFilter(filterName, value) {
+        var filter = this.filterBarStore.getFilter(filterName);
+        if (filter.type === "multi_select") {
+          value = [value];
+        }
         this.enableFilter(filterName, value);
         this.applyFilters();
       }
@@ -9784,9 +9788,14 @@ var QuickFilters = exports.QuickFilters = (function (_React$Component) {
     render: {
       value: function render() {
         var quickFilters = this.context.filterBarStore.quickFilters;
-        var filterBlocks = Object.keys(quickFilters).map(function (filter) {
-          return React.createElement(QuickFiltersBlock, { filters: quickFilters[filter] });
-        }, this);
+        if (quickFilters !== undefined) {
+          var filterBlocks = Object.keys(quickFilters).map(function (filter) {
+            return React.createElement(QuickFiltersBlock, { filters: quickFilters[filter] });
+          }, this);
+        } else {
+          var filterBlocks = "";
+        }
+
         return React.createElement(
           "div",
           { className: "quick-filters" },
@@ -9837,7 +9846,7 @@ var QuickFiltersBlock = exports.QuickFiltersBlock = (function (_React$Component)
         }, this);
         return React.createElement(
           "div",
-          { className: "btn-group quick-filters-block", "data-toggle": "buttons" },
+          { className: "btn-group quick-filters-block" },
           buttons
         );
       }
@@ -9888,12 +9897,9 @@ var QuickFiltersButton = exports.QuickFiltersButton = (function (_React$Componen
     },
     render: {
       value: function render() {
-        var buttonName = "quick_filter_" + this.state.filterName;
         return React.createElement(
-          "label",
-          { className: "btn btn-primary btn-xs quick-filters-button", onClick: this.onClick.bind(this) },
-          React.createElement("input", { type: "radio", name: buttonName }),
-          " ",
+          "button",
+          { className: "btn btn-primary btn-xs quick-filters-button", type: "button", onClick: this.onClick.bind(this) },
           this.state.label
         );
       }

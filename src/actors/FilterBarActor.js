@@ -54,6 +54,10 @@ export class FilterBarActor {
   }
 
   applyQuickFilter(filterName, value) {
+    let filter = this.filterBarStore.getFilter(filterName)
+    if (filter.type === 'multi_select') {
+      value = [value]
+    }
     this.enableFilter(filterName, value);
     this.applyFilters();
   }

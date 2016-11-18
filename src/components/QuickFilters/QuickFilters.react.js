@@ -7,11 +7,17 @@ export class QuickFilters extends React.Component {
 
   render() {
     var quickFilters = this.context.filterBarStore.quickFilters;
-    var filterBlocks = Object.keys(quickFilters).map(function(filter) {
-      return (
-        <QuickFiltersBlock filters={quickFilters[filter]}/>
-      );
-    }, this);
+    if (quickFilters !== undefined) 
+    {
+      var filterBlocks = Object.keys(quickFilters).map(function(filter) {
+        return (
+          <QuickFiltersBlock filters={quickFilters[filter]}/>
+        );
+      }, this);
+    } else {
+      var filterBlocks = '';
+    }
+
     return (
       <div className="quick-filters">
         {filterBlocks}

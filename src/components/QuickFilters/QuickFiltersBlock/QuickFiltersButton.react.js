@@ -17,11 +17,10 @@ export class QuickFiltersButton extends React.Component {
   }
 
   render() {
-    var buttonName = "quick_filter_" + this.state.filterName;
     return (
-      <label className="btn btn-primary btn-xs quick-filters-button" onClick={this.onClick.bind(this)}>
-        <input type="radio" name={buttonName}/> {this.state.label}
-      </label>
+      <button className="btn btn-primary btn-xs quick-filters-button"  type="button"  onClick={this.onClick.bind(this)}>
+        {this.state.label}
+      </button>
     );
   }
 }
