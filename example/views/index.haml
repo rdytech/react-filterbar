@@ -4,6 +4,9 @@
   %link{:href=>"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css", :rel=>"stylesheet"}
   %script{:src=>"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"}
   %script{:src=>"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"}
+  %link{:href=>"/css/select2.css", :rel=>"stylesheet"}
+  %link{:href=>"/css/select2-bootstrap.css", :rel=>"stylesheet"}
+  %script{:src=>"/js/select2.min.js"}
   %script{:src=>"/js/react-fluxer.js"}
   %script{:src=>"/js/react-bootstrap.js"}
   %script{:src=>"/js/react-filterbar.js"}
@@ -20,6 +23,12 @@
             %dt.saved-searches-url{ data: { value: '/saved_searches' } }
             %dt.export-results-url{ data: { value: '/export_results' } }
             %dl.filters
+              %dl.author_multi_test
+                %dt.field{ data: { value: "author" } }
+                %dt.label{ data: { value: "Author Multi" } }
+                %dt.type{ data: { value: "multi_select" } }
+                %dt.url{ data: { value: "/authors" } }
+                %dt.default{ data: { value: "Author 31" } }
               %dl.author
                 %dt.field{ data: { value: "author" } }
                 %dt.type{ data: { value: "select" } }
@@ -49,6 +58,13 @@
                 %dt.url{ data: { value: "/authors_by_genres" } }
                 %dt.default{ data: { value: "Author 31" } }
             %dl.quick-filters
+              %dl.multi-author-block
+                %dl.multi-author-button
+                  %dt.label{ data: { value:  'Mulit Test'} }
+                  %dl.filters
+                    %dl.author
+                      %dt.value{ data: { value:  'Author 2'} }
+                      %dt.filter{ data: { value:  'author_multi_test'} }
               %dl.author-block
                 %dl.mine-button
                   %dt.label{ data: { value:  'Mine'} }
