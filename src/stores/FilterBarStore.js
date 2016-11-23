@@ -13,6 +13,7 @@ export class FilterBarStore {
     this.savedSearchesUrl = configuration.savedSearchesUrl;
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.filters = configuration.filters;
+    this.quickFilters = configuration.quickFilters;
 
     if (this.savedSearchesUrl !== undefined) {
       getSavedSearches(this.savedSearchesUrl, this.setSavedSearches.bind(this));

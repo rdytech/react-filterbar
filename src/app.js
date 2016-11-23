@@ -13,6 +13,9 @@ function walk(node) {
     });
   } else if(node.nodeName === "DT") {
     nodeObject = node.getAttribute("data-value");
+    if(nodeObject === null) {
+      nodeObject = { from: node.getAttribute("data-value-from"), to: node.getAttribute("data-value-to") }
+    }
   } else {
     throw "Malformed html configuration";
   }
