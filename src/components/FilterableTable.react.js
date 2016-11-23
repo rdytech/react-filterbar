@@ -6,7 +6,7 @@ import {TableStore} from "../stores/TableStore";
 import {BatchActionsStore} from "../stores/BatchActionsStore";
 
 import {FilterBar} from "./FilterBar/FilterBar.react";
-import {QuickFilters} from "./QuickFilters/QuickFilters.react";
+// import {QuickFilters} from "./QuickFilters/QuickFilters.react";
 import {Table} from "./Table/Table.react";
 
 export class FilterableTable extends React.Component {
@@ -32,9 +32,9 @@ export class FilterableTable extends React.Component {
   }
 
   render() {
+    // <QuickFilters />
     return (
       <div>
-        <QuickFilters />
         <FilterBar />
         <Table />
       </div>
