@@ -1,3 +1,5 @@
+import {QuickFilters} from "../QuickFilters/QuickFilters.react";
+
 export class TableCaption extends React.Component {
   constructor(props) {
     super(props);
@@ -8,7 +10,14 @@ export class TableCaption extends React.Component {
 
     if (content) {
       return (
-        <caption>{content}</caption>
+        <caption>
+          <div className='pull-left'>
+            {content}
+          </div>
+          <div className='pull-right'>
+            <QuickFilters />
+          </div>
+        </caption>
       );
     }
     else {

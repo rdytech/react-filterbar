@@ -9702,8 +9702,6 @@ var BatchActionsStore = require("../stores/BatchActionsStore").BatchActionsStore
 
 var FilterBar = require("./FilterBar/FilterBar.react").FilterBar;
 
-var QuickFilters = require("./QuickFilters/QuickFilters.react").QuickFilters;
-
 var Table = require("./Table/Table.react").Table;
 
 var FilterableTable = exports.FilterableTable = (function (_React$Component) {
@@ -9739,7 +9737,6 @@ var FilterableTable = exports.FilterableTable = (function (_React$Component) {
         return React.createElement(
           "div",
           null,
-          React.createElement(QuickFilters, null),
           React.createElement(FilterBar, null),
           React.createElement(Table, null)
         );
@@ -9758,7 +9755,7 @@ FilterableTable.childContextTypes = {
   tableActor: React.PropTypes.object
 };
 
-},{"../actors/FilterBarActor":198,"../actors/TableActor":199,"../stores/BatchActionsStore":239,"../stores/FilterBarStore":240,"../stores/TableStore":241,"./FilterBar/FilterBar.react":206,"./QuickFilters/QuickFilters.react":222,"./Table/Table.react":233}],222:[function(require,module,exports){
+},{"../actors/FilterBarActor":198,"../actors/TableActor":199,"../stores/BatchActionsStore":239,"../stores/FilterBarStore":240,"../stores/TableStore":241,"./FilterBar/FilterBar.react":206,"./Table/Table.react":233}],222:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10651,6 +10648,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var QuickFilters = require("../QuickFilters/QuickFilters.react").QuickFilters;
+
 var TableCaption = exports.TableCaption = (function (_React$Component) {
   function TableCaption(props) {
     _classCallCheck(this, TableCaption);
@@ -10669,7 +10668,16 @@ var TableCaption = exports.TableCaption = (function (_React$Component) {
           return React.createElement(
             "caption",
             null,
-            content
+            React.createElement(
+              "div",
+              { className: "pull-left" },
+              content
+            ),
+            React.createElement(
+              "div",
+              { className: "pull-right" },
+              React.createElement(QuickFilters, null)
+            )
           );
         } else {
           return React.createElement("caption", { hidden: true });
@@ -10681,7 +10689,7 @@ var TableCaption = exports.TableCaption = (function (_React$Component) {
   return TableCaption;
 })(React.Component);
 
-},{}],235:[function(require,module,exports){
+},{"../QuickFilters/QuickFilters.react":222}],235:[function(require,module,exports){
 "use strict";
 
 exports.tableUpdated = tableUpdated;
