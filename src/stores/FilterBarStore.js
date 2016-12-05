@@ -139,6 +139,14 @@ export class FilterBarStore {
     this.emitChange();
   }
 
+  enableQuickFilter(quickFilterName, blockName) {
+    var self = this;
+    Object.keys(this.quickFilters[blockName]).map(function(filterName) {
+      self.quickFilters[blockName][filterName].active = false
+    })
+    this.quickFilters[blockName][quickFilterName].active = true
+  }
+
   updateFilter(filterUid, propKey, propValue) {
     this.filters[filterUid][propKey] = propValue;
     this.emitChange();
