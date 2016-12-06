@@ -11,6 +11,7 @@ export class QuickFiltersButton extends React.Component {
   }
 
   onClick(e) {
+    this.context.filterBarActor.disableBlockFilters(this.state.blockName)
     Object.keys(this.state.filters).map(function(filter) {
       var value = this.state.filters[filter].value;
       var filterName = this.state.filters[filter].filter;

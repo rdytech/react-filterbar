@@ -63,6 +63,18 @@ export class FilterBarActor {
     this.applyFilters();
   }
 
+  disableBlockFilters(blockName) {
+    var self = this;
+    var filterBarStore = this.filterBarStore;
+    var buttons = filterBarStore.quickFilters[blockName];
+    Object.keys(buttons).map(function(buttonName) {
+      var filters = filterBarStore.quickFilters[blockName][buttonName].filters;
+      Object.keys(filters).map(function(filterName) {
+        self.disableFilter(filters[filterName].filter)
+      });
+    });
+  }
+
   exportResults() {
     var url = URLHelper.updateUrlSearch(
         this.filterBarStore.getExportResultsUrl(), "q", this.filterBarStore.getQuery()
