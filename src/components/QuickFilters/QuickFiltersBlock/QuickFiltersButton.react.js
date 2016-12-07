@@ -20,9 +20,11 @@ export class QuickFiltersButton extends React.Component {
   }
 
   render() {
-    var klasses = 'btn btn-primary btn-xs quick-filters-button';
+    var klasses = 'btn quick-filters-button';
     if(this.state.quickFilterButton.active === true)
-      klasses += ' btn-warning';
+      klasses += ' btn-primary disabled';
+    else
+      klasses += ' btn-default';
 
     return (
       <button className={klasses}  type="button"  onClick={this.onClick.bind(this)}>
