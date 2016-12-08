@@ -29,6 +29,7 @@ export class FilterBarActor {
 
   disableAllFilters() {
     this.filterBarStore.disableAllFilters();
+    this.filterBarStore.disableAllQuickFilters();
     this.applyFilters();
   }
 
@@ -53,13 +54,26 @@ export class FilterBarActor {
     }
   }
 
-  applyQuickFilter(filterName, value) {
+  applyQuickFilter(filterName, value, quickFilterName, blockName) {
     let filter = this.filterBarStore.getFilter(filterName)
     if (filter.type === 'multi_select') {
       value = [value]
     }
+    this.filterBarStore.enableQuickFilter(quickFilterName, blockName);
     this.enableFilter(filterName, value);
     this.applyFilters();
+  }
+
+  disableBlockFilters(blockName) {
+    var self = this;
+    var filterBarStore = this.filterBarStore;
+    var buttons = filterBarStore.quickFilters[blockName];
+    Object.keys(buttons).map(function(buttonName) {
+      var filters = filterBarStore.quickFilters[blockName][buttonName].filters;
+      Object.keys(filters).map(function(filterName) {
+        self.disableFilter(filters[filterName].filter)
+      });
+    });
   }
 
   exportResults() {

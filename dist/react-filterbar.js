@@ -7724,6 +7724,7 @@ var FilterBarActor = exports.FilterBarActor = (function () {
     disableAllFilters: {
       value: function disableAllFilters() {
         this.filterBarStore.disableAllFilters();
+        this.filterBarStore.disableAllQuickFilters();
         this.applyFilters();
       }
     },
@@ -7749,13 +7750,27 @@ var FilterBarActor = exports.FilterBarActor = (function () {
       }
     },
     applyQuickFilter: {
-      value: function applyQuickFilter(filterName, value) {
+      value: function applyQuickFilter(filterName, value, quickFilterName, blockName) {
         var filter = this.filterBarStore.getFilter(filterName);
         if (filter.type === "multi_select") {
           value = [value];
         }
+        this.filterBarStore.enableQuickFilter(quickFilterName, blockName);
         this.enableFilter(filterName, value);
         this.applyFilters();
+      }
+    },
+    disableBlockFilters: {
+      value: function disableBlockFilters(blockName) {
+        var self = this;
+        var filterBarStore = this.filterBarStore;
+        var buttons = filterBarStore.quickFilters[blockName];
+        Object.keys(buttons).map(function (buttonName) {
+          var filters = filterBarStore.quickFilters[blockName][buttonName].filters;
+          Object.keys(filters).map(function (filterName) {
+            self.disableFilter(filters[filterName].filter);
+          });
+        });
       }
     },
     exportResults: {
@@ -9787,7 +9802,7 @@ var QuickFilters = exports.QuickFilters = (function (_React$Component) {
         var quickFilters = this.context.filterBarStore.quickFilters;
         if (quickFilters !== undefined) {
           var filterBlocks = Object.keys(quickFilters).map(function (filter) {
-            return React.createElement(QuickFiltersBlock, { filters: quickFilters[filter] });
+            return React.createElement(QuickFiltersBlock, { filters: quickFilters[filter], name: filter });
           }, this);
         } else {
           var filterBlocks = "";
@@ -9830,6 +9845,9 @@ var QuickFiltersBlock = exports.QuickFiltersBlock = (function (_React$Component)
     _classCallCheck(this, QuickFiltersBlock);
 
     _get(Object.getPrototypeOf(QuickFiltersBlock.prototype), "constructor", this).call(this, props);
+    this.state = {
+      name: this.props.name
+    };
   }
 
   _inherits(QuickFiltersBlock, _React$Component);
@@ -9839,7 +9857,7 @@ var QuickFiltersBlock = exports.QuickFiltersBlock = (function (_React$Component)
       value: function render() {
         var filters = this.props.filters;
         var buttons = Object.keys(filters).map(function (filter) {
-          return React.createElement(QuickFiltersButton, { filters: filters[filter] });
+          return React.createElement(QuickFiltersButton, { filters: filters[filter], name: filter, blockName: this.state.name });
         }, this);
         return React.createElement(
           "div",
@@ -9874,8 +9892,11 @@ var QuickFiltersButton = exports.QuickFiltersButton = (function (_React$Componen
 
     _get(Object.getPrototypeOf(QuickFiltersButton.prototype), "constructor", this).call(this, props);
     this.state = {
+      name: this.props.name,
       label: this.props.filters.label,
-      filters: this.props.filters.filters
+      filters: this.props.filters.filters,
+      blockName: this.props.blockName,
+      quickFilterButton: this.props.filters
     };
   }
 
@@ -9884,19 +9905,22 @@ var QuickFiltersButton = exports.QuickFiltersButton = (function (_React$Componen
   _createClass(QuickFiltersButton, {
     onClick: {
       value: function onClick(e) {
+        this.context.filterBarActor.disableBlockFilters(this.state.blockName);
         Object.keys(this.state.filters).map(function (filter) {
           var value = this.state.filters[filter].value;
           var filterName = this.state.filters[filter].filter;
-
-          this.context.filterBarActor.applyQuickFilter(filterName, value);
+          this.context.filterBarActor.applyQuickFilter(filterName, value, this.state.name, this.state.blockName);
         }, this);
       }
     },
     render: {
       value: function render() {
+        var klasses = "btn quick-filters-button";
+        if (this.state.quickFilterButton.active === true) klasses += " btn-primary disabled";else klasses += " btn-default";
+
         return React.createElement(
           "button",
-          { className: "btn btn-primary btn-xs quick-filters-button", type: "button", onClick: this.onClick.bind(this) },
+          { className: klasses, type: "button", onClick: this.onClick.bind(this) },
           this.state.label
         );
       }
@@ -11086,6 +11110,25 @@ var FilterBarStore = exports.FilterBarStore = (function () {
         this.filters[filterUid].enabled = true;
         this.filters[filterUid].value = value || this.filters[filterUid].value || "";
         this.emitChange();
+      }
+    },
+    enableQuickFilter: {
+      value: function enableQuickFilter(quickFilterName, blockName) {
+        var self = this;
+        Object.keys(this.quickFilters[blockName]).map(function (filterName) {
+          self.quickFilters[blockName][filterName].active = false;
+        });
+        this.quickFilters[blockName][quickFilterName].active = true;
+      }
+    },
+    disableAllQuickFilters: {
+      value: function disableAllQuickFilters() {
+        var self = this;
+        Object.keys(self.quickFilters).map(function (blockName) {
+          Object.keys(self.quickFilters[blockName]).map(function (filterName) {
+            self.quickFilters[blockName][filterName].active = false;
+          });
+        });
       }
     },
     updateFilter: {

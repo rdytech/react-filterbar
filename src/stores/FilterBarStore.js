@@ -139,6 +139,23 @@ export class FilterBarStore {
     this.emitChange();
   }
 
+  enableQuickFilter(quickFilterName, blockName) {
+    var self = this;
+    Object.keys(this.quickFilters[blockName]).map(function(filterName) {
+      self.quickFilters[blockName][filterName].active = false
+    })
+    this.quickFilters[blockName][quickFilterName].active = true
+  }
+
+  disableAllQuickFilters() {
+    var self = this;
+    Object.keys(self.quickFilters).map(function(blockName) {
+      Object.keys(self.quickFilters[blockName]).map(function(filterName) {
+        self.quickFilters[blockName][filterName].active = false
+      })
+    })
+  }
+
   updateFilter(filterUid, propKey, propValue) {
     this.filters[filterUid][propKey] = propValue;
     this.emitChange();

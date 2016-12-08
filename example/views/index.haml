@@ -138,6 +138,26 @@
                       %dt.value{ data: { value:  { from: '5', to: '' } } }
                       %dt.filter{ data: { value:  'rating'} }
 
+              %dl.different-filters-block
+                %dl.today-me-button
+                  %dt.label{ data: { value:  'Today by Me'} }
+                  %dl.filters
+                    %dl.published
+                      %dt.value{ data: { value:  { from: '2016-11-15', to: '2016-11-15' } } }
+                      %dt.filter{ data: { value:  'published'} }
+                    %dl.author
+                      %dt.value{ data: { value:  'Author 1'} }
+                      %dt.filter{ data: { value:  'author'} }
+                %dl.best-rated-button
+                  %dt.label{ data: { value:  'Best Rated by Me'} }
+                  %dl.filters
+                    %dl.rating
+                      %dt.value{ data: { value:  { from: '5', to: '' } } }
+                      %dt.filter{ data: { value:  'rating'} }
+                    %dl.author
+                      %dt.value{ data: { value:  'Author 1'} }
+                      %dt.filter{ data: { value:  'author'} }
+
           %dl.tableConfiguration
             %dt.data-url{ data: { value: "/" } }
             %dt.selectable{ data: { value: "id"} }
