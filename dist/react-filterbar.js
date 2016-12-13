@@ -9914,6 +9914,16 @@ var QuickFiltersButton = exports.QuickFiltersButton = (function (_React$Componen
         }, this);
       }
     },
+    componentDidMount: {
+      value: function componentDidMount() {
+        this.context.filterBarStore.addChangeListener(this.onChange.bind(this));
+      }
+    },
+    onChange: {
+      value: function onChange(e) {
+        this.forceUpdate();
+      }
+    },
     render: {
       value: function render() {
         var klasses = "btn quick-filters-button";
@@ -9932,7 +9942,8 @@ var QuickFiltersButton = exports.QuickFiltersButton = (function (_React$Componen
 })(React.Component);
 
 QuickFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object
 };
 
 },{}],225:[function(require,module,exports){
@@ -11135,7 +11146,38 @@ var FilterBarStore = exports.FilterBarStore = (function () {
     updateFilter: {
       value: function updateFilter(filterUid, propKey, propValue) {
         this.filters[filterUid][propKey] = propValue;
+        if (propKey === "value") this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
         this.emitChange();
+      }
+    },
+    deactivateQuickFiltersBasedOnFilterValue: {
+      value: function deactivateQuickFiltersBasedOnFilterValue(filterName, filterValue, quickFilters) {
+        quickFilters.map(function (quickFilter) {
+          Object.keys(quickFilter.filters).map(function (quickFilterName) {
+            var quickFilterFilter = quickFilter.filters[quickFilterName];
+            if (quickFilterFilter.filter === filterName) {
+              if (typeof quickFilterFilter.value === "object") {
+                if (quickFilterFilter.value.from !== filterValue.from || quickFilterFilter.value.to !== filterValue.to) quickFilter.active = false;
+              } else if (filterValue !== quickFilterFilter.value) {
+                quickFilter.active = false;
+              }
+            }
+          });
+        });
+        this.emitChange();
+      }
+    },
+    activeQuickFilters: {
+      value: function activeQuickFilters() {
+        var self = this;
+        var active = [];
+        Object.keys(self.quickFilters).map(function (blockName) {
+          Object.keys(self.quickFilters[blockName]).map(function (filterName) {
+            var quickFilter = self.quickFilters[blockName][filterName];
+            if (quickFilter.active) active.push(quickFilter);
+          });
+        });
+        return active;
       }
     },
     emitChange: {
