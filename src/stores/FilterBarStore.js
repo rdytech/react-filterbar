@@ -158,7 +158,38 @@ export class FilterBarStore {
 
   updateFilter(filterUid, propKey, propValue) {
     this.filters[filterUid][propKey] = propValue;
+    if(propKey === 'value')
+      this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
     this.emitChange();
+  }
+
+  deactivateQuickFiltersBasedOnFilterValue(filterName, filterValue, quickFilters) {
+    quickFilters.map(function (quickFilter) {
+      Object.keys(quickFilter.filters).map(function (quickFilterName) {
+        var quickFilterFilter = quickFilter.filters[quickFilterName]
+        if (quickFilterFilter.filter === filterName) {
+          if (typeof quickFilterFilter.value === "object") {
+            if (quickFilterFilter.value.from !== filterValue.from || quickFilterFilter.value.to !== filterValue.to) quickFilter.active = false;
+          } else if (filterValue !== quickFilterFilter.value) {
+            quickFilter.active = false;
+          }
+        }
+      });
+    });
+    this.emitChange();
+  }
+
+  activeQuickFilters() {
+    var self = this;
+    var active = [];
+    Object.keys(self.quickFilters).map(function(blockName) {
+      Object.keys(self.quickFilters[blockName]).map(function(filterName) {
+        var quickFilter = self.quickFilters[blockName][filterName];
+        if(quickFilter.active)
+          active.push(quickFilter)
+      })
+    })
+    return active;
   }
 
   emitChange() {
