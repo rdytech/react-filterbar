@@ -13,8 +13,9 @@ export class QuickFiltersButton extends React.Component {
   onClick(e) {
     this.context.filterBarActor.disableBlockFilters(this.state.blockName)
     Object.keys(this.state.filters).map(function(filter) {
-      var value = this.state.filters[filter].value;
-      var filterName = this.state.filters[filter].filter;
+      var clonedFilter = JSON.parse(JSON.stringify(this.state.filters[filter])); // avoid value to be overwritten when filter changes
+      var value = clonedFilter.value;
+      var filterName = clonedFilter.filter;
       this.context.filterBarActor.applyQuickFilter(filterName, value, this.state.name, this.state.blockName);
     }, this);
   }
