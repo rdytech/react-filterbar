@@ -136,6 +136,7 @@ The following haml snippet is an example of the code to include on your html pag
               %dt.filter{ data: { value:  'author'} }
         %dl.yours-button
           %dt.label{ data: { value:  'Yours'} }
+          %dt.disabled{ data: { value:  'tooltip text'} }
           %dl.filters
             %dl.author
               %dt.value{ data: { value:  'Author 2'} }
@@ -206,6 +207,8 @@ NOTE: The multi_select component can only be used if the select2 jQuery library 
 
 NOTE: The batchActionsConfiguration element is used to both enable the checkboxes column on the filterbar as well as define the actions that will be visible to the user for batch processing. The data value inside the selectable element has to be a unique identifier for each record. This unique identifier value will be assigned as the value for each checkbox so that when selected this value is added to the selected values list within the current filterbar state. Each element under actions will need a unique name and within these, the label and the URL to be called for batch processing will need to be defined.
 
+NOTE: You can disable quick filters by adding a disabled element. When disabled is present, a tooltip will be displayed when the button is hovered.
+
 ## Events
 
 The React filterbar will trigger an event named 'react-filterbar:table-updated' against the document object whenever.
@@ -225,7 +228,7 @@ the data is updated.
 * development within the react-filterbar repo can be performed using the example application included. see /example
 
 ## Deployment
-run the following to deploy 
+run the following to deploy
 gulp dist
 
 ## Common Problems / Bugs

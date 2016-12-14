@@ -9893,6 +9893,7 @@ var QuickFiltersButton = exports.QuickFiltersButton = (function (_React$Componen
     _get(Object.getPrototypeOf(QuickFiltersButton.prototype), "constructor", this).call(this, props);
     this.state = {
       name: this.props.name,
+      disabled: this.props.filters.disabled,
       label: this.props.filters.label,
       filters: this.props.filters.filters,
       blockName: this.props.blockName,
@@ -9905,13 +9906,17 @@ var QuickFiltersButton = exports.QuickFiltersButton = (function (_React$Componen
   _createClass(QuickFiltersButton, {
     onClick: {
       value: function onClick(e) {
-        this.context.filterBarActor.disableBlockFilters(this.state.blockName);
-        Object.keys(this.state.filters).map(function (filter) {
-          var clonedFilter = JSON.parse(JSON.stringify(this.state.filters[filter])); // avoid value to be overwritten when filter changes
-          var value = clonedFilter.value;
-          var filterName = clonedFilter.filter;
-          this.context.filterBarActor.applyQuickFilter(filterName, value, this.state.name, this.state.blockName);
-        }, this);
+        if (this.state.disabled) {
+          e.stopPropagation();
+        } else {
+          this.context.filterBarActor.disableBlockFilters(this.state.blockName);
+          Object.keys(this.state.filters).map(function (filter) {
+            var clonedFilter = JSON.parse(JSON.stringify(this.state.filters[filter])); // avoid value to be overwritten when filter changes
+            var value = clonedFilter.value;
+            var filterName = clonedFilter.filter;
+            this.context.filterBarActor.applyQuickFilter(filterName, value, this.state.name, this.state.blockName);
+          }, this);
+        }
       }
     },
     componentDidMount: {
@@ -9924,16 +9929,45 @@ var QuickFiltersButton = exports.QuickFiltersButton = (function (_React$Componen
         this.forceUpdate();
       }
     },
-    render: {
-      value: function render() {
+    buttonClasses: {
+      value: function buttonClasses() {
         var klasses = "btn quick-filters-button";
         if (this.state.quickFilterButton.active === true) klasses += " btn-primary disabled";else klasses += " btn-default";
 
+        if (this.state.disabled) klasses += " btn-danger";
+
+        return klasses;
+      }
+    },
+    renderButton: {
+      value: function renderButton() {
         return React.createElement(
           "button",
-          { className: klasses, type: "button", onClick: this.onClick.bind(this) },
+          { className: this.buttonClasses(), type: "button", onClick: this.onClick.bind(this) },
           this.state.label
         );
+      }
+    },
+    renderTooltip: {
+      value: function renderTooltip() {
+        return React.createElement(
+          ReactBootstrap.Tooltip,
+          { id: "quick-filters-tooltip" },
+          this.state.disabled
+        );
+      }
+    },
+    render: {
+      value: function render() {
+        if (this.state.disabled) {
+          return React.createElement(
+            ReactBootstrap.OverlayTrigger,
+            { placement: "top", overlay: this.renderTooltip() },
+            this.renderButton()
+          );
+        } else {
+          return this.renderButton();
+        }
       }
     }
   });
