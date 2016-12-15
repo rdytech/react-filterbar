@@ -11152,19 +11152,34 @@ var FilterBarStore = exports.FilterBarStore = (function () {
     },
     deactivateQuickFiltersBasedOnFilterValue: {
       value: function deactivateQuickFiltersBasedOnFilterValue(filterName, filterValue, quickFilters) {
+        var self = this;
         quickFilters.map(function (quickFilter) {
           Object.keys(quickFilter.filters).map(function (quickFilterName) {
-            var quickFilterFilter = quickFilter.filters[quickFilterName];
-            if (quickFilterFilter.filter === filterName) {
-              if (typeof quickFilterFilter.value === "object") {
-                if (quickFilterFilter.value.from !== filterValue.from || quickFilterFilter.value.to !== filterValue.to) quickFilter.active = false;
-              } else if (filterValue !== quickFilterFilter.value) {
-                quickFilter.active = false;
-              }
-            }
+            self.inactivateQuickFilterIfValueChanged(quickFilter.filters[quickFilterName], filterName, filterValue, quickFilter);
           });
         });
         this.emitChange();
+      }
+    },
+    inactivateQuickFilterIfValueChanged: {
+      value: function inactivateQuickFilterIfValueChanged(quickFilterFilter, filterName, filterValue, quickFilter) {
+        if (quickFilterFilter.filter === filterName) {
+          if (typeof quickFilterFilter.value === "object") {
+            if (this.rangeFilterValuesChanged(quickFilterFilter.value, filterValue)) this.inactivateQuickFilter(quickFilter);
+          } else if (filterValue !== quickFilterFilter.value) {
+            this.inactivateQuickFilter(quickFilter);
+          }
+        }
+      }
+    },
+    rangeFilterValuesChanged: {
+      value: function rangeFilterValuesChanged(value1, value2) {
+        return value1.from !== value2.from || value1.to !== value2.to;
+      }
+    },
+    inactivateQuickFilter: {
+      value: function inactivateQuickFilter(quickFilter) {
+        quickFilter.active = false;
       }
     },
     activeQuickFilters: {
