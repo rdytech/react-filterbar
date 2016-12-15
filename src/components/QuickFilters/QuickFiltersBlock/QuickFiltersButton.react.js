@@ -20,6 +20,14 @@ export class QuickFiltersButton extends React.Component {
     }, this);
   }
 
+  componentDidMount() {
+    this.context.filterBarStore.addChangeListener(this.onChange.bind(this));
+  }
+
+  onChange(e) {
+    this.forceUpdate();
+  }
+
   render() {
     var klasses = 'btn quick-filters-button';
     if(this.state.quickFilterButton.active === true)
@@ -36,5 +44,6 @@ export class QuickFiltersButton extends React.Component {
 }
 
 QuickFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object
 };
