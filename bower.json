@@ -25,6 +25,7 @@
     "tests"
   ],
   "dependencies": {
-    "query-string": "~1.0.0"
+    "query-string": "~1.0.0",
+    "react-bootstrap": "^0.17.0"
   }
 }
