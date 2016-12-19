@@ -60,7 +60,7 @@
                       %dt.field{ data: { value: "id" } }
                       %dt.type{ data: { value: "id" } }
                       %dt.label{ data: { value: "Book ID" } }
-                    %dl.published
+                    %dl.published_on
                       %dt.field{ data: { value: "published_on" } }
                       %dt.type{ data: { value: "date" } }
                       %dt.label{ data: { value: "Published On" } }
@@ -79,7 +79,7 @@
                       %dl.multi-author-button
                         %dt.label{ data: { value:  'Mulit Test'} }
                         %dl.filters
-                          %dl.author
+                          %dl.author_multi_test
                             %dt.value{ data: { value:  'Author 2'} }
                             %dt.filter{ data: { value:  'author_multi_test'} }
                     %dl.author-block
@@ -100,38 +100,38 @@
                       %dl.today-button
                         %dt.label{ data: { value:  'Today'} }
                         %dl.filters
-                          %dl.published
+                          %dl.published_on
                             %dt.value{ data: { value:  { from: '2016-11-15', to: '2016-11-15' } } }
-                            %dt.filter{ data: { value:  'published'} }
+                            %dt.filter{ data: { value:  'published_on'} }
                       %dl.this-month-button
                         %dt.label{ data: { value:  'This Month'} }
                         %dl.filters
-                          %dl.published
+                          %dl.published_on
                             %dt.value{ data: { value: { from: '2016-11-01', to: '2016-11-30' } } }
-                            %dt.filter{ data: { value:  'published'} }
+                            %dt.filter{ data: { value:  'published_on'} }
                       %dl.last-month-button
                         %dt.label{ data: { value:  'Last Month'} }
                         %dl.filters
-                          %dl.published
+                          %dl.published_on
                             %dt.value{ data: { value: { from: '2016-10-01', to: '2016-10-30' } } }
-                            %dt.filter{ data: { value:  'published'} }
+                            %dt.filter{ data: { value:  'published_on'} }
 
                     %dl.published-author-block
                       %dl.today-me-button
                         %dt.label{ data: { value:  'Today by Me'} }
                         %dl.filters
-                          %dl.published
+                          %dl.published_on
                             %dt.value{ data: { value:  { from: '2016-11-15', to: '2016-11-15' } } }
-                            %dt.filter{ data: { value:  'published'} }
+                            %dt.filter{ data: { value:  'published_on'} }
                           %dl.author
                             %dt.value{ data: { value:  'Author 1'} }
                             %dt.filter{ data: { value:  'author'} }
                       %dl.today-you-button
                         %dt.label{ data: { value:  'Today by You'} }
                         %dl.filters
-                          %dl.published
+                          %dl.published_on
                             %dt.value{ data: { value:  { from: '2016-11-15', to: '2016-11-15' } } }
-                            %dt.filter{ data: { value:  'published'} }
+                            %dt.filter{ data: { value:  'published_on'} }
                           %dl.author
                             %dt.value{ data: { value:  'Author 2'} }
                             %dt.filter{ data: { value:  'author'} }
@@ -160,9 +160,9 @@
                       %dl.today-me-button
                         %dt.label{ data: { value:  'Today by Me'} }
                         %dl.filters
-                          %dl.published
+                          %dl.published_on
                             %dt.value{ data: { value:  { from: '2016-11-15', to: '2016-11-15' } } }
-                            %dt.filter{ data: { value:  'published'} }
+                            %dt.filter{ data: { value:  'published_on'} }
                           %dl.author
                             %dt.value{ data: { value:  'Author 1'} }
                             %dt.filter{ data: { value:  'author'} }
