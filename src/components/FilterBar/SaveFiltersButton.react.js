@@ -16,7 +16,6 @@ export class SaveFiltersButton extends React.Component {
     return (
       <ReactBootstrap.DropdownButton
         bsStyle="default"
-        className="btn btn-default margin-bottom-sm"
         title="Save Search"
         type="button"
       >
