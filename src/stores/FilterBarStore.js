@@ -130,6 +130,7 @@ export class FilterBarStore {
   disableFilter(filterUid) {
     this.filters[filterUid].enabled = false;
     this.filters[filterUid].value = "";
+    this.deactivateQuickFiltersBasedOnRemovedFilter(filterUid, this.activeQuickFilters());
     this.emitChange();
   }
 
@@ -160,6 +161,17 @@ export class FilterBarStore {
     this.filters[filterUid][propKey] = propValue;
     if(propKey === 'value')
       this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
+    this.emitChange();
+  }
+
+  deactivateQuickFiltersBasedOnRemovedFilter(filterName, quickFilters) {
+    var self = this;
+    quickFilters.map(function (quickFilter) {
+      Object.keys(quickFilter.filters).map(function (quickFilterName) {
+        if(quickFilter.filters[quickFilterName].filter === filterName)
+          self.inactivateQuickFilter(quickFilter);
+      });
+    });
     this.emitChange();
   }
 
