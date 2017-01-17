@@ -44,6 +44,16 @@ export class FilterBarStore {
     }
   }
 
+  *quickFiltersGenerator(quickFilters) {
+    for (let quickFilter of quickFilters) {
+      for (var property in quickFilter.filters) {
+        if (quickFilter.filters.hasOwnProperty(property)) {
+          yield [quickFilter, property];
+        }
+      }
+    }
+  }
+
   getId() {
     return this.id;
   }
@@ -130,6 +140,7 @@ export class FilterBarStore {
   disableFilter(filterUid) {
     this.filters[filterUid].enabled = false;
     this.filters[filterUid].value = "";
+    this.deactivateQuickFiltersBasedOnRemovedFilter(filterUid, this.activeQuickFilters());
     this.emitChange();
   }
 
@@ -163,13 +174,24 @@ export class FilterBarStore {
     this.emitChange();
   }
 
+  deactivateQuickFiltersBasedOnRemovedFilter(filterName, quickFilters) {
+    var self = this;
+    for (var outcome of self.quickFiltersGenerator(quickFilters)) {
+      let quickFilter = outcome[0],
+          quickFilterName = outcome[1];
+      if(quickFilter.filters[quickFilterName].filter === filterName)
+        self.inactivateQuickFilter(quickFilter);
+    }
+    this.emitChange();
+  }
+
   deactivateQuickFiltersBasedOnFilterValue(filterName, filterValue, quickFilters) {
     var self = this;
-    quickFilters.map(function (quickFilter) {
-      Object.keys(quickFilter.filters).map(function (quickFilterName) {
-        self.inactivateQuickFilterIfValueChanged(quickFilter.filters[quickFilterName], filterName, filterValue, quickFilter);
-      });
-    });
+    for (var outcome of self.quickFiltersGenerator(quickFilters)) {
+      let quickFilter = outcome[0],
+          quickFilterName = outcome[1];
+      self.inactivateQuickFilterIfValueChanged(quickFilter.filters[quickFilterName], filterName, filterValue, quickFilter);
+    }
     this.emitChange();
   }
 

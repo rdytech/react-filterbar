@@ -9493,7 +9493,6 @@ var SaveFiltersButton = exports.SaveFiltersButton = (function (_React$Component)
           ReactBootstrap.DropdownButton,
           {
             bsStyle: "default",
-            className: "btn btn-default margin-bottom-sm",
             title: "Save Search",
             type: "button"
           },
@@ -11047,6 +11046,94 @@ var FilterBarStore = exports.FilterBarStore = (function () {
         }, selectFilters, this);
       })
     },
+    quickFiltersGenerator: {
+      value: regeneratorRuntime.mark(function quickFiltersGenerator(quickFilters) {
+        var _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, quickFilter, property;
+
+        return regeneratorRuntime.wrap(function quickFiltersGenerator$(context$2$0) {
+          while (1) switch (context$2$0.prev = context$2$0.next) {
+            case 0:
+              _iteratorNormalCompletion = true;
+              _didIteratorError = false;
+              _iteratorError = undefined;
+              context$2$0.prev = 3;
+              _iterator = quickFilters[Symbol.iterator]();
+
+            case 5:
+              if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                context$2$0.next = 18;
+                break;
+              }
+
+              quickFilter = _step.value;
+              context$2$0.t6 = regeneratorRuntime.keys(quickFilter.filters);
+
+            case 8:
+              if ((context$2$0.t7 = context$2$0.t6()).done) {
+                context$2$0.next = 15;
+                break;
+              }
+
+              property = context$2$0.t7.value;
+
+              if (!quickFilter.filters.hasOwnProperty(property)) {
+                context$2$0.next = 13;
+                break;
+              }
+
+              context$2$0.next = 13;
+              return [quickFilter, property];
+
+            case 13:
+              context$2$0.next = 8;
+              break;
+
+            case 15:
+              _iteratorNormalCompletion = true;
+              context$2$0.next = 5;
+              break;
+
+            case 18:
+              context$2$0.next = 24;
+              break;
+
+            case 20:
+              context$2$0.prev = 20;
+              context$2$0.t8 = context$2$0["catch"](3);
+              _didIteratorError = true;
+              _iteratorError = context$2$0.t8;
+
+            case 24:
+              context$2$0.prev = 24;
+              context$2$0.prev = 25;
+
+              if (!_iteratorNormalCompletion && _iterator["return"]) {
+                _iterator["return"]();
+              }
+
+            case 27:
+              context$2$0.prev = 27;
+
+              if (!_didIteratorError) {
+                context$2$0.next = 30;
+                break;
+              }
+
+              throw _iteratorError;
+
+            case 30:
+              return context$2$0.finish(27);
+
+            case 31:
+              return context$2$0.finish(24);
+
+            case 32:
+            case "end":
+              return context$2$0.stop();
+          }
+        }, quickFiltersGenerator, this, [[3, 20, 24, 32], [25,, 27, 31]]);
+      })
+    },
     getId: {
       value: function getId() {
         return this.id;
@@ -11148,6 +11235,7 @@ var FilterBarStore = exports.FilterBarStore = (function () {
       value: function disableFilter(filterUid) {
         this.filters[filterUid].enabled = false;
         this.filters[filterUid].value = "";
+        this.deactivateQuickFiltersBasedOnRemovedFilter(filterUid, this.activeQuickFilters());
         this.emitChange();
       }
     },
@@ -11184,14 +11272,69 @@ var FilterBarStore = exports.FilterBarStore = (function () {
         this.emitChange();
       }
     },
+    deactivateQuickFiltersBasedOnRemovedFilter: {
+      value: function deactivateQuickFiltersBasedOnRemovedFilter(filterName, quickFilters) {
+        var self = this;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = self.quickFiltersGenerator(quickFilters)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var outcome = _step.value;
+
+            var quickFilter = outcome[0],
+                quickFilterName = outcome[1];
+            if (quickFilter.filters[quickFilterName].filter === filterName) self.inactivateQuickFilter(quickFilter);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"]) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        this.emitChange();
+      }
+    },
     deactivateQuickFiltersBasedOnFilterValue: {
       value: function deactivateQuickFiltersBasedOnFilterValue(filterName, filterValue, quickFilters) {
         var self = this;
-        quickFilters.map(function (quickFilter) {
-          Object.keys(quickFilter.filters).map(function (quickFilterName) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = self.quickFiltersGenerator(quickFilters)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var outcome = _step.value;
+
+            var quickFilter = outcome[0],
+                quickFilterName = outcome[1];
             self.inactivateQuickFilterIfValueChanged(quickFilter.filters[quickFilterName], filterName, filterValue, quickFilter);
-          });
-        });
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"]) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
         this.emitChange();
       }
     },
