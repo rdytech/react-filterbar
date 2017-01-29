@@ -5,6 +5,7 @@ export class QuickFiltersButton extends React.Component {
       name: this.props.name,
       disabled: this.props.filters.disabled,
       label: this.props.filters.label,
+      tooltip: this.props.filters.tooltip,
       filters: this.props.filters.filters,
       blockName: this.props.blockName,
       quickFilterButton: this.props.filters
@@ -46,7 +47,7 @@ export class QuickFiltersButton extends React.Component {
     return klasses;
   }
 
-  renderButton() {
+  button() {
     return (
       <button className={this.buttonClasses()} type="button" onClick={this.onClick.bind(this)}>
         {this.state.label}
@@ -54,7 +55,13 @@ export class QuickFiltersButton extends React.Component {
     );
   }
 
-  renderTooltip() {
+  tooltip() {
+    return (
+      <ReactBootstrap.Tooltip id="quick-filters-tooltip">{this.state.tooltip}</ReactBootstrap.Tooltip>
+    );
+  }
+
+  disabledTooltip() {
     return (
       <ReactBootstrap.Tooltip id="quick-filters-tooltip">{this.state.disabled}</ReactBootstrap.Tooltip>
     );
@@ -63,12 +70,16 @@ export class QuickFiltersButton extends React.Component {
   render() {
     if(this.state.disabled) {
       return (
-        <ReactBootstrap.OverlayTrigger placement="top" overlay={this.renderTooltip()}>
-          {this.renderButton()}
+        <ReactBootstrap.OverlayTrigger placement="top" overlay={this.disabledTooltip()}>
+          {this.button()}
         </ReactBootstrap.OverlayTrigger>
       );
     } else {
-      return this.renderButton();
+      return (
+        <ReactBootstrap.OverlayTrigger placement="top" overlay={this.tooltip()}>
+          {this.button()}
+        </ReactBootstrap.OverlayTrigger>
+      );
     }
   }
 }

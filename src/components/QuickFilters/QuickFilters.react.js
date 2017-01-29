@@ -11,7 +11,7 @@ export class QuickFilters extends React.Component {
     {
       var filterBlocks = Object.keys(quickFilters).map(function(filter) {
         return (
-          <QuickFiltersBlock filters={quickFilters[filter]} name={filter}/>
+          <QuickFiltersBlock filters={quickFilters[filter]} name={filter} label={quickFilters[filter].label}/>
         );
       }, this);
     } else {
