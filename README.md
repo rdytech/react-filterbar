@@ -128,8 +128,10 @@ The following haml snippet is an example of the code to include on your html pag
         %dt.label{  :data => { value: "Rating" } }
     %dl.quick-filters
       %dl.author-block
+        %dt.label{ data: { value: "Author Block Label" }}
         %dl.mine-button
           %dt.label{ data: { value:  'Mine'} }
+          %dt.tooltip{ data: { value: "My Tooltip" }}
           %dl.filters
             %dl.author
               %dt.value{ data: { value:  'Author 1'} }

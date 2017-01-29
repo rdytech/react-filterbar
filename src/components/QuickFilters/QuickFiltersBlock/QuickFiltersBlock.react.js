@@ -4,20 +4,26 @@ export class QuickFiltersBlock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.name
+      name: this.props.name,
+      label: this.props.label,
     };
   }
 
   render() {
     var filters = this.props.filters;
     var buttons = Object.keys(filters).map(function(filter) {
-      return (
-        <QuickFiltersButton filters={filters[filter]} name={filter} blockName={this.state.name}/>
-      );
+      if (filter != "label") {
+        return (
+          <QuickFiltersButton filters={filters[filter]} name={filter} blockName={this.state.name}/>
+        );
+      }
     }, this);
     return (
-      <div className="btn-group quick-filters-block">
-        {buttons}
+      <div>
+        {this.props.label}
+        <div className="btn-group quick-filters-block">
+          {buttons}
+        </div>
       </div>
     );
   }
