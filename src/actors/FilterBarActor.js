@@ -70,9 +70,11 @@ export class FilterBarActor {
     var buttons = filterBarStore.quickFilters[blockName];
     Object.keys(buttons).map(function(buttonName) {
       var filters = filterBarStore.quickFilters[blockName][buttonName].filters;
-      Object.keys(filters).map(function(filterName) {
-        self.disableFilter(filters[filterName].filter)
-      });
+      if (typeof filters == "object") {
+        Object.keys(filters).map(function(filterName) {
+          self.disableFilter(filters[filterName].filter)
+        });
+      }
     });
   }
 
