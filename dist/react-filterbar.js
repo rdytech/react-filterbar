@@ -7767,9 +7767,11 @@ var FilterBarActor = exports.FilterBarActor = (function () {
         var buttons = filterBarStore.quickFilters[blockName];
         Object.keys(buttons).map(function (buttonName) {
           var filters = filterBarStore.quickFilters[blockName][buttonName].filters;
-          Object.keys(filters).map(function (filterName) {
-            self.disableFilter(filters[filterName].filter);
-          });
+          if (typeof filters == "object") {
+            Object.keys(filters).map(function (filterName) {
+              self.disableFilter(filters[filterName].filter);
+            });
+          }
         });
       }
     },
@@ -11271,7 +11273,9 @@ var FilterBarStore = exports.FilterBarStore = (function () {
       value: function enableQuickFilter(quickFilterName, blockName) {
         var self = this;
         Object.keys(this.quickFilters[blockName]).map(function (filterName) {
-          self.quickFilters[blockName][filterName].active = false;
+          if (typeof self.quickFilters[blockName][filterName] == "object") {
+            self.quickFilters[blockName][filterName].active = false;
+          }
         });
         this.quickFilters[blockName][quickFilterName].active = true;
       }
