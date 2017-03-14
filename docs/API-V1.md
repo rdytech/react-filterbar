@@ -118,6 +118,12 @@ This is the type of the filter, used on the server to structure the query.
 
 * **select**: a dropdown selection box
 
+* **lazy_select**: a dropdown selection which is loaded only after searching (Usefull for huge collections)
+
+* **multi_select**: a dropdown selection box which allows multiple values
+
+* **lazy_multi_select**: a dropdown selection box which allows multiple values and is loaded only after searching (Usefull for huge collections)
+
 * **range**: a from, to text input
 
 *Allowed Values*: ['text', 'id', 'date', 'select', 'range'], must be one of these.

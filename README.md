@@ -205,7 +205,7 @@ The following haml snippet is an example of the code to include on your html pag
 
 NOTE: The operator field in the Filter has currently only been implemented within the SingleDateTime input component. This can be extended for use in other filter at a later stage.
 
-NOTE: The multi_select component can only be used if the select2 jQuery library version 3.5.2 has already been installed within your project.
+NOTE: The multi_select component can only be used if the select2 jQuery library version 3.5.4 has already been installed within your project.
 
 NOTE: The batchActionsConfiguration element is used to both enable the checkboxes column on the filterbar as well as define the actions that will be visible to the user for batch processing. The data value inside the selectable element has to be a unique identifier for each record. This unique identifier value will be assigned as the value for each checkbox so that when selected this value is added to the selected values list within the current filterbar state. Each element under actions will need a unique name and within these, the label and the URL to be called for batch processing will need to be defined.
 

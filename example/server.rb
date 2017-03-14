@@ -59,7 +59,7 @@ class Server < Sinatra::Base
       haystack.select do |hay|
         (Date.parse(value["from"])..Date.parse(value["to"])) === hay.send(field)
       end
-    when :id, :select
+    when :id, :select, :lazy_select, :lazy_multi_select
       haystack.select do |hay|
         hay.send(field).to_s == value
       end
