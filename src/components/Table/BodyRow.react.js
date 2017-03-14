@@ -18,6 +18,10 @@ export class BodyRow extends React.Component {
     }
   }
 
+  displayValueFor(value) {
+    return String(value === null ? "" : value);
+  }
+
   render() {
     var columns = this.context.tableStore.getColumns();
 
@@ -26,7 +30,7 @@ export class BodyRow extends React.Component {
         <BodyCell
           key={columnId}
           type={columns[columnId].type}
-          value={String(this.props.cells[columnId])}
+          value={this.displayValueFor(this.props.cells[columnId])}
         />
       );
     }, this);
