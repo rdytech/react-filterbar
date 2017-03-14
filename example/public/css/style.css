@@ -5,3 +5,14 @@
 #quick-filters-tooltip .tooltip-arrow {
   border-top-color: #4c4d4f;
 }
+
+/*.bootstrap-datetimepicker-widget {
+  z-index: 99999 !important;
+}
+*/
+
+.filterbar .panel {
+  overflow: visible;
+  float: left;
+  width: 100%;
+}
