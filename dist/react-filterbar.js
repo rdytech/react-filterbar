@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }), filterableTableNode);
 });
 
-},{"./components/FilterableTable.react":222,"./helpers/FilterVerificator":237,"URIjs":4,"babel/polyfill":196}],2:[function(require,module,exports){
+},{"./components/FilterableTable.react":224,"./helpers/FilterVerificator":239,"URIjs":4,"babel/polyfill":196}],2:[function(require,module,exports){
 /*!
  * URI.js - Mutating URLs
  * IPv6 Support
@@ -7877,7 +7877,7 @@ var FilterBarActor = exports.FilterBarActor = (function () {
   return FilterBarActor;
 })();
 
-},{"../clients/SearchClient":200,"../helpers/FilterVerificator":237,"../helpers/URLHelper":239}],199:[function(require,module,exports){
+},{"../clients/SearchClient":200,"../helpers/FilterVerificator":239,"../helpers/URLHelper":241}],199:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
@@ -8176,7 +8176,7 @@ BatchActionsList.contextTypes = {
   batchActionsStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../helpers/ModalHelper":238,"./BatchActionsListItem.react":203}],203:[function(require,module,exports){
+},{"../../../helpers/ModalHelper":240,"./BatchActionsListItem.react":203}],203:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -8419,7 +8419,7 @@ FilterBar.contextTypes = {
   batchActionsStore: React.PropTypes.object
 };
 
-},{"./ApplyFiltersButton.react":201,"./BatchActionsList/BatchActionsList.react":202,"./ClearFiltersButton.react":204,"./ExportResultsButton.react":205,"./FilterDisplay/FilterDisplay.react":207,"./FilterList/FilterList.react":217,"./SaveFiltersButton.react":219,"./SavedSearchesList/SavedSearchesList.react":220}],207:[function(require,module,exports){
+},{"./ApplyFiltersButton.react":201,"./BatchActionsList/BatchActionsList.react":202,"./ClearFiltersButton.react":204,"./ExportResultsButton.react":205,"./FilterDisplay/FilterDisplay.react":207,"./FilterList/FilterList.react":219,"./SaveFiltersButton.react":221,"./SavedSearchesList/SavedSearchesList.react":222}],207:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -8624,9 +8624,13 @@ var SingleDateTimeInput = require("./Inputs/SingleDateTimeInput.react").SingleDa
 
 var SelectInput = require("./Inputs/SelectInput.react").SelectInput;
 
+var LazySelectInput = require("./Inputs/LazySelectInput.react").LazySelectInput;
+
 var RangeInput = require("./Inputs/RangeInput.react").RangeInput;
 
 var MultiSelectInput = require("./Inputs/MultiSelectInput.react").MultiSelectInput;
+
+var LazyMultiSelectInput = require("./Inputs/LazyMultiSelectInput.react").LazyMultiSelectInput;
 
 function FilterInputFactory(propObject) {
   // Janky way to ensure uniqueness of the input, so that it re-renders the
@@ -8639,8 +8643,10 @@ function FilterInputFactory(propObject) {
     date_time: React.createElement(DateTimeInput, propObject),
     single_datetime: React.createElement(SingleDateTimeInput, propObject),
     select: React.createElement(SelectInput, propObject),
+    lazy_select: React.createElement(LazySelectInput, propObject),
     range: React.createElement(RangeInput, propObject),
-    multi_select: React.createElement(MultiSelectInput, propObject)
+    multi_select: React.createElement(MultiSelectInput, propObject),
+    lazy_multi_select: React.createElement(LazyMultiSelectInput, propObject)
   };
 
   if (inputs.hasOwnProperty(propObject.type)) {
@@ -8648,7 +8654,7 @@ function FilterInputFactory(propObject) {
   }
 }
 
-},{"./Inputs/DateInput.react":210,"./Inputs/DateTimeInput.react":211,"./Inputs/MultiSelectInput.react":212,"./Inputs/RangeInput.react":213,"./Inputs/SelectInput.react":214,"./Inputs/SingleDateTimeInput.react":215,"./Inputs/TextInput.react":216}],210:[function(require,module,exports){
+},{"./Inputs/DateInput.react":210,"./Inputs/DateTimeInput.react":211,"./Inputs/LazyMultiSelectInput.react":212,"./Inputs/LazySelectInput.react":213,"./Inputs/MultiSelectInput.react":214,"./Inputs/RangeInput.react":215,"./Inputs/SelectInput.react":216,"./Inputs/SingleDateTimeInput.react":217,"./Inputs/TextInput.react":218}],210:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -8925,6 +8931,239 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var LazyMultiSelectInput = exports.LazyMultiSelectInput = (function (_React$Component) {
+  function LazyMultiSelectInput(props, context) {
+    _classCallCheck(this, LazyMultiSelectInput);
+
+    _get(Object.getPrototypeOf(LazyMultiSelectInput.prototype), "constructor", this).call(this, props, context);
+    this.state = {
+      value: this.props.value === "" ? this.getDefaultValue() : this.props.value,
+      options: []
+    };
+  }
+
+  _inherits(LazyMultiSelectInput, _React$Component);
+
+  _createClass(LazyMultiSelectInput, {
+    componentDidMount: {
+      value: function componentDidMount() {
+        var filter = this.getFilterFromFilterBarStore();
+        this.setState({ options: [] });
+        filter.value = this.state.value;
+      }
+    },
+    getFilterFromFilterBarStore: {
+      value: function getFilterFromFilterBarStore() {
+        return this.context.filterBarStore.getFilter(this.props.filterUid);
+      }
+    },
+    componentDidUpdate: {
+      value: function componentDidUpdate() {
+        var multiSelectInput = $(React.findDOMNode(this.refs.reactLazyMultiSelect));
+        var filter = this.getFilterFromFilterBarStore();
+        multiSelectInput.select2({
+          minimumInputLength: 3,
+          multiple: true,
+          ajax: {
+            url: filter.url,
+            quietMillis: 250,
+            dataType: "json",
+            data: function data(term, page) {
+              return {
+                q: term
+              };
+            },
+            results: function results(data, params) {
+              return {
+                results: $.map(data, function (item) {
+                  return {
+                    text: item.label,
+                    id: item.value
+                  };
+                })
+              };
+            }
+          }
+        });
+        multiSelectInput.on("change", this.onSelect.bind(this));
+      }
+    },
+    componentWillUnmount: {
+      value: function componentWillUnmount() {
+        if (this.serverRequest !== undefined) {
+          this.serverRequest.abort();
+        }
+      }
+    },
+    getDefaultValue: {
+      value: function getDefaultValue() {
+        var filter = this.getFilterFromFilterBarStore();
+        return [filter["default"]];
+      }
+    },
+    onSelect: {
+      value: function onSelect(event) {
+        var filter = this.getFilterFromFilterBarStore();
+        filter.value = event.target.value.split(",");
+      }
+    },
+    render: {
+      value: function render() {
+        return React.createElement(
+          "li",
+          null,
+          React.createElement("input", {
+            className: "form-control",
+            value: this.state.value,
+            ref: "reactLazyMultiSelect"
+          })
+        );
+      }
+    }
+  });
+
+  return LazyMultiSelectInput;
+})(React.Component);
+
+LazyMultiSelectInput.propTypes = {
+  filterUid: React.PropTypes.string.isRequired,
+  value: React.PropTypes.node.isRequired
+};
+
+LazyMultiSelectInput.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object.isRequired
+};
+
+},{}],213:[function(require,module,exports){
+"use strict";
+
+var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var LazySelectInput = exports.LazySelectInput = (function (_React$Component) {
+  function LazySelectInput(props, context) {
+    _classCallCheck(this, LazySelectInput);
+
+    _get(Object.getPrototypeOf(LazySelectInput.prototype), "constructor", this).call(this, props, context);
+    this.state = { value: props.value, options: [] };
+  }
+
+  _inherits(LazySelectInput, _React$Component);
+
+  _createClass(LazySelectInput, {
+    componentDidMount: {
+      value: function componentDidMount() {
+        var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
+        this.setState({ options: [] });
+        filter.value = this.state.value;
+      }
+    },
+    componentDidUpdate: {
+      value: function componentDidUpdate() {
+        var selectInput = $(React.findDOMNode(this.refs.reactLazySelect));
+        var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
+        selectInput.select2({
+          minimumInputLength: 3,
+          ajax: {
+            url: filter.url,
+            quietMillis: 250,
+            dataType: "json",
+            data: function data(term, page) {
+              return {
+                q: term
+              };
+            },
+            results: function results(data, params) {
+              return {
+                results: $.map(data, function (item) {
+                  return {
+                    text: item.label,
+                    id: item.value
+                  };
+                })
+              };
+            }
+          }
+        });
+        selectInput.on("change", this.onSelect.bind(this));
+      }
+    },
+    componentWillUnmount: {
+      value: function componentWillUnmount() {
+        if (this.serverRequest !== undefined) {
+          this.serverRequest.abort();
+        }
+      }
+    },
+    stringValueOf: {
+      value: function stringValueOf(value) {
+        if (typeof value !== "undefined" && value !== null) {
+          return String(value);
+        }
+
+        return null;
+      }
+    },
+    onSelect: {
+      value: function onSelect(event) {
+        var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
+        filter.value = event.target.value.split(",");
+      }
+    },
+    render: {
+      value: function render() {
+        return React.createElement(
+          "li",
+          null,
+          React.createElement("input", {
+            className: "form-control",
+            selected: this.state.value,
+            value: this.state.value,
+            ref: "reactLazySelect"
+          })
+        );
+      }
+    }
+  });
+
+  return LazySelectInput;
+})(React.Component);
+
+LazySelectInput.propTypes = {
+  filterUid: React.PropTypes.string.isRequired,
+  value: React.PropTypes.node.isRequired
+};
+
+LazySelectInput.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object.isRequired
+};
+
+},{}],214:[function(require,module,exports){
+"use strict";
+
+var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
   function MultiSelectInput(props, context) {
     _classCallCheck(this, MultiSelectInput);
@@ -9029,7 +9268,7 @@ MultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],213:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9121,7 +9360,7 @@ RangeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],214:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9252,7 +9491,7 @@ SelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],215:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9356,7 +9595,7 @@ SingleDateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],216:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9441,7 +9680,7 @@ TextInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],217:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9530,7 +9769,7 @@ FilterList.propTypes = {
   disabledFilters: React.PropTypes.object.isRequired
 };
 
-},{"./FilterListOption.react":218}],218:[function(require,module,exports){
+},{"./FilterListOption.react":220}],220:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9587,7 +9826,7 @@ FilterListOption.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],219:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9672,7 +9911,7 @@ SaveFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],220:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9768,7 +10007,7 @@ SavedSearchesList.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"./SavedSearchesListItem.react":221}],221:[function(require,module,exports){
+},{"./SavedSearchesListItem.react":223}],223:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9825,7 +10064,7 @@ SavedSearchesListItem.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],222:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9905,7 +10144,7 @@ FilterableTable.childContextTypes = {
   tableActor: React.PropTypes.object
 };
 
-},{"../actors/FilterBarActor":198,"../actors/TableActor":199,"../stores/BatchActionsStore":240,"../stores/FilterBarStore":241,"../stores/TableStore":242,"./FilterBar/FilterBar.react":206,"./Table/Table.react":234}],223:[function(require,module,exports){
+},{"../actors/FilterBarActor":198,"../actors/TableActor":199,"../stores/BatchActionsStore":242,"../stores/FilterBarStore":243,"../stores/TableStore":244,"./FilterBar/FilterBar.react":206,"./Table/Table.react":236}],225:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -9958,7 +10197,7 @@ var QuickFilters = exports.QuickFilters = (function (_React$Component) {
 QuickFilters.contextTypes = {
   filterBarStore: React.PropTypes.object };
 
-},{"./QuickFiltersBlock/QuickFiltersBlock.react":224}],224:[function(require,module,exports){
+},{"./QuickFiltersBlock/QuickFiltersBlock.react":226}],226:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10013,7 +10252,7 @@ var QuickFiltersBlock = exports.QuickFiltersBlock = (function (_React$Component)
   return QuickFiltersBlock;
 })(React.Component);
 
-},{"./QuickFiltersButton.react":225}],225:[function(require,module,exports){
+},{"./QuickFiltersButton.react":227}],227:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10136,7 +10375,7 @@ QuickFiltersButton.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{}],226:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10192,7 +10431,7 @@ Body.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyRow.react":228}],227:[function(require,module,exports){
+},{"./BodyRow.react":230}],229:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10233,7 +10472,7 @@ BodyCell.propTypes = {
   value: React.PropTypes.string.isRequired
 };
 
-},{}],228:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10314,7 +10553,7 @@ BodyRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyCell.react":227,"./BodySelectable.react":229}],229:[function(require,module,exports){
+},{"./BodyCell.react":229,"./BodySelectable.react":231}],231:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10398,7 +10637,7 @@ BodySelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],230:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10480,7 +10719,7 @@ HeadingCell.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],231:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10560,7 +10799,7 @@ HeadingRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./HeadingCell.react":230,"./HeadingSelectable.react":232}],232:[function(require,module,exports){
+},{"./HeadingCell.react":232,"./HeadingSelectable.react":234}],234:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10639,7 +10878,7 @@ HeadingSelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],233:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10762,7 +11001,7 @@ Pagination.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{}],234:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
@@ -10864,7 +11103,7 @@ Table.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{"../../events/TableEvent":236,"./Body.react":226,"./HeadingRow.react":231,"./Pagination.react":233,"./TableCaption.react":235}],235:[function(require,module,exports){
+},{"../../events/TableEvent":238,"./Body.react":228,"./HeadingRow.react":233,"./Pagination.react":235,"./TableCaption.react":237}],237:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10920,7 +11159,7 @@ var TableCaption = exports.TableCaption = (function (_React$Component) {
   return TableCaption;
 })(React.Component);
 
-},{"../QuickFilters/QuickFilters.react":223}],236:[function(require,module,exports){
+},{"../QuickFilters/QuickFilters.react":225}],238:[function(require,module,exports){
 "use strict";
 
 exports.tableUpdated = tableUpdated;
@@ -10934,7 +11173,7 @@ function tableUpdated() {
   document.dispatchEvent(event);
 }
 
-},{}],237:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10988,7 +11227,7 @@ var FilterVerificator = exports.FilterVerificator = (function () {
   return FilterVerificator;
 })();
 
-},{"URIjs":4}],238:[function(require,module,exports){
+},{"URIjs":4}],240:[function(require,module,exports){
 "use strict";
 
 exports.displayModalForData = displayModalForData;
@@ -11008,7 +11247,7 @@ function displayModalForData(data) {
   modal.modal();
 }
 
-},{}],239:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 "use strict";
 
 exports.updateApplicationUrlState = updateApplicationUrlState;
@@ -11032,7 +11271,7 @@ function redirectUrl(url) {
   window.location.href = url;
 }
 
-},{"URIjs":4}],240:[function(require,module,exports){
+},{"URIjs":4}],242:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -11061,7 +11300,7 @@ var BatchActionsStore = exports.BatchActionsStore = (function () {
   return BatchActionsStore;
 })();
 
-},{}],241:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -11556,7 +11795,7 @@ var FilterBarStore = exports.FilterBarStore = (function () {
   return FilterBarStore;
 })();
 
-},{"../clients/SearchClient":200}],242:[function(require,module,exports){
+},{"../clients/SearchClient":200}],244:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
