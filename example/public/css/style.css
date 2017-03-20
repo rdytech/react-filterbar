@@ -5,3 +5,9 @@
 #quick-filters-tooltip .tooltip-arrow {
   border-top-color: #4c4d4f;
 }
+
+.filterbar .panel {
+  overflow: visible;
+  float: left;
+  width: 100%;
+}

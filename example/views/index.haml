@@ -12,8 +12,9 @@
   %script{:src=>"/js/select2.min.js"}
   %script{:src=>"/js/react-fluxer.js"}
   %script{:src=>"/js/react-bootstrap.js"}
+  %script{:src=>"/js/moment.js"}
+  %script{:src=>"/js/bootstrap-datetimepicker.min.js"}
   %script{:src=>"/js/react-filterbar.js"}
-
 
 %body.jobready
   %section#container
@@ -64,6 +65,10 @@
                       %dt.field{ data: { value: "published_on" } }
                       %dt.type{ data: { value: "date" } }
                       %dt.label{ data: { value: "Published On" } }
+                    %dl.published_on_with_time
+                      %dt.field{ data: { value: "published_on" } }
+                      %dt.type{ data: { value: "date_time" } }
+                      %dt.label{ data: { value: "Publish Time" } }
                     %dl.rating
                       %dt.field{ data: { value: "rating" } }
                       %dt.type{ data: { value: "range" } }
