@@ -34,6 +34,10 @@ export class LazySelectInput extends React.Component {
             })
           };
         }
+      },
+      initSelection: function(element, callback) {
+        var value = element.attr('value');
+        callback({id: value, text: value });
       }
     });
     selectInput.on('change', this.onSelect.bind(this));
@@ -45,17 +49,9 @@ export class LazySelectInput extends React.Component {
     }
   }
 
-  stringValueOf(value) {
-    if (typeof value !== 'undefined' && value !== null) {
-      return String(value);
-    }
-
-    return null;
-  }
-
   onSelect(event) {
     let filter = this.context.filterBarStore.getFilter(this.props.filterUid);
-    filter.value = event.target.value.split(",");
+    filter.value = event.target.value;
   }
 
   render() {
@@ -63,7 +59,6 @@ export class LazySelectInput extends React.Component {
       <li>
         <input
           className="form-control"
-          selected={this.state.value}
           value={this.state.value}
           ref="reactLazySelect"
         >

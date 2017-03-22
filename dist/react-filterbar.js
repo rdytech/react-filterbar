@@ -8983,6 +8983,13 @@ var LazyMultiSelectInput = exports.LazyMultiSelectInput = (function (_React$Comp
                 })
               };
             }
+          },
+          initSelection: function initSelection(element, callback) {
+            var data = [];
+            element.attr("value").split(",").forEach(function (value) {
+              data.push({ id: value, text: value });
+            });
+            callback(data);
           }
         });
         multiSelectInput.on("change", this.onSelect.bind(this));
@@ -9004,7 +9011,11 @@ var LazyMultiSelectInput = exports.LazyMultiSelectInput = (function (_React$Comp
     onSelect: {
       value: function onSelect(event) {
         var filter = this.getFilterFromFilterBarStore();
-        filter.value = event.target.value.split(",");
+        if (event.target.value === "") {
+          filter.value = [];
+        } else {
+          filter.value = event.target.value.split(",");
+        }
       }
     },
     render: {
@@ -9093,6 +9104,10 @@ var LazySelectInput = exports.LazySelectInput = (function (_React$Component) {
                 })
               };
             }
+          },
+          initSelection: function initSelection(element, callback) {
+            var value = element.attr("value");
+            callback({ id: value, text: value });
           }
         });
         selectInput.on("change", this.onSelect.bind(this));
@@ -9105,19 +9120,10 @@ var LazySelectInput = exports.LazySelectInput = (function (_React$Component) {
         }
       }
     },
-    stringValueOf: {
-      value: function stringValueOf(value) {
-        if (typeof value !== "undefined" && value !== null) {
-          return String(value);
-        }
-
-        return null;
-      }
-    },
     onSelect: {
       value: function onSelect(event) {
         var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
-        filter.value = event.target.value.split(",");
+        filter.value = event.target.value;
       }
     },
     render: {
@@ -9127,7 +9133,6 @@ var LazySelectInput = exports.LazySelectInput = (function (_React$Component) {
           null,
           React.createElement("input", {
             className: "form-control",
-            selected: this.state.value,
             value: this.state.value,
             ref: "reactLazySelect"
           })

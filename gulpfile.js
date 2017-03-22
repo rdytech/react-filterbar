@@ -95,6 +95,18 @@ gulp.task('neptune', function() {
   .pipe(gulp.dest('/Users/emersonxavier/Code/neptune/vendor/assets/bower_components/react-filterbar/dist'));
 });
 
+gulp.task('marcus', function() {
+  browserify({
+    entries: './src/' + appFile,
+    extensions: ['.js'],
+    debug: true
+  })
+  .transform(babelify)
+  .bundle()
+  .pipe(source(appDistFile))
+  .pipe(gulp.dest('/Users/marcusm/Projects/neptune/vendor/assets/bower_components/react-filterbar/dist'));
+});
+
 gulp.task('build', ['delete'], function () {
   return browserify({
     entries: './src/' + appFile,

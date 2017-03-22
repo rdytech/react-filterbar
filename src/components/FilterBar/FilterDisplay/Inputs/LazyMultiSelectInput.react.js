@@ -42,6 +42,13 @@ export class LazyMultiSelectInput extends React.Component {
             })
           };
         }
+      },
+      initSelection: function(element, callback) {
+        var data = [];
+        element.attr('value').split(',').forEach(function(value) {
+          data.push({id: value, text: value })
+        });
+        callback(data);
       }
     });
     multiSelectInput.on('change', this.onSelect.bind(this));
@@ -60,7 +67,11 @@ export class LazyMultiSelectInput extends React.Component {
 
   onSelect(event) {
     let filter = this.getFilterFromFilterBarStore();
-    filter.value = event.target.value.split(",");
+    if(event.target.value === '') {
+      filter.value = [];
+    } else {
+      filter.value = event.target.value.split(",");
+    }
   }
 
   render() {
