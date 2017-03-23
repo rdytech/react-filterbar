@@ -41,6 +41,11 @@
                   %dt.saved-searches-url{ data: { value: '/saved_searches' } }
                   %dt.export-results-url{ data: { value: '/export_results' } }
                   %dl.filters
+                    %dl.author_multi_lazy
+                      %dt.field{ data: { value: "author" } }
+                      %dt.label{ data: { value: "Lazy Author Multi" } }
+                      %dt.type{ data: { value: "lazy_multi_select" } }
+                      %dt.url{ data: { value: "/authors" } }
                     %dl.author_multi_test
                       %dt.field{ data: { value: "author" } }
                       %dt.label{ data: { value: "Author Multi" } }
@@ -53,6 +58,11 @@
                       %dt.label{ data: { value: "Author" } }
                       %dt.url{ data: { value: "/authors" } }
                       %dt.default{ data: { value: "Author 31" } }
+                    %dl.author_lazy
+                      %dt.field{ data: { value: "author" } }
+                      %dt.type{ data: { value: "lazy_select" } }
+                      %dt.label{ data: { value: "Lazy Author" } }
+                      %dt.url{ data: { value: "/authors" } }
                     %dl.title
                       %dt.field{ data: { value: "title" } }
                       %dt.type{ data: { value: "text" } }
