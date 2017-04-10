@@ -12,6 +12,8 @@ export class FilterBarStore {
     this.saveSearchUrl = configuration.saveSearchUrl;
     this.savedSearchesUrl = configuration.savedSearchesUrl;
     this.exportResultsUrl = configuration.exportResultsUrl;
+    this.exportPageLimit = configuration.exportPageLimit;
+    this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
     this.quickFilters = configuration.quickFilters || {};
 
@@ -72,6 +74,14 @@ export class FilterBarStore {
 
   getExportResultsUrl() {
     return this.exportResultsUrl;
+  }
+
+  getExportPageLimit() {
+    return Number(this.exportPageLimit);
+  }
+
+  getExportPageLimitExceededMessage() {
+    return this.exportPageLimitExceededMessage || "Cannot Export CSV. Exporting is limited to " + this.getExportPageLimit() + " page(s) at a time.";
   }
 
   getSavedSearches() {

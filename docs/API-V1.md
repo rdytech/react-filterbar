@@ -14,6 +14,8 @@ An example usage of the configuration API is:
     %dt.save-search-url{ data:  { value: '/books/saved_searches' } }
     %dt.saved-searches-url{ data:  { value: '/books/saved_searches' } }
     %dt.export-results-url{ data:  { value: '/books/export' } }
+    %dt.export-page-limit{ data:  { value: '50' } }
+    %dt.export-page-limit-exceeded-message{ data:  { value: 'Too many books.' } }
     %dl.filters
       %dl.genre
         %dt.field{   data:  { value: "genre" } }
@@ -89,6 +91,16 @@ This setting is the endpoint the component should use to GET a list of saved sea
 This setting is the endpoint the component should use to export the current resultset. The API contract is defined at [Export Results API](#export-results-api)
 
 *Allowed Values*: ['/resource', '://fqdn/resource']
+
+#### dt.export-page-limit
+This setting limits the number of pages that can be exported at once. The API contract is defined at [Export Results API](#export-results-api)
+
+*Allowed Values*: string(integer)
+
+#### dt.export-page-limit-exceeded-message
+This message is displayed to the user if they attempt to export more pages than they're limited to. The API contract is defined at [Export Results API](#export-results-api)
+
+*Allowed Values*: string
 
 #### dl.filters
 
