@@ -8972,7 +8972,7 @@ var LazyMultiSelectInput = exports.LazyMultiSelectInput = (function (_React$Comp
         var multiSelectInput = $(React.findDOMNode(this.refs.reactLazyMultiSelect));
         var filter = this.getFilterFromFilterBarStore();
         multiSelectInput.select2({
-          minimumInputLength: 3,
+          minimumInputLength: filter.minimumInputLength || 3,
           multiple: true,
           ajax: {
             url: filter.url,
@@ -9094,7 +9094,7 @@ var LazySelectInput = exports.LazySelectInput = (function (_React$Component) {
         var selectInput = $(React.findDOMNode(this.refs.reactLazySelect));
         var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
         selectInput.select2({
-          minimumInputLength: 3,
+          minimumInputLength: filter.minimumInputLength || 3,
           ajax: {
             url: filter.url,
             quietMillis: 250,
