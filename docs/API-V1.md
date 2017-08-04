@@ -156,6 +156,12 @@ This is an optional field for a select type. If the field is present, the input 
 
 *Allowed Values*: ['/resource', '://fqdn/resource']
 
+###### dt.minimumInputLength
+
+This is an optional field for a lazy_multi_select/lazy_select type. The default minimum input length is 3.
+
+*Allowed Values*: number
+
 ### dl.tableConfiguration
 
 The tableConfiguration tree has several options, as well as a child tree containing the configurations and definitions for the columns used in the Table component.

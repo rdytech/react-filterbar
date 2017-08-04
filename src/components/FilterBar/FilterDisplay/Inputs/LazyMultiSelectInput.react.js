@@ -21,7 +21,7 @@ export class LazyMultiSelectInput extends React.Component {
     let multiSelectInput = $(React.findDOMNode(this.refs.reactLazyMultiSelect));
     let filter = this.getFilterFromFilterBarStore();
     multiSelectInput.select2({
-      minimumInputLength: 3,
+      minimumInputLength: filter.minimumInputLength || 3,
       multiple: true,
       ajax: {
         url: filter.url,

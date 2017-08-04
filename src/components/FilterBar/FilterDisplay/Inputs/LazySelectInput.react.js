@@ -14,7 +14,7 @@ export class LazySelectInput extends React.Component {
     let selectInput = $(React.findDOMNode(this.refs.reactLazySelect));
     let filter = this.context.filterBarStore.getFilter(this.props.filterUid);
     selectInput.select2({
-      minimumInputLength: 3,
+      minimumInputLength: filter.minimumInputLength || 3,
       ajax: {
         url: filter.url,
         quietMillis: 250,
