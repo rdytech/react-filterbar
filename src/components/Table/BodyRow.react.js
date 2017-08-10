@@ -9,10 +9,17 @@ export class BodyRow extends React.Component {
   displaySelectableColumn() {
     if (this.context.tableStore.getSelectableColumn() !== undefined) {
       var selectValue = this.props.cells[this.context.tableStore.getSelectableColumn()].toString();
+      var selectableStyles;
+      if(this.props.displayTable === 'scroll') {
+        selectableStyles = {
+          position: `relative`,
+        };
+      }
       return(
         <BodySelectable
           value={selectValue}
           key={selectValue}
+          style={selectableStyles}
         />
       )
     }
@@ -24,21 +31,39 @@ export class BodyRow extends React.Component {
 
   render() {
     var columns = this.context.tableStore.getColumns();
-
-    var cells = Object.keys(columns).map(function(columnId) {
+    var cellKeys = Object.keys(columns);
+    var cells = Object.keys(columns).map(function(columnId, index) {
+      var cellStyles;
+      if(this.props.displayTable === 'fix' && index == (cellKeys.length -1)) {
+        cellStyles = {
+          position: `relative`,
+          zIndex: 1
+        };
+      }
+      else if(this.props.displayTable === 'scroll' && index < (cellKeys.length -1)) {
+        cellStyles = {
+          position: `relative`,
+        };
+      }
       return (
         <BodyCell
           key={columnId}
           type={columns[columnId].type}
           value={this.displayValueFor(this.props.cells[columnId])}
+          style={cellStyles}
         />
       );
     }, this);
 
     var displaySelectableColumn = this.displaySelectableColumn();
-
+    var trStyles;
+    if(this.props.displayTable === 'fix' || this.props.displayTable === 'scroll') {
+      trStyles = {
+        whiteSpace: `nowrap`
+      };
+    }
     return (
-      <tr>
+      <tr style={trStyles}>
         {displaySelectableColumn}
         {cells}
       </tr>

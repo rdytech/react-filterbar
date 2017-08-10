@@ -7,23 +7,43 @@ export class TableCaption extends React.Component {
 
   render() {
     var content = this.props.value;
-
-    if (content) {
-      return (
-        <caption>
-          <div className='pull-left'>
-            {content}
+    if(this.props.outputDiv) {
+      if(content) {
+        return (
+          <div className='clearfix' style={{marginBottom: `5px`}}>
+            <div className='pull-left'>
+                {content}
+              </div>
+              <div className='pull-right'>
+                <QuickFilters />
+              </div>
           </div>
-          <div className='pull-right'>
-            <QuickFilters />
-          </div>
-        </caption>
-      );
+        );
+      }
+      else {
+        return (
+          <div></div>
+        );
+      }
     }
     else {
-      return (
-        <caption hidden />
-      );
+      if (content) {
+        return (
+          <caption>
+            <div className='pull-left'>
+              {content}
+            </div>
+            <div className='pull-right'>
+              <QuickFilters />
+            </div>
+          </caption>
+        );
+      }
+      else {
+        return (
+          <caption hidden />
+        );
+      }
     }
   }
 }

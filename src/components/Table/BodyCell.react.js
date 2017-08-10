@@ -7,7 +7,7 @@ export class BodyCell extends React.Component {
     var content = this.props.value;
 
     return (
-      <td dangerouslySetInnerHTML={{__html: content}} />
+      <td style={this.props.style} dangerouslySetInnerHTML={{__html: content}} />
     );
   }
 }

@@ -10,32 +10,59 @@ export class HeadingRow extends React.Component {
     var selectableColumn = this.context.tableStore.getSelectableColumn();
     if (selectableColumn !== undefined) {
       var selectableKey = 'select_all_' + this.context.tableStore.getCurrentPage();
+      var selectableStyles;
+      if(this.props.displayTable === 'scroll') {
+        selectableStyles = {
+          position: `relative`,
+        };
+      }
       return(
         <HeadingSelectable
           index={this.props.key}
           key={selectableKey}
+          style={selectableStyles}
         />
       )
     }
   }
 
   render() {
-    var cells = Object.keys(this.props.cells).map(function(cellId) {
+    var cellKeys = Object.keys(this.props.cells);
+
+    var cells = cellKeys.map(function(cellId, index) {
+      var cellStyles;
+      if(this.props.displayTable === 'fix' && index == (cellKeys.length -1)) {
+        cellStyles = {
+          position: `relative`,
+          zIndex: 1
+        };
+      }
+      else if(this.props.displayTable === 'scroll' && index < (cellKeys.length -1)) {
+        cellStyles = {
+          position: `relative`,
+        };
+      }
       return (
         <HeadingCell
           key={cellId}
           type={this.props.cells[cellId].type}
           value={this.props.cells[cellId].heading}
           sortable={this.props.cells[cellId].sortable}
+          style={cellStyles}
         />
       );
     }, this);
 
     var displaySelectableColumn = this.displaySelectableColumn();
-
+    var trStyles;
+    if(this.props.displayTable === 'fix' || this.props.displayTable === 'scroll') {
+      trStyles = {
+        whiteSpace: `nowrap`
+      };
+    }
     return (
       <thead>
-        <tr>
+        <tr style={trStyles}>
           {displaySelectableColumn}
           {cells}
         </tr>

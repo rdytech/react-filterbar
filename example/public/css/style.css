@@ -11,3 +11,6 @@
   float: left;
   width: 100%;
 }
+.table-striped > tbody > tr:nth-child(even) > td {
+  background: white;
+}

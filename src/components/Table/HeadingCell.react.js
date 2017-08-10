@@ -34,14 +34,16 @@ export class HeadingCell extends React.Component {
     var content = this.props.value;
 
     if (this.props.sortable !== undefined) {
+      var style = {cursor: "pointer"}
       return (
-        <th className={["sortable", this.currentSortOrder()].join(" ")} onClick={this.sortTable.bind(this)} style={{cursor: "pointer"}}>
+        <th className={["sortable", this.currentSortOrder()].join(" ")} onClick={this.sortTable.bind(this)} style={Object.assign(style, this.props.style)}>
           {content}
         </th>
       );
-    } else {
+    }
+    else {
       return (
-        <th>
+        <th style={this.props.style}>
           {content}
         </th>
       );
