@@ -10548,11 +10548,16 @@ var BodyRow = exports.BodyRow = (function (_React$Component) {
           if (this.props.displayTable === "fix" && index == cellKeys.length - 1) {
             cellStyles = {
               position: "relative",
-              zIndex: 1
+              zIndex: 1,
+              whiteSpace: "nowrap"
             };
           } else if (this.props.displayTable === "scroll" && index < cellKeys.length - 1) {
             cellStyles = {
               position: "relative" };
+          } else if (this.props.displayTable === "scroll" && index == cellKeys.length - 1) {
+            cellStyles = {
+              whiteSpace: "nowrap"
+            };
           }
           return React.createElement(BodyCell, {
             key: columnId,
@@ -10563,15 +10568,9 @@ var BodyRow = exports.BodyRow = (function (_React$Component) {
         }, this);
 
         var displaySelectableColumn = this.displaySelectableColumn();
-        var trStyles;
-        if (this.props.displayTable === "fix" || this.props.displayTable === "scroll") {
-          trStyles = {
-            whiteSpace: "nowrap"
-          };
-        }
         return React.createElement(
           "tr",
-          { style: trStyles },
+          null,
           displaySelectableColumn,
           cells
         );
@@ -10814,11 +10813,16 @@ var HeadingRow = exports.HeadingRow = (function (_React$Component) {
           if (this.props.displayTable === "fix" && index == cellKeys.length - 1) {
             cellStyles = {
               position: "relative",
-              zIndex: 1
+              zIndex: 1,
+              whiteSpace: "nowrap"
             };
           } else if (this.props.displayTable === "scroll" && index < cellKeys.length - 1) {
             cellStyles = {
               position: "relative" };
+          } else if (this.props.displayTable === "scroll" && index == cellKeys.length - 1) {
+            cellStyles = {
+              whiteSpace: "nowrap"
+            };
           }
           return React.createElement(HeadingCell, {
             key: cellId,
@@ -10830,18 +10834,12 @@ var HeadingRow = exports.HeadingRow = (function (_React$Component) {
         }, this);
 
         var displaySelectableColumn = this.displaySelectableColumn();
-        var trStyles;
-        if (this.props.displayTable === "fix" || this.props.displayTable === "scroll") {
-          trStyles = {
-            whiteSpace: "nowrap"
-          };
-        }
         return React.createElement(
           "thead",
           null,
           React.createElement(
             "tr",
-            { style: trStyles },
+            null,
             displaySelectableColumn,
             cells
           )
@@ -11139,7 +11137,7 @@ var Table = exports.Table = (function (_React$Component) {
         var headings = this.state.columnHeadings;
         var tableCaption = this.state.tableCaption;
 
-        if (this.state.fixRightColumn !== undefined) {
+        if (this.state.fixRightColumn === "true") {
           return React.createElement(
             "div",
             { className: "panel panel-responsive" },

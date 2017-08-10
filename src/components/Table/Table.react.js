@@ -42,7 +42,7 @@ export class Table extends React.Component {
     var headings = this.state.columnHeadings;
     var tableCaption = this.state.tableCaption;
 
-    if (this.state.fixRightColumn !== undefined) {
+    if (this.state.fixRightColumn === 'true') {
       return (
         <div className="panel panel-responsive">
           <TableCaption value={tableCaption} outputDiv={true} />

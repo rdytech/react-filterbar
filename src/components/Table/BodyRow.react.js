@@ -37,13 +37,19 @@ export class BodyRow extends React.Component {
       if(this.props.displayTable === 'fix' && index == (cellKeys.length -1)) {
         cellStyles = {
           position: `relative`,
-          zIndex: 1
+          zIndex: 1,
+          whiteSpace: `nowrap`
         };
       }
       else if(this.props.displayTable === 'scroll' && index < (cellKeys.length -1)) {
         cellStyles = {
           position: `relative`,
         };
+      }
+      else if(this.props.displayTable === 'scroll' && index == (cellKeys.length -1)) {
+        cellStyles = {
+          whiteSpace: `nowrap`
+        }
       }
       return (
         <BodyCell
@@ -56,14 +62,8 @@ export class BodyRow extends React.Component {
     }, this);
 
     var displaySelectableColumn = this.displaySelectableColumn();
-    var trStyles;
-    if(this.props.displayTable === 'fix' || this.props.displayTable === 'scroll') {
-      trStyles = {
-        whiteSpace: `nowrap`
-      };
-    }
     return (
-      <tr style={trStyles}>
+      <tr>
         {displaySelectableColumn}
         {cells}
       </tr>
