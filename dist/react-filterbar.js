@@ -10422,7 +10422,8 @@ var Body = exports.Body = (function (_React$Component) {
         var rows = this.props.rows.map(function (cells, index) {
           return React.createElement(BodyRow, {
             cells: cells,
-            key: index
+            key: index,
+            displayTable: this.props.displayTable
           });
         }, this);
         return React.createElement(
@@ -10475,7 +10476,7 @@ var BodyCell = exports.BodyCell = (function (_React$Component) {
       value: function render() {
         var content = this.props.value;
 
-        return React.createElement("td", { dangerouslySetInnerHTML: { __html: content } });
+        return React.createElement("td", { style: this.props.style, dangerouslySetInnerHTML: { __html: content } });
       }
     }
   });
@@ -10520,9 +10521,15 @@ var BodyRow = exports.BodyRow = (function (_React$Component) {
       value: function displaySelectableColumn() {
         if (this.context.tableStore.getSelectableColumn() !== undefined) {
           var selectValue = this.props.cells[this.context.tableStore.getSelectableColumn()].toString();
+          var selectableStyles;
+          if (this.props.displayTable === "scroll") {
+            selectableStyles = {
+              position: "relative" };
+          }
           return React.createElement(BodySelectable, {
             value: selectValue,
-            key: selectValue
+            key: selectValue,
+            style: selectableStyles
           });
         }
       }
@@ -10535,17 +10542,32 @@ var BodyRow = exports.BodyRow = (function (_React$Component) {
     render: {
       value: function render() {
         var columns = this.context.tableStore.getColumns();
-
-        var cells = Object.keys(columns).map(function (columnId) {
+        var cellKeys = Object.keys(columns);
+        var cells = Object.keys(columns).map(function (columnId, index) {
+          var cellStyles;
+          if (this.props.displayTable === "fix" && index == cellKeys.length - 1) {
+            cellStyles = {
+              position: "relative",
+              zIndex: 1,
+              whiteSpace: "nowrap"
+            };
+          } else if (this.props.displayTable === "scroll" && index < cellKeys.length - 1) {
+            cellStyles = {
+              position: "relative" };
+          } else if (this.props.displayTable === "scroll" && index == cellKeys.length - 1) {
+            cellStyles = {
+              whiteSpace: "nowrap"
+            };
+          }
           return React.createElement(BodyCell, {
             key: columnId,
             type: columns[columnId].type,
-            value: this.displayValueFor(this.props.cells[columnId])
+            value: this.displayValueFor(this.props.cells[columnId]),
+            style: cellStyles
           });
         }, this);
 
         var displaySelectableColumn = this.displaySelectableColumn();
-
         return React.createElement(
           "tr",
           null,
@@ -10628,7 +10650,7 @@ var BodySelectable = exports.BodySelectable = (function (_React$Component) {
       value: function render() {
         return React.createElement(
           "td",
-          null,
+          { style: this.props.style },
           React.createElement("input", {
             type: "checkbox",
             value: this.props.value,
@@ -10706,15 +10728,16 @@ var HeadingCell = exports.HeadingCell = (function (_React$Component) {
         var content = this.props.value;
 
         if (this.props.sortable !== undefined) {
+          var style = { cursor: "pointer" };
           return React.createElement(
             "th",
-            { className: ["sortable", this.currentSortOrder()].join(" "), onClick: this.sortTable.bind(this), style: { cursor: "pointer" } },
+            { className: ["sortable", this.currentSortOrder()].join(" "), onClick: this.sortTable.bind(this), style: Object.assign(style, this.props.style) },
             content
           );
         } else {
           return React.createElement(
             "th",
-            null,
+            { style: this.props.style },
             content
           );
         }
@@ -10768,26 +10791,49 @@ var HeadingRow = exports.HeadingRow = (function (_React$Component) {
         var selectableColumn = this.context.tableStore.getSelectableColumn();
         if (selectableColumn !== undefined) {
           var selectableKey = "select_all_" + this.context.tableStore.getCurrentPage();
+          var selectableStyles;
+          if (this.props.displayTable === "scroll") {
+            selectableStyles = {
+              position: "relative" };
+          }
           return React.createElement(HeadingSelectable, {
             index: this.props.key,
-            key: selectableKey
+            key: selectableKey,
+            style: selectableStyles
           });
         }
       }
     },
     render: {
       value: function render() {
-        var cells = Object.keys(this.props.cells).map(function (cellId) {
+        var cellKeys = Object.keys(this.props.cells);
+
+        var cells = cellKeys.map(function (cellId, index) {
+          var cellStyles;
+          if (this.props.displayTable === "fix" && index == cellKeys.length - 1) {
+            cellStyles = {
+              position: "relative",
+              zIndex: 1,
+              whiteSpace: "nowrap"
+            };
+          } else if (this.props.displayTable === "scroll" && index < cellKeys.length - 1) {
+            cellStyles = {
+              position: "relative" };
+          } else if (this.props.displayTable === "scroll" && index == cellKeys.length - 1) {
+            cellStyles = {
+              whiteSpace: "nowrap"
+            };
+          }
           return React.createElement(HeadingCell, {
             key: cellId,
             type: this.props.cells[cellId].type,
             value: this.props.cells[cellId].heading,
-            sortable: this.props.cells[cellId].sortable
+            sortable: this.props.cells[cellId].sortable,
+            style: cellStyles
           });
         }, this);
 
         var displaySelectableColumn = this.displaySelectableColumn();
-
         return React.createElement(
           "thead",
           null,
@@ -10874,7 +10920,7 @@ var HeadingSelectable = exports.HeadingSelectable = (function (_React$Component)
       value: function render() {
         return React.createElement(
           "th",
-          null,
+          { style: this.props.style },
           React.createElement("input", {
             type: "checkbox",
             onChange: this.addRemoveAllFromSelection.bind(this),
@@ -11081,7 +11127,8 @@ var Table = exports.Table = (function (_React$Component) {
           rows: this.context.tableStore.getRows(),
           currentPage: this.context.tableStore.getCurrentPage(),
           totalPages: this.context.tableStore.getTotalPages(),
-          tableCaption: this.context.tableStore.getTableCaption()
+          tableCaption: this.context.tableStore.getTableCaption(),
+          fixRightColumn: this.context.tableStore.getFixRightColumn()
         };
       }
     },
@@ -11090,22 +11137,55 @@ var Table = exports.Table = (function (_React$Component) {
         var headings = this.state.columnHeadings;
         var tableCaption = this.state.tableCaption;
 
-        return React.createElement(
-          "div",
-          { className: "panel panel-responsive" },
-          React.createElement(
+        if (this.state.fixRightColumn === "true") {
+          return React.createElement(
             "div",
-            { className: "table-responsive" },
+            { className: "panel panel-responsive" },
+            React.createElement(TableCaption, { value: tableCaption, outputDiv: true }),
             React.createElement(
-              "table",
-              { className: "table table-hover table-striped" },
-              React.createElement(TableCaption, { value: tableCaption }),
-              React.createElement(HeadingRow, { cells: headings }),
-              React.createElement(Body, { rows: this.state.rows })
+              "div",
+              { className: "table-responsive", style: { position: "relative" } },
+              React.createElement(
+                "div",
+                { style: { position: "absolute", right: 0, minWidth: "100%" } },
+                React.createElement(
+                  "table",
+                  { className: "table table-hover table-striped" },
+                  React.createElement(HeadingRow, { cells: headings, displayTable: "fix" }),
+                  React.createElement(Body, { rows: this.state.rows, displayTable: "fix" })
+                )
+              ),
+              React.createElement(
+                "div",
+                { style: { overflowX: "auto" } },
+                React.createElement(
+                  "table",
+                  { className: "table table-hover table-striped" },
+                  React.createElement(HeadingRow, { cells: headings, displayTable: "scroll" }),
+                  React.createElement(Body, { rows: this.state.rows, displayTable: "scroll" })
+                )
+              )
             ),
             React.createElement(Pagination, { currentPage: this.state.currentPage, totalPages: this.state.totalPages })
-          )
-        );
+          );
+        } else {
+          return React.createElement(
+            "div",
+            { className: "panel panel-responsive" },
+            React.createElement(
+              "div",
+              { className: "table-responsive" },
+              React.createElement(
+                "table",
+                { className: "table table-hover table-striped" },
+                React.createElement(TableCaption, { value: tableCaption }),
+                React.createElement(HeadingRow, { cells: headings }),
+                React.createElement(Body, { rows: this.state.rows })
+              ),
+              React.createElement(Pagination, { currentPage: this.state.currentPage, totalPages: this.state.totalPages })
+            )
+          );
+        }
       }
     }
   });
@@ -11148,24 +11228,44 @@ var TableCaption = exports.TableCaption = (function (_React$Component) {
     render: {
       value: function render() {
         var content = this.props.value;
-
-        if (content) {
-          return React.createElement(
-            "caption",
-            null,
-            React.createElement(
+        if (this.props.outputDiv) {
+          if (content) {
+            return React.createElement(
               "div",
-              { className: "pull-left" },
-              content
-            ),
-            React.createElement(
-              "div",
-              { className: "pull-right" },
-              React.createElement(QuickFilters, null)
-            )
-          );
+              { className: "clearfix", style: { marginBottom: "5px" } },
+              React.createElement(
+                "div",
+                { className: "pull-left" },
+                content
+              ),
+              React.createElement(
+                "div",
+                { className: "pull-right" },
+                React.createElement(QuickFilters, null)
+              )
+            );
+          } else {
+            return React.createElement("div", null);
+          }
         } else {
-          return React.createElement("caption", { hidden: true });
+          if (content) {
+            return React.createElement(
+              "caption",
+              null,
+              React.createElement(
+                "div",
+                { className: "pull-left" },
+                content
+              ),
+              React.createElement(
+                "div",
+                { className: "pull-right" },
+                React.createElement(QuickFilters, null)
+              )
+            );
+          } else {
+            return React.createElement("caption", { hidden: true });
+          }
         }
       }
     }
@@ -11852,6 +11952,7 @@ var TableStore = exports.TableStore = (function () {
     this.url = configuration.dataUrl;
     this.selectable = configuration.selectable;
     this.selectedRows = [];
+    this.fixRightColumn = configuration.fixRightColumn;
   }
 
   _createClass(TableStore, {
@@ -11910,6 +12011,11 @@ var TableStore = exports.TableStore = (function () {
     getSelectedRows: {
       value: function getSelectedRows() {
         return this.selectedRows;
+      }
+    },
+    getFixRightColumn: {
+      value: function getFixRightColumn() {
+        return this.fixRightColumn;
       }
     },
     clearSelectedRows: {

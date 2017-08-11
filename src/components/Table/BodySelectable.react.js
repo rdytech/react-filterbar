@@ -35,7 +35,7 @@ export class BodySelectable extends React.Component {
 
   render() {
     return (
-      <td>
+      <td style={this.props.style}>
         <input
           type='checkbox'
           value={this.props.value}

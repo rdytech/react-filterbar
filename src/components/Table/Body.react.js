@@ -11,6 +11,7 @@ export class Body extends React.Component {
         <BodyRow
           cells={cells}
           key={index}
+          displayTable = {this.props.displayTable}
         />
       );
     }, this);

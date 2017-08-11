@@ -204,6 +204,22 @@ This is an optional field. It is used to indicate that the data in the column is
 
 *Allowed Values*: [null, string].
 
+###### dt.fix-right-column
+
+This is an optional field. If value is set to true, the right column would be fixed/frozen.
+
+```HAML
+  %dt.fix-right-column{ data: { value: "true"} }
+```
+
+In this case, please add css below in your assets. because two tables are one above another, we have to set background to non-transparent color. reference: https://stackoverflow.com/a/17557830
+
+```
+.table-striped > tbody > tr:nth-child(even) > td {
+  background: white;
+}
+```
+
 ## Table Results API
 
 The table dt.data-url endpoint and the filterbar dt.search-url endpoints expect to receive JSON documents containing results for the queries / initial data load for the table.

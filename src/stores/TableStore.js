@@ -16,6 +16,7 @@ export class TableStore {
     this.url = configuration.dataUrl;
     this.selectable = configuration.selectable;
     this.selectedRows = [];
+    this.fixRightColumn = configuration.fixRightColumn;
   }
 
   setUrl(url) {
@@ -62,6 +63,10 @@ export class TableStore {
 
   getSelectedRows() {
     return this.selectedRows;
+  }
+
+  getFixRightColumn() {
+    return this.fixRightColumn;
   }
 
   clearSelectedRows() {

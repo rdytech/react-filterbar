@@ -35,7 +35,7 @@ export class HeadingSelectable extends React.Component {
 
   render() {
     return (
-      <th>
+      <th style={this.props.style}>
         <input
           type='checkbox'
           onChange={this.addRemoveAllFromSelection.bind(this)}
