@@ -9,7 +9,6 @@ export class FilterBarStore {
     this.persistent = configuration.persistent;
     this.url = configuration.searchUrl;
     this.searchUrl = configuration.searchUrl;
-    this.saveSearchUrl = configuration.saveSearchUrl;
     this.savedSearchesUrl = configuration.savedSearchesUrl;
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.exportPageLimit = configuration.exportPageLimit;
@@ -62,10 +61,6 @@ export class FilterBarStore {
 
   getSearchUrl() {
     return this.searchUrl;
-  }
-
-  getSaveSearchUrl() {
-    return this.saveSearchUrl;
   }
 
   getSavedSearchesUrl() {

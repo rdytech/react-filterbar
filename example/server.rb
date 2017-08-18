@@ -1,5 +1,6 @@
 require 'json'
 require 'sinatra/respond_with'
+require 'yaml/store'
 
 class Server < Sinatra::Base
   register Sinatra::RespondWith
@@ -42,6 +43,32 @@ class Server < Sinatra::Base
           }
         end.to_json
       end
+    end
+  end
+
+  post '/saved_searches' do
+    saved_search = params[:saved_search]
+    store = YAML::Store.new 'saved_search.yml'
+    store.transaction do
+      store[saved_search[:search_title]] = saved_search[:filters].to_json
+    end
+  end
+
+  get '/saved_searches' do
+    store = YAML::Store.new 'saved_search.yml'
+    result = []
+    store.transaction do
+      store.roots.each do |name|
+        result.push({ name: name, configuration: store[name], url: "/saved_searches/#{name}"})
+      end
+    end
+    result.to_json
+  end
+
+  delete '/saved_searches/:name' do |name|
+    store = YAML::Store.new 'saved_search.yml'
+    store.transaction do
+      store.delete(name)
     end
   end
 

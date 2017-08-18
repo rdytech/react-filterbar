@@ -11,7 +11,6 @@ An example usage of the configuration API is:
   %dl.filterBarConfiguration
     %dt.persistent{ data:  { value: 'true' } }
     %dt.search-url{ data:  { value: '/books' } }
-    %dt.save-search-url{ data:  { value: '/books/saved_searches' } }
     %dt.saved-searches-url{ data:  { value: '/books/saved_searches' } }
     %dt.export-results-url{ data:  { value: '/books/export' } }
     %dt.export-page-limit{ data:  { value: '50' } }
@@ -75,15 +74,9 @@ This setting is the endpoint the component should use to GET results from. The A
 
 *Allowed Values*: ['/resource', '://fqdn/resource']
 
-#### dt.save-search-url
-
-This setting is the endpoint the component should use to POST a search in order to save it. The API contract is defined at [Saved Search API](#saved-search-api)
-
-*Allowed Values*: ['/resource', '://fqdn/resource']
-
 #### dt.saved-searches-url
 
-This setting is the endpoint the component should use to GET a list of saved searches. The API contract is defined at [Saved Search API](#saved-search-api)
+This setting is the endpoint the component should use to GET a list of saved searches or POST a search in order to save it. The API contract is defined at [Saved Search API](#saved-search-api)
 
 *Allowed Values*: ['/resource', '://fqdn/resource']
 
@@ -331,7 +324,7 @@ The above shows you the possible packets for each filter type, where dt.filterNa
 
 ## Saved Search API
 
-The saved search endpoint must be able to handle two actions, GET and POST. The GET action retrieves a list of saved searches, the POST action saves the current search (index and create essentially).
+The saved search endpoint must be able to handle three actions, GET and POST and DELETE. The GET action retrieves a list of saved searches, the POST action saves the current search (index and create essentially), the DELETE action delete one saved search.
 
 ### GET
 
@@ -340,16 +333,17 @@ The endpoint GET action expects to be able to receive a JSON array of the follow
 ```javascript
 [
   {
-    name: NAME
+    name: NAME,
     configuration: {
                      "dt.filterName":"value",
                      ...
-                   }
+                   },
+    url: '/saved_searches/my_id'
   }, ...
 ]
 ```
 
-This is an array of objects, where each object has a key:value pair for a name label, and a configuration object of key:value pairs of a filterUid and a filterValue, where filterUid and Value are of the same form as in the [Search API](#search-api).
+This is an array of objects, where each object has a key:value pair for a name label, and a configuration object of key:value pairs of a filterUid and a filterValue, where filterUid and Value are of the same form as in the [Search API](#search-api), and a key:value pair for delete url.
 
 ### POST
 
@@ -370,6 +364,14 @@ The endpoint POST action expects to be able to post a JSON payload of the follow
 This is an object where the saved_search object has two key:value pairs.
 The search_title key:value pair is the user entered title for the search.
 The filters key:value pair is an object who's key:value pairs are the enabled filters uids and values at the time of saving.
+
+### DELETE
+
+The endpoint DELETE action expects to be able to delete a saved search by id:
+
+```
+  DELETE '/saved_searches/:id'
+```
 
 ## Export Results API
 *Coming Soon*

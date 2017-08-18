@@ -7,11 +7,23 @@ export class SavedSearchesListItem extends React.Component {
     this.context.filterBarActor.loadSavedSearch(this.props.searchId);
   }
 
+  onClickDelete() {
+    this.context.filterBarActor.deleteSavedSearch(this.props.searchId);
+  }
+
   render() {
+    var liStyles = {
+          display: "inline-flex !important",
+          width: "100%",
+          marginBottom: "5px"
+        };
     return (
-      <li>
-        <a className="dynamic-text-filter" onClick={this.onClick.bind(this)} style={ {cursor: "pointer"} }>
+      <li style={liStyles}>
+        <a className="dynamic-text-filter" onClick={this.onClick.bind(this)} style={ {cursor: "pointer", marginRight: "39px"} }>
           {this.props.name}
+        </a>
+        <a className="btn btn-circle-danger btn-sm" title="Delete" style={ { position: "absolute", right: "4px"} } onClick={this.onClickDelete.bind(this)}>
+          <span className="icon icon-delete"></span>
         </a>
       </li>
     );

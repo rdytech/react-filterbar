@@ -37,8 +37,8 @@ export function getSavedSearches(url, success) {
 export function deleteSearch(url, success) {
   $.ajax({
     url: url,
-    method: "POST",
-    data: { '_method': 'DELETE' },
+    type: "DELETE",
+    cache: false,
     dataType: "json",
     success: function() {
       success();

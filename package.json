@@ -1,6 +1,6 @@
 {
   "name": "react-filterbar",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "",
   "main": "dist/react-filterbar.js",
   "engines": {

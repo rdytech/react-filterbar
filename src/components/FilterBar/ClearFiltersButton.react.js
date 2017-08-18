@@ -4,7 +4,7 @@ export class ClearFiltersButton extends React.Component {
   }
 
   onClick() {
-    this.context.filterBarActor.disableAllFilters();
+    this.context.filterBarActor.disableAllFiltersAndApply();
   }
 
   render() {
