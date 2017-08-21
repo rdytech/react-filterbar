@@ -7725,6 +7725,11 @@ var FilterBarActor = exports.FilterBarActor = (function () {
       value: function disableAllFilters() {
         this.filterBarStore.disableAllFilters();
         this.filterBarStore.disableAllQuickFilters();
+      }
+    },
+    disableAllFiltersAndApply: {
+      value: function disableAllFiltersAndApply() {
+        this.disableAllFilters();
         this.applyFilters();
       }
     },
@@ -7808,7 +7813,7 @@ var FilterBarActor = exports.FilterBarActor = (function () {
 
           this.applyFilters();
         } else {
-          this.deleteSavedSearch(searchId);
+          this.deleteSavedSearch(searchId, "One of the filters in this saved search cannot be applied anymore. Remove saved search?");
         }
       }
     },
@@ -7863,14 +7868,18 @@ var FilterBarActor = exports.FilterBarActor = (function () {
       }
     },
     deleteSavedSearch: {
-      value: function deleteSavedSearch(searchId) {
+      value: function deleteSavedSearch(searchId, confirmationMessage) {
         var savedSearch = this.filterBarStore.getSavedSearch(searchId);
 
         if (!savedSearch.url) {
           return;
         }
 
-        var confirmation = confirm("One of the filters in this saved search cannot be applied anymore. Remove saved search?");
+        if (confirmationMessage === undefined) {
+          confirmationMessage = "Are you sure remove saved search \"" + savedSearch.name + "\"?";
+        }
+
+        var confirmation = confirm(confirmationMessage);
 
         if (confirmation) {
           SearchClient.deleteSearch(savedSearch.url, this.reloadSavedSearches.bind(this));
@@ -8011,8 +8020,8 @@ function getSavedSearches(url, success) {
 function deleteSearch(url, success) {
   $.ajax({
     url: url,
-    method: "POST",
-    data: { _method: "DELETE" },
+    type: "DELETE",
+    cache: false,
     dataType: "json",
     success: (function (_success) {
       var _successWrapper = function success() {
@@ -8265,7 +8274,7 @@ var ClearFiltersButton = exports.ClearFiltersButton = (function (_React$Componen
   _createClass(ClearFiltersButton, {
     onClick: {
       value: function onClick() {
-        this.context.filterBarActor.disableAllFilters();
+        this.context.filterBarActor.disableAllFiltersAndApply();
       }
     },
     render: {
@@ -10052,15 +10061,30 @@ var SavedSearchesListItem = exports.SavedSearchesListItem = (function (_React$Co
         this.context.filterBarActor.loadSavedSearch(this.props.searchId);
       }
     },
+    onClickDelete: {
+      value: function onClickDelete() {
+        this.context.filterBarActor.deleteSavedSearch(this.props.searchId);
+      }
+    },
     render: {
       value: function render() {
+        var liStyles = {
+          display: "inline-flex !important",
+          width: "100%",
+          marginBottom: "5px"
+        };
         return React.createElement(
           "li",
-          null,
+          { style: liStyles },
           React.createElement(
             "a",
-            { className: "dynamic-text-filter", onClick: this.onClick.bind(this), style: { cursor: "pointer" } },
+            { className: "dynamic-text-filter", onClick: this.onClick.bind(this), style: { cursor: "pointer", marginRight: "39px" } },
             this.props.name
+          ),
+          React.createElement(
+            "a",
+            { className: "btn btn-circle-danger btn-sm", title: "Delete", style: { position: "absolute", right: "4px" }, onClick: this.onClickDelete.bind(this) },
+            React.createElement("span", { className: "icon icon-delete" })
           )
         );
       }
@@ -11439,7 +11463,6 @@ var FilterBarStore = exports.FilterBarStore = (function () {
     this.persistent = configuration.persistent;
     this.url = configuration.searchUrl;
     this.searchUrl = configuration.searchUrl;
-    this.saveSearchUrl = configuration.saveSearchUrl;
     this.savedSearchesUrl = configuration.savedSearchesUrl;
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.exportPageLimit = configuration.exportPageLimit;
@@ -11660,11 +11683,6 @@ var FilterBarStore = exports.FilterBarStore = (function () {
     getSearchUrl: {
       value: function getSearchUrl() {
         return this.searchUrl;
-      }
-    },
-    getSaveSearchUrl: {
-      value: function getSaveSearchUrl() {
-        return this.saveSearchUrl;
       }
     },
     getSavedSearchesUrl: {

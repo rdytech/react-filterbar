@@ -30,6 +30,10 @@ export class FilterBarActor {
   disableAllFilters() {
     this.filterBarStore.disableAllFilters();
     this.filterBarStore.disableAllQuickFilters();
+  }
+
+  disableAllFiltersAndApply() {
+    this.disableAllFilters();
     this.applyFilters();
   }
 
@@ -107,7 +111,7 @@ export class FilterBarActor {
 
       this.applyFilters();
     } else {
-      this.deleteSavedSearch(searchId);
+      this.deleteSavedSearch(searchId, 'One of the filters in this saved search cannot be applied anymore. Remove saved search?');
     }
   }
 
@@ -140,14 +144,18 @@ export class FilterBarActor {
     this.applyFilters();
   }
 
-  deleteSavedSearch(searchId) {
+  deleteSavedSearch(searchId, confirmationMessage) {
     var savedSearch = this.filterBarStore.getSavedSearch(searchId);
 
     if (!savedSearch.url) {
       return;
     }
 
-    var confirmation = confirm('One of the filters in this saved search cannot be applied anymore. Remove saved search?');
+    if(confirmationMessage === undefined) {
+      confirmationMessage = 'Are you sure remove saved search "' + savedSearch.name + '"?';
+    }
+
+    var confirmation = confirm(confirmationMessage);
 
     if (confirmation) {
       SearchClient.deleteSearch(
