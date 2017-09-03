@@ -42,8 +42,8 @@ export class MultiSelectInput extends React.Component {
         selectedValues.push(targetOptions[i].value);
       }
     }
-    this.setState({ value: selectedValues });
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", selectedValues);
+    let filter = this.getFilterFromFilterBarStore();
+    filter.value = selectedValues;
   }
 
   render() {

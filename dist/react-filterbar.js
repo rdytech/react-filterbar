@@ -9245,8 +9245,8 @@ var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
             selectedValues.push(targetOptions[i].value);
           }
         }
-        this.setState({ value: selectedValues });
-        this.context.filterBarActor.updateFilter(this.props.filterUid, "value", selectedValues);
+        var filter = this.getFilterFromFilterBarStore();
+        filter.value = selectedValues;
       }
     },
     render: {
