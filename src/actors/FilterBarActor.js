@@ -134,6 +134,9 @@ export class FilterBarActor {
     for (var [filterUid, filter] of this.filterBarStore.enabledFilters()) {
       savedSearchPacket.saved_search.filters[filterUid] = filter.value;
     }
+    if(Object.keys(savedSearchPacket.saved_search.filters).length === 0) {
+      return false;
+    }
 
     SearchClient.saveSearch(
       this.filterBarStore.getSavedSearchesUrl(),
@@ -142,6 +145,7 @@ export class FilterBarActor {
     );
 
     this.applyFilters();
+    return true;
   }
 
   deleteSavedSearch(searchId, confirmationMessage) {
