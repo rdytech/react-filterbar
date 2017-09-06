@@ -7862,9 +7862,14 @@ var FilterBarActor = exports.FilterBarActor = (function () {
           }
         }
 
+        if (Object.keys(savedSearchPacket.saved_search.filters).length === 0) {
+          return false;
+        }
+
         SearchClient.saveSearch(this.filterBarStore.getSavedSearchesUrl(), savedSearchPacket, this.reloadSavedSearches.bind(this));
 
         this.applyFilters();
+        return true;
       }
     },
     deleteSavedSearch: {
@@ -9878,7 +9883,15 @@ var SaveFiltersButton = exports.SaveFiltersButton = (function (_React$Component)
   _createClass(SaveFiltersButton, {
     onClick: {
       value: function onClick() {
-        this.context.filterBarActor.saveFilters(this.state.configurationName);
+        if (this.state.configurationName.trim() === "") {
+          $.bootstrapGrowl("Search title can't be blank", { type: "danger" });
+          return;
+        }
+        if (this.context.filterBarActor.saveFilters(this.state.configurationName.trim())) {
+          $.bootstrapGrowl("Search saved sucessfully", { type: "success" });
+        } else {
+          $.bootstrapGrowl("No filters enabled, please add filter", { type: "danger" });
+        }
       }
     },
     onChange: {
@@ -9889,38 +9902,48 @@ var SaveFiltersButton = exports.SaveFiltersButton = (function (_React$Component)
     render: {
       value: function render() {
         return React.createElement(
-          ReactBootstrap.DropdownButton,
-          {
-            bsStyle: "default",
-            title: "Save Search",
-            type: "button"
-          },
+          "div",
+          { className: "btn-group" },
           React.createElement(
-            ReactBootstrap.MenuItem,
-            { eventKey: "1" },
+            "button",
+            {
+              className: "btn btn-default dropdown-toggle",
+              "data-toggle": "dropdown",
+              type: "button"
+            },
+            "Save Search",
+            React.createElement("span", { className: "caret" })
+          ),
+          React.createElement(
+            "ul",
+            { className: "dropdown-menu", role: "menu" },
             React.createElement(
-              "div",
-              { className: "form-group" },
+              "li",
+              null,
               React.createElement(
-                "label",
-                null,
-                "Search Title"
-              ),
-              React.createElement("input", {
-                className: "form-control",
-                onChange: this.onChange.bind(this),
-                type: "text",
-                value: this.state.configurationName
-              })
-            ),
-            React.createElement(
-              "button",
-              {
-                className: "btn btn-primary",
-                onClick: this.onClick.bind(this),
-                type: "button"
-              },
-              "Save"
+                "form",
+                { style: { margin: "0 16px" } },
+                React.createElement(
+                  "label",
+                  null,
+                  "Search Title"
+                ),
+                React.createElement("input", {
+                  className: "form-control",
+                  onChange: this.onChange.bind(this),
+                  type: "text",
+                  value: this.state.configurationName
+                }),
+                React.createElement(
+                  "button",
+                  {
+                    className: "btn btn-primary",
+                    onClick: this.onClick.bind(this),
+                    type: "button"
+                  },
+                  "Save"
+                )
+              )
             )
           )
         );
