@@ -9892,6 +9892,7 @@ var SaveFiltersButton = exports.SaveFiltersButton = (function (_React$Component)
         } else {
           $.bootstrapGrowl("No filters enabled, please add filter", { type: "danger" });
         }
+        this.setState({ configurationName: "" });
       }
     },
     onChange: {
@@ -9912,7 +9913,7 @@ var SaveFiltersButton = exports.SaveFiltersButton = (function (_React$Component)
               type: "button"
             },
             "Save Search",
-            React.createElement("span", { className: "caret" })
+            React.createElement("i", { className: "icon icon-chevron-down" })
           ),
           React.createElement(
             "ul",
@@ -9938,6 +9939,7 @@ var SaveFiltersButton = exports.SaveFiltersButton = (function (_React$Component)
                   "button",
                   {
                     className: "btn btn-primary",
+                    style: { marginTop: "5px" },
                     onClick: this.onClick.bind(this),
                     type: "button"
                   },

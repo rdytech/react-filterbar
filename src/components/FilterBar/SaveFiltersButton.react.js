@@ -15,6 +15,7 @@ export class SaveFiltersButton extends React.Component {
     else{
       $.bootstrapGrowl("No filters enabled, please add filter", { type: "danger" });
     }
+    this.setState({configurationName: ''});
   }
 
   onChange(event) {
@@ -30,7 +31,7 @@ export class SaveFiltersButton extends React.Component {
           type="button"
         >
           Save Search
-          <span className="caret" />
+          <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">
           <li>
@@ -44,6 +45,7 @@ export class SaveFiltersButton extends React.Component {
               />
               <button
                 className="btn btn-primary"
+                style={{marginTop: `5px`}}
                 onClick={this.onClick.bind(this)}
                 type="button"
               >
