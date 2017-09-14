@@ -92,7 +92,7 @@ gulp.task('neptune', function() {
   .transform(babelify)
   .bundle()
   .pipe(source(appDistFile))
-  .pipe(gulp.dest('/Users/emersonxavier/Code/neptune/vendor/assets/bower_components/react-filterbar/dist'));
+  .pipe(gulp.dest('../neptune/vendor/assets/bower_components/react-filterbar/dist'));
 });
 
 gulp.task('marcus', function() {
