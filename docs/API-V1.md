@@ -12,6 +12,7 @@ An example usage of the configuration API is:
     %dt.persistent{ data:  { value: 'true' } }
     %dt.search-url{ data:  { value: '/books' } }
     %dt.saved-searches-url{ data:  { value: '/books/saved_searches' } }
+    %dt.configuration-url{ data:  { value: '/filter_bar_configurations/books' } }
     %dt.export-results-url{ data:  { value: '/books/export' } }
     %dt.export-page-limit{ data:  { value: '50' } }
     %dt.export-page-limit-exceeded-message{ data:  { value: 'Too many books.' } }
@@ -77,6 +78,12 @@ This setting is the endpoint the component should use to GET results from. The A
 #### dt.saved-searches-url
 
 This setting is the endpoint the component should use to GET a list of saved searches or POST a search in order to save it. The API contract is defined at [Saved Search API](#saved-search-api)
+
+*Allowed Values*: ['/resource', '://fqdn/resource']
+
+#### dt.configuration-url
+
+This setting is a URL which allows the user to configure their filter bar. This URL will be rendered within a modal.
 
 *Allowed Values*: ['/resource', '://fqdn/resource']
 

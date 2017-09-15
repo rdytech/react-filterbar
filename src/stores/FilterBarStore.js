@@ -10,6 +10,7 @@ export class FilterBarStore {
     this.url = configuration.searchUrl;
     this.searchUrl = configuration.searchUrl;
     this.savedSearchesUrl = configuration.savedSearchesUrl;
+    this.configurationUrl = configuration.configurationUrl;
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
@@ -65,6 +66,10 @@ export class FilterBarStore {
 
   getSavedSearchesUrl() {
     return this.savedSearchesUrl;
+  }
+
+  getConfigurationUrl() {
+    return this.configurationUrl;
   }
 
   getExportResultsUrl() {
@@ -126,6 +131,10 @@ export class FilterBarStore {
       };
     }, this);
     return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : "";
+  }
+
+  isConfigurable() {
+    return this.getConfigurationUrl() !== undefined;
   }
 
   setSavedSearches(savedSearches) {
