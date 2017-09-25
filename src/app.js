@@ -30,7 +30,7 @@ function setupConfiguration(configuration) {
 
   if (Object.keys(searchObject).length === 0 && localStorage[storageKey] !== undefined) {
     history.pushState({}, "", localStorage[storageKey]);
-    url = uri(window.location);
+    url = uri(window.location).removeSearch("page");
   }
 
   var verifiedFilters = new FilterVerificator(configuration.filterBarConfiguration.filters).verify();

@@ -34,7 +34,7 @@ function setupConfiguration(configuration) {
 
   if (Object.keys(searchObject).length === 0 && localStorage[storageKey] !== undefined) {
     history.pushState({}, "", localStorage[storageKey]);
-    url = uri(window.location);
+    url = uri(window.location).removeSearch("page");
   }
 
   var verifiedFilters = new FilterVerificator(configuration.filterBarConfiguration.filters).verify();
@@ -7936,7 +7936,7 @@ var TableActor = exports.TableActor = (function () {
 
         if (this.filterBarStore.persistent) {
           history.pushState({}, "", window.location.origin + url);
-          localStorage[window.location.pathname.replace(/\//g, "")] = url.search();
+          localStorage[window.location.pathname.replace(/\//g, "")] = url.removeSearch("page").search();
         }
       }
     }
