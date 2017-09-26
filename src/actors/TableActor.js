@@ -16,7 +16,7 @@ export class TableActor {
 
     if (this.filterBarStore.persistent) {
       history.pushState({}, "", window.location.origin + url);
-      localStorage[window.location.pathname.replace(/\//g, "")] = url.search();
+      localStorage[window.location.pathname.replace(/\//g, "")] = url.removeSearch("page").search();
     }
   }
 }
