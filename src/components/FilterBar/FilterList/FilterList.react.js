@@ -4,7 +4,10 @@ export class FilterList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { filters: props.disabledFilters };
+    this.state = {
+      filters: props.disabledFilters,
+      searchTerm: ''
+    };
   }
 
   componentDidMount() {
@@ -21,15 +24,24 @@ export class FilterList extends React.Component {
     };
   }
 
+  onSearchTermChange(event) {
+    this.setState({ searchTerm: event.target.value.toLowerCase() });
+  }
+
   render() {
     var optionKey = "";
-    var filterOptions = Object.keys(this.state.filters).map(function(filterUid) {
+    var filters = this.state.filters;
+    var term = this.state.searchTerm;
+    var uids = Object.keys(filters).filter(function(uid) {
+      return filters[uid].label.toLowerCase().search(term) !== -1;
+    });
+    var filterOptions = uids.map(function(filterUid) {
       optionKey = "option-" + filterUid;
       return (
         <FilterListOption
           filterUid={filterUid}
           key={optionKey}
-          label={this.state.filters[filterUid].label}
+          label={filters[filterUid].label}
         />
       );
     }, this);
@@ -40,9 +52,14 @@ export class FilterList extends React.Component {
           Add Filter
           <i className="icon icon-chevron-down" />
         </button>
-        <ul className="dropdown-menu" role="menu">
-          {filterOptions}
-        </ul>
+        <div className="dropdown-menu" role="menu">
+          <input type="text"
+            placeholder="Search"
+            onChange={this.onSearchTermChange.bind(this)} />
+          <ul className="filter-options">
+            {filterOptions}
+          </ul>
+        </div>
       </div>
     );
   }
