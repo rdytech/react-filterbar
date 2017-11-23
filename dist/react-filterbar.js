@@ -9797,7 +9797,10 @@ var FilterList = exports.FilterList = (function (_React$Component) {
 
     _get(Object.getPrototypeOf(FilterList.prototype), "constructor", this).call(this, props);
 
-    this.state = { filters: props.disabledFilters };
+    this.state = {
+      filters: props.disabledFilters,
+      searchTerm: ""
+    };
   }
 
   _inherits(FilterList, _React$Component);
@@ -9820,15 +9823,25 @@ var FilterList = exports.FilterList = (function (_React$Component) {
         };
       }
     },
+    onSearchTermChange: {
+      value: function onSearchTermChange(event) {
+        this.setState({ searchTerm: event.target.value.toLowerCase() });
+      }
+    },
     render: {
       value: function render() {
         var optionKey = "";
-        var filterOptions = Object.keys(this.state.filters).map(function (filterUid) {
+        var filters = this.state.filters;
+        var term = this.state.searchTerm;
+        var uids = Object.keys(filters).filter(function (uid) {
+          return filters[uid].label.toLowerCase().search(term) !== -1;
+        });
+        var filterOptions = uids.map(function (filterUid) {
           optionKey = "option-" + filterUid;
           return React.createElement(FilterListOption, {
             filterUid: filterUid,
             key: optionKey,
-            label: this.state.filters[filterUid].label
+            label: filters[filterUid].label
           });
         }, this);
         return React.createElement(
@@ -9842,9 +9855,16 @@ var FilterList = exports.FilterList = (function (_React$Component) {
             React.createElement("i", { className: "icon icon-chevron-down" })
           ),
           React.createElement(
-            "ul",
+            "div",
             { className: "dropdown-menu", role: "menu" },
-            filterOptions
+            React.createElement("input", { type: "text",
+              placeholder: "Search",
+              onChange: this.onSearchTermChange.bind(this) }),
+            React.createElement(
+              "ul",
+              { className: "filter-options" },
+              filterOptions
+            )
           )
         );
       }
