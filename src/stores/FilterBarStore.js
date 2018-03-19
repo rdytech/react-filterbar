@@ -137,6 +137,10 @@ export class FilterBarStore {
     return this.getConfigurationUrl() !== undefined;
   }
 
+  isExportable() {
+    return this.getExportResultsUrl() !== undefined;
+  }
+
   setSavedSearches(savedSearches) {
     this.savedSearches = savedSearches;
     this.emitChange();

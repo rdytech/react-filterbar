@@ -45,9 +45,11 @@ export class FilterBar extends React.Component {
               />
             }
 
-            <ExportResultsButton
-              filterBarActor={this.context.filterBarActor}
-            />
+            {this.context.filterBarStore.isExportable() &&
+              <ExportResultsButton
+                filterBarActor={this.context.filterBarActor}
+              />
+            }
 
             <BatchActionsList />
           </div>

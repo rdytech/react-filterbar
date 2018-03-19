@@ -8483,7 +8483,7 @@ var FilterBar = exports.FilterBar = (function (_React$Component) {
               this.context.filterBarStore.isConfigurable() && React.createElement(ConfigurationButton, {
                 filterBarStore: this.context.filterBarStore
               }),
-              React.createElement(ExportResultsButton, {
+              this.context.filterBarStore.isExportable() && React.createElement(ExportResultsButton, {
                 filterBarActor: this.context.filterBarActor
               }),
               React.createElement(BatchActionsList, null)
@@ -11880,6 +11880,11 @@ var FilterBarStore = exports.FilterBarStore = (function () {
     isConfigurable: {
       value: function isConfigurable() {
         return this.getConfigurationUrl() !== undefined;
+      }
+    },
+    isExportable: {
+      value: function isExportable() {
+        return this.getExportResultsUrl() !== undefined;
       }
     },
     setSavedSearches: {
