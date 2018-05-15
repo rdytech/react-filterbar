@@ -7758,7 +7758,9 @@ var FilterBarActor = exports.FilterBarActor = (function () {
       value: function applyQuickFilter(filterName, value, quickFilterName, blockName) {
         var filter = this.filterBarStore.getFilter(filterName);
         if (filter.type === "multi_select") {
-          value = [value];
+          value = value.split(",").map(function (string) {
+            return string.trim();
+          });
         }
         this.filterBarStore.enableQuickFilter(quickFilterName, blockName);
         this.enableFilter(filterName, value);

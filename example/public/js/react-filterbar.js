@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (root.IPv6 === this) {
       root.IPv6 = _IPv6;
     }
-  
+
     return this;
   }
 
@@ -3685,7 +3685,7 @@ module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
       , ACCEPT_ITERABLES     = $iterDetect(function(iter){ new C(iter); }) // eslint-disable-line no-new
       // for early implementations -0 and +0 not the same
       , BUGGY_ZERO;
-    if(!ACCEPT_ITERABLES){ 
+    if(!ACCEPT_ITERABLES){
       C = wrapper(function(target, iterable){
         strictNew(target, C, NAME);
         var that = new Base;
@@ -7761,7 +7761,9 @@ var FilterBarActor = exports.FilterBarActor = (function () {
       value: function applyQuickFilter(filterName, value, quickFilterName, blockName) {
         var filter = this.filterBarStore.getFilter(filterName);
         if (filter.type === "multi_select") {
-          value = [value];
+          value = value.split(",").map(function (string) {
+            return string.trim();
+          });
         }
         this.filterBarStore.enableQuickFilter(quickFilterName, blockName);
         this.enableFilter(filterName, value);
