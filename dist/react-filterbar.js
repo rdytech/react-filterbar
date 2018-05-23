@@ -8541,6 +8541,24 @@ var FilterDisplay = exports.FilterDisplay = (function (_React$Component) {
   _createClass(FilterDisplay, {
     componentWillMount: {
       value: function componentWillMount() {
+        var self = this;
+        var quickFilters = this.context.filterBarStore.quickFilters;
+        Object.keys(this.getStateFromStores().filters).map(function (filterUid) {
+          Object.keys(quickFilters).map(function (blockName) {
+            Object.keys(quickFilters[blockName]).map(function (filterName) {
+              var quickFilter = quickFilters[blockName][filterName];
+              if (quickFilter.filters && quickFilter.filters[filterUid]) {
+                if (self.getStateFromStores().filters[filterUid].type == "multi_select") {
+                  if (self.getStateFromStores().filters[filterUid].value.join(",") === quickFilter.filters[filterUid].value) quickFilter.active = true;
+                } else {
+                  if (self.getStateFromStores().filters[filterUid].value === quickFilter.filters[filterUid].value) {
+                    quickFilter.active = true;
+                  }
+                }
+              }
+            });
+          });
+        });
         this.context.filterBarStore.addChangeListener(this.onChange.bind(this));
       }
     },
