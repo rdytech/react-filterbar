@@ -8114,6 +8114,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var BatchActionsListItem = require("./BatchActionsListItem.react").BatchActionsListItem;
 
+var URLHelper = _interopRequireWildcard(require("../../../helpers/URLHelper"));
+
 var ModalHelper = _interopRequireWildcard(require("../../../helpers/ModalHelper"));
 
 var BatchActionsList = exports.BatchActionsList = (function (_React$Component) {
@@ -8144,6 +8146,22 @@ var BatchActionsList = exports.BatchActionsList = (function (_React$Component) {
         }
       }
     },
+    updateBatchFormFieldsSelectAll: {
+      value: function updateBatchFormFieldsSelectAll(event) {
+        event.preventDefault();
+        if (this.context.tableStore.getSelectedRows().length > 0) {
+          this.updateBatchFormFields(event);
+        } else {
+          $.ajax({
+            url: URLHelper.updateUrlSearch(event.target.href, "q", this.context.filterBarStore.getQuery()).toString(),
+            type: "POST",
+            success: (function (data) {
+              ModalHelper.displayModalForData(data);
+            }).bind(this)
+          });
+        }
+      }
+    },
     batchActionsListItems: {
       value: function batchActionsListItems(batchActions) {
         return Object.keys(batchActions).map(function (batchActionName, index) {
@@ -8151,7 +8169,7 @@ var BatchActionsList = exports.BatchActionsList = (function (_React$Component) {
             key: index,
             label: batchActions[batchActionName].label,
             url: batchActions[batchActionName].url,
-            onClickAction: this.updateBatchFormFields.bind(this)
+            onClickAction: batchActions[batchActionName].allowSelectAll ? this.updateBatchFormFieldsSelectAll.bind(this) : this.updateBatchFormFields.bind(this)
           });
         }, this);
       }
@@ -8202,7 +8220,7 @@ BatchActionsList.contextTypes = {
   batchActionsStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../helpers/ModalHelper":241,"./BatchActionsListItem.react":203}],203:[function(require,module,exports){
+},{"../../../helpers/ModalHelper":241,"../../../helpers/URLHelper":242,"./BatchActionsListItem.react":203}],203:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

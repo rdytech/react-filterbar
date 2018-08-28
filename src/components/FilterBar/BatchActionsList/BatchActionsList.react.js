@@ -1,4 +1,5 @@
 import {BatchActionsListItem} from "./BatchActionsListItem.react";
+import * as URLHelper from "../../../helpers/URLHelper";
 import * as ModalHelper from "../../../helpers/ModalHelper";
 
 export class BatchActionsList extends React.Component {
@@ -24,6 +25,23 @@ export class BatchActionsList extends React.Component {
     }
   }
 
+  updateBatchFormFieldsSelectAll(event) {
+    event.preventDefault();
+    if (this.context.tableStore.getSelectedRows().length > 0) {
+      this.updateBatchFormFields(event);
+    } else {
+      $.ajax({
+        url: URLHelper.updateUrlSearch(
+          event.target.href, "q", this.context.filterBarStore.getQuery()
+        ).toString(),
+        type: "POST",
+        success: function(data) {
+          ModalHelper.displayModalForData(data);
+        }.bind(this)
+      });
+    }
+  }
+
   batchActionsListItems(batchActions) {
     return(
       Object.keys(batchActions).map(function(batchActionName, index) {
@@ -32,7 +50,7 @@ export class BatchActionsList extends React.Component {
             key={index}
             label={batchActions[batchActionName].label}
             url={batchActions[batchActionName].url}
-            onClickAction={this.updateBatchFormFields.bind(this)}
+            onClickAction={batchActions[batchActionName].allowSelectAll ? this.updateBatchFormFieldsSelectAll.bind(this) : this.updateBatchFormFields.bind(this)}
           />
         );
       }, this)
