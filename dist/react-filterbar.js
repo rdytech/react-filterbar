@@ -9353,8 +9353,8 @@ var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
             selectedValues.push(targetOptions[i].value);
           }
         }
-        var filter = this.getFilterFromFilterBarStore();
-        filter.value = selectedValues;
+        this.setState({ value: selectedValues });
+        this.getFilterFromFilterBarStore().value = selectedValues;
       }
     },
     updateOperator: {

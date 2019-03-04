@@ -43,8 +43,8 @@ export class MultiSelectInput extends React.Component {
         selectedValues.push(targetOptions[i].value);
       }
     }
-    let filter = this.getFilterFromFilterBarStore();
-    filter.value = selectedValues;
+    this.setState({ value: selectedValues })
+    this.getFilterFromFilterBarStore().value = selectedValues
   }
 
   updateOperator(e) {
