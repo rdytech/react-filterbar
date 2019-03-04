@@ -9303,8 +9303,8 @@ var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
     _get(Object.getPrototypeOf(MultiSelectInput.prototype), "constructor", this).call(this, props, context);
     this.state = {
       value: this.props.value === "" ? this.getDefaultValue() : this.props.value,
-      options: []
-    };
+      options: [],
+      operator: this.props.operator };
   }
 
   _inherits(MultiSelectInput, _React$Component);
@@ -9357,6 +9357,12 @@ var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
         filter.value = selectedValues;
       }
     },
+    updateOperator: {
+      value: function updateOperator(e) {
+        this.setState({ operator: e.target.value });
+        this.getFilterFromFilterBarStore().operator = e.target.value;
+      }
+    },
     render: {
       value: function render() {
         var optionList = this.state.options;
@@ -9381,6 +9387,34 @@ var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
               ref: "reactMultiSelect"
             },
             options
+          ),
+          this.props.operator && React.createElement(
+            "div",
+            null,
+            React.createElement(
+              "label",
+              { className: "radio-inline" },
+              React.createElement("input", {
+                type: "radio",
+                name: "operator",
+                value: "any",
+                checked: this.state.operator == "any",
+                onChange: this.updateOperator.bind(this)
+              }),
+              "Any"
+            ),
+            React.createElement(
+              "label",
+              { className: "radio-inline" },
+              React.createElement("input", {
+                type: "radio",
+                name: "operator",
+                value: "all",
+                checked: this.state.operator == "all",
+                onChange: this.updateOperator.bind(this)
+              }),
+              "All"
+            )
           )
         );
       }
@@ -11909,8 +11943,8 @@ var FilterBarStore = exports.FilterBarStore = (function () {
             uid: filterUid,
             type: filter.type,
             field: filter.field,
-            value: filter.value
-          };
+            value: filter.value,
+            operator: filter.operator };
         }, this);
         return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : "";
       }

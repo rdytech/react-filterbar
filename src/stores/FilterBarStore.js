@@ -127,7 +127,8 @@ export class FilterBarStore {
         uid: filterUid,
         type: filter.type,
         field: filter.field,
-        value: filter.value
+        value: filter.value,
+        operator: filter.operator,
       };
     }, this);
     return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : "";
