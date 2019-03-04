@@ -162,6 +162,12 @@ This is an optional field for a lazy_multi_select/lazy_select type. The default 
 
 *Allowed Values*: number
 
+###### dt.operator
+
+This is an optional field for the multi_select filter type. If specified, the filter will include the option to search by "Any" of the specified values (boolean OR), or by "All" of the specified values (boolean AND). Whichever value is supplied will be the default selected option.
+
+*Allowed Values*: ['all', 'any']
+
 ### dl.tableConfiguration
 
 The tableConfiguration tree has several options, as well as a child tree containing the configurations and definitions for the columns used in the Table component.

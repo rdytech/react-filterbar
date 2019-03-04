@@ -3,7 +3,8 @@ export class MultiSelectInput extends React.Component {
     super(props, context);
     this.state =  {
       value: this.props.value === '' ? this.getDefaultValue() : this.props.value,
-      options: []
+      options: [],
+      operator: this.props.operator,
     }
   }
 
@@ -42,8 +43,13 @@ export class MultiSelectInput extends React.Component {
         selectedValues.push(targetOptions[i].value);
       }
     }
-    let filter = this.getFilterFromFilterBarStore();
-    filter.value = selectedValues;
+    this.setState({ value: selectedValues })
+    this.getFilterFromFilterBarStore().value = selectedValues
+  }
+
+  updateOperator(e) {
+    this.setState({ operator: e.target.value })
+    this.getFilterFromFilterBarStore().operator = e.target.value
   }
 
   render() {
@@ -67,6 +73,30 @@ export class MultiSelectInput extends React.Component {
         >
           {options}
         </select>
+        {this.props.operator && (
+          <div>
+            <label className="radio-inline">
+              <input
+                type="radio"
+                name="operator"
+                value="any"
+                checked={this.state.operator == "any"}
+                onChange={this.updateOperator.bind(this)}
+              />
+              Any
+            </label>
+            <label className="radio-inline">
+              <input
+                type="radio"
+                name="operator"
+                value="all"
+                checked={this.state.operator == "all"}
+                onChange={this.updateOperator.bind(this)}
+              />
+              All
+            </label>
+          </div>
+        )}
       </li>
     );
   }
