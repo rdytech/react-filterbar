@@ -36,19 +36,24 @@ export class MultiSelectInput extends React.Component {
   }
 
   onSelect(event) {
-    let selectedValues = [];
-    let targetOptions = event.target.options
+    this.getFilterFromFilterBarStore().value = this.getSelectedValues()
+  }
+
+  getSelectedValues() {
+    let selectedValues = []
+    let targetOptions = React.findDOMNode(this.refs.reactMultiSelect).options
+
     for (let i = 0; i < targetOptions.length; i++) {
       if (targetOptions[i].selected) {
-        selectedValues.push(targetOptions[i].value);
+        selectedValues.push(targetOptions[i].value)
       }
     }
-    this.setState({ value: selectedValues })
-    this.getFilterFromFilterBarStore().value = selectedValues
+
+    return selectedValues
   }
 
   updateOperator(e) {
-    this.setState({ operator: e.target.value })
+    this.setState({ operator: e.target.value, value: this.getSelectedValues() })
     this.getFilterFromFilterBarStore().operator = e.target.value
   }
 
