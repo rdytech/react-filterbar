@@ -9346,20 +9346,26 @@ var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
     },
     onSelect: {
       value: function onSelect(event) {
+        this.getFilterFromFilterBarStore().value = this.getSelectedValues();
+      }
+    },
+    getSelectedValues: {
+      value: function getSelectedValues() {
         var selectedValues = [];
-        var targetOptions = event.target.options;
+        var targetOptions = React.findDOMNode(this.refs.reactMultiSelect).options;
+
         for (var i = 0; i < targetOptions.length; i++) {
           if (targetOptions[i].selected) {
             selectedValues.push(targetOptions[i].value);
           }
         }
-        this.setState({ value: selectedValues });
-        this.getFilterFromFilterBarStore().value = selectedValues;
+
+        return selectedValues;
       }
     },
     updateOperator: {
       value: function updateOperator(e) {
-        this.setState({ operator: e.target.value });
+        this.setState({ operator: e.target.value, value: this.getSelectedValues() });
         this.getFilterFromFilterBarStore().operator = e.target.value;
       }
     },
