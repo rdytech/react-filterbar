@@ -9407,7 +9407,7 @@ var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
                 checked: this.state.operator == "any",
                 onChange: this.updateOperator.bind(this)
               }),
-              "Any"
+              "ANY selected"
             ),
             React.createElement(
               "label",
@@ -9419,7 +9419,7 @@ var MultiSelectInput = exports.MultiSelectInput = (function (_React$Component) {
                 checked: this.state.operator == "all",
                 onChange: this.updateOperator.bind(this)
               }),
-              "All"
+              "ALL selected"
             )
           )
         );

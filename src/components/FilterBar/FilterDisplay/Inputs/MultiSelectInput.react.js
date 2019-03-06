@@ -88,7 +88,7 @@ export class MultiSelectInput extends React.Component {
                 checked={this.state.operator == "any"}
                 onChange={this.updateOperator.bind(this)}
               />
-              Any
+              ANY selected
             </label>
             <label className="radio-inline">
               <input
@@ -98,7 +98,7 @@ export class MultiSelectInput extends React.Component {
                 checked={this.state.operator == "all"}
                 onChange={this.updateOperator.bind(this)}
               />
-              All
+              ALL selected
             </label>
           </div>
         )}
