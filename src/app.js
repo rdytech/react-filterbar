@@ -53,6 +53,10 @@ function setupConfiguration(configuration) {
       if (configFilter) {
         configFilter.enabled = true;
         configFilter.value = filter.value;
+
+        if (filter.operator) {
+          configFilter.operator = filter.operator;
+        }
       }
     }
   }
