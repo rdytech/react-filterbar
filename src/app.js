@@ -1,7 +1,5 @@
 var uri = require("URIjs");
 
-// import "core-js/stable";
-// import "regenerator-runtime/runtime";
 import {FilterableTable} from "./components/FilterableTable.react";
 import {FilterVerificator} from "./helpers/FilterVerificator";
 

@@ -32,7 +32,10 @@ gulp.task('dev', function() {
     debug: true
   })
   .transform(babelify.configure({
-    presets: ["es2015"]
+    presets: [
+      "@babel/preset-env",
+      "@babel/preset-react",
+    ]
   }))
   .bundle()
   .pipe(source(appDistFile))
@@ -76,18 +79,24 @@ gulp.task('example', function () {
     debug: true
   })
   .transform(babelify.configure({
-    presets: ["es2015"]
+    presets: [
+      "@babel/preset-env",
+      "@babel/preset-react",
+    ]
   }))
   .bundle()
   .pipe(source(appDistFile))
   .pipe(gulp.dest('example/public/js'));
 });
 
-gulp.task('delete', function() {
-  return del('dist/*.js', function(err, deletedFiles) {
-    console.log("Files deleted:",deletedFiles.join(', '));
-  });
-});
+gulp.task('delete', () =>
+  new Promise((resolve, reject) =>
+    del('dist/*.js', (err, deletedFiles) => {
+      console.log("Files deleted:",deletedFiles.join(', '));
+      resolve();
+    })
+  )
+);
 
 gulp.task('build', gulp.series('delete', () =>
   browserify({
@@ -95,7 +104,10 @@ gulp.task('build', gulp.series('delete', () =>
     extensions: ['.js'],
   })
   .transform(babelify.configure({
-    presets: ["es2015"]
+    presets: [
+      "@babel/preset-env",
+      "@babel/preset-react",
+    ]
   }))
   .bundle()
   .pipe(source(appDistFile))
