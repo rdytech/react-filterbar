@@ -72,8 +72,8 @@ gulp.task('testWatch', function() {
   gulp.watch([scriptsPath + '/**/*.*', './__tests__/**/*.*'], ['jest']);
 })
 
-gulp.task('example', function () {
-  browserify({
+gulp.task('example', () => {
+  return browserify({
     entries: './src/' + appFile,
     extensions: ['.js'],
     debug: true
@@ -86,7 +86,7 @@ gulp.task('example', function () {
   }))
   .bundle()
   .pipe(source(appDistFile))
-  .pipe(gulp.dest('example/public/js'));
+  .pipe(gulp.dest('example/public/js'))
 });
 
 gulp.task('delete', () =>
