@@ -107,16 +107,16 @@ gulp.task('marcus', function() {
   .pipe(gulp.dest('/Users/marcusm/Projects/neptune/vendor/assets/bower_components/react-filterbar/dist'));
 });
 
-gulp.task('build', ['delete'], function () {
-  return browserify({
+gulp.task('build', gulp.series('delete', () =>
+  browserify({
     entries: './src/' + appFile,
     extensions: ['.js'],
   })
   .transform(babelify)
   .bundle()
   .pipe(source(appDistFile))
-  .pipe(gulp.dest('dist'));
-});
+  .pipe(gulp.dest('dist'))
+));
 
 gulp.task('compress', ['build'], function() {
   return gulp.src('dist/' + appDistFile)
