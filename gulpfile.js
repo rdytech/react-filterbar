@@ -31,7 +31,9 @@ gulp.task('dev', function() {
     extensions: ['.js'],
     debug: true
   })
-  .transform(babelify)
+  .transform(babelify.configure({
+    presets: ["es2015"]
+  }))
   .bundle()
   .pipe(source(appDistFile))
   .pipe(gulp.dest('example/public/js'));
@@ -67,62 +69,18 @@ gulp.task('testWatch', function() {
   gulp.watch([scriptsPath + '/**/*.*', './__tests__/**/*.*'], ['jest']);
 })
 
-gulp.task('wneptune', function() {
-  gulp.watch([scriptsPath + '/**/*.*', './__tests__/**/*.*'], ['neptune']);
-});
-
 gulp.task('example', function () {
   browserify({
     entries: './src/' + appFile,
     extensions: ['.js'],
     debug: true
   })
-  .transform(babelify)
+  .transform(babelify.configure({
+    presets: ["es2015"]
+  }))
   .bundle()
   .pipe(source(appDistFile))
   .pipe(gulp.dest('example/public/js'));
-});
-
-gulp.task('neptune', function() {
-  browserify({
-    entries: './src/' + appFile,
-    extensions: ['.js'],
-    debug: true
-  })
-  .transform(babelify)
-  .bundle()
-  .pipe(source(appDistFile))
-  .pipe(gulp.dest('/app/vendor/assets/bower_components/react-filterbar/dist'));
-});
-
-gulp.task('marcus', function() {
-  browserify({
-    entries: './src/' + appFile,
-    extensions: ['.js'],
-    debug: true
-  })
-  .transform(babelify)
-  .bundle()
-  .pipe(source(appDistFile))
-  .pipe(gulp.dest('/Users/marcusm/Projects/neptune/vendor/assets/bower_components/react-filterbar/dist'));
-});
-
-gulp.task('build', gulp.series('delete', () =>
-  browserify({
-    entries: './src/' + appFile,
-    extensions: ['.js'],
-  })
-  .transform(babelify)
-  .bundle()
-  .pipe(source(appDistFile))
-  .pipe(gulp.dest('dist'))
-));
-
-gulp.task('compress', ['build'], function() {
-  return gulp.src('dist/' + appDistFile)
-  .pipe(uglify())
-  .pipe(rename(appMinDistFile))
-  .pipe(gulp.dest('dist'));
 });
 
 gulp.task('delete', function() {
@@ -131,5 +89,25 @@ gulp.task('delete', function() {
   });
 });
 
-gulp.task('default',['example','neptune','watch']);
-gulp.task('dist', ['compress']);
+gulp.task('build', gulp.series('delete', () =>
+  browserify({
+    entries: './src/' + appFile,
+    extensions: ['.js'],
+  })
+  .transform(babelify.configure({
+    presets: ["es2015"]
+  }))
+  .bundle()
+  .pipe(source(appDistFile))
+  .pipe(gulp.dest('dist'))
+));
+
+gulp.task('compress', gulp.series('build', () =>
+  gulp.src('dist/' + appDistFile)
+  .pipe(uglify())
+  .pipe(rename(appMinDistFile))
+  .pipe(gulp.dest('dist'))
+));
+
+gulp.task('default', gulp.series('example'));
+gulp.task('dist', gulp.series('compress'));
