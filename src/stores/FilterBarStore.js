@@ -5,6 +5,8 @@ export class FilterBarStore {
     this.CHANGE_EVENT = "change";
     this.eventEmitter = new EventEmitter();
 
+    this.eventEmitter.setMaxListeners(30);
+
     this.id = configuration.id;
     this.persistent = configuration.persistent;
     this.url = configuration.searchUrl;
