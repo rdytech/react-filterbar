@@ -37,6 +37,13 @@ export class DateInputRelative extends React.Component {
 
   // TODO: Update relative dates based on relative selection (if in query params) on page load, rather than applying stored dates directly
   componentDidMount() {
+
+    var relativeSelect = $(React.findDOMNode(this.refs.relativeSelect)).find(":selected");
+    var from = moment(parseInt(relativeSelect.data('from')));
+    var to = moment(parseInt(relativeSelect.data('to')));
+
+    this.setState( { value: { value: relativeSelect.val(), from: from.format(this.props.dateFormat), to: to.format(this.props.dateFormat) }});
+
     var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
     if (datePickerFrom.datetimepicker !== undefined) {
       datePickerFrom.datetimepicker({ locale: 'en-au', format: 'L' });
@@ -82,6 +89,7 @@ export class DateInputRelative extends React.Component {
       <li>
         <select
           className="form-control"
+          ref="relativeSelect"
           onChange={this.onRelativeSelectionChange.bind(this)}
           defaultValue={this.state.value.value}
         >
