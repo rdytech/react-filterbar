@@ -35,9 +35,48 @@ export class DateInput extends React.Component {
     }
   }
 
+  displayOptions() {
+
+    const optionsList = [
+      { label: 'Today' , from: moment().format('l'), to: moment().format('l') },
+      { label: 'Last week' , from: moment().subtract(1, 'week').startOf('isoWeek'), to: moment().subtract(1, 'week').endOf('isoWeek') }
+      // { label: 'This week' , from: moment().format('l') },
+      // { label: 'Next week' , from: moment().format('l') },
+    ]
+
+    let options = optionsList.map(function(item) {
+      return(
+        <option key={item.from} value={item.from}>
+          {item.label}
+        </option>
+      )
+    })
+
+    return(
+      {options}
+    )
+  }
+
+  displayRelativeSelect() {
+    var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
+
+    if (filter.includeRelativeDates == 'true') {
+      return (
+        <select
+        className="form-control"
+        >
+          {this.displayOptions()}
+        </select>
+      )
+    } else {
+      return '';
+    }
+  }
+
   render() {
     return (
       <li>
+        {this.displayRelativeSelect()}
         <div className="input-group datepicker dateRangeFrom" ref="dateRangeFrom">
           <input
             aria-required="true"
