@@ -47,10 +47,10 @@ export class DateInput extends React.Component {
 
   displayOptions() {
     const optionsList = [
+      { label: 'Select Time Period' , from: null , to: null },
       { label: 'Today' , from: moment() , to: moment() },
-      { label: 'Last week' , from: moment().subtract(1, 'week').startOf('isoWeek'), to: moment().subtract(1, 'week').endOf('isoWeek') }
-      // { label: 'This week' , from: moment().format('l') },
-      // { label: 'Next week' , from: moment().format('l') },
+      { label: 'Last week' , from: moment().subtract(1, 'week').startOf('isoWeek'), to: moment().subtract(1, 'week').endOf('isoWeek') },
+      { label: 'This week' , from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
     ]
 
     let options = optionsList.map(function(item) {
