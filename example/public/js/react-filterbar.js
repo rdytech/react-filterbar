@@ -15417,8 +15417,24 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "onRelativeChange",
+    value: function onRelativeChange(event) {
+      var optionElement = event.target.childNodes[event.target.selectedIndex];
+      var from = moment(parseInt(optionElement.getAttribute('data-from')));
+      var to = moment(parseInt(optionElement.getAttribute('data-to')));
+      var newValue = {
+        value: optionElement.value,
+        from: from.format('DD/MM/YYYY'),
+        to: to.format('DD/MM/YYYY')
+      };
+      this.setState({
+        value: newValue
+      });
+      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
+    }
+  }, {
     key: "onBlur",
-    value: function onBlur() {
+    value: function onBlur(event) {
       this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
     }
   }, {
@@ -15445,9 +15461,50 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "displayOptions",
+    value: function displayOptions() {
+      var optionsList = [{
+        label: 'Today',
+        from: moment(),
+        to: moment()
+      }, {
+        label: 'Last week',
+        from: moment().subtract(1, 'week').startOf('isoWeek'),
+        to: moment().subtract(1, 'week').endOf('isoWeek') // { label: 'This week' , from: moment().format('l') },
+        // { label: 'Next week' , from: moment().format('l') },
+
+      }];
+      var options = optionsList.map(function (item) {
+        return React.createElement("option", {
+          key: item.label,
+          value: item.label,
+          "data-from": item.from,
+          "data-to": item.to
+        }, item.label);
+      });
+      return {
+        options: options
+      };
+    }
+  }, {
+    key: "displayRelativeSelect",
+    value: function displayRelativeSelect() {
+      var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
+
+      if (filter.includeRelativeDates == 'true') {
+        return React.createElement("select", {
+          className: "form-control",
+          onChange: this.onRelativeChange.bind(this),
+          value: this.state.value.value
+        }, this.displayOptions());
+      } else {
+        return '';
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      return React.createElement("li", null, React.createElement("div", {
+      return React.createElement("li", null, this.displayRelativeSelect(), React.createElement("div", {
         className: "input-group datepicker dateRangeFrom",
         ref: "dateRangeFrom"
       }, React.createElement("input", {

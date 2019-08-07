@@ -21,8 +21,10 @@ export class DateInput extends React.Component {
     var optionElement = event.target.childNodes[event.target.selectedIndex];
     var from = moment(parseInt(optionElement.getAttribute('data-from')));
     var to = moment(parseInt(optionElement.getAttribute('data-to')));
+    var newValue = { value: optionElement.value, from: from.format('DD/MM/YYYY'), to: to.format('DD/MM/YYYY') };
 
-    this.setState({value: { from: from.format('l'), to: to.format('l') }});
+    this.setState({value: newValue });
+    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
   }
 
   onBlur() {
@@ -72,6 +74,7 @@ export class DateInput extends React.Component {
         <select
           className="form-control"
           onChange={this.onRelativeChange.bind(this)}
+          value={this.state.value.value}
         >
           {this.displayOptions()}
         </select>
