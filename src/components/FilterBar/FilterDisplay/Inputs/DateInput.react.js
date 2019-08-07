@@ -17,6 +17,14 @@ export class DateInput extends React.Component {
     this.setState({value: newValue});
   }
 
+  onRelativeChange(event) {
+    var optionElement = event.target.childNodes[event.target.selectedIndex];
+    var from = moment(parseInt(optionElement.getAttribute('data-from')));
+    var to = moment(parseInt(optionElement.getAttribute('data-to')));
+
+    this.setState({value: { from: from.format('l'), to: to.format('l') }});
+  }
+
   onBlur() {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
   }
@@ -36,9 +44,8 @@ export class DateInput extends React.Component {
   }
 
   displayOptions() {
-
     const optionsList = [
-      { label: 'Today' , from: moment().format('l'), to: moment().format('l') },
+      { label: 'Today' , from: moment() , to: moment() },
       { label: 'Last week' , from: moment().subtract(1, 'week').startOf('isoWeek'), to: moment().subtract(1, 'week').endOf('isoWeek') }
       // { label: 'This week' , from: moment().format('l') },
       // { label: 'Next week' , from: moment().format('l') },
@@ -46,7 +53,7 @@ export class DateInput extends React.Component {
 
     let options = optionsList.map(function(item) {
       return(
-        <option key={item.from} value={item.from}>
+        <option key={item.label} value={item.label} data-from={item.from} data-to={item.to}>
           {item.label}
         </option>
       )
@@ -63,7 +70,8 @@ export class DateInput extends React.Component {
     if (filter.includeRelativeDates == 'true') {
       return (
         <select
-        className="form-control"
+          className="form-control"
+          onChange={this.onRelativeChange.bind(this)}
         >
           {this.displayOptions()}
         </select>
