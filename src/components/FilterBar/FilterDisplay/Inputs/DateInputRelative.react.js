@@ -77,22 +77,16 @@ export class DateInputRelative extends React.Component {
     )
   }
 
-  displayRelativeSelect() {
-    return (
-      <select
-        className="form-control"
-        onChange={this.onRelativeSelectionChange.bind(this)}
-        defaultValue={this.state.value.value}
-      >
-        {this.displayOptions()}
-      </select>
-    )
-  }
-
   render() {
     return (
       <li>
-        {this.displayRelativeSelect()}
+        <select
+          className="form-control"
+          onChange={this.onRelativeSelectionChange.bind(this)}
+          defaultValue={this.state.value.value}
+        >
+          {this.displayOptions()}
+        </select>
         <div className="input-group datepicker dateRangeFrom" ref="dateRangeFrom">
           <input
             aria-required="true"
