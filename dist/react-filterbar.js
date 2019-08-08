@@ -15603,7 +15603,7 @@ function (_React$Component) {
           locale: 'en-au',
           format: 'L'
         });
-        datePickerFrom.datetimepicker().on("dp.change", this.onChange.bind(this));
+        datePickerFrom.datetimepicker().on("dp.change", this.onDateInputChange.bind(this));
       }
 
       var datePickerTo = $(React.findDOMNode(this.refs.dateRangeTo));
@@ -15613,7 +15613,7 @@ function (_React$Component) {
           locale: 'en-au',
           format: 'L'
         });
-        datePickerTo.datetimepicker().on("dp.change", this.onChange.bind(this));
+        datePickerTo.datetimepicker().on("dp.change", this.onDateInputChange.bind(this));
       }
     }
   }, {
