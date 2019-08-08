@@ -82,7 +82,7 @@ class Server < Sinatra::Base
   def search(needle, haystack)
     field, type, value = needle.values_at(*%w(field type value))
     case type.to_sym
-    when :date
+    when :date, :date_relative
       haystack.select do |hay|
         (Date.parse(value["from"])..Date.parse(value["to"])) === hay.send(field)
       end
