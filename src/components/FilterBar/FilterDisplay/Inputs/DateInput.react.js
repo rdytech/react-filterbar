@@ -2,7 +2,7 @@ export class DateInput extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { value: this.props.value || { from: null, to: null } };
+    this.state = { value: this.props.value || { from: null, to: null, value: null } };
   }
 
   onChange(event) {
@@ -23,14 +23,19 @@ export class DateInput extends React.Component {
     var to = moment(parseInt(optionElement.getAttribute('data-to')));
     var newValue = { value: optionElement.value, from: from.format('DD/MM/YYYY'), to: to.format('DD/MM/YYYY') };
 
-    this.setState({value: newValue });
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
+    this.setState({ value: newValue });
+    this.updateFilter(newValue);
   }
 
   onBlur() {
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+    this.updateFilter(this.state.value);
   }
 
+  updateFilter(newValue) {
+    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
+  }
+
+  // TODO: Update relative dates based on relative selection (if in query params) on page load, rather than applying stored dates directly
   componentDidMount() {
     var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
     if (datePickerFrom.datetimepicker !== undefined) {
@@ -46,16 +51,22 @@ export class DateInput extends React.Component {
   }
 
   displayOptions() {
+    var lastWeek = moment().subtract(1, 'week');
     const optionsList = [
       { label: 'Select Time Period' , from: null , to: null },
       { label: 'Today' , from: moment() , to: moment() },
-      { label: 'Last week' , from: moment().subtract(1, 'week').startOf('isoWeek'), to: moment().subtract(1, 'week').endOf('isoWeek') },
+      { label: 'Last week' , from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
       { label: 'This week' , from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
     ]
 
     let options = optionsList.map(function(item) {
       return(
-        <option key={item.label} value={item.label} data-from={item.from} data-to={item.to}>
+        <option
+          key={item.label}
+          value={item.label}
+          data-from={item.from}
+          data-to={item.to}
+        >
           {item.label}
         </option>
       )
@@ -74,7 +85,7 @@ export class DateInput extends React.Component {
         <select
           className="form-control"
           onChange={this.onRelativeChange.bind(this)}
-          value={this.state.value.value}
+          defaultValue={this.state.value.value}
         >
           {this.displayOptions()}
         </select>
