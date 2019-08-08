@@ -14326,7 +14326,7 @@ function () {
 
 exports.FilterBarActor = FilterBarActor;
 
-},{"../clients/SearchClient":368,"../helpers/FilterVerificator":408,"../helpers/URLHelper":410}],366:[function(require,module,exports){
+},{"../clients/SearchClient":368,"../helpers/FilterVerificator":409,"../helpers/URLHelper":411}],366:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14494,7 +14494,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }), filterableTableNode);
 });
 
-},{"./components/FilterableTable.react":393,"./helpers/FilterVerificator":408,"URIjs":3,"core-js/stable":362,"regenerator-runtime/runtime":364}],368:[function(require,module,exports){
+},{"./components/FilterableTable.react":394,"./helpers/FilterVerificator":409,"URIjs":3,"core-js/stable":362,"regenerator-runtime/runtime":364}],368:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14749,7 +14749,7 @@ BatchActionsList.contextTypes = {
   batchActionsStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../helpers/ModalHelper":409,"../../../helpers/URLHelper":410,"./BatchActionsListItem.react":371}],371:[function(require,module,exports){
+},{"../../../helpers/ModalHelper":410,"../../../helpers/URLHelper":411,"./BatchActionsListItem.react":371}],371:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14941,7 +14941,7 @@ ConfigurationButton.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../helpers/ModalHelper":409}],374:[function(require,module,exports){
+},{"../../helpers/ModalHelper":410}],374:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15096,7 +15096,7 @@ FilterBar.contextTypes = {
   batchActionsStore: React.PropTypes.object
 };
 
-},{"./ApplyFiltersButton.react":369,"./BatchActionsList/BatchActionsList.react":370,"./ClearFiltersButton.react":372,"./ConfigurationButton.react":373,"./ExportResultsButton.react":374,"./FilterDisplay/FilterDisplay.react":376,"./FilterList/FilterList.react":388,"./SaveFiltersButton.react":390,"./SavedSearchesList/SavedSearchesList.react":391}],376:[function(require,module,exports){
+},{"./ApplyFiltersButton.react":369,"./BatchActionsList/BatchActionsList.react":370,"./ClearFiltersButton.react":372,"./ConfigurationButton.react":373,"./ExportResultsButton.react":374,"./FilterDisplay/FilterDisplay.react":376,"./FilterList/FilterList.react":389,"./SaveFiltersButton.react":391,"./SavedSearchesList/SavedSearchesList.react":392}],376:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15318,6 +15318,8 @@ var _TextInput = require("./Inputs/TextInput.react");
 
 var _DateInput = require("./Inputs/DateInput.react");
 
+var _DateInputRelative = require("./Inputs/DateInputRelative.react");
+
 var _DateTimeInput = require("./Inputs/DateTimeInput.react");
 
 var _SingleDateTimeInput = require("./Inputs/SingleDateTimeInput.react");
@@ -15339,6 +15341,7 @@ function FilterInputFactory(propObject) {
     text: React.createElement(_TextInput.TextInput, propObject),
     id: React.createElement(_TextInput.TextInput, propObject),
     date: React.createElement(_DateInput.DateInput, propObject),
+    date_relative: React.createElement(_DateInputRelative.DateInputRelative, propObject),
     date_time: React.createElement(_DateTimeInput.DateTimeInput, propObject),
     single_datetime: React.createElement(_SingleDateTimeInput.SingleDateTimeInput, propObject),
     select: React.createElement(_SelectInput.SelectInput, propObject),
@@ -15353,7 +15356,7 @@ function FilterInputFactory(propObject) {
   }
 }
 
-},{"./Inputs/DateInput.react":379,"./Inputs/DateTimeInput.react":380,"./Inputs/LazyMultiSelectInput.react":381,"./Inputs/LazySelectInput.react":382,"./Inputs/MultiSelectInput.react":383,"./Inputs/RangeInput.react":384,"./Inputs/SelectInput.react":385,"./Inputs/SingleDateTimeInput.react":386,"./Inputs/TextInput.react":387}],379:[function(require,module,exports){
+},{"./Inputs/DateInput.react":379,"./Inputs/DateInputRelative.react":380,"./Inputs/DateTimeInput.react":381,"./Inputs/LazyMultiSelectInput.react":382,"./Inputs/LazySelectInput.react":383,"./Inputs/MultiSelectInput.react":384,"./Inputs/RangeInput.react":385,"./Inputs/SelectInput.react":386,"./Inputs/SingleDateTimeInput.react":387,"./Inputs/TextInput.react":388}],379:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15393,8 +15396,7 @@ function (_React$Component) {
     _this.state = {
       value: _this.props.value || {
         from: null,
-        to: null,
-        value: null
+        to: null
       }
     };
     return _this;
@@ -15416,15 +15418,164 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "onRelativeChange",
-    value: function onRelativeChange(event) {
+    key: "onBlur",
+    value: function onBlur() {
+      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
+
+      if (datePickerFrom.datetimepicker !== undefined) {
+        datePickerFrom.datetimepicker({
+          locale: 'en-au',
+          format: 'L'
+        });
+        datePickerFrom.datetimepicker().on("dp.change", this.onChange.bind(this));
+      }
+
+      var datePickerTo = $(React.findDOMNode(this.refs.dateRangeTo));
+
+      if (datePickerTo.datetimepicker !== undefined) {
+        datePickerTo.datetimepicker({
+          locale: 'en-au',
+          format: 'L'
+        });
+        datePickerTo.datetimepicker().on("dp.change", this.onChange.bind(this));
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement("li", null, React.createElement("div", {
+        className: "input-group datepicker dateRangeFrom",
+        ref: "dateRangeFrom"
+      }, React.createElement("input", {
+        "aria-required": "true",
+        className: "form-control",
+        "data-date-format": "DD/MM/YYYY",
+        onBlur: this.onBlur.bind(this),
+        onChange: this.onChange.bind(this),
+        placeholder: "from",
+        type: "text",
+        value: this.state.value.from
+      }), React.createElement("span", {
+        className: "input-group-addon"
+      }, React.createElement("span", {
+        "aria-hidden": "true",
+        className: "icon-calendar icon"
+      }), React.createElement("span", {
+        className: "sr-only icon icon-calendar"
+      }, "Calendar"))), React.createElement("div", {
+        className: "input-group datepicker dateRangeTo",
+        ref: "dateRangeTo"
+      }, React.createElement("input", {
+        "aria-required": "true",
+        className: "form-control",
+        "data-date-format": "DD/MM/YYYY",
+        onBlur: this.onBlur.bind(this),
+        onChange: this.onChange.bind(this),
+        placeholder: "to",
+        type: "text",
+        value: this.state.value.to
+      }), React.createElement("span", {
+        className: "input-group-addon"
+      }, React.createElement("span", {
+        "aria-hidden": "true",
+        className: "icon-calendar icon"
+      }), React.createElement("span", {
+        className: "sr-only icon icon-calendar"
+      }, "Calendar"))));
+    }
+  }]);
+
+  return DateInput;
+}(React.Component);
+
+exports.DateInput = DateInput;
+DateInput.propTypes = {
+  filterUid: React.PropTypes.string.isRequired,
+  value: React.PropTypes.node.isRequired
+};
+DateInput.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object.isRequired
+};
+
+},{}],380:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DateInputRelative = void 0;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var DateInputRelative =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(DateInputRelative, _React$Component);
+
+  function DateInputRelative(props) {
+    var _this;
+
+    _classCallCheck(this, DateInputRelative);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DateInputRelative).call(this, props));
+    _this.props.dateFormat = 'DD/MM/YYYY';
+    _this.state = {
+      value: _this.props.value || {
+        from: null,
+        to: null,
+        value: null
+      }
+    };
+    return _this;
+  }
+
+  _createClass(DateInputRelative, [{
+    key: "onDateInputChange",
+    value: function onDateInputChange(event) {
+      var newValue = this.state.value;
+
+      if (event.type === "dp") {
+        newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+      } else if (event.type === "input") {
+        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+      }
+
+      this.setState({
+        value: newValue
+      });
+    }
+  }, {
+    key: "onRelativeSelectionChange",
+    value: function onRelativeSelectionChange(event) {
       var optionElement = event.target.childNodes[event.target.selectedIndex];
       var from = moment(parseInt(optionElement.getAttribute('data-from')));
       var to = moment(parseInt(optionElement.getAttribute('data-to')));
       var newValue = {
         value: optionElement.value,
-        from: from.format('DD/MM/YYYY'),
-        to: to.format('DD/MM/YYYY')
+        from: from.format(this.props.dateFormat),
+        to: to.format(this.props.dateFormat)
       };
       this.setState({
         value: newValue
@@ -15501,17 +15652,11 @@ function (_React$Component) {
   }, {
     key: "displayRelativeSelect",
     value: function displayRelativeSelect() {
-      var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
-
-      if (filter.includeRelativeDates == 'true') {
-        return React.createElement("select", {
-          className: "form-control",
-          onChange: this.onRelativeChange.bind(this),
-          defaultValue: this.state.value.value
-        }, this.displayOptions());
-      } else {
-        return '';
-      }
+      return React.createElement("select", {
+        className: "form-control",
+        onChange: this.onRelativeSelectionChange.bind(this),
+        defaultValue: this.state.value.value
+      }, this.displayOptions());
     }
   }, {
     key: "render",
@@ -15522,9 +15667,9 @@ function (_React$Component) {
       }, React.createElement("input", {
         "aria-required": "true",
         className: "form-control",
-        "data-date-format": "DD/MM/YYYY",
+        "data-date-format": this.props.dateFormat,
         onBlur: this.onBlur.bind(this),
-        onChange: this.onChange.bind(this),
+        onChange: this.onDateInputChange.bind(this),
         placeholder: "from",
         type: "text",
         value: this.state.value.from
@@ -15541,9 +15686,9 @@ function (_React$Component) {
       }, React.createElement("input", {
         "aria-required": "true",
         className: "form-control",
-        "data-date-format": "DD/MM/YYYY",
+        "data-date-format": this.props.dateFormat,
         onBlur: this.onBlur.bind(this),
-        onChange: this.onChange.bind(this),
+        onChange: this.onDateInputChange.bind(this),
         placeholder: "to",
         type: "text",
         value: this.state.value.to
@@ -15558,20 +15703,20 @@ function (_React$Component) {
     }
   }]);
 
-  return DateInput;
+  return DateInputRelative;
 }(React.Component);
 
-exports.DateInput = DateInput;
-DateInput.propTypes = {
+exports.DateInputRelative = DateInputRelative;
+DateInputRelative.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
   value: React.PropTypes.node.isRequired
 };
-DateInput.contextTypes = {
+DateInputRelative.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired,
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],380:[function(require,module,exports){
+},{}],381:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15720,7 +15865,7 @@ DateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],381:[function(require,module,exports){
+},{}],382:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15867,7 +16012,7 @@ LazyMultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],382:[function(require,module,exports){
+},{}],383:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15994,7 +16139,7 @@ LazySelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],383:[function(require,module,exports){
+},{}],384:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16153,7 +16298,7 @@ MultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],384:[function(require,module,exports){
+},{}],385:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16255,7 +16400,7 @@ RangeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],385:[function(require,module,exports){
+},{}],386:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16395,7 +16540,7 @@ SelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],386:[function(require,module,exports){
+},{}],387:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16511,7 +16656,7 @@ SingleDateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],387:[function(require,module,exports){
+},{}],388:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16608,7 +16753,7 @@ TextInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],388:[function(require,module,exports){
+},{}],389:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16730,7 +16875,7 @@ FilterList.propTypes = {
   disabledFilters: React.PropTypes.object.isRequired
 };
 
-},{"./FilterListOption.react":389}],389:[function(require,module,exports){
+},{"./FilterListOption.react":390}],390:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16796,7 +16941,7 @@ FilterListOption.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],390:[function(require,module,exports){
+},{}],391:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16912,7 +17057,7 @@ SaveFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],391:[function(require,module,exports){
+},{}],392:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17016,7 +17161,7 @@ SavedSearchesList.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"./SavedSearchesListItem.react":392}],392:[function(require,module,exports){
+},{"./SavedSearchesListItem.react":393}],393:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17106,7 +17251,7 @@ SavedSearchesListItem.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],393:[function(require,module,exports){
+},{}],394:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17195,7 +17340,7 @@ FilterableTable.childContextTypes = {
   tableActor: React.PropTypes.object
 };
 
-},{"../actors/FilterBarActor":365,"../actors/TableActor":366,"../stores/BatchActionsStore":411,"../stores/FilterBarStore":412,"../stores/TableStore":413,"./FilterBar/FilterBar.react":375,"./Table/Table.react":405}],394:[function(require,module,exports){
+},{"../actors/FilterBarActor":365,"../actors/TableActor":366,"../stores/BatchActionsStore":412,"../stores/FilterBarStore":413,"../stores/TableStore":414,"./FilterBar/FilterBar.react":375,"./Table/Table.react":406}],395:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17265,7 +17410,7 @@ QuickFilters.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{"./QuickFiltersBlock/QuickFiltersBlock.react":395}],395:[function(require,module,exports){
+},{"./QuickFiltersBlock/QuickFiltersBlock.react":396}],396:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17335,7 +17480,7 @@ function (_React$Component) {
 
 exports.QuickFiltersBlock = QuickFiltersBlock;
 
-},{"./QuickFiltersButton.react":396}],396:[function(require,module,exports){
+},{"./QuickFiltersButton.react":397}],397:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17467,7 +17612,7 @@ QuickFiltersButton.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{}],397:[function(require,module,exports){
+},{}],398:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17532,7 +17677,7 @@ Body.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyRow.react":399}],398:[function(require,module,exports){
+},{"./BodyRow.react":400}],399:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17590,7 +17735,7 @@ BodyCell.propTypes = {
   value: React.PropTypes.string.isRequired
 };
 
-},{}],399:[function(require,module,exports){
+},{}],400:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17704,7 +17849,7 @@ BodyRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyCell.react":398,"./BodySelectable.react":400}],400:[function(require,module,exports){
+},{"./BodyCell.react":399,"./BodySelectable.react":401}],401:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17802,7 +17947,7 @@ BodySelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],401:[function(require,module,exports){
+},{}],402:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17896,7 +18041,7 @@ HeadingCell.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],402:[function(require,module,exports){
+},{}],403:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18007,7 +18152,7 @@ HeadingRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./HeadingCell.react":401,"./HeadingSelectable.react":403}],403:[function(require,module,exports){
+},{"./HeadingCell.react":402,"./HeadingSelectable.react":404}],404:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18101,7 +18246,7 @@ HeadingSelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],404:[function(require,module,exports){
+},{}],405:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18229,7 +18374,7 @@ Pagination.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{}],405:[function(require,module,exports){
+},{}],406:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18391,7 +18536,7 @@ Table.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{"../../events/TableEvent":407,"./Body.react":397,"./HeadingRow.react":402,"./Pagination.react":404,"./TableCaption.react":406}],406:[function(require,module,exports){
+},{"../../events/TableEvent":408,"./Body.react":398,"./HeadingRow.react":403,"./Pagination.react":405,"./TableCaption.react":407}],407:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18471,7 +18616,7 @@ function (_React$Component) {
 
 exports.TableCaption = TableCaption;
 
-},{"../QuickFilters/QuickFilters.react":394}],407:[function(require,module,exports){
+},{"../QuickFilters/QuickFilters.react":395}],408:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18485,7 +18630,7 @@ function tableUpdated() {
   document.dispatchEvent(event);
 }
 
-},{}],408:[function(require,module,exports){
+},{}],409:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18546,7 +18691,7 @@ function () {
 
 exports.FilterVerificator = FilterVerificator;
 
-},{"URIjs":3}],409:[function(require,module,exports){
+},{"URIjs":3}],410:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18564,7 +18709,7 @@ function displayModalForData(data) {
   modal.modal();
 }
 
-},{}],410:[function(require,module,exports){
+},{}],411:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18589,7 +18734,7 @@ function redirectUrl(url) {
   window.location.href = url;
 }
 
-},{"URIjs":3}],411:[function(require,module,exports){
+},{"URIjs":3}],412:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18624,7 +18769,7 @@ function () {
 
 exports.BatchActionsStore = BatchActionsStore;
 
-},{}],412:[function(require,module,exports){
+},{}],413:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -19163,7 +19308,7 @@ function () {
 
 exports.FilterBarStore = FilterBarStore;
 
-},{"../clients/SearchClient":368}],413:[function(require,module,exports){
+},{"../clients/SearchClient":368}],414:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

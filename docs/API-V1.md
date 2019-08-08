@@ -128,6 +128,8 @@ This is the type of the filter, used on the server to structure the query.
 
 * **date**: a from, to date input
 
+* **date_relative**: a from, to date input, with a relative selection to populate the dates (e.g. Last Week)
+
 * **select**: a dropdown selection box
 
 * **lazy_select**: a dropdown selection which is loaded only after searching (Usefull for huge collections)
@@ -138,7 +140,7 @@ This is the type of the filter, used on the server to structure the query.
 
 * **range**: a from, to text input
 
-*Allowed Values*: ['text', 'id', 'date', 'select', 'range'], must be one of these.
+*Allowed Values*: ['text', 'id', 'date', 'date_relative', 'select', 'range'], must be one of these.
 
 ###### dt.label
 
