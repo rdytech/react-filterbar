@@ -1,4 +1,4 @@
-export class DateInputRelative extends React.Component {
+export class RelativeDateInput extends React.Component {
   constructor(props) {
     super(props);
     this.props.dateFormat = 'DD/MM/YYYY'
@@ -128,12 +128,12 @@ export class DateInputRelative extends React.Component {
   }
 }
 
-DateInputRelative.propTypes = {
+RelativeDateInput.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
   value: React.PropTypes.node.isRequired
 };
 
-DateInputRelative.contextTypes = {
+RelativeDateInput.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired,
   filterBarStore: React.PropTypes.object.isRequired
 };
