@@ -53,7 +53,7 @@ export class DateInputRelative extends React.Component {
   displayOptions() {
     var lastWeek = moment().subtract(1, 'week');
     const optionsList = [
-      { label: 'Select Time Period' , from: null , to: null },
+      { label: 'Select Period' , from: null , to: null },
       { label: 'Today' , from: moment() , to: moment() },
       { label: 'Last week' , from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
       { label: 'This week' , from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
