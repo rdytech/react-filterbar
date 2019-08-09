@@ -79,6 +79,22 @@ export class RelativeDateInput extends React.Component {
 
   render() {
     return (
+      <DateInput value={this.state.value}>
+        <select
+          className="form-control"
+          onChange={this.onRelativeChange.bind(this)}
+          value={this.state.value.value}
+        >
+          {this.relativeOptions().map(({ label, from, to }) => (
+            <option key={label} value={label} data-from={from} data-to={to}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </DateInput>
+    )
+  }
+    return (
       <li>
         <select
           className="form-control"
