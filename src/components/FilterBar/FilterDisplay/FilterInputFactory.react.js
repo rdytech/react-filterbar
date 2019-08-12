@@ -1,6 +1,6 @@
 import {TextInput} from "./Inputs/TextInput.react";
 import {DateInput} from "./Inputs/DateInput.react";
-import {RelativeDateInput} from "./Inputs/DateInputRelative.react";
+import {RelativeDateInput} from "./Inputs/RelativeDateInput.react";
 import {DateTimeInput} from "./Inputs/DateTimeInput.react";
 import {SingleDateTimeInput} from "./Inputs/SingleDateTimeInput.react";
 import {SelectInput} from "./Inputs/SelectInput.react";
