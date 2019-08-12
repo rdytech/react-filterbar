@@ -15318,7 +15318,7 @@ var _TextInput = require("./Inputs/TextInput.react");
 
 var _DateInput = require("./Inputs/DateInput.react");
 
-var _DateInputRelative = require("./Inputs/DateInputRelative.react");
+var _RelativeDateInput = require("./Inputs/RelativeDateInput.react");
 
 var _DateTimeInput = require("./Inputs/DateTimeInput.react");
 
@@ -15341,7 +15341,7 @@ function FilterInputFactory(propObject) {
     text: React.createElement(_TextInput.TextInput, propObject),
     id: React.createElement(_TextInput.TextInput, propObject),
     date: React.createElement(_DateInput.DateInput, propObject),
-    date_relative: React.createElement(_DateInputRelative.DateInputRelative, propObject),
+    date_relative: React.createElement(_RelativeDateInput.RelativeDateInput, propObject),
     date_time: React.createElement(_DateTimeInput.DateTimeInput, propObject),
     single_datetime: React.createElement(_SingleDateTimeInput.SingleDateTimeInput, propObject),
     select: React.createElement(_SelectInput.SelectInput, propObject),
@@ -15356,7 +15356,7 @@ function FilterInputFactory(propObject) {
   }
 }
 
-},{"./Inputs/DateInput.react":379,"./Inputs/DateInputRelative.react":380,"./Inputs/DateTimeInput.react":381,"./Inputs/LazyMultiSelectInput.react":382,"./Inputs/LazySelectInput.react":383,"./Inputs/MultiSelectInput.react":384,"./Inputs/RangeInput.react":385,"./Inputs/SelectInput.react":386,"./Inputs/SingleDateTimeInput.react":387,"./Inputs/TextInput.react":388}],379:[function(require,module,exports){
+},{"./Inputs/DateInput.react":379,"./Inputs/DateTimeInput.react":380,"./Inputs/LazyMultiSelectInput.react":381,"./Inputs/LazySelectInput.react":382,"./Inputs/MultiSelectInput.react":383,"./Inputs/RangeInput.react":384,"./Inputs/RelativeDateInput.react":385,"./Inputs/SelectInput.react":386,"./Inputs/SingleDateTimeInput.react":387,"./Inputs/TextInput.react":388}],379:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15509,219 +15509,6 @@ DateInput.contextTypes = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.DateInputRelative = void 0;
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var DateInputRelative =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(DateInputRelative, _React$Component);
-
-  function DateInputRelative(props) {
-    var _this;
-
-    _classCallCheck(this, DateInputRelative);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(DateInputRelative).call(this, props));
-    _this.props.dateFormat = 'DD/MM/YYYY';
-    _this.state = {
-      value: _this.props.value || {
-        from: null,
-        to: null,
-        value: null
-      }
-    };
-    return _this;
-  }
-
-  _createClass(DateInputRelative, [{
-    key: "onDateInputChange",
-    value: function onDateInputChange(event) {
-      var newValue = this.state.value;
-
-      if (event.type === "dp") {
-        newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
-      } else if (event.type === "input") {
-        newValue[event.target.getAttribute("placeholder")] = event.target.value;
-      }
-
-      this.setState({
-        value: newValue
-      });
-    }
-  }, {
-    key: "onRelativeSelectionChange",
-    value: function onRelativeSelectionChange(event) {
-      var optionElement = event.target.childNodes[event.target.selectedIndex];
-      var from = moment(parseInt(optionElement.getAttribute('data-from')));
-      var to = moment(parseInt(optionElement.getAttribute('data-to')));
-      var newValue = {
-        value: optionElement.value,
-        from: from.format(this.props.dateFormat),
-        to: to.format(this.props.dateFormat)
-      };
-      this.setState({
-        value: newValue
-      });
-      this.updateFilter(newValue);
-    }
-  }, {
-    key: "onBlur",
-    value: function onBlur() {
-      this.updateFilter(this.state.value);
-    }
-  }, {
-    key: "updateFilter",
-    value: function updateFilter(newValue) {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
-    } // TODO: Update relative dates based on relative selection (if in query params) on page load, rather than applying stored dates directly
-
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
-
-      if (datePickerFrom.datetimepicker !== undefined) {
-        datePickerFrom.datetimepicker({
-          locale: 'en-au',
-          format: 'L'
-        });
-        datePickerFrom.datetimepicker().on("dp.change", this.onDateInputChange.bind(this));
-      }
-
-      var datePickerTo = $(React.findDOMNode(this.refs.dateRangeTo));
-
-      if (datePickerTo.datetimepicker !== undefined) {
-        datePickerTo.datetimepicker({
-          locale: 'en-au',
-          format: 'L'
-        });
-        datePickerTo.datetimepicker().on("dp.change", this.onDateInputChange.bind(this));
-      }
-    }
-  }, {
-    key: "displayOptions",
-    value: function displayOptions() {
-      var lastWeek = moment().subtract(1, 'week');
-      var optionsList = [{
-        label: 'Select Time Period',
-        from: null,
-        to: null
-      }, {
-        label: 'Today',
-        from: moment(),
-        to: moment()
-      }, {
-        label: 'Last week',
-        from: lastWeek.clone().startOf('isoWeek'),
-        to: lastWeek.clone().endOf('isoWeek')
-      }, {
-        label: 'This week',
-        from: moment().startOf('isoWeek'),
-        to: moment().endOf('isoWeek')
-      }];
-      var options = optionsList.map(function (item) {
-        return React.createElement("option", {
-          key: item.label,
-          value: item.label,
-          "data-from": item.from,
-          "data-to": item.to
-        }, item.label);
-      });
-      return {
-        options: options
-      };
-    }
-  }, {
-    key: "displayRelativeSelect",
-    value: function displayRelativeSelect() {
-      return React.createElement("select", {
-        className: "form-control",
-        onChange: this.onRelativeSelectionChange.bind(this),
-        defaultValue: this.state.value.value
-      }, this.displayOptions());
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return React.createElement("li", null, this.displayRelativeSelect(), React.createElement("div", {
-        className: "input-group datepicker dateRangeFrom",
-        ref: "dateRangeFrom"
-      }, React.createElement("input", {
-        "aria-required": "true",
-        className: "form-control",
-        "data-date-format": this.props.dateFormat,
-        onBlur: this.onBlur.bind(this),
-        onChange: this.onDateInputChange.bind(this),
-        placeholder: "from",
-        type: "text",
-        value: this.state.value.from
-      }), React.createElement("span", {
-        className: "input-group-addon"
-      }, React.createElement("span", {
-        "aria-hidden": "true",
-        className: "icon-calendar icon"
-      }), React.createElement("span", {
-        className: "sr-only icon icon-calendar"
-      }, "Calendar"))), React.createElement("div", {
-        className: "input-group datepicker dateRangeTo",
-        ref: "dateRangeTo"
-      }, React.createElement("input", {
-        "aria-required": "true",
-        className: "form-control",
-        "data-date-format": this.props.dateFormat,
-        onBlur: this.onBlur.bind(this),
-        onChange: this.onDateInputChange.bind(this),
-        placeholder: "to",
-        type: "text",
-        value: this.state.value.to
-      }), React.createElement("span", {
-        className: "input-group-addon"
-      }, React.createElement("span", {
-        "aria-hidden": "true",
-        className: "icon-calendar icon"
-      }), React.createElement("span", {
-        className: "sr-only icon icon-calendar"
-      }, "Calendar"))));
-    }
-  }]);
-
-  return DateInputRelative;
-}(React.Component);
-
-exports.DateInputRelative = DateInputRelative;
-DateInputRelative.propTypes = {
-  filterUid: React.PropTypes.string.isRequired,
-  value: React.PropTypes.node.isRequired
-};
-DateInputRelative.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired,
-  filterBarStore: React.PropTypes.object.isRequired
-};
-
-},{}],381:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 exports.DateTimeInput = void 0;
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -15865,7 +15652,7 @@ DateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],382:[function(require,module,exports){
+},{}],381:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16012,7 +15799,7 @@ LazyMultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],383:[function(require,module,exports){
+},{}],382:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16139,7 +15926,7 @@ LazySelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],384:[function(require,module,exports){
+},{}],383:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16298,7 +16085,7 @@ MultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],385:[function(require,module,exports){
+},{}],384:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16400,7 +16187,141 @@ RangeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],386:[function(require,module,exports){
+},{}],385:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.RelativeDateInput = void 0;
+
+var _DateInput = require("./DateInput.react");
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var RelativeDateInput =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(RelativeDateInput, _React$Component);
+
+  function RelativeDateInput(props) {
+    var _this;
+
+    _classCallCheck(this, RelativeDateInput);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RelativeDateInput).call(this, props));
+    _this.state = {
+      value: _this.props.value || {
+        from: null,
+        to: null,
+        value: null
+      }
+    };
+    return _this;
+  }
+
+  _createClass(RelativeDateInput, [{
+    key: "onRelativeChange",
+    value: function onRelativeChange(event) {
+      var optionElement = event.target.childNodes[event.target.selectedIndex];
+      var from = moment(parseInt(optionElement.getAttribute('data-from')));
+      var to = moment(parseInt(optionElement.getAttribute('data-to')));
+      var newValue = {
+        value: optionElement.value,
+        from: from.format(this.props.dateFormat),
+        to: to.format(this.props.dateFormat)
+      };
+      this.setState({
+        value: newValue
+      });
+      this.updateFilter(newValue);
+    }
+  }, {
+    key: "updateFilter",
+    value: function updateFilter(newValue) {
+      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
+    } // TODO: Update relative dates based on relative selection (if in query params) on page load, rather than applying stored dates directly
+
+  }, {
+    key: "relativeOptions",
+    value: function relativeOptions() {
+      var lastWeek = moment().subtract(1, 'week');
+      var optionsList = [{
+        label: 'Select Period',
+        from: null,
+        to: null
+      }, {
+        label: 'Today',
+        from: moment(),
+        to: moment()
+      }, {
+        label: 'Last week',
+        from: lastWeek.clone().startOf('isoWeek'),
+        to: lastWeek.clone().endOf('isoWeek')
+      }, {
+        label: 'This week',
+        from: moment().startOf('isoWeek'),
+        to: moment().endOf('isoWeek')
+      }];
+      return optionsList;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement("div", null, React.createElement("select", {
+        className: "form-control",
+        onChange: this.onRelativeChange.bind(this),
+        value: this.state.value.value
+      }, this.relativeOptions().map(function (_ref) {
+        var label = _ref.label,
+            from = _ref.from,
+            to = _ref.to;
+        return React.createElement("option", {
+          key: label,
+          value: label,
+          "data-from": from,
+          "data-to": to
+        }, label);
+      })), React.createElement(_DateInput.DateInput, {
+        value: this.state.value,
+        filterUid: this.props.filterUid
+      }));
+    }
+  }]);
+
+  return RelativeDateInput;
+}(React.Component);
+
+exports.RelativeDateInput = RelativeDateInput;
+RelativeDateInput.propTypes = {
+  filterUid: React.PropTypes.string.isRequired,
+  value: React.PropTypes.node.isRequired
+};
+RelativeDateInput.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object.isRequired
+};
+RelativeDateInput.defaultProps = {
+  dateFormat: 'DD/MM/YYYY'
+};
+
+},{"./DateInput.react":379}],386:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

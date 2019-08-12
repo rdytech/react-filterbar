@@ -3,7 +3,6 @@ import {DateInput} from "./DateInput.react";
 export class RelativeDateInput extends React.Component {
   constructor(props) {
     super(props);
-    this.props.dateFormat = 'DD/MM/YYYY'
     this.state = { value: this.props.value || { from: null, to: null, value: null } };
   }
 
@@ -22,7 +21,6 @@ export class RelativeDateInput extends React.Component {
   }
 
   // TODO: Update relative dates based on relative selection (if in query params) on page load, rather than applying stored dates directly
-
   relativeOptions() {
     var lastWeek = moment().subtract(1, 'week');
     const optionsList = [
@@ -63,3 +61,7 @@ RelativeDateInput.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired,
   filterBarStore: React.PropTypes.object.isRequired
 };
+
+RelativeDateInput.defaultProps = {
+  dateFormat: 'DD/MM/YYYY'
+}
