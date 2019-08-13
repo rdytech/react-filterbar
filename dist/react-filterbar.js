@@ -15374,9 +15374,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -15397,14 +15397,17 @@ function (_React$Component) {
       value: _this.props.value || {
         from: null,
         to: null
-      }
+      },
+      displayFrom: _this.props.displayFrom,
+      displayTo: _this.props.displayTo
     };
+    _this.handleDateChange = _this.props.onDateChangeCustom ? _this.props.onDateChangeCustom.bind(_assertThisInitialized(_this)) : _this.onDateChange.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(DateInput, [{
-    key: "onChange",
-    value: function onChange(event) {
+    key: "onDateChange",
+    value: function onDateChange(event) {
       var newValue = this.state.value;
 
       if (event.type === "dp") {
@@ -15432,7 +15435,7 @@ function (_React$Component) {
           locale: 'en-au',
           format: 'L'
         });
-        datePickerFrom.datetimepicker().on("dp.change", this.onChange.bind(this));
+        datePickerFrom.datetimepicker().on("dp.change", this.handleDateChange);
       }
 
       var datePickerTo = $(React.findDOMNode(this.refs.dateRangeTo));
@@ -15442,7 +15445,7 @@ function (_React$Component) {
           locale: 'en-au',
           format: 'L'
         });
-        datePickerTo.datetimepicker().on("dp.change", this.onChange.bind(this));
+        datePickerTo.datetimepicker().on("dp.change", this.handleDateChange);
       }
     }
   }, {
@@ -15456,10 +15459,10 @@ function (_React$Component) {
         className: "form-control",
         "data-date-format": "DD/MM/YYYY",
         onBlur: this.onBlur.bind(this),
-        onChange: this.onChange.bind(this),
+        onChange: this.handleDateChange,
         placeholder: "from",
         type: "text",
-        value: this.state.value.from
+        value: this.state.displayFrom || this.state.value.from
       }), React.createElement("span", {
         className: "input-group-addon"
       }, React.createElement("span", {
@@ -15475,10 +15478,10 @@ function (_React$Component) {
         className: "form-control",
         "data-date-format": "DD/MM/YYYY",
         onBlur: this.onBlur.bind(this),
-        onChange: this.onChange.bind(this),
+        onChange: this.handleDateChange,
         placeholder: "to",
         type: "text",
-        value: this.state.value.to
+        value: this.state.displayTo || this.state.value.to
       }), React.createElement("span", {
         className: "input-group-addon"
       }, React.createElement("span", {
@@ -16233,74 +16236,113 @@ function (_React$Component) {
         value: null
       }
     };
+
+    _this.setDisplayDates(_this.props.value['value']);
+
     return _this;
-  }
+  } // If relative option selected, set dates for the datepickers to display
+
 
   _createClass(RelativeDateInput, [{
+    key: "setDisplayDates",
+    value: function setDisplayDates(relativeDateSelection) {
+      if (relativeDateSelection === undefined || relativeDateSelection == '') {
+        return;
+      }
+
+      var selected = this.relativeOptions()[relativeDateSelection];
+      this.state.displayFrom = selected.from.format(this.props.dateFormat);
+      this.state.displayTo = selected.to.format(this.props.dateFormat);
+    }
+  }, {
     key: "onRelativeChange",
     value: function onRelativeChange(event) {
-      var optionElement = event.target.childNodes[event.target.selectedIndex];
-      var from = moment(parseInt(optionElement.getAttribute('data-from')));
-      var to = moment(parseInt(optionElement.getAttribute('data-to')));
+      var selectedOption = $(event.target.childNodes[event.target.selectedIndex]);
       var newValue = {
-        value: optionElement.value,
-        from: from.format(this.props.dateFormat),
-        to: to.format(this.props.dateFormat)
+        value: selectedOption.val()
       };
+      this.state = {
+        value: newValue
+      };
+      this.updateFilter(newValue);
+    }
+  }, {
+    key: "onDatePickerChange",
+    value: function onDatePickerChange(event) {
+      var newValue = {
+        from: this.state.value.from || this.state.displayFrom,
+        to: this.state.value.to || this.state.displayTo
+      };
+
+      if (event.type === "dp") {
+        newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+      } else if (event.type === "input") {
+        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+      }
+
       this.setState({
         value: newValue
       });
-      this.updateFilter(newValue);
     }
   }, {
     key: "updateFilter",
     value: function updateFilter(newValue) {
       this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
-    } // TODO: Update relative dates based on relative selection (if in query params) on page load, rather than applying stored dates directly
-
+    }
   }, {
     key: "relativeOptions",
     value: function relativeOptions() {
       var lastWeek = moment().subtract(1, 'week');
-      var optionsList = [{
-        label: 'Select Period',
-        from: null,
-        to: null
-      }, {
-        label: 'Today',
-        from: moment(),
-        to: moment()
-      }, {
-        label: 'Last week',
-        from: lastWeek.clone().startOf('isoWeek'),
-        to: lastWeek.clone().endOf('isoWeek')
-      }, {
-        label: 'This week',
-        from: moment().startOf('isoWeek'),
-        to: moment().endOf('isoWeek')
-      }];
+      var optionsList = {
+        'Select Period': {
+          value: '',
+          from: null,
+          to: null
+        },
+        'Today': {
+          from: moment(),
+          to: moment()
+        },
+        'Last Week': {
+          from: lastWeek.clone().startOf('isoWeek'),
+          to: lastWeek.clone().endOf('isoWeek')
+        },
+        'This week': {
+          from: moment().startOf('isoWeek'),
+          to: moment().endOf('isoWeek')
+        }
+      };
       return optionsList;
+    }
+  }, {
+    key: "relativeOption",
+    value: function relativeOption(optionKey) {
+      var optionItem = this.relativeOptions()[optionKey];
+      return React.createElement("option", {
+        key: optionKey,
+        value: optionItem.value !== undefined ? optionItem.value : optionKey,
+        "data-from": optionItem.from,
+        "data-to": optionItem.to
+      }, optionKey);
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return React.createElement("div", null, React.createElement("select", {
         className: "form-control",
         onChange: this.onRelativeChange.bind(this),
-        value: this.state.value.value
-      }, this.relativeOptions().map(function (_ref) {
-        var label = _ref.label,
-            from = _ref.from,
-            to = _ref.to;
-        return React.createElement("option", {
-          key: label,
-          value: label,
-          "data-from": from,
-          "data-to": to
-        }, label);
+        value: this.state.value.value,
+        ref: "relativeSelect"
+      }, Object.keys(this.relativeOptions()).map(function (optionKey) {
+        return _this2.relativeOption(optionKey);
       })), React.createElement(_DateInput.DateInput, {
         value: this.state.value,
-        filterUid: this.props.filterUid
+        filterUid: this.props.filterUid,
+        displayFrom: this.state.displayFrom,
+        displayTo: this.state.displayTo,
+        onDateChangeCustom: this.onDatePickerChange
       }));
     }
   }]);

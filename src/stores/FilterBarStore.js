@@ -191,8 +191,6 @@ export class FilterBarStore {
   }
 
   updateFilter(filterUid, propKey, propValue) {
-    var oldValue = this.filters[filterUid][propKey];
-
     this.filters[filterUid][propKey] = propValue;
     if(propKey === 'value')
       this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
