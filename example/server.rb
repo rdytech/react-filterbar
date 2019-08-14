@@ -1,6 +1,7 @@
 require 'json'
 require 'sinatra/respond_with'
 require 'yaml/store'
+require 'active_support/all'
 
 class Server < Sinatra::Base
   register Sinatra::RespondWith
@@ -87,13 +88,9 @@ class Server < Sinatra::Base
         (Date.parse(value["from"])..Date.parse(value["to"])) === hay.send(field)
       end
     when :date_relative
-      puts value
       relative_value = value['value']
-      if(!relative_value.nil? && relative_value != '')
-        # TODO: Actually calculate relative dates from selection
-        today = Date.today
-        from = (today - 7)
-        to = today
+      if(relative_value.present?)
+        from, to = calculate_relative_dates(relative_value)
       else
         from = Date.parse(value["from"])
         to = Date.parse(value["to"])
@@ -163,6 +160,21 @@ class Server < Sinatra::Base
       table_caption: book_list.length.to_s + ' books',
       results: books.map { |book| book.to_h }
     }.to_json
+  end
+
+  def calculate_relative_dates(selected)
+    case selected
+    when 'Today'
+      from = Date.today
+      to   = Date.today
+    when 'Last Week'
+      from = Date.today.last_week
+      to   = from.end_of_week
+    when 'This Week'
+      from = Date.today.beginning_of_week
+      to   = from.end_of_week
+    end
+    return [from, to]
   end
 end
 
