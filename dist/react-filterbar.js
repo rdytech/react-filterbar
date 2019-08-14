@@ -16250,7 +16250,7 @@ function (_React$Component) {
         return;
       }
 
-      var selected = this.relativeOptions()[relativeDateSelection];
+      var selected = this.props.relativeOptions[relativeDateSelection];
       this.state.displayFrom = selected.from.format(this.props.dateFormat);
       this.state.displayTo = selected.to.format(this.props.dateFormat);
     }
@@ -16290,34 +16290,9 @@ function (_React$Component) {
       this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
     }
   }, {
-    key: "relativeOptions",
-    value: function relativeOptions() {
-      var lastWeek = moment().subtract(1, 'week');
-      var optionsList = {
-        'Select Period': {
-          value: '',
-          from: null,
-          to: null
-        },
-        'Today': {
-          from: moment(),
-          to: moment()
-        },
-        'Last Week': {
-          from: lastWeek.clone().startOf('isoWeek'),
-          to: lastWeek.clone().endOf('isoWeek')
-        },
-        'This week': {
-          from: moment().startOf('isoWeek'),
-          to: moment().endOf('isoWeek')
-        }
-      };
-      return optionsList;
-    }
-  }, {
     key: "relativeOption",
     value: function relativeOption(optionKey) {
-      var optionItem = this.relativeOptions()[optionKey];
+      var optionItem = this.props.relativeOptions[optionKey];
       return React.createElement("option", {
         key: optionKey,
         value: optionItem.value !== undefined ? optionItem.value : optionKey,
@@ -16335,7 +16310,7 @@ function (_React$Component) {
         onChange: this.onRelativeChange.bind(this),
         value: this.state.value.value,
         ref: "relativeSelect"
-      }, Object.keys(this.relativeOptions()).map(function (optionKey) {
+      }, Object.keys(this.props.relativeOptions).map(function (optionKey) {
         return _this2.relativeOption(optionKey);
       })), React.createElement(_DateInput.DateInput, {
         value: this.state.value,
@@ -16360,8 +16335,33 @@ RelativeDateInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 RelativeDateInput.defaultProps = {
-  dateFormat: 'DD/MM/YYYY'
+  dateFormat: 'DD/MM/YYYY',
+  relativeOptions: relativeOptions()
 };
+
+function relativeOptions() {
+  var lastWeek = moment().subtract(1, 'week');
+  var optionsList = {
+    'Select Period': {
+      value: '',
+      from: null,
+      to: null
+    },
+    'Today': {
+      from: moment(),
+      to: moment()
+    },
+    'Last Week': {
+      from: lastWeek.clone().startOf('isoWeek'),
+      to: lastWeek.clone().endOf('isoWeek')
+    },
+    'This Week': {
+      from: moment().startOf('isoWeek'),
+      to: moment().endOf('isoWeek')
+    }
+  };
+  return optionsList;
+}
 
 },{"./DateInput.react":379}],386:[function(require,module,exports){
 "use strict";

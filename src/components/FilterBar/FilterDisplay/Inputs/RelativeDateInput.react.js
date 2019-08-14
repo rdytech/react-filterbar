@@ -13,7 +13,7 @@ export class RelativeDateInput extends React.Component {
       return;
     }
 
-    var selected            = this.relativeOptions()[relativeDateSelection];
+    var selected            = this.props.relativeOptions[relativeDateSelection];
     this.state.displayFrom  = selected.from.format(this.props.dateFormat);
     this.state.displayTo    = selected.to.format(this.props.dateFormat);
   }
@@ -44,19 +44,8 @@ export class RelativeDateInput extends React.Component {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
   }
 
-  relativeOptions() {
-    var lastWeek = moment().subtract(1, 'week');
-    const optionsList = {
-      'Select Period':  { value: '',  from: null , to: null },
-      'Today':          { from: moment() , to: moment() },
-      'Last Week':      { from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
-      'This week':      { from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
-    }
-    return optionsList
-  }
-
   relativeOption(optionKey) {
-    var optionItem = this.relativeOptions()[optionKey];
+    var optionItem = this.props.relativeOptions[optionKey];
     return <option
       key={optionKey}
       value={optionItem.value !== undefined ? optionItem.value : optionKey}
@@ -74,7 +63,7 @@ export class RelativeDateInput extends React.Component {
           value={this.state.value.value}
           ref="relativeSelect"
         >
-          {Object.keys(this.relativeOptions()).map((optionKey) => (
+          {Object.keys(this.props.relativeOptions).map((optionKey) => (
             this.relativeOption(optionKey)
           ))}
         </select>
@@ -96,4 +85,16 @@ RelativeDateInput.contextTypes = {
 
 RelativeDateInput.defaultProps = {
   dateFormat: 'DD/MM/YYYY',
+  relativeOptions: relativeOptions()
+}
+
+function relativeOptions() {
+    var lastWeek = moment().subtract(1, 'week');
+    const optionsList = {
+      'Select Period':  { value: '',  from: null , to: null },
+      'Today':          { from: moment() , to: moment() },
+      'Last Week':      { from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
+      'This Week':      { from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
+    }
+    return optionsList;
 }
