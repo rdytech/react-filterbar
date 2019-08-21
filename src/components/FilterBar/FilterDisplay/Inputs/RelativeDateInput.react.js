@@ -9,7 +9,7 @@ export class RelativeDateInput extends React.Component {
 
   // If relative option selected, set dates for the datepickers to display
   setDisplayDates(relativeDateSelection) {
-    if(relativeDateSelection === undefined || relativeDateSelection == '') {
+    if(!this.relativeValueSelected(relativeDateSelection)) {
       return;
     }
 
@@ -40,6 +40,14 @@ export class RelativeDateInput extends React.Component {
     this.setState({value: newValue});
   }
 
+  relativeValueSelected(selection) {
+    if(selection === undefined) {
+      selection = this.state.value.value;
+    }
+
+    return selection !== undefined && selection !== null && selection != '';
+  }
+
   updateFilter(newValue) {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
   }
@@ -67,7 +75,7 @@ export class RelativeDateInput extends React.Component {
             this.relativeOption(optionKey)
           ))}
         </select>
-        <DateInput value={this.state.value} filterUid={this.props.filterUid} displayFrom={this.state.displayFrom} displayTo={this.state.displayTo} onDateChangeCustom={this.onDatePickerChange}/>
+        <DateInput value={this.state.value} filterUid={this.props.filterUid} displayFrom={this.state.displayFrom} displayTo={this.state.displayTo} onDateChangeCustom={this.onDatePickerChange} disabled={this.relativeValueSelected()}/>
       </div>
     )
   }

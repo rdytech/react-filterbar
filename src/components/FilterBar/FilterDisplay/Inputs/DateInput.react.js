@@ -53,6 +53,7 @@ export class DateInput extends React.Component {
             onChange={this.handleDateChange}
             placeholder="from"
             type="text"
+            disabled={this.props.disabled}
             value={this.state.displayFrom || this.state.value.from}
           />
           <span className="input-group-addon">
@@ -71,6 +72,7 @@ export class DateInput extends React.Component {
             onChange={this.handleDateChange}
             placeholder="to"
             type="text"
+            disabled={this.props.disabled}
             value={this.state.displayTo || this.state.value.to}
           />
           <span className="input-group-addon">
@@ -94,3 +96,7 @@ DateInput.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired,
   filterBarStore: React.PropTypes.object.isRequired
 };
+
+DateInput.defaultProps = {
+  disabled: false,
+}

@@ -15462,6 +15462,7 @@ function (_React$Component) {
         onChange: this.handleDateChange,
         placeholder: "from",
         type: "text",
+        disabled: this.props.disabled,
         value: this.state.displayFrom || this.state.value.from
       }), React.createElement("span", {
         className: "input-group-addon"
@@ -15481,6 +15482,7 @@ function (_React$Component) {
         onChange: this.handleDateChange,
         placeholder: "to",
         type: "text",
+        disabled: this.props.disabled,
         value: this.state.displayTo || this.state.value.to
       }), React.createElement("span", {
         className: "input-group-addon"
@@ -15504,6 +15506,9 @@ DateInput.propTypes = {
 DateInput.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired,
   filterBarStore: React.PropTypes.object.isRequired
+};
+DateInput.defaultProps = {
+  disabled: false
 };
 
 },{}],380:[function(require,module,exports){
@@ -16246,7 +16251,7 @@ function (_React$Component) {
   _createClass(RelativeDateInput, [{
     key: "setDisplayDates",
     value: function setDisplayDates(relativeDateSelection) {
-      if (relativeDateSelection === undefined || relativeDateSelection == '') {
+      if (!this.relativeValueSelected(relativeDateSelection)) {
         return;
       }
 
@@ -16285,6 +16290,15 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "relativeValueSelected",
+    value: function relativeValueSelected(selection) {
+      if (selection === undefined) {
+        selection = this.state.value.value;
+      }
+
+      return selection !== undefined && selection !== null && selection != '';
+    }
+  }, {
     key: "updateFilter",
     value: function updateFilter(newValue) {
       this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
@@ -16317,7 +16331,8 @@ function (_React$Component) {
         filterUid: this.props.filterUid,
         displayFrom: this.state.displayFrom,
         displayTo: this.state.displayTo,
-        onDateChangeCustom: this.onDatePickerChange
+        onDateChangeCustom: this.onDatePickerChange,
+        disabled: this.relativeValueSelected()
       }));
     }
   }]);
