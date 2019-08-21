@@ -16357,7 +16357,7 @@ RelativeDateInput.defaultProps = {
 function relativeOptions() {
   var lastWeek = moment().subtract(1, 'week');
   var optionsList = {
-    'Select Period': {
+    'Custom Period': {
       value: '',
       from: null,
       to: null

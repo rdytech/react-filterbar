@@ -99,7 +99,7 @@ RelativeDateInput.defaultProps = {
 function relativeOptions() {
     var lastWeek = moment().subtract(1, 'week');
     const optionsList = {
-      'Select Period':  { value: '',  from: null , to: null },
+      'Custom Period':  { value: '',  from: null , to: null },
       'Today':          { from: moment() , to: moment() },
       'Last Week':      { from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
       'This Week':      { from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
