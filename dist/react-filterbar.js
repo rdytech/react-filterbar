@@ -16251,7 +16251,7 @@ function (_React$Component) {
   _createClass(RelativeDateInput, [{
     key: "setDisplayDates",
     value: function setDisplayDates(relativeDateSelection) {
-      if (!this.relativeValueSelected(relativeDateSelection)) {
+      if (!this.relativeValueSelected(relativeDateSelection) || relativeDateSelection == 'None') {
         return;
       }
 
@@ -16362,6 +16362,7 @@ function relativeOptions() {
       from: null,
       to: null
     },
+    'None': {},
     'Today': {
       from: moment(),
       to: moment()
