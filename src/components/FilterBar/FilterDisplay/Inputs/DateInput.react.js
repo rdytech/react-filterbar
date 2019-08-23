@@ -2,10 +2,16 @@ export class DateInput extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { value: this.props.value || { from: null, to: null } };
+    this.state = {
+      value: this.props.value || { from: null, to: null },
+      displayFrom: this.props.displayFrom,
+      displayTo: this.props.displayTo
+    };
+
+    this.handleDateChange = this.props.onDateChangeCustom ? this.props.onDateChangeCustom.bind(this) : this.onDateChange.bind(this)
   }
 
-  onChange(event) {
+  onDateChange(event) {
     var newValue = this.state.value;
 
     if(event.type === "dp") {
@@ -25,13 +31,13 @@ export class DateInput extends React.Component {
     var datePickerFrom = $(React.findDOMNode(this.refs.dateRangeFrom));
     if (datePickerFrom.datetimepicker !== undefined) {
       datePickerFrom.datetimepicker({ locale: 'en-au', format: 'L' });
-      datePickerFrom.datetimepicker().on("dp.change", this.onChange.bind(this));
+      datePickerFrom.datetimepicker().on("dp.change", this.handleDateChange);
     }
 
     var datePickerTo = $(React.findDOMNode(this.refs.dateRangeTo));
     if (datePickerTo.datetimepicker !== undefined) {
       datePickerTo.datetimepicker({ locale: 'en-au', format: 'L' });
-      datePickerTo.datetimepicker().on("dp.change", this.onChange.bind(this));
+      datePickerTo.datetimepicker().on("dp.change", this.handleDateChange);
     }
   }
 
@@ -44,10 +50,11 @@ export class DateInput extends React.Component {
             className="form-control"
             data-date-format="DD/MM/YYYY"
             onBlur={this.onBlur.bind(this)}
-            onChange={this.onChange.bind(this)}
+            onChange={this.handleDateChange}
             placeholder="from"
             type="text"
-            value={this.state.value.from}
+            disabled={this.props.disabled}
+            value={this.state.displayFrom || this.state.value.from}
           />
           <span className="input-group-addon">
             <span aria-hidden="true" className="icon-calendar icon" />
@@ -62,10 +69,11 @@ export class DateInput extends React.Component {
             className="form-control"
             data-date-format="DD/MM/YYYY"
             onBlur={this.onBlur.bind(this)}
-            onChange={this.onChange.bind(this)}
+            onChange={this.handleDateChange}
             placeholder="to"
             type="text"
-            value={this.state.value.to}
+            disabled={this.props.disabled}
+            value={this.state.displayTo || this.state.value.to}
           />
           <span className="input-group-addon">
             <span aria-hidden="true" className="icon-calendar icon" />
@@ -88,3 +96,7 @@ DateInput.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired,
   filterBarStore: React.PropTypes.object.isRequired
 };
+
+DateInput.defaultProps = {
+  disabled: false,
+}

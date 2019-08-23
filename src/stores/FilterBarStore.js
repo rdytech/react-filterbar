@@ -194,6 +194,7 @@ export class FilterBarStore {
     this.filters[filterUid][propKey] = propValue;
     if(propKey === 'value')
       this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
+
     this.emitChange();
   }
 

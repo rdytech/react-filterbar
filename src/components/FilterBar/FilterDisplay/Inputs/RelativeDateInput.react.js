@@ -4,32 +4,62 @@ export class RelativeDateInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: this.props.value || { from: null, to: null, value: null } };
+    this.setDisplayDates(this.props.value['value']);
+  }
+
+  // If relative option selected, set dates for the datepickers to display
+  setDisplayDates(relativeDateSelection) {
+    if(!this.relativeValueSelected(relativeDateSelection)) {
+      return;
+    }
+
+    var selected            = this.props.relativeOptions[relativeDateSelection];
+    this.state.displayFrom  = selected.from.format(this.props.dateFormat);
+    this.state.displayTo    = selected.to.format(this.props.dateFormat);
   }
 
   onRelativeChange(event) {
-    var optionElement = event.target.childNodes[event.target.selectedIndex];
-    var from = moment(parseInt(optionElement.getAttribute('data-from')));
-    var to = moment(parseInt(optionElement.getAttribute('data-to')));
-    var newValue = { value: optionElement.value, from: from.format(this.props.dateFormat), to: to.format(this.props.dateFormat) };
-
-    this.setState({ value: newValue });
+    var selectedOption = $(event.target.childNodes[event.target.selectedIndex]);
+    var newValue = { value: selectedOption.val() };
+    this.state = { value: newValue }
     this.updateFilter(newValue);
+  }
+
+  onDatePickerChange(event) {
+    var newValue = {
+      from: this.state.value.from || this.state.displayFrom,
+      to: this.state.value.to || this.state.displayTo
+    };
+
+    if(event.type === "dp") {
+      newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+    } else if (event.type === "input") {
+      newValue[event.target.getAttribute("placeholder")] = event.target.value;
+    }
+
+    this.setState({value: newValue});
+  }
+
+  relativeValueSelected(selection) {
+    if(selection === undefined) {
+      selection = this.state.value.value;
+    }
+
+    return selection !== undefined && selection !== null && selection != '';
   }
 
   updateFilter(newValue) {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
   }
 
-  // TODO: Update relative dates based on relative selection (if in query params) on page load, rather than applying stored dates directly
-  relativeOptions() {
-    var lastWeek = moment().subtract(1, 'week');
-    const optionsList = [
-      { label: 'Select Period' , from: null , to: null },
-      { label: 'Today' , from: moment() , to: moment() },
-      { label: 'Last week' , from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
-      { label: 'This week' , from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
-    ]
-    return optionsList
+  relativeOption(optionKey) {
+    var optionItem = this.props.relativeOptions[optionKey];
+    return <option
+      key={optionKey}
+      value={optionItem.value !== undefined ? optionItem.value : optionKey}
+      data-from={optionItem.from} data-to={optionItem.to}>
+      {optionKey}
+    </option>
   }
 
   render() {
@@ -39,14 +69,13 @@ export class RelativeDateInput extends React.Component {
           className="form-control"
           onChange={this.onRelativeChange.bind(this)}
           value={this.state.value.value}
+          ref="relativeSelect"
         >
-          {this.relativeOptions().map(({ label, from, to }) => (
-            <option key={label} value={label} data-from={from} data-to={to}>
-              {label}
-            </option>
+          {Object.keys(this.props.relativeOptions).map((optionKey) => (
+            this.relativeOption(optionKey)
           ))}
         </select>
-        <DateInput value={this.state.value} filterUid={this.props.filterUid} />
+        <DateInput value={this.state.value} filterUid={this.props.filterUid} displayFrom={this.state.displayFrom} displayTo={this.state.displayTo} onDateChangeCustom={this.onDatePickerChange} disabled={this.relativeValueSelected()}/>
       </div>
     )
   }
@@ -63,5 +92,17 @@ RelativeDateInput.contextTypes = {
 };
 
 RelativeDateInput.defaultProps = {
-  dateFormat: 'DD/MM/YYYY'
+  dateFormat: 'DD/MM/YYYY',
+  relativeOptions: relativeOptions()
+}
+
+function relativeOptions() {
+    var lastWeek = moment().subtract(1, 'week');
+    const optionsList = {
+      'Custom Period':  { value: '',  from: null , to: null },
+      'Today':          { from: moment() , to: moment() },
+      'Last Week':      { from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
+      'This Week':      { from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
+    }
+    return optionsList;
 }
