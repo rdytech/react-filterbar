@@ -131,7 +131,7 @@ class Server < Sinatra::Base
         book["author"],
         book["title"],
         book["id"],
-        Date.parse(book["published_on"]),
+        book["published_on"].present? ? Date.parse(book["published_on"]) : '',
         book["rating"]
       )
     end
