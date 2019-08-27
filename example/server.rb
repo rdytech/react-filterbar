@@ -88,7 +88,16 @@ class Server < Sinatra::Base
         (Date.parse(value["from"])..Date.parse(value["to"])) === hay.send(field)
       end
     when :date_relative
-      search_date_relative(haystack, field, value)
+      relative_value = value['value']
+      if(relative_value.present?)
+        from, to = calculate_relative_dates(relative_value)
+      else
+        from = Date.parse(value["from"])
+        to = Date.parse(value["to"])
+      end
+      haystack.select do |hay|
+        (from..to) === hay.send(field)
+      end
     when :id, :select, :lazy_select
       haystack.select do |hay|
         hay.send(field).to_s == value
@@ -122,7 +131,7 @@ class Server < Sinatra::Base
         book["author"],
         book["title"],
         book["id"],
-        book["published_on"].present? ? Date.parse(book["published_on"]) : '',
+        Date.parse(book["published_on"]),
         book["rating"]
       )
     end
@@ -153,23 +162,6 @@ class Server < Sinatra::Base
     }.to_json
   end
 
-  def search_date_relative(haystack, field, value)
-    relative_value = value['value']
-    if(relative_value == 'None')
-      search_blank_values(haystack, field)
-    else
-      if(relative_value.present?)
-        from, to = calculate_relative_dates(relative_value)
-      else
-        from = Date.parse(value["from"])
-        to = Date.parse(value["to"])
-      end
-      haystack.select do |hay|
-        (from..to) === hay.send(field)
-      end
-    end
-  end
-
   def calculate_relative_dates(selected)
     case selected
     when 'Today'
@@ -183,12 +175,6 @@ class Server < Sinatra::Base
       to   = from.end_of_week
     end
     return [from, to]
-  end
-
-  def search_blank_values(haystack, field)
-    haystack.select do |hay|
-      '' === hay.send(field)
-    end
   end
 end
 

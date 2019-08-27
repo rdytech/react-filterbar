@@ -9,7 +9,7 @@ export class RelativeDateInput extends React.Component {
 
   // If relative option selected, set dates for the datepickers to display
   setDisplayDates(relativeDateSelection) {
-    if(!this.relativeValueSelected(relativeDateSelection) || relativeDateSelection == 'None') {
+    if(!this.relativeValueSelected(relativeDateSelection)) {
       return;
     }
 
@@ -100,7 +100,6 @@ function relativeOptions() {
     var lastWeek = moment().subtract(1, 'week');
     const optionsList = {
       'Custom Period':  { value: '',  from: null , to: null },
-      'None':           { },
       'Today':          { from: moment() , to: moment() },
       'Last Week':      { from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
       'This Week':      { from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
