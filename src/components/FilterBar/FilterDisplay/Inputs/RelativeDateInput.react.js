@@ -14,8 +14,8 @@ export class RelativeDateInput extends React.Component {
     }
 
     var selected            = this.props.relativeOptions[relativeDateSelection];
-    this.state.displayFrom  = selected.from.format(this.props.dateFormat);
-    this.state.displayTo    = selected.to.format(this.props.dateFormat);
+    this.state.displayFrom  = selected.from && selected.from.format(this.props.dateFormat);
+    this.state.displayTo    = selected.to   && selected.to.format(this.props.dateFormat);
   }
 
   onRelativeChange(event) {
@@ -98,12 +98,17 @@ RelativeDateInput.defaultProps = {
 
 function relativeOptions() {
     var lastWeek = moment().subtract(1, 'week');
-    const optionsList = {
-      'Custom Period':  { value: '',  from: null , to: null },
-      'None':           { },
-      'Today':          { from: moment() , to: moment() },
-      'Last Week':      { from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
-      'This Week':      { from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
+
+    return {
+      'Custom Period':                { value: '', from: null, to: null },
+      'None':                         {},
+      'Today':                        { from: moment(), to: moment() },
+      'Last Week':                    { from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
+      'This Week':                    { from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
+      'Older than 7 days':            { from: null, to: moment().subtract(7, 'day') },
+      'Older than 14 days':           { from: null, to: moment().subtract(14, 'day') },
+      'Older than 20 days':           { from: null, to: moment().subtract(20, 'day') },
+      'Older than 30 days':           { from: null, to: moment().subtract(30, 'day') },
+      'Older than 42 days (6 weeks)': { from: null, to: moment().subtract(42, 'day') },
     }
-    return optionsList;
 }
