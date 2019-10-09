@@ -16256,8 +16256,8 @@ function (_React$Component) {
       }
 
       var selected = this.props.relativeOptions[relativeDateSelection];
-      this.state.displayFrom = selected.from.format(this.props.dateFormat);
-      this.state.displayTo = selected.to.format(this.props.dateFormat);
+      this.state.displayFrom = selected.from && selected.from.format(this.props.dateFormat);
+      this.state.displayTo = selected.to && selected.to.format(this.props.dateFormat);
     }
   }, {
     key: "onRelativeChange",
@@ -16356,7 +16356,7 @@ RelativeDateInput.defaultProps = {
 
 function relativeOptions() {
   var lastWeek = moment().subtract(1, 'week');
-  var optionsList = {
+  return {
     'Custom Period': {
       value: '',
       from: null,
@@ -16374,9 +16374,28 @@ function relativeOptions() {
     'This Week': {
       from: moment().startOf('isoWeek'),
       to: moment().endOf('isoWeek')
+    },
+    'Older than 7 days': {
+      from: null,
+      to: moment().subtract(7, 'day')
+    },
+    'Older than 14 days': {
+      from: null,
+      to: moment().subtract(14, 'day')
+    },
+    'Older than 20 days': {
+      from: null,
+      to: moment().subtract(20, 'day')
+    },
+    'Older than 30 days': {
+      from: null,
+      to: moment().subtract(30, 'day')
+    },
+    'Older than 42 days (6 weeks)': {
+      from: null,
+      to: moment().subtract(42, 'day')
     }
   };
-  return optionsList;
 }
 
 },{"./DateInput.react":379}],386:[function(require,module,exports){
