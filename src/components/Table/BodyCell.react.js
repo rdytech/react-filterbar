@@ -6,9 +6,18 @@ export class BodyCell extends React.Component {
   render() {
     var content = this.props.value;
 
-    return (
-      <td style={this.props.style} dangerouslySetInnerHTML={{__html: content}} />
-    );
+    if (this.props.type === 'html') {
+      return (
+        <td style={this.props.style} dangerouslySetInnerHTML={{__html: content}} />
+      );
+    }
+    else {
+      return (
+        <td style={this.props.style}>
+          {content}
+        </td>
+      );
+    }
   }
 }
 
