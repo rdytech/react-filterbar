@@ -46,7 +46,7 @@
     "jasmine": "^2.2.1",
     "jest-cli": "^24.8.0",
     "keymirror": "*",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "react-tools": "*",
     "reactify": "^1.1.0",
     "uglify-js": "^2.4.17",
