@@ -100,6 +100,16 @@ export class MultiSelectInput extends React.Component {
               />
               ALL selected
             </label>
+            <label className="radio-inline">
+              <input
+                type="radio"
+                name="operator"
+                value="none"
+                checked={this.state.operator == "none"}
+                onChange={this.updateOperator.bind(this)}
+              />
+              MISSING ANY selected
+            </label>
           </div>
         )}
       </li>
