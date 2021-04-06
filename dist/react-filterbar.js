@@ -19867,10 +19867,8 @@ var FilterVerificator = /*#__PURE__*/function () {
   }, {
     key: "validateFilter",
     value: function validateFilter(appliedFilter) {
-      return Object.keys(this.configurationFilters).some(function (filterUid) {
-        var confFilter = this.configurationFilters[filterUid];
-        return this.validateFilterProperties(appliedFilter.field, confFilter.field) && this.validateFilterProperties(appliedFilter.type, confFilter.type) && this.validateFilterProperties(appliedFilter.uid, filterUid);
-      }.bind(this));
+      var confFilter = this.configurationFilters[appliedFilter.uid];
+      return !confFilter || this.validateFilterProperties(appliedFilter.field, confFilter.field) && this.validateFilterProperties(appliedFilter.type, confFilter.type);
     }
   }, {
     key: "validateFilterProperties",
