@@ -17483,23 +17483,23 @@ function relativeOptions() {
     },
     'Older than 7 days': {
       from: null,
-      to: moment().subtract(7, 'day')
+      to: moment().subtract(8, 'day')
     },
     'Older than 14 days': {
       from: null,
-      to: moment().subtract(14, 'day')
+      to: moment().subtract(15, 'day')
     },
     'Older than 20 days': {
       from: null,
-      to: moment().subtract(20, 'day')
+      to: moment().subtract(21, 'day')
     },
     'Older than 30 days': {
       from: null,
-      to: moment().subtract(30, 'day')
+      to: moment().subtract(31, 'day')
     },
     'Older than 42 days (6 weeks)': {
       from: null,
-      to: moment().subtract(42, 'day')
+      to: moment().subtract(43, 'day')
     }
   };
 }
