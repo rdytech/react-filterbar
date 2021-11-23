@@ -231,9 +231,33 @@ the data is updated.
 
 * development within the react-filterbar repo can be performed using the example application included. see /example
 
+*Using Docker*
+
+- Build the image for your environment:
+```
+docker build -t filterbar .
+```
+- Access your new environment:
+```
+docker run --rm -it -v "$PWD:/code" -p "4567:4567" filterbar bash
+```
+- Move to the example dir and run bundle install:
+```
+cd example/ && bundle install
+```
+- Start the Sinatra Rack server on port 4567
+```
+bundle exec rackup -p 4567 -o 0.0.0.0
+```
+
+- Visit the server via: http://localhost:4567
+
+### Making Changes
+
+Run `node_modules/.bin/gulp` to deploy your changes to /example application.
+
 ## Deployment
-run the following to deploy
-gulp dist
+When your code is ready for distribuition, run: `node_modules/.bin/gulp dist`
 
 ## Common Problems / Bugs
 

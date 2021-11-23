@@ -53,6 +53,7 @@
                       %dt.type{ data: { value: "multi_select" } }
                       %dt.url{ data: { value: "/authors" } }
                       %dt.default{ data: { value: "Author 31" } }
+                      %dt.operator{ data: { value: "any" }}
                     %dl.author
                       %dt.field{ data: { value: "author" } }
                       %dt.type{ data: { value: "select" } }
@@ -95,6 +96,11 @@
                       %dt.label{ data: { value: "Author By Genre" } }
                       %dt.url{ data: { value: "/authors_by_genres" } }
                       %dt.default{ data: { value: "Author 31" } }
+                    %dl.published_on_date_range
+                      %dt.field{ data: { value: "published_on" } }
+                      %dt.type{ data: { value: "relative_date_range" } }
+                      %dt.label{ data: { value: "Published On Date Range" } }
+
                   %dl.quick-filters
                     %dl.multi-author-block
                       %dl.multi-author-button

@@ -8,22 +8,28 @@ This document describes how to setup Sinatra for the purposes of development and
 git clone https://github.com/jobready/react-filterbar.git
 ```
 
-* move to the example dir and run bundle install
+* Use Docker
+
+Build the image for your environment
 ```
-cd react-filterbar/example/
-bundle install
+docker build -t filterbar .
 ```
+Access your new environment
+```
+docker run --rm -it -v "$PWD:/code" -p "4567:4567" filterbar bash
+```
+Move to the example dir and run bundle install
+```
+cd example/ && bundle install
+```
+Start the Sinatra Rack server on port 4567
+```
+bundle exec rackup -p 4567 -o 0.0.0.0
+```
+Visit the server via: http://localhost:4567
 
 * optionally reset the example data so date filters make sense
 ```
-cd react-filterbar/example/
+cd example/
 ruby generate_books.rb
 ```
-
-
-* start the Sinatra Rack server on port 4567
-```
-bundle exec rackup -p 4567
-```
-
-Visit the server via: http://localhost:4567 

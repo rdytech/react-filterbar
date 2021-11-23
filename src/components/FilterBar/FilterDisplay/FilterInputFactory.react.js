@@ -1,6 +1,7 @@
 import {TextInput} from "./Inputs/TextInput.react";
 import {DateInput} from "./Inputs/DateInput.react";
 import {RelativeDateInput} from "./Inputs/RelativeDateInput.react";
+import {RelativeDateRangeInput} from "./Inputs/RelativeDateRangeInput.react";
 import {DateTimeInput} from "./Inputs/DateTimeInput.react";
 import {SingleDateTimeInput} from "./Inputs/SingleDateTimeInput.react";
 import {SelectInput} from "./Inputs/SelectInput.react";
@@ -24,7 +25,8 @@ export function FilterInputFactory(propObject) {
     lazy_select: React.createElement(LazySelectInput, propObject),
     range: React.createElement(RangeInput, propObject),
     multi_select: React.createElement(MultiSelectInput, propObject),
-    lazy_multi_select: React.createElement(LazyMultiSelectInput, propObject)
+    lazy_multi_select: React.createElement(LazyMultiSelectInput, propObject),
+    relative_date_range: React.createElement(RelativeDateRangeInput, propObject),
   };
 
   if (inputs.hasOwnProperty(propObject.type)) {
