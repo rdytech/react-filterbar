@@ -19200,8 +19200,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.RelativeDateRangeInput = void 0;
 
-var _RangeInput2 = require("./RangeInput.react");
-
 var _DateInput = require("./DateInput.react");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19224,8 +19222,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var RelativeDateRangeInput = /*#__PURE__*/function (_RangeInput) {
-  _inherits(RelativeDateRangeInput, _RangeInput);
+var RelativeDateRangeInput = /*#__PURE__*/function (_React$Component) {
+  _inherits(RelativeDateRangeInput, _React$Component);
 
   var _super = _createSuper(RelativeDateRangeInput);
 
@@ -19260,7 +19258,7 @@ var RelativeDateRangeInput = /*#__PURE__*/function (_RangeInput) {
       if (value < 0) {
         return moment().subtract(Math.abs(value), 'day');
       } else {
-        return moment().add(Math.abs(value), 'day');
+        return moment().add(value, 'day');
       }
     }
   }, {
@@ -19275,26 +19273,35 @@ var RelativeDateRangeInput = /*#__PURE__*/function (_RangeInput) {
       }
     }
   }, {
-    key: "onChangeFrom",
-    value: function onChangeFrom(event) {
+    key: "handleInputChange",
+    value: function handleInputChange(event, input) {
       var newValue = this.state.value;
-      newValue["from"] = event.target.value;
+      newValue[input] = event.target.value;
+      newValue['value'] = "Custom"; // Reset preset selection
+
       this.setState({
         value: newValue
       });
     }
   }, {
-    key: "onChangeTo",
-    value: function onChangeTo(event) {
+    key: "handleDatePickerChange",
+    value: function handleDatePickerChange(event) {
       var newValue = this.state.value;
-      newValue["to"] = event.target.value;
+      newValue['value'] = "Custom"; // Reset preset selection
+
+      if (event.type === "dp") {
+        newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+      } else if (event.type === "input") {
+        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+      }
+
       this.setState({
         value: newValue
       });
     }
   }, {
-    key: "onRelativeChange",
-    value: function onRelativeChange(event) {
+    key: "onPresetChange",
+    value: function onPresetChange(event) {
       var selectedOption = $(event.target.childNodes[event.target.selectedIndex]);
       var fromValue = selectedOption.context.dataset.from;
       var toValue = selectedOption.context.dataset.to;
@@ -19338,7 +19345,8 @@ var RelativeDateRangeInput = /*#__PURE__*/function (_RangeInput) {
         value: this.state.value,
         filterUid: this.props.filterUid,
         displayFrom: this.state.displayFrom,
-        displayTo: this.state.displayTo
+        displayTo: this.state.displayTo,
+        onDateChangeCustom: this.handleDatePickerChange
       }));
     }
   }, {
@@ -19353,9 +19361,8 @@ var RelativeDateRangeInput = /*#__PURE__*/function (_RangeInput) {
       }, "Today"), /*#__PURE__*/React.createElement("input", {
         type: "number",
         className: "form-control",
-        onBlur: this.onBlur.bind(this),
         onChange: function onChange(e) {
-          return _this2.onChangeFrom(e);
+          return _this2.handleInputChange(e, 'from');
         },
         placeholder: "+/- days",
         value: this.state.value.from
@@ -19370,9 +19377,8 @@ var RelativeDateRangeInput = /*#__PURE__*/function (_RangeInput) {
       }, "Today"), /*#__PURE__*/React.createElement("input", {
         type: "number",
         className: "form-control",
-        onBlur: this.onBlur.bind(this),
         onChange: function onChange(e) {
-          return _this2.onChangeTo(e);
+          return _this2.handleInputChange(e, 'to');
         },
         placeholder: "+/- days",
         value: this.state.value.to
@@ -19388,10 +19394,10 @@ var RelativeDateRangeInput = /*#__PURE__*/function (_RangeInput) {
       var _this3 = this;
 
       return /*#__PURE__*/React.createElement("div", {
-        className: "col-sm-10"
+        className: "col-xl-10"
       }, /*#__PURE__*/React.createElement("select", {
         className: "form-control",
-        onChange: this.onRelativeChange.bind(this),
+        onChange: this.onPresetChange.bind(this),
         value: this.state.value.value
       }, Object.keys(this.props.relativeOptions).map(function (optionKey) {
         return _this3.relativeOption(optionKey);
@@ -19415,7 +19421,7 @@ var RelativeDateRangeInput = /*#__PURE__*/function (_RangeInput) {
         type: "radio",
         name: "operator",
         value: "relative",
-        checked: this.state.operator == "relative",
+        checked: !this.isAbsolute(),
         onChange: function onChange(e) {
           return _this3.setState({
             operator: e.target.value
@@ -19426,9 +19432,13 @@ var RelativeDateRangeInput = /*#__PURE__*/function (_RangeInput) {
   }]);
 
   return RelativeDateRangeInput;
-}(_RangeInput2.RangeInput);
+}(React.Component);
 
 exports.RelativeDateRangeInput = RelativeDateRangeInput;
+RelativeDateRangeInput.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object.isRequired
+};
 RelativeDateRangeInput.defaultProps = {
   dateFormat: 'DD/MM/YYYY',
   relativeOptions: relativeOptions()
@@ -19469,7 +19479,7 @@ function relativeOptions() {
   };
 }
 
-},{"./DateInput.react":446,"./RangeInput.react":451}],454:[function(require,module,exports){
+},{"./DateInput.react":446}],454:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
