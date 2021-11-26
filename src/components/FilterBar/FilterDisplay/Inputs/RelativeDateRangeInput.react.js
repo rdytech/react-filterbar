@@ -1,6 +1,5 @@
-import { RangeInput } from "./RangeInput.react";
 import { DateInput } from "./DateInput.react";
-export class RelativeDateRangeInput extends RangeInput {
+export class RelativeDateRangeInput extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -21,7 +20,7 @@ export class RelativeDateRangeInput extends RangeInput {
     if (value < 0) {
       return moment().subtract(Math.abs(value), 'day')
     } else {
-      return moment().add(Math.abs(value), 'day')
+      return moment().add(value, 'day')
     }
   }
 
@@ -35,19 +34,27 @@ export class RelativeDateRangeInput extends RangeInput {
     }
   }
 
-  onChangeFrom(event) {
+  handleInputChange(event, input) {
     var newValue = this.state.value
-    newValue["from"] = event.target.value
+    newValue[input] = event.target.value
+    newValue['value'] = "Custom" // Reset preset selection
     this.setState({ value: newValue })
   }
 
-  onChangeTo(event) {
+  handleDatePickerChange(event) {
     var newValue = this.state.value
-    newValue["to"] = event.target.value
-    this.setState({ value: newValue })
+    newValue['value'] = "Custom" // Reset preset selection
+
+    if (event.type === "dp") {
+      newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+    } else if (event.type === "input") {
+      newValue[event.target.getAttribute("placeholder")] = event.target.value;
+    }
+
+    this.setState({ value: newValue });
   }
 
-  onRelativeChange(event) {
+  onPresetChange(event) {
     var selectedOption = $(event.target.childNodes[event.target.selectedIndex]);
     var fromValue = selectedOption.context.dataset.from
     var toValue = selectedOption.context.dataset.to
@@ -88,7 +95,7 @@ export class RelativeDateRangeInput extends RangeInput {
   showDateInputs() {
     return (
       <div>
-        <DateInput value={this.state.value} filterUid={this.props.filterUid} displayFrom={this.state.displayFrom} displayTo={this.state.displayTo} />
+        <DateInput value={this.state.value} filterUid={this.props.filterUid} displayFrom={this.state.displayFrom} displayTo={this.state.displayTo} onDateChangeCustom={this.handleDatePickerChange} />
       </div>
     )
   }
@@ -103,8 +110,7 @@ export class RelativeDateRangeInput extends RangeInput {
           <input
             type="number"
             className="form-control"
-            onBlur={this.onBlur.bind(this)}
-            onChange={(e) => this.onChangeFrom(e)}
+            onChange={(e) => this.handleInputChange(e, 'from')}
             placeholder="+/- days"
             value={this.state.value.from}
           />
@@ -122,8 +128,7 @@ export class RelativeDateRangeInput extends RangeInput {
           <input
             type="number"
             className="form-control"
-            onBlur={this.onBlur.bind(this)}
-            onChange={(e) => this.onChangeTo(e)}
+            onChange={(e) => this.handleInputChange(e, 'to')}
             placeholder="+/- days"
             value={this.state.value.to}
           />
@@ -141,10 +146,7 @@ export class RelativeDateRangeInput extends RangeInput {
   render() {
     return (
       <div className="col-sm-10">
-        <select className="form-control"
-          onChange={this.onRelativeChange.bind(this)}
-          value={this.state.value.value}
-        >
+        <select className="form-control" onChange={this.onPresetChange.bind(this)} value={this.state.value.value}>
           {Object.keys(this.props.relativeOptions).map((optionKey) => (
             this.relativeOption(optionKey)
           ))}
@@ -171,7 +173,7 @@ export class RelativeDateRangeInput extends RangeInput {
               type="radio"
               name="operator"
               value="relative"
-              checked={this.state.operator == "relative"}
+              checked={!this.isAbsolute()}
               onChange={(e) => this.setState({ operator: e.target.value })}
             />
             Relative
@@ -181,6 +183,11 @@ export class RelativeDateRangeInput extends RangeInput {
     );
   }
 }
+
+RelativeDateRangeInput.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object.isRequired
+};
 
 RelativeDateRangeInput.defaultProps = {
   dateFormat: 'DD/MM/YYYY',
