@@ -171,7 +171,12 @@ class Server < Sinatra::Base
       search_blank_values(haystack, field)
     else
       if(relative_value.present?)
-        from, to = calculate_relative_dates(relative_value)
+        if relative_value == "Relative"
+          from = Date.current.advance(days: value["from"].to_i)
+          to = Date.current.advance(days: value["to"].to_i)
+        else
+          from, to = calculate_relative_dates(relative_value)
+        end
       else
         from = Date.parse(value["from"])
         to = Date.parse(value["to"])
