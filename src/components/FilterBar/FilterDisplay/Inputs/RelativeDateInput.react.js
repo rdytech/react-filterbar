@@ -52,6 +52,85 @@ export class RelativeDateInput extends React.Component {
     this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
   }
 
+  intToMoment(value) {
+    if (Number.isNaN(value) || value == null) {
+      return null
+    }
+
+    if (value < 0) {
+      return moment().subtract(Math.abs(value), 'day')
+    } else {
+      return moment().add(value, 'day')
+    }
+  }
+
+  momentFormatted(value) {
+    var momentValue = this.intToMoment(parseInt(value))
+
+    if (momentValue) {
+      return momentValue.format(this.props.dateFormat)
+    } else {
+      return moment().format(this.props.dateFormat)
+    }
+  }
+
+  handleInputChange(event, input) {
+    var newValue = this.state.value
+    newValue[input] = event.target.value
+    this.setState({ value: newValue })
+  }
+
+  showRelativeRangeInputs() {
+    return (
+      <div>
+        <div className="input-group">
+          <span className="input-group-addon">
+            Today
+          </span>
+          <input
+            type="number"
+            className="form-control"
+            onChange={(e) => this.handleInputChange(e, 'from')}
+            placeholder="+/- days"
+            value={this.state.value.from}
+          />
+          <span className="input-group-addon">
+            day(s)
+          </span>
+          <span className="input-group-addon">
+            {this.momentFormatted(this.state.value.from)}
+          </span>
+        </div>
+        <div className="input-group">
+          <span className="input-group-addon">
+            Today
+          </span>
+          <input
+            type="number"
+            className="form-control"
+            onChange={(e) => this.handleInputChange(e, 'to')}
+            placeholder="+/- days"
+            value={this.state.value.to}
+          />
+          <span className="input-group-addon">
+            day(s)
+          </span>
+          <span className="input-group-addon">
+            {this.momentFormatted(this.state.value.to)}
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  showDateInputs() {
+    return (
+      <div>
+        <DateInput value={this.state.value} filterUid={this.props.filterUid} displayFrom={this.state.displayFrom} displayTo={this.state.displayTo} onDateChangeCustom={this.onDatePickerChange} disabled={this.relativeValueSelected()} />
+      </div>
+    )
+  }
+
   relativeOption(optionKey) {
     var optionItem = this.props.relativeOptions[optionKey];
     return <option
@@ -75,7 +154,9 @@ export class RelativeDateInput extends React.Component {
             this.relativeOption(optionKey)
           ))}
         </select>
-        <DateInput value={this.state.value} filterUid={this.props.filterUid} displayFrom={this.state.displayFrom} displayTo={this.state.displayTo} onDateChangeCustom={this.onDatePickerChange} disabled={this.relativeValueSelected()}/>
+        {
+          this.state.value.value == "Relative from today" ? this.showRelativeRangeInputs() : this.showDateInputs()
+        }
       </div>
     )
   }
@@ -110,5 +191,6 @@ function relativeOptions() {
       'Older than 20 days':           { from: null, to: moment().subtract(21, 'day') },
       'Older than 30 days':           { from: null, to: moment().subtract(31, 'day') },
       'Older than 42 days (6 weeks)': { from: null, to: moment().subtract(43, 'day') },
+      'Relative from today':          { from: null, to: null },
     }
 }

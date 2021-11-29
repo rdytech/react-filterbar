@@ -89,18 +89,6 @@ class Server < Sinatra::Base
       end
     when :date_relative
       search_date_relative(haystack, field, value)
-    when :relative_date_range
-      if value["operator"] == "absolute"
-        from = value["from"].presence && Date.parse(value["from"])
-        to = value["to"].presence && Date.parse(value["to"])
-      else
-        from = Date.current.advance(days: value["from"].to_i)
-        to = Date.current.advance(days: value["to"].to_i)
-      end
-
-      haystack.select do |hay|
-        (from..to) === hay.send(field)
-      end
     when :id, :select, :lazy_select
       haystack.select do |hay|
         hay.send(field).to_s == value
@@ -171,7 +159,12 @@ class Server < Sinatra::Base
       search_blank_values(haystack, field)
     else
       if(relative_value.present?)
-        from, to = calculate_relative_dates(relative_value)
+        if relative_value == "Relative from today"
+          from = Date.current.advance(days: value["from"].to_i)
+          to = Date.current.advance(days: value["to"].to_i)
+        else
+          from, to = calculate_relative_dates(relative_value)
+        end
       else
         from = Date.parse(value["from"])
         to = Date.parse(value["to"])
