@@ -16202,7 +16202,8 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      filters: props.enabledFilters
+      filters: props.enabledFilters,
+      advanced: false
     };
     return _this;
   }
@@ -16244,9 +16245,16 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
-    key: "render",
-    value: function render() {
-      var filters = Object.keys(this.state.filters).map(function (filterUid) {
+    key: "onClickSwitchView",
+    value: function onClickSwitchView() {
+      this.setState({
+        advanced: !this.state.advanced
+      });
+    }
+  }, {
+    key: "renderBasicView",
+    value: function renderBasicView() {
+      return Object.keys(this.state.filters).map(function (filterUid) {
         var filter = this.state.filters[filterUid];
         return /*#__PURE__*/React.createElement(_FilterInput.FilterInput, {
           filterUid: filterUid,
@@ -16257,16 +16265,44 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
           operator: filter.operator
         });
       }, this);
+    }
+  }, {
+    key: "renderAdvancedView",
+    value: function renderAdvancedView() {
+      return /*#__PURE__*/React.createElement("textarea", {
+        className: "form-control text optional form-control"
+      }, JSON.stringify(this.state.filters));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var switcher;
+      var filters;
 
-      if (filters.length === 0) {
+      if (this.state.advanced) {
+        switcher = /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("a", {
+          href: "#",
+          onClick: this.onClickSwitchView.bind(this)
+        }, "Switch to Basic"));
+        filters = this.renderAdvancedView();
+      } else {
+        switcher = /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("a", {
+          href: "#",
+          onClick: this.onClickSwitchView.bind(this)
+        }, "Switch to Advanced"));
+        filters = this.renderBasicView();
+      }
+
+      if (this.state.filters.length === 0) {
         filters = /*#__PURE__*/React.createElement("div", null, "No Filters Enabled!");
+        switcher = null;
       }
 
       return /*#__PURE__*/React.createElement("div", {
         className: "navbar filterbar"
       }, /*#__PURE__*/React.createElement("div", {
         className: "panel panel-default"
-      }, filters));
+      }, switcher, filters));
     }
   }]);
 

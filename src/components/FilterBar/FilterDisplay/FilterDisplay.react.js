@@ -4,7 +4,7 @@ export class FilterDisplay extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { filters: props.enabledFilters };
+    this.state = { filters: props.enabledFilters, advanced: false };
   }
 
   componentWillMount() {
@@ -40,8 +40,12 @@ export class FilterDisplay extends React.Component {
     };
   }
 
-  render() {
-    var filters = Object.keys(this.state.filters).map(function(filterUid) {
+  onClickSwitchView() {
+    this.setState({ advanced: !this.state.advanced})
+  }
+
+  renderBasicView() {
+    return Object.keys(this.state.filters).map(function(filterUid) {
       var filter = this.state.filters[filterUid];
 
       return (
@@ -55,14 +59,34 @@ export class FilterDisplay extends React.Component {
         />
       );
     }, this);
+  }
 
-    if (filters.length === 0) {
-      filters = (<div>No Filters Enabled!</div>);
+  renderAdvancedView() {
+    return (<textarea className="form-control text optional form-control">{ JSON.stringify(this.state.filters) }</textarea>);
+  }
+
+  render() {
+    var switcher;
+    var filters;
+
+    if (this.state.advanced) {
+      switcher = (<div><a href="#" onClick={ this.onClickSwitchView.bind(this) }>Switch to Basic</a></div>)
+      filters = this.renderAdvancedView();
+    } else {
+      switcher = (<div><a href="#" onClick={ this.onClickSwitchView.bind(this) }>Switch to Advanced</a></div>)
+      filters = this.renderBasicView();
     }
+
+    if (this.state.filters.length === 0) {
+      filters = (<div>No Filters Enabled!</div>);
+      switcher = null;
+    }
+
 
     return (
       <div className="navbar filterbar">
         <div className="panel panel-default">
+          {switcher}
           {filters}
         </div>
       </div>
