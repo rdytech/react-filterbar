@@ -25,23 +25,6 @@ var appFile = 'app.js';
 var appDistFile = appName + '.js';
 var appMinDistFile = appName + '.min.js';
 
-gulp.task('dev', function() {
-  browserify({
-    entries: './src/' + appFile,
-    extensions: ['.js'],
-    debug: true
-  })
-  .transform(babelify.configure({
-    presets: [
-      "@babel/preset-env",
-      "@babel/preset-react",
-    ]
-  }))
-  .bundle()
-  .pipe(source(appDistFile))
-  .pipe(gulp.dest('example/public/js'));
-})
-
 gulp.task('devloop', function() {
   gulp.watch([scriptsPath + '/**/*.*'], ['dev']);
 })

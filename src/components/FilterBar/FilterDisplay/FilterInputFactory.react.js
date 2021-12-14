@@ -24,7 +24,7 @@ export function FilterInputFactory(propObject) {
     lazy_select: React.createElement(LazySelectInput, propObject),
     range: React.createElement(RangeInput, propObject),
     multi_select: React.createElement(MultiSelectInput, propObject),
-    lazy_multi_select: React.createElement(LazyMultiSelectInput, propObject)
+    lazy_multi_select: React.createElement(LazyMultiSelectInput, propObject),
   };
 
   if (inputs.hasOwnProperty(propObject.type)) {
