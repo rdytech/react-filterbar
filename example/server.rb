@@ -51,7 +51,7 @@ class Server < Sinatra::Base
     saved_search = params[:saved_search]
     store = YAML::Store.new 'saved_search.yml'
     store.transaction do
-      store[saved_search[:search_title]] = saved_search[:filters].to_json
+      store[saved_search[:search_title]] = saved_search[:filters]
     end
   end
 

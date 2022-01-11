@@ -16951,13 +16951,21 @@ var FilterBarActor = /*#__PURE__*/function () {
   }, {
     key: "loadSavedSearch",
     value: function loadSavedSearch(searchId) {
+      var _this = this;
+
       this.disableAllFilters();
       var savedSearch = this.filterBarStore.getSavedSearch(searchId);
       var filters = JSON.parse(savedSearch.configuration);
 
       if (this.verifySavedFilters(filters)) {
-        for (var filter in filters) {
-          this.enableFilter(filter, filters[filter]);
+        if (filters instanceof Array) {
+          filters.forEach(function (filter) {
+            return _this.enableFilter(filter.uid, filter.value);
+          });
+        } else {
+          for (var filter in filters) {
+            this.enableFilter(filter, filters[filter]);
+          }
         }
 
         this.applyFilters();
@@ -16968,22 +16976,24 @@ var FilterBarActor = /*#__PURE__*/function () {
   }, {
     key: "verifySavedFilters",
     value: function verifySavedFilters(filters) {
-      var filtersArr = Object.keys(filters).map(function (name) {
-        return {
-          uid: name
-        };
-      });
+      var filtersArr;
+
+      if (filters instanceof Array) {
+        filtersArr = filters;
+      } else {
+        filtersArr = Object.keys(filters).map(function (name) {
+          return {
+            uid: name
+          };
+        });
+      }
+
       return new _FilterVerificator.FilterVerificator(this.filterBarStore.getFilters(), filtersArr).verify();
     }
   }, {
     key: "saveFilters",
     value: function saveFilters(name) {
-      var savedSearchPacket = {
-        saved_search: {
-          filters: {},
-          search_title: name
-        }
-      };
+      var filters = [];
 
       var _iterator = _createForOfIteratorHelper(this.filterBarStore.enabledFilters()),
           _step;
@@ -16994,13 +17004,26 @@ var FilterBarActor = /*#__PURE__*/function () {
               filterUid = _step$value[0],
               filter = _step$value[1];
 
-          savedSearchPacket.saved_search.filters[filterUid] = filter.value;
+          filters.push({
+            uid: filterUid,
+            type: filter.type,
+            field: filter.field,
+            value: filter.value
+          });
         }
       } catch (err) {
         _iterator.e(err);
       } finally {
         _iterator.f();
       }
+
+      var savedSearchPacket = {
+        saved_search: {
+          filters: JSON.stringify(filters),
+          // TODO: changed {} to: []
+          search_title: name
+        }
+      };
 
       if (Object.keys(savedSearchPacket.saved_search.filters).length === 0) {
         return false;
