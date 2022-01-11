@@ -151,9 +151,9 @@ export class FilterBarActor {
 
     var savedSearchPacket = {
       saved_search: {
-        filters: {},
-        search_title: name
-      }
+        filters: JSON.stringify(filters), // TODO: changed {} to: []
+        search_title: name,
+      },
     };
 
     if (Object.keys(savedSearchPacket.saved_search.filters).length === 0) {
