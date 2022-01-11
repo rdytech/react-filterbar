@@ -343,7 +343,9 @@ The saved search endpoint must be able to handle three actions, GET and POST and
 
 ### GET
 
-The endpoint GET action expects to be able to receive a JSON array of the following form:
+The endpoint GET action expects to be able to receive the save search and convert to Search API. It is backward compatible to version 1 format as well as the current version 2 format. It can receive a JSON array of the following forms:
+
+##### Version 1 format
 
 ```javascript
 [
@@ -358,6 +360,27 @@ The endpoint GET action expects to be able to receive a JSON array of the follow
 ]
 ```
 
+##### Version 2 format
+
+```javascript
+[
+  {
+    name: NAME,
+    configuration: [
+      {
+        uid: "dt.filterName",
+        type: "select",
+        field: "dt.field",
+        value: "User selected value",
+      },
+      ...,
+    ],
+    url: "/saved_searches/my_id",
+  },
+  ...,
+]
+```
+
 This is an array of objects, where each object has a key:value pair for a name label, and a configuration object of key:value pairs of a filterUid and a filterValue, where filterUid and Value are of the same form as in the [Search API](#search-api), and a key:value pair for delete url.
 
 ### POST
@@ -368,17 +391,31 @@ The endpoint POST action expects to be able to post a JSON payload of the follow
   {
     "saved_search": {
       "search_title": "user entered value",
-      "filters": {
-        "dt.filterName": "filterValue",
-        ...
-      },
+      "filters": '[{"uid":"dt.filterName","type":"select","field":"dt.field","value":"User selected value"},{"uid":"dt.filterName","type":"text","field":"dt.field","value":"User entered value"}]',
     }
   }
 ```
 
-This is an object where the saved_search object has two key:value pairs.
+This is an object where the saved_search object has search_title and.
 The search_title key:value pair is the user entered title for the search.
-The filters key:value pair is an object who's key:value pairs are the enabled filters uids and values at the time of saving.
+The filters key:value pair is an stringified JSON which when jsonified returns the array in the following format:
+
+```javascript
+[
+  {
+    uid: "dt.filterName",
+    type: "select",
+    field: "dt.field",
+    value: "User selected value",
+  },
+  {
+    uid: "dt.filterName",
+    type: "text",
+    field: "dt.field",
+    value: "User entered value",
+  },
+];
+```
 
 ### DELETE
 
