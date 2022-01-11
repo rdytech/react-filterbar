@@ -107,8 +107,14 @@ export class FilterBarActor {
     var filters = JSON.parse(savedSearch.configuration);
 
     if (this.verifySavedFilters(filters)) {
-      for (var filter in filters) {
-        this.enableFilter(filter, filters[filter]);
+      if (filters instanceof Array) {
+        filters.forEach((filter) =>
+          this.enableFilter(filter.uid, filter.value)
+        );
+      } else {
+        for (var filter in filters) {
+          this.enableFilter(filter, filters[filter]);
+        }
       }
 
       this.applyFilters();
@@ -118,14 +124,31 @@ export class FilterBarActor {
   }
 
   verifySavedFilters(filters) {
-    var filtersArr = Object.keys(filters)
-                      .map(function(name) {
-                        return { uid: name }
-                      });
+    var filtersArr;
+
+    if (filters instanceof Array) {
+      filtersArr = filters;
+    } else {
+      filtersArr = Object.keys(filters)
+        .map(function (name) {
+          return { uid: name }
+      });
+    }
+
     return new FilterVerificator(this.filterBarStore.getFilters(), filtersArr).verify();
   }
 
   saveFilters(name) {
+    var filters = [];
+    for (var [filterUid, filter] of this.filterBarStore.enabledFilters()) {
+      filters.push({
+        uid: filterUid,
+        type: filter.type,
+        field: filter.field,
+        value: filter.value,
+      });
+    }
+
     var savedSearchPacket = {
       saved_search: {
         filters: {},
@@ -133,10 +156,7 @@ export class FilterBarActor {
       }
     };
 
-    for (var [filterUid, filter] of this.filterBarStore.enabledFilters()) {
-      savedSearchPacket.saved_search.filters[filterUid] = filter.value;
-    }
-    if(Object.keys(savedSearchPacket.saved_search.filters).length === 0) {
+    if (Object.keys(savedSearchPacket.saved_search.filters).length === 0) {
       return false;
     }
 
