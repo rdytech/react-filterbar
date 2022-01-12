@@ -17020,7 +17020,6 @@ var FilterBarActor = /*#__PURE__*/function () {
       var savedSearchPacket = {
         saved_search: {
           filters: JSON.stringify(filters),
-          // TODO: changed {} to: []
           search_title: name
         }
       };
