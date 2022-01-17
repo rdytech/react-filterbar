@@ -17,6 +17,7 @@ export class FilterBarStore {
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
+    this.activeFilters = []
     this.quickFilters = configuration.quickFilters || {};
 
     if (this.savedSearchesUrl !== undefined) {
@@ -122,17 +123,22 @@ export class FilterBarStore {
     return enabledFilters;
   }
 
+  getActiveFilters() {
+    return this.activeFilters;
+  }
+
   getQuery() {
-    var enabledFilters = Object.keys(this.getEnabled()).map(function(filterUid) {
-      var filter = this.getFilter(filterUid);
-      return {
-        uid: filterUid,
-        type: filter.type,
-        field: filter.field,
-        value: filter.value,
-        operator: filter.operator,
-      };
-    }, this);
+    var enabledFilters = this.activeFilters.map(function(filters) {
+      return filters.map(function(filter) {
+          return {
+            uid: filter.uid,
+            type: filter.type,
+            field: filter.field,
+            value: filter.value,
+            operator: filter.operator,
+          };
+        })
+    });
     return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : "";
   }
 
@@ -150,11 +156,7 @@ export class FilterBarStore {
   }
 
   disableAllFilters() {
-    var enabledFilters = this.getEnabled();
-
-    for (var filterUid in enabledFilters) {
-      this.disableFilter(filterUid);
-    }
+    this.activeFilters = []
     this.emitChange();
   }
 
@@ -190,10 +192,31 @@ export class FilterBarStore {
     })
   }
 
-  updateFilter(filterUid, propKey, propValue) {
-    this.filters[filterUid][propKey] = propValue;
-    if(propKey === 'value')
-      this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
+  disableFilter(groupKey, inputKey) {
+    this.activeFilters[groupKey].splice(inputKey, 1);
+    if (this.activeFilters[groupKey].length === 0) {
+      this.activeFilters.splice(groupKey, 1);
+    }
+
+    this.emitChange();
+  }
+
+  updateFilter(groupKey, inputKey, value) {
+    //this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
+
+    this.activeFilters[groupKey][inputKey].value = value;
+  }
+
+  addGroupFilter(groupKey, filterUid) {
+    const filter = this.filters[filterUid];
+    filter.filterUid = filterUid;
+    filter.uid = filterUid;
+
+    if (groupKey < 0) {
+      this.activeFilters.push([filter])
+    } else {
+      this.activeFilters[groupKey].push(filter);
+    }
 
     this.emitChange();
   }

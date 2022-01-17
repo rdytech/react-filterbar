@@ -16,7 +16,7 @@ export class RangeInput extends React.Component {
   }
 
   onBlur() {
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+    this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
   }
 
   render() {

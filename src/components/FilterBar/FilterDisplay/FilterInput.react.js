@@ -6,7 +6,8 @@ export class FilterInput extends React.Component {
   }
 
   onClick() {
-    this.context.filterBarActor.disableFilter(this.props.filterUid);
+    const { groupKey, inputKey } = this.props;
+    this.context.filterBarActor.disableFilter(groupKey, inputKey);
   }
 
   objectProperties() {
@@ -14,6 +15,8 @@ export class FilterInput extends React.Component {
     return(
       {
         filterUid: this.props.filterUid,
+        groupKey: this.props.groupKey,
+        inputKey: this.props.inputKey,
         key: key,
         value: this.props.value,
         type: this.props.type,
@@ -26,7 +29,7 @@ export class FilterInput extends React.Component {
     var propObject = this.objectProperties();
     var inputs = new FilterInputFactory(propObject);
     return (
-      <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 filter">
+      <div className="filter">
         <ul className={this.filterKey}>
           <li>
             <i

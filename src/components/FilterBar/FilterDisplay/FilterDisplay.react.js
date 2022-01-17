@@ -1,5 +1,7 @@
 import {FilterInput} from "./FilterInput.react";
-
+import {FilterButton} from "./FilterButton.react";
+import {FilterGroup} from "./FilterGroup.react";
+import { FilterList } from "../FilterList/FilterList.react";
 export class FilterDisplay extends React.Component {
   constructor(props) {
     super(props);
@@ -40,30 +42,68 @@ export class FilterDisplay extends React.Component {
     };
   }
 
-  render() {
-    var filters = Object.keys(this.state.filters).map(function(filterUid) {
-      var filter = this.state.filters[filterUid];
+  getActiveFilters() {
+    return this.context.filterBarStore.getActiveFilters();
+  }
 
-      return (
-        <FilterInput
-          filterUid={filterUid}
-          key={filterUid}
-          label={filter.label}
-          type={filter.type}
-          value={filter.value}
-          operator={filter.operator}
-        />
+  getFilters() {
+    return this.context.filterBarStore.getFilters();
+  }
+
+  addGroup(filterUid) {
+    this.context.filterBarStore.addGroupFilter(-1, filterUid);
+  }
+
+  render() {
+    var filters = [];
+    this.getActiveFilters().map(function(groupFilters, idx) {
+      if (idx > 0) {
+        filters.push(
+          (
+            <div style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }>OR</div>
+          )
+        )
+      }
+
+      filters.push(
+        (<FilterGroup
+          key={ idx }
+          groupKey={ idx }
+          filters={ groupFilters }
+        />)
       );
-    }, this);
+
+    })
 
     if (filters.length === 0) {
-      filters = (<div>No Filters Enabled!</div>);
+      filters.push((
+        <div style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }>
+          <FilterButton
+          filters={ this.getFilters() }
+          title="ADD FILTER"
+          onClick={ this.addGroup.bind(this) }
+        />
+        </div>)
+      );
+    } else {
+      filters.push(
+        (
+        <div style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }>
+          <FilterButton
+            filters={ this.getFilters() }
+            title="OR"
+            onClick={ this.addGroup.bind(this) }
+          />
+        </div>
+      ));
     }
 
     return (
       <div className="navbar filterbar">
-        <div className="panel panel-default">
-          {filters}
+        <div className="panel panel-default" style={ { paddingTop: 'unset', paddingBottom: 'unset' } }>
+          <div style={ { display: 'flex', float: 'left', flexWrap: 'wrap' } }>
+            {filters}
+          </div>
         </div>
       </div>
     );

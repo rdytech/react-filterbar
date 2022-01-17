@@ -23,10 +23,6 @@ export class FilterBarActor {
     this.filterBarStore.enableFilter(filterUid, value);
   }
 
-  disableFilter(filterUid) {
-    this.filterBarStore.disableFilter(filterUid);
-  }
-
   disableAllFilters() {
     this.filterBarStore.disableAllFilters();
     this.filterBarStore.disableAllQuickFilters();
@@ -37,8 +33,12 @@ export class FilterBarActor {
     this.applyFilters();
   }
 
-  updateFilter(filterUid, propKey, propValue) {
-    this.filterBarStore.updateFilter(filterUid, propKey, propValue);
+  updateFilter(groupKey, inputKey, value) {
+    this.filterBarStore.updateFilter(groupKey, inputKey, value);
+  }
+
+  disableFilter(groupKey, inputKey) {
+    this.filterBarStore.disableFilter(groupKey, inputKey)
   }
 
   applyFilters() {

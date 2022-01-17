@@ -52,6 +52,7 @@ export class LazySelectInput extends React.Component {
   onSelect(event) {
     let filter = this.context.filterBarStore.getFilter(this.props.filterUid);
     filter.value = event.target.value;
+    this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, filter.value);
   }
 
   render() {

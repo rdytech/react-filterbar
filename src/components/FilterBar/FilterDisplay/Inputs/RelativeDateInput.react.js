@@ -49,7 +49,7 @@ export class RelativeDateInput extends React.Component {
   }
 
   updateFilter(newValue) {
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
+    this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, newValue);
   }
 
   intToMoment(value) {

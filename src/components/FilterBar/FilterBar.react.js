@@ -18,10 +18,6 @@ export class FilterBar extends React.Component {
       <div>
         <div>
           <div className="btn-group margin-bottom-sm">
-            <FilterList
-              disabledFilters={this.context.filterBarStore.getDisabled()}
-            />
-
             <ApplyFiltersButton
               filterBarActor={this.context.filterBarActor}
             />

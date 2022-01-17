@@ -4,7 +4,7 @@ export class FilterListOption extends React.Component {
   }
 
   onClick() {
-    this.context.filterBarActor.enableFilter(this.props.filterUid);
+    this.props.onClick(this.props.filterUid);
   }
 
   render() {
