@@ -33,7 +33,7 @@ export class FilterInput extends React.Component {
         <ul className={this.filterKey}>
           <li>
             <i
-              className="btn btn-circle-primary btn-xs icon icon-close remove-filter"
+              className="btn btn-circle-primary btn-xs icon icon-close remove-filter" style={ { lineHeight: '16px' } }
               onClick={this.onClick.bind(this)}
             />
             <label>
