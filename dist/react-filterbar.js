@@ -16864,11 +16864,6 @@ var FilterBarActor = /*#__PURE__*/function () {
       this.filterBarStore.enableFilter(filterUid, value);
     }
   }, {
-    key: "disableFilter",
-    value: function disableFilter(filterUid) {
-      this.filterBarStore.disableFilter(filterUid);
-    }
-  }, {
     key: "disableAllFilters",
     value: function disableAllFilters() {
       this.filterBarStore.disableAllFilters();
@@ -16882,8 +16877,13 @@ var FilterBarActor = /*#__PURE__*/function () {
     }
   }, {
     key: "updateFilter",
-    value: function updateFilter(filterUid, propKey, propValue) {
-      this.filterBarStore.updateFilter(filterUid, propKey, propValue);
+    value: function updateFilter(groupKey, inputKey, value) {
+      this.filterBarStore.updateFilter(groupKey, inputKey, value);
+    }
+  }, {
+    key: "disableFilter",
+    value: function disableFilter(groupKey, inputKey) {
+      this.filterBarStore.disableFilter(groupKey, inputKey);
     }
   }, {
     key: "applyFilters",
@@ -17063,7 +17063,7 @@ var FilterBarActor = /*#__PURE__*/function () {
 
 exports.FilterBarActor = FilterBarActor;
 
-},{"../clients/SearchClient":435,"../helpers/FilterVerificator":476,"../helpers/URLHelper":478}],433:[function(require,module,exports){
+},{"../clients/SearchClient":435,"../helpers/FilterVerificator":478,"../helpers/URLHelper":480}],433:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17229,7 +17229,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }), filterableTableNode);
 });
 
-},{"./components/FilterableTable.react":461,"./helpers/FilterVerificator":476,"URIjs":3,"core-js/stable":430,"regenerator-runtime/runtime":431}],435:[function(require,module,exports){
+},{"./components/FilterableTable.react":463,"./helpers/FilterVerificator":478,"URIjs":3,"core-js/stable":430,"regenerator-runtime/runtime":431}],435:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17494,7 +17494,7 @@ BatchActionsList.contextTypes = {
   batchActionsStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../helpers/ModalHelper":477,"../../../helpers/URLHelper":478,"./BatchActionsListItem.react":438}],438:[function(require,module,exports){
+},{"../../../helpers/ModalHelper":479,"../../../helpers/URLHelper":480,"./BatchActionsListItem.react":438}],438:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17700,7 +17700,7 @@ ConfigurationButton.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../helpers/ModalHelper":477}],441:[function(require,module,exports){
+},{"../../helpers/ModalHelper":479}],441:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17830,9 +17830,7 @@ var FilterBar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
         className: "btn-group margin-bottom-sm"
-      }, /*#__PURE__*/React.createElement(_FilterList.FilterList, {
-        disabledFilters: this.context.filterBarStore.getDisabled()
-      }), /*#__PURE__*/React.createElement(_ApplyFiltersButton.ApplyFiltersButton, {
+      }, /*#__PURE__*/React.createElement(_ApplyFiltersButton.ApplyFiltersButton, {
         filterBarActor: this.context.filterBarActor
       }), /*#__PURE__*/React.createElement(_ClearFiltersButton.ClearFiltersButton, {
         filterBarActor: this.context.filterBarActor
@@ -17863,7 +17861,120 @@ FilterBar.contextTypes = {
   batchActionsStore: React.PropTypes.object
 };
 
-},{"./ApplyFiltersButton.react":436,"./BatchActionsList/BatchActionsList.react":437,"./ClearFiltersButton.react":439,"./ConfigurationButton.react":440,"./ExportResultsButton.react":441,"./FilterDisplay/FilterDisplay.react":443,"./FilterList/FilterList.react":456,"./SaveFiltersButton.react":458,"./SavedSearchesList/SavedSearchesList.react":459}],443:[function(require,module,exports){
+},{"./ApplyFiltersButton.react":436,"./BatchActionsList/BatchActionsList.react":437,"./ClearFiltersButton.react":439,"./ConfigurationButton.react":440,"./ExportResultsButton.react":441,"./FilterDisplay/FilterDisplay.react":444,"./FilterList/FilterList.react":458,"./SaveFiltersButton.react":460,"./SavedSearchesList/SavedSearchesList.react":461}],443:[function(require,module,exports){
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FilterButton = void 0;
+
+var _FilterListOption = require("../FilterList/FilterListOption.react");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var FilterButton = /*#__PURE__*/function (_React$Component) {
+  _inherits(FilterButton, _React$Component);
+
+  var _super = _createSuper(FilterButton);
+
+  function FilterButton(props) {
+    var _this;
+
+    _classCallCheck(this, FilterButton);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      filters: props.filters
+    };
+    return _this;
+  }
+
+  _createClass(FilterButton, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.context.filterBarStore.addChangeListener(this.onChange.bind(this));
+    }
+  }, {
+    key: "onChange",
+    value: function onChange() {
+      this.setState(this.getStateFromStores());
+    }
+  }, {
+    key: "getStateFromStores",
+    value: function getStateFromStores() {
+      return {
+        filters: this.context.filterBarStore.getFilters()
+      };
+    }
+  }, {
+    key: "onClick",
+    value: function onClick(filterUid) {
+      this.props.onClick(filterUid);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var optionKey = "";
+      var filterOptions = Object.keys(this.state.filters).map(function (filterUid) {
+        optionKey = "option-" + filterUid;
+        return /*#__PURE__*/React.createElement(_FilterListOption.FilterListOption, {
+          onClick: this.onClick.bind(this),
+          filterUid: filterUid,
+          key: optionKey,
+          label: this.state.filters[filterUid].label
+        });
+      }, this);
+      return /*#__PURE__*/React.createElement("div", {
+        className: "btn-group"
+      }, /*#__PURE__*/React.createElement("button", {
+        className: "btn btn-default dropdown-toggle",
+        "data-toggle": "dropdown",
+        type: "button"
+      }, /*#__PURE__*/React.createElement("span", null, this.props.title), /*#__PURE__*/React.createElement("i", {
+        className: "icon icon-add"
+      })), /*#__PURE__*/React.createElement("div", {
+        className: "dropdown-menu",
+        role: "menu"
+      }, /*#__PURE__*/React.createElement("ul", {
+        className: "filter-options"
+      }, filterOptions)));
+    }
+  }]);
+
+  return FilterButton;
+}(React.Component);
+
+exports.FilterButton = FilterButton;
+FilterButton.contextTypes = {
+  filterBarActor: React.PropTypes.object,
+  filterBarStore: React.PropTypes.object
+};
+FilterButton.propTypes = {
+  disabledFilters: React.PropTypes.object.isRequired
+};
+
+},{"../FilterList/FilterListOption.react":459}],444:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17874,6 +17985,12 @@ Object.defineProperty(exports, "__esModule", {
 exports.FilterDisplay = void 0;
 
 var _FilterInput = require("./FilterInput.react");
+
+var _FilterButton = require("./FilterButton.react");
+
+var _FilterGroup = require("./FilterGroup.react");
+
+var _FilterList = require("../FilterList/FilterList.react");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -17949,29 +18066,83 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "getActiveFilters",
+    value: function getActiveFilters() {
+      return this.context.filterBarStore.getActiveFilters();
+    }
+  }, {
+    key: "getFilters",
+    value: function getFilters() {
+      return this.context.filterBarStore.getFilters();
+    }
+  }, {
+    key: "addGroup",
+    value: function addGroup(filterUid) {
+      this.context.filterBarStore.addGroupFilter(-1, filterUid);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var filters = Object.keys(this.state.filters).map(function (filterUid) {
-        var filter = this.state.filters[filterUid];
-        return /*#__PURE__*/React.createElement(_FilterInput.FilterInput, {
-          filterUid: filterUid,
-          key: filterUid,
-          label: filter.label,
-          type: filter.type,
-          value: filter.value,
-          operator: filter.operator
-        });
-      }, this);
+      var filters = [];
+      this.getActiveFilters().map(function (groupFilters, idx) {
+        if (idx > 0) {
+          filters.push( /*#__PURE__*/React.createElement("div", {
+            style: {
+              marginTop: 'auto',
+              marginBottom: 'auto',
+              padding: '10px'
+            }
+          }, "OR"));
+        }
+
+        filters.push( /*#__PURE__*/React.createElement(_FilterGroup.FilterGroup, {
+          key: idx,
+          groupKey: idx,
+          filters: groupFilters
+        }));
+      });
 
       if (filters.length === 0) {
-        filters = /*#__PURE__*/React.createElement("div", null, "No Filters Enabled!");
+        filters.push( /*#__PURE__*/React.createElement("div", {
+          style: {
+            marginTop: 'auto',
+            marginBottom: 'auto',
+            padding: '10px'
+          }
+        }, /*#__PURE__*/React.createElement(_FilterButton.FilterButton, {
+          filters: this.getFilters(),
+          title: "ADD FILTER",
+          onClick: this.addGroup.bind(this)
+        })));
+      } else {
+        filters.push( /*#__PURE__*/React.createElement("div", {
+          style: {
+            marginTop: 'auto',
+            marginBottom: 'auto',
+            padding: '10px'
+          }
+        }, /*#__PURE__*/React.createElement(_FilterButton.FilterButton, {
+          filters: this.getFilters(),
+          title: "OR",
+          onClick: this.addGroup.bind(this)
+        })));
       }
 
       return /*#__PURE__*/React.createElement("div", {
         className: "navbar filterbar"
       }, /*#__PURE__*/React.createElement("div", {
-        className: "panel panel-default"
-      }, filters));
+        className: "panel panel-default",
+        style: {
+          paddingTop: 'unset',
+          paddingBottom: 'unset'
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          display: 'flex',
+          "float": 'left',
+          flexWrap: 'wrap'
+        }
+      }, filters)));
     }
   }]);
 
@@ -17990,7 +18161,135 @@ FilterDisplay.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{"./FilterInput.react":444}],444:[function(require,module,exports){
+},{"../FilterList/FilterList.react":458,"./FilterButton.react":443,"./FilterGroup.react":445,"./FilterInput.react":446}],445:[function(require,module,exports){
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FilterGroup = void 0;
+
+var _FilterInput = require("./FilterInput.react");
+
+var _FilterButton = require("./FilterButton.react");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var FilterGroup = /*#__PURE__*/function (_React$Component) {
+  _inherits(FilterGroup, _React$Component);
+
+  var _super = _createSuper(FilterGroup);
+
+  function FilterGroup(props) {
+    var _this;
+
+    _classCallCheck(this, FilterGroup);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      filters: props.filters
+    };
+    return _this;
+  }
+
+  _createClass(FilterGroup, [{
+    key: "getFilters",
+    value: function getFilters() {
+      return this.context.filterBarStore.getFilters();
+    }
+  }, {
+    key: "onButtonClick",
+    value: function onButtonClick(filterUid) {
+      this.context.filterBarStore.addGroupFilter(this.props.groupKey, filterUid);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var groupKey = this.props.groupKey;
+      var filters = [];
+      this.state.filters.map(function (filter, idx) {
+        if (idx > 0) {
+          filters.push( /*#__PURE__*/React.createElement("div", {
+            style: {
+              marginTop: 'auto',
+              marginBottom: 'auto',
+              padding: '10px'
+            }
+          }, "AND"));
+        }
+
+        filters.push( /*#__PURE__*/React.createElement("div", {
+          style: {
+            marginTop: 'auto',
+            marginBottom: 'auto',
+            padding: '10px'
+          }
+        }, /*#__PURE__*/React.createElement(_FilterInput.FilterInput, {
+          groupKey: groupKey,
+          inputKey: idx,
+          filterUid: filter.uid,
+          key: filter.uid,
+          label: filter.label,
+          type: filter.type,
+          value: filter.value,
+          operator: filter.operator
+        })));
+      });
+      filters.push( /*#__PURE__*/React.createElement("div", {
+        style: {
+          marginTop: 'auto',
+          marginBottom: 'auto',
+          padding: '10px'
+        }
+      }, /*#__PURE__*/React.createElement(_FilterButton.FilterButton, {
+        filters: this.getFilters(),
+        title: "ADD",
+        onClick: this.onButtonClick.bind(this)
+      })));
+      return /*#__PURE__*/React.createElement("div", {
+        style: {
+          display: 'flex',
+          flexWrap: 'wrap',
+          borderRadius: '5px',
+          border: '1px solid #c0c0c0',
+          backgroundColor: '#eee',
+          marginTop: '7px',
+          marginBottom: '7px'
+        }
+      }, filters);
+    }
+  }]);
+
+  return FilterGroup;
+}(React.Component);
+
+exports.FilterGroup = FilterGroup;
+FilterGroup.contextTypes = {
+  filterBarActor: React.PropTypes.object,
+  filterBarStore: React.PropTypes.object
+};
+
+},{"./FilterButton.react":443,"./FilterInput.react":446}],446:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18036,7 +18335,10 @@ var FilterInput = /*#__PURE__*/function (_React$Component) {
   _createClass(FilterInput, [{
     key: "onClick",
     value: function onClick() {
-      this.context.filterBarActor.disableFilter(this.props.filterUid);
+      var _this$props = this.props,
+          groupKey = _this$props.groupKey,
+          inputKey = _this$props.inputKey;
+      this.context.filterBarActor.disableFilter(groupKey, inputKey);
     }
   }, {
     key: "objectProperties",
@@ -18044,6 +18346,8 @@ var FilterInput = /*#__PURE__*/function (_React$Component) {
       var key = Date.now();
       return {
         filterUid: this.props.filterUid,
+        groupKey: this.props.groupKey,
+        inputKey: this.props.inputKey,
         key: key,
         value: this.props.value,
         type: this.props.type,
@@ -18056,11 +18360,14 @@ var FilterInput = /*#__PURE__*/function (_React$Component) {
       var propObject = this.objectProperties();
       var inputs = new _FilterInputFactory.FilterInputFactory(propObject);
       return /*#__PURE__*/React.createElement("div", {
-        className: "col-lg-3 col-md-4 col-sm-6 col-xs-12 filter"
+        className: "filter"
       }, /*#__PURE__*/React.createElement("ul", {
         className: this.filterKey
       }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("i", {
         className: "btn btn-circle-primary btn-xs icon icon-close remove-filter",
+        style: {
+          lineHeight: '16px'
+        },
         onClick: this.onClick.bind(this)
       }), /*#__PURE__*/React.createElement("label", null, this.props.label)), inputs));
     }
@@ -18081,7 +18388,7 @@ FilterInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"./FilterInputFactory.react":445}],445:[function(require,module,exports){
+},{"./FilterInputFactory.react":447}],447:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18131,7 +18438,7 @@ function FilterInputFactory(propObject) {
   }
 }
 
-},{"./Inputs/DateInput.react":446,"./Inputs/DateTimeInput.react":447,"./Inputs/LazyMultiSelectInput.react":448,"./Inputs/LazySelectInput.react":449,"./Inputs/MultiSelectInput.react":450,"./Inputs/RangeInput.react":451,"./Inputs/RelativeDateInput.react":452,"./Inputs/SelectInput.react":453,"./Inputs/SingleDateTimeInput.react":454,"./Inputs/TextInput.react":455}],446:[function(require,module,exports){
+},{"./Inputs/DateInput.react":448,"./Inputs/DateTimeInput.react":449,"./Inputs/LazyMultiSelectInput.react":450,"./Inputs/LazySelectInput.react":451,"./Inputs/MultiSelectInput.react":452,"./Inputs/RangeInput.react":453,"./Inputs/RelativeDateInput.react":454,"./Inputs/SelectInput.react":455,"./Inputs/SingleDateTimeInput.react":456,"./Inputs/TextInput.react":457}],448:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18202,7 +18509,7 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
     }
   }, {
     key: "componentDidMount",
@@ -18290,7 +18597,7 @@ DateInput.defaultProps = {
   disabled: false
 };
 
-},{}],447:[function(require,module,exports){
+},{}],449:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18358,7 +18665,7 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
     }
   }, {
     key: "componentDidMount",
@@ -18443,7 +18750,7 @@ DateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],448:[function(require,module,exports){
+},{}],450:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18569,6 +18876,8 @@ var LazyMultiSelectInput = /*#__PURE__*/function (_React$Component) {
       } else {
         filter.value = event.target.value.split(",");
       }
+
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, filter.value);
     }
   }, {
     key: "render",
@@ -18594,7 +18903,7 @@ LazyMultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],449:[function(require,module,exports){
+},{}],451:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18700,6 +19009,7 @@ var LazySelectInput = /*#__PURE__*/function (_React$Component) {
     value: function onSelect(event) {
       var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
       filter.value = event.target.value;
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, filter.value);
     }
   }, {
     key: "render",
@@ -18725,7 +19035,7 @@ LazySelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],450:[function(require,module,exports){
+},{}],452:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18815,6 +19125,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
     key: "onSelect",
     value: function onSelect(event) {
       this.getFilterFromFilterBarStore().value = this.getSelectedValues();
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.getSelectedValues());
     }
   }, {
     key: "getSelectedValues",
@@ -18896,7 +19207,7 @@ MultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],451:[function(require,module,exports){
+},{}],453:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18962,7 +19273,7 @@ var RangeInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
     }
   }, {
     key: "render",
@@ -19002,7 +19313,7 @@ RangeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],452:[function(require,module,exports){
+},{}],454:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19112,7 +19423,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updateFilter",
     value: function updateFilter(newValue) {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, newValue);
     }
   }, {
     key: "intToMoment",
@@ -19290,7 +19601,7 @@ function relativeOptions() {
   };
 }
 
-},{"./DateInput.react":446}],453:[function(require,module,exports){
+},{"./DateInput.react":448}],455:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19381,7 +19692,7 @@ var SelectInput = /*#__PURE__*/function (_React$Component) {
       this.setState({
         value: event.target.value
       });
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", event.target.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, event.target.value);
     }
   }, {
     key: "displayOption",
@@ -19434,7 +19745,7 @@ SelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],454:[function(require,module,exports){
+},{}],456:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19505,7 +19816,7 @@ var SingleDateTimeInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
     }
   }, {
     key: "componentDidMount",
@@ -19554,7 +19865,7 @@ SingleDateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],455:[function(require,module,exports){
+},{}],457:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19627,7 +19938,7 @@ var TextInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
     }
   }, {
     key: "render",
@@ -19655,7 +19966,7 @@ TextInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],456:[function(require,module,exports){
+},{}],458:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19781,7 +20092,7 @@ FilterList.propTypes = {
   disabledFilters: React.PropTypes.object.isRequired
 };
 
-},{"./FilterListOption.react":457}],457:[function(require,module,exports){
+},{"./FilterListOption.react":459}],459:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19825,7 +20136,7 @@ var FilterListOption = /*#__PURE__*/function (_React$Component) {
   _createClass(FilterListOption, [{
     key: "onClick",
     value: function onClick() {
-      this.context.filterBarActor.enableFilter(this.props.filterUid);
+      this.props.onClick(this.props.filterUid);
     }
   }, {
     key: "render",
@@ -19851,7 +20162,7 @@ FilterListOption.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],458:[function(require,module,exports){
+},{}],460:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19971,7 +20282,7 @@ SaveFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],459:[function(require,module,exports){
+},{}],461:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20079,7 +20390,7 @@ SavedSearchesList.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"./SavedSearchesListItem.react":460}],460:[function(require,module,exports){
+},{"./SavedSearchesListItem.react":462}],462:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20173,7 +20484,7 @@ SavedSearchesListItem.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],461:[function(require,module,exports){
+},{}],463:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20266,7 +20577,7 @@ FilterableTable.childContextTypes = {
   tableActor: React.PropTypes.object
 };
 
-},{"../actors/FilterBarActor":432,"../actors/TableActor":433,"../stores/BatchActionsStore":479,"../stores/FilterBarStore":480,"../stores/TableStore":481,"./FilterBar/FilterBar.react":442,"./Table/Table.react":473}],462:[function(require,module,exports){
+},{"../actors/FilterBarActor":432,"../actors/TableActor":433,"../stores/BatchActionsStore":481,"../stores/FilterBarStore":482,"../stores/TableStore":483,"./FilterBar/FilterBar.react":442,"./Table/Table.react":475}],464:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20340,7 +20651,7 @@ QuickFilters.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{"./QuickFiltersBlock/QuickFiltersBlock.react":463}],463:[function(require,module,exports){
+},{"./QuickFiltersBlock/QuickFiltersBlock.react":465}],465:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20414,7 +20725,7 @@ var QuickFiltersBlock = /*#__PURE__*/function (_React$Component) {
 
 exports.QuickFiltersBlock = QuickFiltersBlock;
 
-},{"./QuickFiltersButton.react":464}],464:[function(require,module,exports){
+},{"./QuickFiltersButton.react":466}],466:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20550,7 +20861,7 @@ QuickFiltersButton.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{}],465:[function(require,module,exports){
+},{}],467:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20619,7 +20930,7 @@ Body.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyRow.react":467}],466:[function(require,module,exports){
+},{"./BodyRow.react":469}],468:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20688,7 +20999,7 @@ BodyCell.propTypes = {
   value: React.PropTypes.string.isRequired
 };
 
-},{}],467:[function(require,module,exports){
+},{}],469:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20806,7 +21117,7 @@ BodyRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyCell.react":466,"./BodySelectable.react":468}],468:[function(require,module,exports){
+},{"./BodyCell.react":468,"./BodySelectable.react":470}],470:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20908,7 +21219,7 @@ BodySelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],469:[function(require,module,exports){
+},{}],471:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21006,7 +21317,7 @@ HeadingCell.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],470:[function(require,module,exports){
+},{}],472:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21121,7 +21432,7 @@ HeadingRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./HeadingCell.react":469,"./HeadingSelectable.react":471}],471:[function(require,module,exports){
+},{"./HeadingCell.react":471,"./HeadingSelectable.react":473}],473:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21219,7 +21530,7 @@ HeadingSelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],472:[function(require,module,exports){
+},{}],474:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21351,7 +21662,7 @@ Pagination.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{}],473:[function(require,module,exports){
+},{}],475:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21519,7 +21830,7 @@ Table.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{"../../events/TableEvent":475,"./Body.react":465,"./HeadingRow.react":470,"./Pagination.react":472,"./TableCaption.react":474}],474:[function(require,module,exports){
+},{"../../events/TableEvent":477,"./Body.react":467,"./HeadingRow.react":472,"./Pagination.react":474,"./TableCaption.react":476}],476:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21603,7 +21914,7 @@ var TableCaption = /*#__PURE__*/function (_React$Component) {
 
 exports.TableCaption = TableCaption;
 
-},{"../QuickFilters/QuickFilters.react":462}],475:[function(require,module,exports){
+},{"../QuickFilters/QuickFilters.react":464}],477:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21617,7 +21928,7 @@ function tableUpdated() {
   document.dispatchEvent(event);
 }
 
-},{}],476:[function(require,module,exports){
+},{}],478:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21674,7 +21985,7 @@ var FilterVerificator = /*#__PURE__*/function () {
 
 exports.FilterVerificator = FilterVerificator;
 
-},{"URIjs":3}],477:[function(require,module,exports){
+},{"URIjs":3}],479:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21692,7 +22003,7 @@ function displayModalForData(data) {
   modal.modal();
 }
 
-},{}],478:[function(require,module,exports){
+},{}],480:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21717,7 +22028,7 @@ function redirectUrl(url) {
   window.location.href = url;
 }
 
-},{"URIjs":3}],479:[function(require,module,exports){
+},{"URIjs":3}],481:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21750,7 +22061,7 @@ var BatchActionsStore = /*#__PURE__*/function () {
 
 exports.BatchActionsStore = BatchActionsStore;
 
-},{}],480:[function(require,module,exports){
+},{}],482:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21791,6 +22102,7 @@ var FilterBarStore = /*#__PURE__*/function () {
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
+    this.activeFilters = [];
     this.quickFilters = configuration.quickFilters || {};
 
     if (this.savedSearchesUrl !== undefined) {
@@ -22062,18 +22374,24 @@ var FilterBarStore = /*#__PURE__*/function () {
       return enabledFilters;
     }
   }, {
+    key: "getActiveFilters",
+    value: function getActiveFilters() {
+      return this.activeFilters;
+    }
+  }, {
     key: "getQuery",
     value: function getQuery() {
-      var enabledFilters = Object.keys(this.getEnabled()).map(function (filterUid) {
-        var filter = this.getFilter(filterUid);
-        return {
-          uid: filterUid,
-          type: filter.type,
-          field: filter.field,
-          value: filter.value,
-          operator: filter.operator
-        };
-      }, this);
+      var enabledFilters = this.activeFilters.map(function (filters) {
+        return filters.map(function (filter) {
+          return {
+            uid: filter.uid,
+            type: filter.type,
+            field: filter.field,
+            value: filter.value,
+            operator: filter.operator
+          };
+        });
+      });
       return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : "";
     }
   }, {
@@ -22095,20 +22413,18 @@ var FilterBarStore = /*#__PURE__*/function () {
   }, {
     key: "disableAllFilters",
     value: function disableAllFilters() {
-      var enabledFilters = this.getEnabled();
-
-      for (var filterUid in enabledFilters) {
-        this.disableFilter(filterUid);
-      }
-
+      this.activeFilters = [];
       this.emitChange();
     }
   }, {
     key: "disableFilter",
-    value: function disableFilter(filterUid) {
-      this.filters[filterUid].enabled = false;
-      this.filters[filterUid].value = "";
-      this.deactivateQuickFiltersBasedOnRemovedFilter(filterUid, this.activeQuickFilters());
+    value: function disableFilter(groupKey, inputKey) {
+      this.activeFilters[groupKey].splice(inputKey, 1);
+
+      if (this.activeFilters[groupKey].length === 0) {
+        this.activeFilters.splice(groupKey, 1);
+      }
+
       this.emitChange();
     }
   }, {
@@ -22141,9 +22457,23 @@ var FilterBarStore = /*#__PURE__*/function () {
     }
   }, {
     key: "updateFilter",
-    value: function updateFilter(filterUid, propKey, propValue) {
-      this.filters[filterUid][propKey] = propValue;
-      if (propKey === 'value') this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
+    value: function updateFilter(groupKey, inputKey, value) {
+      //this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
+      this.activeFilters[groupKey][inputKey].value = value;
+    }
+  }, {
+    key: "addGroupFilter",
+    value: function addGroupFilter(groupKey, filterUid) {
+      var filter = this.filters[filterUid];
+      filter.filterUid = filterUid;
+      filter.uid = filterUid;
+
+      if (groupKey < 0) {
+        this.activeFilters.push([filter]);
+      } else {
+        this.activeFilters[groupKey].push(filter);
+      }
+
       this.emitChange();
     }
   }, {
@@ -22248,7 +22578,7 @@ var FilterBarStore = /*#__PURE__*/function () {
 
 exports.FilterBarStore = FilterBarStore;
 
-},{"../clients/SearchClient":435}],481:[function(require,module,exports){
+},{"../clients/SearchClient":435}],483:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
