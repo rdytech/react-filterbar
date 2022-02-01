@@ -81,7 +81,7 @@ class Server < Sinatra::Base
   end
 
   def search(needle, haystack)
-    field, type, value = needle.values_at(*%w(field type value))
+    field, type, value = needle.first.values_at(*%w(field type value))
     case type.to_sym
     when :date
       haystack.select do |hay|
@@ -103,7 +103,7 @@ class Server < Sinatra::Base
       end
     when :text
       haystack.select do |hay|
-        hay.send(field).to_s.include?(value)
+        value && hay.send(field).to_s.include?(value)
       end
     else
       []
