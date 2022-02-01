@@ -13,33 +13,45 @@ export class FilterGroup extends React.Component {
   }
 
   onButtonClick(filterUid) {
-    this.context.filterBarStore.addGroupFilter(this.props.groupKey, filterUid);
+    this.props.onButtonClick(filterUid, this.props.groupKey)
+  }
+
+  onFilterRemove(groupKey, inputKey) {
+    this.props.onFilterRemove(groupKey, inputKey);
   }
 
   render() {
     const { groupKey } = this.props;
+    const ctrl = this;
     var filters = [];
     this.state.filters.map(function(filter, idx) {
       if (idx > 0) {
         filters.push(
           (
-            <div style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }>AND</div>
+            <div
+              key={ Math.random() }
+              style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }
+            >AND</div>
           )
         );
       }
 
       filters.push(
         (
-        <div style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }>
+        <div
+          style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }
+          key={ Math.random() }
+        >
           <FilterInput
+            key={ idx }
             groupKey={ groupKey }
             inputKey={ idx }
-            filterUid={filter.uid}
-            key={filter.uid}
-            label={filter.label}
-            type={filter.type}
-            value={filter.value}
-            operator={filter.operator}
+            onFilterRemove={ ctrl.onFilterRemove.bind(ctrl) }
+            filterUid={ filter.uid }
+            label={ filter.label }
+            type={ filter.type }
+            value={ filter.value || "" }
+            operator={ filter.operator }
           />
         </div>)
       );
@@ -47,11 +59,15 @@ export class FilterGroup extends React.Component {
 
     filters.push(
       (
-        <div style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }>
+        <div
+          style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }
+          key={ Math.random() }
+        >
           <FilterButton
+            key={ Math.random() }
             filters={ this.getFilters() }
             title="ADD"
-            onClick={ this.onButtonClick.bind(this) }
+            onClick={ ctrl.onButtonClick.bind(ctrl) }
           />
         </div>
       )
@@ -64,6 +80,12 @@ export class FilterGroup extends React.Component {
     )
   }
 }
+
+FilterGroup.propTypes = {
+  groupKey: React.PropTypes.number.isRequired,
+  filters: React.PropTypes.array.isRequired,
+  onFilterRemove: React.PropTypes.func.isRequired
+};
 
 FilterGroup.contextTypes = {
   filterBarActor: React.PropTypes.object,

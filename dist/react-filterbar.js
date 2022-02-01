@@ -16817,20 +16817,6 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -16881,9 +16867,9 @@ var FilterBarActor = /*#__PURE__*/function () {
       this.filterBarStore.updateFilter(groupKey, inputKey, value);
     }
   }, {
-    key: "disableFilter",
-    value: function disableFilter(groupKey, inputKey) {
-      this.filterBarStore.disableFilter(groupKey, inputKey);
+    key: "clearActiveFilter",
+    value: function clearActiveFilter(groupKey, inputKey) {
+      this.filterBarStore.clearActiveFilter(groupKey, inputKey);
     }
   }, {
     key: "applyFilters",
@@ -16910,7 +16896,8 @@ var FilterBarActor = /*#__PURE__*/function () {
       }
 
       this.filterBarStore.enableQuickFilter(quickFilterName, blockName);
-      this.enableFilter(filterName, value);
+      this.filterBarStore.setActiveFilters([]);
+      this.filterBarStore.addGroupFilter(filterName, undefined, value);
       this.applyFilters();
     }
   }, {
@@ -16951,24 +16938,14 @@ var FilterBarActor = /*#__PURE__*/function () {
   }, {
     key: "loadSavedSearch",
     value: function loadSavedSearch(searchId) {
-      var _this = this;
-
       this.disableAllFilters();
       var savedSearch = this.filterBarStore.getSavedSearch(searchId);
       var filters = JSON.parse(savedSearch.configuration);
 
       if (this.verifySavedFilters(filters)) {
-        if (filters instanceof Array) {
-          filters.forEach(function (filter) {
-            return _this.enableFilter(filter.uid, filter.value);
-          });
-        } else {
-          for (var filter in filters) {
-            this.enableFilter(filter, filters[filter]);
-          }
-        }
-
+        this.filterBarStore.setActiveFilters(filters);
         this.applyFilters();
+        this.filterBarStore.emitChange();
       } else {
         this.deleteSavedSearch(searchId, 'One of the filters in this saved search cannot be applied anymore. Remove saved search?');
       }
@@ -16993,30 +16970,7 @@ var FilterBarActor = /*#__PURE__*/function () {
   }, {
     key: "saveFilters",
     value: function saveFilters(name) {
-      var filters = [];
-
-      var _iterator = _createForOfIteratorHelper(this.filterBarStore.enabledFilters()),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var _step$value = _slicedToArray(_step.value, 2),
-              filterUid = _step$value[0],
-              filter = _step$value[1];
-
-          filters.push({
-            uid: filterUid,
-            type: filter.type,
-            field: filter.field,
-            value: filter.value
-          });
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-
+      var filters = this.filterBarStore.getActiveFilters();
       var savedSearchPacket = {
         saved_search: {
           filters: JSON.stringify(filters),
@@ -17181,22 +17135,38 @@ function setupConfiguration(configuration) {
   configuration.tableConfiguration.page = Number(url.query(true).page);
 
   if (url.query(true).q !== "") {
-    var _iterator = _createForOfIteratorHelper(JSON.parse(url.query(true).q)),
+    var activeFilters = JSON.parse(url.query(true).q);
+    configuration.filterBarConfiguration.activeFilters = [];
+
+    var _iterator = _createForOfIteratorHelper(activeFilters),
         _step;
 
     try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var filter = _step.value;
-        var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
+      var _loop = function _loop() {
+        groupFilters = _step.value;
+        var _groupFilters = [];
+        groupFilters.map(function (filter) {
+          var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
 
-        if (configFilter) {
-          configFilter.enabled = true;
-          configFilter.value = filter.value;
+          if (configFilter) {
+            configFilter.filterUid = filter.uid;
+            configFilter.uid = filter.uid;
+            configFilter.value = filter.value;
 
-          if (filter.operator) {
-            configFilter.operator = filter.operator;
+            if (filter.operator) {
+              configFilter.operator = filter.operator;
+            }
           }
-        }
+
+          _groupFilters.push(configFilter);
+        });
+        configuration.filterBarConfiguration.activeFilters.push(_groupFilters);
+      };
+
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var groupFilters;
+
+        _loop();
       }
     } catch (err) {
       _iterator.e(err);
@@ -17845,7 +17815,8 @@ var FilterBar = /*#__PURE__*/function (_React$Component) {
         filterBarActor: this.context.filterBarActor
       }), /*#__PURE__*/React.createElement(_BatchActionsList.BatchActionsList, null)), /*#__PURE__*/React.createElement(_FilterDisplay.FilterDisplay, {
         filterBarActor: this.context.filterBarActor,
-        filterBarStore: this.context.filterBarStore
+        filterBarStore: this.context.filterBarStore,
+        filters: this.context.filterBarStore.getActiveFilters()
       })));
     }
   }]);
@@ -17966,12 +17937,14 @@ var FilterButton = /*#__PURE__*/function (_React$Component) {
 }(React.Component);
 
 exports.FilterButton = FilterButton;
+FilterButton.propTypes = {
+  filters: React.PropTypes.object.isRequired,
+  onClick: React.PropTypes.func.isRequired,
+  title: React.PropTypes.string.isRequired
+};
 FilterButton.contextTypes = {
   filterBarActor: React.PropTypes.object,
   filterBarStore: React.PropTypes.object
-};
-FilterButton.propTypes = {
-  disabledFilters: React.PropTypes.object.isRequired
 };
 
 },{"../FilterList/FilterListOption.react":459}],444:[function(require,module,exports){
@@ -18024,34 +17997,18 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      filters: props.enabledFilters
+      filters: props.filters
     };
     return _this;
   }
 
   _createClass(FilterDisplay, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      var self = this;
-      var quickFilters = this.context.filterBarStore.quickFilters;
-      Object.keys(this.getStateFromStores().filters).map(function (filterUid) {
-        Object.keys(quickFilters).map(function (blockName) {
-          Object.keys(quickFilters[blockName]).map(function (filterName) {
-            var quickFilter = quickFilters[blockName][filterName];
-
-            if (quickFilter.filters && quickFilter.filters[filterUid]) {
-              if (self.getStateFromStores().filters[filterUid].type == 'multi_select') {
-                if (self.getStateFromStores().filters[filterUid].value.join(",") === quickFilter.filters[filterUid].value) quickFilter.active = true;
-              } else {
-                if (self.getStateFromStores().filters[filterUid].value === quickFilter.filters[filterUid].value) {
-                  quickFilter.active = true;
-                }
-              }
-            }
-          });
-        });
-      });
-      this.context.filterBarStore.addChangeListener(this.onChange.bind(this));
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // TODO: Potential memory leak issue
+      // https://github.com/facebook/react/issues/6266#issuecomment-196998237
+      this.onChange = this.onChange.bind(this);
+      this.context.filterBarStore.addChangeListener(this.onChange);
     }
   }, {
     key: "onChange",
@@ -18059,10 +18016,20 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
       this.setState(this.getStateFromStores());
     }
   }, {
+    key: "onFilterRemove",
+    value: function onFilterRemove(groupKey, inputKey) {
+      this.context.filterBarActor.clearActiveFilter(groupKey, inputKey);
+    }
+  }, {
+    key: "onButtonClick",
+    value: function onButtonClick(filterUid, groupKey) {
+      this.context.filterBarStore.addGroupFilter(filterUid, groupKey);
+    }
+  }, {
     key: "getStateFromStores",
     value: function getStateFromStores() {
       return {
-        filters: this.context.filterBarStore.getEnabled()
+        filters: this.context.filterBarStore.getActiveFilters()
       };
     }
   }, {
@@ -18078,15 +18045,17 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "addGroup",
     value: function addGroup(filterUid) {
-      this.context.filterBarStore.addGroupFilter(-1, filterUid);
+      this.context.filterBarStore.addGroupFilter(filterUid);
     }
   }, {
     key: "render",
     value: function render() {
       var filters = [];
-      this.getActiveFilters().map(function (groupFilters, idx) {
+      var ctrl = this;
+      this.state.filters.map(function (groupFilters, idx) {
         if (idx > 0) {
           filters.push( /*#__PURE__*/React.createElement("div", {
+            key: Math.random(),
             style: {
               marginTop: 'auto',
               marginBottom: 'auto',
@@ -18096,9 +18065,11 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
         }
 
         filters.push( /*#__PURE__*/React.createElement(_FilterGroup.FilterGroup, {
-          key: idx,
+          key: Math.random(),
           groupKey: idx,
-          filters: groupFilters
+          filters: groupFilters,
+          onFilterRemove: ctrl.onFilterRemove.bind(ctrl),
+          onButtonClick: ctrl.onButtonClick.bind(ctrl)
         }));
       });
 
@@ -18108,8 +18079,10 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
             marginTop: 'auto',
             marginBottom: 'auto',
             padding: '10px'
-          }
+          },
+          key: Math.random()
         }, /*#__PURE__*/React.createElement(_FilterButton.FilterButton, {
+          key: Math.random(),
           filters: this.getFilters(),
           title: "ADD FILTER",
           onClick: this.addGroup.bind(this)
@@ -18120,8 +18093,10 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
             marginTop: 'auto',
             marginBottom: 'auto',
             padding: '10px'
-          }
+          },
+          key: Math.random()
         }, /*#__PURE__*/React.createElement(_FilterButton.FilterButton, {
+          key: Math.random(),
           filters: this.getFilters(),
           title: "OR",
           onClick: this.addGroup.bind(this)
@@ -18151,10 +18126,10 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
 
 exports.FilterDisplay = FilterDisplay;
 FilterDisplay.propTypes = {
-  enabledFilters: React.PropTypes.object.isRequired
+  filters: React.PropTypes.array.isRequired
 };
 FilterDisplay.defaultProps = {
-  enabledFilters: {}
+  filters: []
 };
 FilterDisplay.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired,
@@ -18220,16 +18195,23 @@ var FilterGroup = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onButtonClick",
     value: function onButtonClick(filterUid) {
-      this.context.filterBarStore.addGroupFilter(this.props.groupKey, filterUid);
+      this.props.onButtonClick(filterUid, this.props.groupKey);
+    }
+  }, {
+    key: "onFilterRemove",
+    value: function onFilterRemove(groupKey, inputKey) {
+      this.props.onFilterRemove(groupKey, inputKey);
     }
   }, {
     key: "render",
     value: function render() {
       var groupKey = this.props.groupKey;
+      var ctrl = this;
       var filters = [];
       this.state.filters.map(function (filter, idx) {
         if (idx > 0) {
           filters.push( /*#__PURE__*/React.createElement("div", {
+            key: Math.random(),
             style: {
               marginTop: 'auto',
               marginBottom: 'auto',
@@ -18243,15 +18225,17 @@ var FilterGroup = /*#__PURE__*/function (_React$Component) {
             marginTop: 'auto',
             marginBottom: 'auto',
             padding: '10px'
-          }
+          },
+          key: Math.random()
         }, /*#__PURE__*/React.createElement(_FilterInput.FilterInput, {
+          key: idx,
           groupKey: groupKey,
           inputKey: idx,
+          onFilterRemove: ctrl.onFilterRemove.bind(ctrl),
           filterUid: filter.uid,
-          key: filter.uid,
           label: filter.label,
           type: filter.type,
-          value: filter.value,
+          value: filter.value || "",
           operator: filter.operator
         })));
       });
@@ -18260,11 +18244,13 @@ var FilterGroup = /*#__PURE__*/function (_React$Component) {
           marginTop: 'auto',
           marginBottom: 'auto',
           padding: '10px'
-        }
+        },
+        key: Math.random()
       }, /*#__PURE__*/React.createElement(_FilterButton.FilterButton, {
+        key: Math.random(),
         filters: this.getFilters(),
         title: "ADD",
-        onClick: this.onButtonClick.bind(this)
+        onClick: ctrl.onButtonClick.bind(ctrl)
       })));
       return /*#__PURE__*/React.createElement("div", {
         style: {
@@ -18284,6 +18270,11 @@ var FilterGroup = /*#__PURE__*/function (_React$Component) {
 }(React.Component);
 
 exports.FilterGroup = FilterGroup;
+FilterGroup.propTypes = {
+  groupKey: React.PropTypes.number.isRequired,
+  filters: React.PropTypes.array.isRequired,
+  onFilterRemove: React.PropTypes.func.isRequired
+};
 FilterGroup.contextTypes = {
   filterBarActor: React.PropTypes.object,
   filterBarStore: React.PropTypes.object
@@ -18338,18 +18329,17 @@ var FilterInput = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           groupKey = _this$props.groupKey,
           inputKey = _this$props.inputKey;
-      this.context.filterBarActor.disableFilter(groupKey, inputKey);
+      this.props.onFilterRemove(groupKey, inputKey);
     }
   }, {
     key: "objectProperties",
     value: function objectProperties() {
-      var key = Date.now();
       return {
         filterUid: this.props.filterUid,
         groupKey: this.props.groupKey,
         inputKey: this.props.inputKey,
-        key: key,
-        value: this.props.value,
+        key: Math.random(),
+        value: this.props.value || "",
         type: this.props.type,
         operator: this.props.operator
       };
@@ -18381,7 +18371,10 @@ FilterInput.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,
-  value: React.PropTypes.node.isRequired
+  value: React.PropTypes.node.isRequired,
+  groupKey: React.PropTypes.number.isRequired,
+  inputKey: React.PropTypes.number.isRequired,
+  onFilterRemove: React.PropTypes.func.isRequired
 };
 FilterInput.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired,
@@ -18509,7 +18502,11 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
+      if (this.props.onBlur) {
+        this.props.onBlur();
+      } else {
+        this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
+      }
     }
   }, {
     key: "componentDidMount",
@@ -19364,7 +19361,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       }
     };
 
-    _this.setDisplayDates(_this.props.value['value']);
+    _this.setDisplayDates(_this.state.value['value']);
 
     return _this;
   } // If relative option selected, set dates for the datepickers to display
@@ -19391,7 +19388,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       this.state = {
         value: newValue
       };
-      this.updateFilter(newValue);
+      this.updateFilter(this.state.value);
     }
   }, {
     key: "onDatePickerChange",
@@ -19410,6 +19407,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       this.setState({
         value: newValue
       });
+      this.updateFilter(this.state.value);
     }
   }, {
     key: "relativeValueSelected",
@@ -19459,6 +19457,11 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "onBlur",
+    value: function onBlur() {
+      this.updateFilter(this.state.value);
+    }
+  }, {
     key: "showRelativeRangeInputs",
     value: function showRelativeRangeInputs() {
       var _this2 = this;
@@ -19505,8 +19508,9 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         filterUid: this.props.filterUid,
         displayFrom: this.state.displayFrom,
         displayTo: this.state.displayTo,
-        onDateChangeCustom: this.onDatePickerChange,
-        disabled: this.relativeValueSelected()
+        onDateChangeCustom: this.onDatePickerChange.bind(this),
+        disabled: this.relativeValueSelected(),
+        onBlur: this.onBlur.bind(this)
       }));
     }
   }, {
@@ -20626,8 +20630,9 @@ var QuickFilters = /*#__PURE__*/function (_React$Component) {
       var quickFilters = this.context.filterBarStore.quickFilters;
 
       if (quickFilters !== undefined) {
-        var filterBlocks = Object.keys(quickFilters).map(function (filter) {
+        var filterBlocks = Object.keys(quickFilters).map(function (filter, idx) {
           return /*#__PURE__*/React.createElement(_QuickFiltersBlock.QuickFiltersBlock, {
+            key: idx,
             filters: quickFilters[filter],
             name: filter,
             label: quickFilters[filter].label
@@ -20705,9 +20710,10 @@ var QuickFiltersBlock = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var filters = this.props.filters;
-      var buttons = Object.keys(filters).map(function (filter) {
+      var buttons = Object.keys(filters).map(function (filter, idx) {
         if (filter != "label") {
           return /*#__PURE__*/React.createElement(_QuickFiltersButton.QuickFiltersButton, {
+            key: idx,
             filters: filters[filter],
             name: filter,
             blockName: this.state.name
@@ -20784,7 +20790,6 @@ var QuickFiltersButton = /*#__PURE__*/function (_React$Component) {
       if (this.state.disabled) {
         e.stopPropagation();
       } else {
-        this.context.filterBarActor.disableBlockFilters(this.state.blockName);
         Object.keys(this.state.filters).map(function (filter) {
           var clonedFilter = JSON.parse(JSON.stringify(this.state.filters[filter])); // avoid value to be overwritten when filter changes
 
@@ -20808,8 +20813,7 @@ var QuickFiltersButton = /*#__PURE__*/function (_React$Component) {
     key: "buttonClasses",
     value: function buttonClasses() {
       var klasses = 'btn quick-filters-button';
-      if (this.state.quickFilterButton.active === true) klasses += ' btn-primary disabled';else klasses += ' btn-default';
-      if (this.state.disabled) klasses += ' btn-danger';
+      if (this.state.quickFilterButton.active === true) klasses += ' btn-primary';else if (this.state.disabled) klasses += ' btn-secondary disabled';else klasses += ' btn-default';
       return klasses;
     }
   }, {
@@ -22102,7 +22106,7 @@ var FilterBarStore = /*#__PURE__*/function () {
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
-    this.activeFilters = [];
+    this.activeFilters = configuration.activeFilters || [];
     this.quickFilters = configuration.quickFilters || {};
 
     if (this.savedSearchesUrl !== undefined) {
@@ -22379,6 +22383,11 @@ var FilterBarStore = /*#__PURE__*/function () {
       return this.activeFilters;
     }
   }, {
+    key: "setActiveFilters",
+    value: function setActiveFilters(filters) {
+      this.activeFilters = filters;
+    }
+  }, {
     key: "getQuery",
     value: function getQuery() {
       var enabledFilters = this.activeFilters.map(function (filters) {
@@ -22418,13 +22427,10 @@ var FilterBarStore = /*#__PURE__*/function () {
     }
   }, {
     key: "disableFilter",
-    value: function disableFilter(groupKey, inputKey) {
-      this.activeFilters[groupKey].splice(inputKey, 1);
-
-      if (this.activeFilters[groupKey].length === 0) {
-        this.activeFilters.splice(groupKey, 1);
-      }
-
+    value: function disableFilter(filterUid) {
+      this.filters[filterUid].enabled = false;
+      this.filters[filterUid].value = "";
+      this.deactivateQuickFiltersBasedOnRemovedFilter(filterUid, this.activeQuickFilters());
       this.emitChange();
     }
   }, {
@@ -22437,11 +22443,11 @@ var FilterBarStore = /*#__PURE__*/function () {
   }, {
     key: "enableQuickFilter",
     value: function enableQuickFilter(quickFilterName, blockName) {
-      var self = this;
-      Object.keys(this.quickFilters[blockName]).map(function (filterName) {
-        if (_typeof(self.quickFilters[blockName][filterName]) == "object") {
-          self.quickFilters[blockName][filterName].active = false;
-        }
+      var ctrl = this;
+      Object.keys(ctrl.quickFilters).map(function (groupName) {
+        Object.keys(ctrl.quickFilters[groupName]).map(function (filterName) {
+          ctrl.quickFilters[groupName][filterName].active = false;
+        });
       });
       this.quickFilters[blockName][quickFilterName].active = true;
     }
@@ -22456,19 +22462,33 @@ var FilterBarStore = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "clearActiveFilter",
+    value: function clearActiveFilter(groupKey, inputKey) {
+      this.activeFilters[groupKey].splice(inputKey, 1);
+
+      if (this.activeFilters[groupKey].length === 0) {
+        this.activeFilters.splice(groupKey, 1);
+      }
+
+      this.emitChange();
+    }
+  }, {
     key: "updateFilter",
     value: function updateFilter(groupKey, inputKey, value) {
-      //this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
       this.activeFilters[groupKey][inputKey].value = value;
     }
   }, {
     key: "addGroupFilter",
-    value: function addGroupFilter(groupKey, filterUid) {
+    value: function addGroupFilter(filterUid, groupKey, value) {
       var filter = this.filters[filterUid];
       filter.filterUid = filterUid;
       filter.uid = filterUid;
 
-      if (groupKey < 0) {
+      if (value) {
+        filter.value = value;
+      }
+
+      if (groupKey == undefined) {
         this.activeFilters.push([filter]);
       } else {
         this.activeFilters[groupKey].push(filter);

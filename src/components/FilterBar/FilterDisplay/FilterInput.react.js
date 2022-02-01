@@ -7,18 +7,17 @@ export class FilterInput extends React.Component {
 
   onClick() {
     const { groupKey, inputKey } = this.props;
-    this.context.filterBarActor.disableFilter(groupKey, inputKey);
+    this.props.onFilterRemove(groupKey, inputKey);
   }
 
   objectProperties() {
-    var key = Date.now();
-    return(
+    return (
       {
         filterUid: this.props.filterUid,
         groupKey: this.props.groupKey,
         inputKey: this.props.inputKey,
-        key: key,
-        value: this.props.value,
+        key: Math.random(),
+        value: this.props.value || "",
         type: this.props.type,
         operator: this.props.operator
       }
@@ -30,14 +29,14 @@ export class FilterInput extends React.Component {
     var inputs = new FilterInputFactory(propObject);
     return (
       <div className="filter">
-        <ul className={this.filterKey}>
+        <ul className={ this.filterKey }>
           <li>
             <i
               className="btn btn-circle-primary btn-xs icon icon-close remove-filter" style={ { lineHeight: '16px' } }
-              onClick={this.onClick.bind(this)}
+              onClick={ this.onClick.bind(this) }
             />
             <label>
-              {this.props.label}
+              { this.props.label }
             </label>
           </li>
           {inputs}
@@ -51,7 +50,10 @@ FilterInput.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,
-  value: React.PropTypes.node.isRequired
+  value: React.PropTypes.node.isRequired,
+  groupKey: React.PropTypes.number.isRequired,
+  inputKey: React.PropTypes.number.isRequired,
+  onFilterRemove: React.PropTypes.func.isRequired
 };
 
 FilterInput.contextTypes = {

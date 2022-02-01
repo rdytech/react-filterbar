@@ -1,0 +1,8 @@
+---
+TEST: "[]"
+Book 1: "[]"
+Book 10: '[[{"field":"title","type":"text","label":"Title","filterUid":"title","uid":"title","value":"Book
+  10"}]]'
+Title wit OR: '[[{"field":"author","type":"select","label":"Author","url":"/authors","default":"Author
+  31","filterUid":"author","uid":"author","value":"Author 31"}],[{"field":"title","type":"text","label":"Title","filterUid":"title","uid":"title","value":"Book
+  10"}]]'

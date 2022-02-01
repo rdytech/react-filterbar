@@ -48,17 +48,25 @@ function setupConfiguration(configuration) {
   configuration.tableConfiguration.page = Number(url.query(true).page);
 
   if (url.query(true).q !== "") {
-    for (var filter of JSON.parse(url.query(true).q)) {
-      var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
+    const activeFilters = JSON.parse(url.query(true).q);
+    configuration.filterBarConfiguration.activeFilters = [];
+    for (var groupFilters of activeFilters) {
+      const _groupFilters = []
+      groupFilters.map(function(filter) {
+        var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
 
-      if (configFilter) {
-        configFilter.enabled = true;
-        configFilter.value = filter.value;
+        if (configFilter) {
+          configFilter.filterUid = filter.uid;
+          configFilter.uid = filter.uid;
+          configFilter.value = filter.value;
 
-        if (filter.operator) {
-          configFilter.operator = filter.operator;
+          if (filter.operator) {
+            configFilter.operator = filter.operator;
+          }
         }
-      }
+        _groupFilters.push(configFilter);
+      });
+      configuration.filterBarConfiguration.activeFilters.push(_groupFilters);
     }
   }
 

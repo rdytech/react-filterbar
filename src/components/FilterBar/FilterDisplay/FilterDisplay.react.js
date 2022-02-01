@@ -6,39 +6,31 @@ export class FilterDisplay extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { filters: props.enabledFilters };
+    this.state = { filters: props.filters };
   }
 
-  componentWillMount() {
-    var self = this;
-    var quickFilters = this.context.filterBarStore.quickFilters;
-    Object.keys(this.getStateFromStores().filters).map(function(filterUid) {
-      Object.keys(quickFilters).map(function(blockName) {
-        Object.keys(quickFilters[blockName]).map(function(filterName) {
-          var quickFilter = quickFilters[blockName][filterName];
-          if (quickFilter.filters && quickFilter.filters[filterUid]) {
-            if (self.getStateFromStores().filters[filterUid].type == 'multi_select') {
-              if (self.getStateFromStores().filters[filterUid].value.join(",") === quickFilter.filters[filterUid].value)
-                quickFilter.active = true;
-            } else {
-              if (self.getStateFromStores().filters[filterUid].value ===  quickFilter.filters[filterUid].value) {
-                quickFilter.active = true;
-              }
-            }
-          }
-        });
-      });
-    });
-    this.context.filterBarStore.addChangeListener(this.onChange.bind(this));
+  componentDidMount() {
+    // TODO: Potential memory leak issue
+    // https://github.com/facebook/react/issues/6266#issuecomment-196998237
+    this.onChange = this.onChange.bind(this);
+    this.context.filterBarStore.addChangeListener(this.onChange);
   }
 
   onChange() {
     this.setState(this.getStateFromStores());
   }
 
+  onFilterRemove(groupKey, inputKey) {
+    this.context.filterBarActor.clearActiveFilter(groupKey, inputKey);
+  }
+
+  onButtonClick(filterUid, groupKey) {
+    this.context.filterBarStore.addGroupFilter(filterUid, groupKey);
+  }
+
   getStateFromStores() {
     return {
-      filters: this.context.filterBarStore.getEnabled()
+      filters: this.context.filterBarStore.getActiveFilters()
     };
   }
 
@@ -51,25 +43,32 @@ export class FilterDisplay extends React.Component {
   }
 
   addGroup(filterUid) {
-    this.context.filterBarStore.addGroupFilter(-1, filterUid);
+    this.context.filterBarStore.addGroupFilter(filterUid);
   }
 
   render() {
-    var filters = [];
-    this.getActiveFilters().map(function(groupFilters, idx) {
+    const filters = []
+    const ctrl = this;
+
+    this.state.filters.map(function(groupFilters, idx) {
       if (idx > 0) {
         filters.push(
           (
-            <div style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }>OR</div>
+            <div
+              key={ Math.random() }
+              style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }
+            >OR</div>
           )
         )
       }
 
       filters.push(
         (<FilterGroup
-          key={ idx }
+          key={ Math.random() }
           groupKey={ idx }
           filters={ groupFilters }
+          onFilterRemove={ ctrl.onFilterRemove.bind(ctrl) }
+          onButtonClick={ ctrl.onButtonClick.bind(ctrl) }
         />)
       );
 
@@ -77,19 +76,27 @@ export class FilterDisplay extends React.Component {
 
     if (filters.length === 0) {
       filters.push((
-        <div style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }>
+        <div
+          style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }
+          key={ Math.random() }
+        >
           <FilterButton
-          filters={ this.getFilters() }
-          title="ADD FILTER"
-          onClick={ this.addGroup.bind(this) }
+            key={ Math.random() }
+            filters={ this.getFilters() }
+            title="ADD FILTER"
+            onClick={ this.addGroup.bind(this) }
         />
         </div>)
       );
     } else {
       filters.push(
         (
-        <div style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }>
+        <div
+          style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }
+          key={ Math.random() }
+        >
           <FilterButton
+            key={ Math.random() }
             filters={ this.getFilters() }
             title="OR"
             onClick={ this.addGroup.bind(this) }
@@ -111,11 +118,11 @@ export class FilterDisplay extends React.Component {
 }
 
 FilterDisplay.propTypes = {
-  enabledFilters: React.PropTypes.object.isRequired
+  filters: React.PropTypes.array.isRequired
 };
 
 FilterDisplay.defaultProps = {
-  enabledFilters: {}
+  filters: []
 };
 
 FilterDisplay.contextTypes = {

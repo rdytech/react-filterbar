@@ -53,6 +53,7 @@ export class FilterBar extends React.Component {
           <FilterDisplay
             filterBarActor={this.context.filterBarActor}
             filterBarStore={this.context.filterBarStore}
+            filters={ this.context.filterBarStore.getActiveFilters() }
           />
         </div>
       </div>

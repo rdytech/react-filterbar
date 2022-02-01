@@ -3,8 +3,9 @@ import {DateInput} from "./DateInput.react";
 export class RelativeDateInput extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = { value: this.props.value || { from: null, to: null, value: null } };
-    this.setDisplayDates(this.props.value['value']);
+    this.setDisplayDates(this.state.value['value']);
   }
 
   // If relative option selected, set dates for the datepickers to display
@@ -22,7 +23,7 @@ export class RelativeDateInput extends React.Component {
     var selectedOption = $(event.target.childNodes[event.target.selectedIndex]);
     var newValue = { value: selectedOption.val() };
     this.state = { value: newValue }
-    this.updateFilter(newValue);
+    this.updateFilter(this.state.value);
   }
 
   onDatePickerChange(event) {
@@ -38,6 +39,7 @@ export class RelativeDateInput extends React.Component {
     }
 
     this.setState({value: newValue});
+    this.updateFilter(this.state.value)
   }
 
   relativeValueSelected(selection) {
@@ -78,6 +80,10 @@ export class RelativeDateInput extends React.Component {
     var newValue = this.state.value
     newValue[input] = event.target.value
     this.setState({ value: newValue })
+  }
+
+  onBlur() {
+    this.updateFilter(this.state.value);
   }
 
   showRelativeRangeInputs() {
@@ -126,7 +132,15 @@ export class RelativeDateInput extends React.Component {
   showDateInputs() {
     return (
       <div>
-        <DateInput value={this.state.value} filterUid={this.props.filterUid} displayFrom={this.state.displayFrom} displayTo={this.state.displayTo} onDateChangeCustom={this.onDatePickerChange} disabled={this.relativeValueSelected()} />
+        <DateInput
+          value={this.state.value}
+          filterUid={this.props.filterUid}
+          displayFrom={this.state.displayFrom}
+          displayTo={this.state.displayTo}
+          onDateChangeCustom={this.onDatePickerChange.bind(this)}
+          disabled={this.relativeValueSelected()}
+          onBlur={ this.onBlur.bind(this) }
+        />
       </div>
     )
   }

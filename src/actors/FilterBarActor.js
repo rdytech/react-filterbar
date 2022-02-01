@@ -37,8 +37,8 @@ export class FilterBarActor {
     this.filterBarStore.updateFilter(groupKey, inputKey, value);
   }
 
-  disableFilter(groupKey, inputKey) {
-    this.filterBarStore.disableFilter(groupKey, inputKey)
+  clearActiveFilter(groupKey, inputKey) {
+    this.filterBarStore.clearActiveFilter(groupKey, inputKey)
   }
 
   applyFilters() {
@@ -59,14 +59,17 @@ export class FilterBarActor {
   }
 
   applyQuickFilter(filterName, value, quickFilterName, blockName) {
-    let filter = this.filterBarStore.getFilter(filterName)
+    var filter = this.filterBarStore.getFilter(filterName)
+
     if (filter.type === 'multi_select') {
       value = value.split(",").map(function (string) {
         return string.trim();
       });
     }
+
     this.filterBarStore.enableQuickFilter(quickFilterName, blockName);
-    this.enableFilter(filterName, value);
+    this.filterBarStore.setActiveFilters([]);
+    this.filterBarStore.addGroupFilter(filterName, undefined, value);
     this.applyFilters();
   }
 
@@ -107,17 +110,9 @@ export class FilterBarActor {
     var filters = JSON.parse(savedSearch.configuration);
 
     if (this.verifySavedFilters(filters)) {
-      if (filters instanceof Array) {
-        filters.forEach((filter) =>
-          this.enableFilter(filter.uid, filter.value)
-        );
-      } else {
-        for (var filter in filters) {
-          this.enableFilter(filter, filters[filter]);
-        }
-      }
-
+      this.filterBarStore.setActiveFilters(filters);
       this.applyFilters();
+      this.filterBarStore.emitChange();
     } else {
       this.deleteSavedSearch(searchId, 'One of the filters in this saved search cannot be applied anymore. Remove saved search?');
     }
@@ -139,15 +134,7 @@ export class FilterBarActor {
   }
 
   saveFilters(name) {
-    var filters = [];
-    for (var [filterUid, filter] of this.filterBarStore.enabledFilters()) {
-      filters.push({
-        uid: filterUid,
-        type: filter.type,
-        field: filter.field,
-        value: filter.value,
-      });
-    }
+    const filters = this.filterBarStore.getActiveFilters();
 
     var savedSearchPacket = {
       saved_search: {

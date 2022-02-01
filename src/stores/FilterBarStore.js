@@ -17,7 +17,7 @@ export class FilterBarStore {
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
-    this.activeFilters = []
+    this.activeFilters = configuration.activeFilters || [];
     this.quickFilters = configuration.quickFilters || {};
 
     if (this.savedSearchesUrl !== undefined) {
@@ -127,6 +127,10 @@ export class FilterBarStore {
     return this.activeFilters;
   }
 
+  setActiveFilters(filters) {
+    this.activeFilters = filters;
+  }
+
   getQuery() {
     var enabledFilters = this.activeFilters.map(function(filters) {
       return filters.map(function(filter) {
@@ -174,12 +178,14 @@ export class FilterBarStore {
   }
 
   enableQuickFilter(quickFilterName, blockName) {
-    var self = this;
-    Object.keys(this.quickFilters[blockName]).map(function(filterName) {
-      if (typeof self.quickFilters[blockName][filterName] == "object") {
-        self.quickFilters[blockName][filterName].active = false
-      }
+    const ctrl = this;
+
+    Object.keys(ctrl.quickFilters).map(function(groupName) {
+      Object.keys(ctrl.quickFilters[groupName]).map(function(filterName) {
+        ctrl.quickFilters[groupName][filterName].active = false
+      });
     })
+
     this.quickFilters[blockName][quickFilterName].active = true
   }
 
@@ -192,7 +198,7 @@ export class FilterBarStore {
     })
   }
 
-  disableFilter(groupKey, inputKey) {
+  clearActiveFilter(groupKey, inputKey) {
     this.activeFilters[groupKey].splice(inputKey, 1);
     if (this.activeFilters[groupKey].length === 0) {
       this.activeFilters.splice(groupKey, 1);
@@ -202,17 +208,19 @@ export class FilterBarStore {
   }
 
   updateFilter(groupKey, inputKey, value) {
-    //this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
-
     this.activeFilters[groupKey][inputKey].value = value;
   }
 
-  addGroupFilter(groupKey, filterUid) {
+  addGroupFilter(filterUid, groupKey, value) {
     const filter = this.filters[filterUid];
     filter.filterUid = filterUid;
     filter.uid = filterUid;
 
-    if (groupKey < 0) {
+    if (value) {
+      filter.value = value
+    }
+
+    if (groupKey == undefined) {
       this.activeFilters.push([filter])
     } else {
       this.activeFilters[groupKey].push(filter);

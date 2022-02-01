@@ -53,11 +53,13 @@ export class FilterButton extends React.Component {
   }
 }
 
+FilterButton.propTypes = {
+  filters: React.PropTypes.object.isRequired,
+  onClick: React.PropTypes.func.isRequired,
+  title: React.PropTypes.string.isRequired
+};
+
 FilterButton.contextTypes = {
   filterBarActor: React.PropTypes.object,
   filterBarStore: React.PropTypes.object
-};
-
-FilterButton.propTypes = {
-  disabledFilters: React.PropTypes.object.isRequired
 };

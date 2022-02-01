@@ -9,9 +9,14 @@ export class QuickFilters extends React.Component {
     var quickFilters = this.context.filterBarStore.quickFilters;
     if (quickFilters !== undefined)
     {
-      var filterBlocks = Object.keys(quickFilters).map(function(filter) {
+      var filterBlocks = Object.keys(quickFilters).map(function(filter, idx) {
         return (
-          <QuickFiltersBlock filters={quickFilters[filter]} name={filter} label={quickFilters[filter].label}/>
+          <QuickFiltersBlock
+            key={ idx }
+            filters={ quickFilters[filter] }
+            name={ filter }
+            label={ quickFilters[filter].label }
+          />
         );
       }, this);
     } else {

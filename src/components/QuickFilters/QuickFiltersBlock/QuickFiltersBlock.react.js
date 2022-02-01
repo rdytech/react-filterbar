@@ -11,10 +11,15 @@ export class QuickFiltersBlock extends React.Component {
 
   render() {
     var filters = this.props.filters;
-    var buttons = Object.keys(filters).map(function(filter) {
+    var buttons = Object.keys(filters).map(function(filter, idx) {
       if (filter != "label") {
         return (
-          <QuickFiltersButton filters={filters[filter]} name={filter} blockName={this.state.name}/>
+          <QuickFiltersButton
+            key={ idx }
+            filters={ filters[filter] }
+            name={ filter }
+            blockName={ this.state.name }
+          />
         );
       }
     }, this);
