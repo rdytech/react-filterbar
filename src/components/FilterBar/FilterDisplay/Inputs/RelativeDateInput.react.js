@@ -20,10 +20,10 @@ export class RelativeDateInput extends React.Component {
   }
 
   onRelativeChange(event) {
-    var selectedOption = $(event.target.childNodes[event.target.selectedIndex]);
-    var newValue = { value: selectedOption.val() };
-    this.state = { value: newValue }
-    this.updateFilter(this.state.value);
+    var selectedOption = $(event.target.childNodes[event.target.selectedIndex])
+    var newValue = { value: selectedOption.val() }
+    this.setState({ value: newValue })
+    this.updateFilter(newValue)
   }
 
   onDatePickerChange(event) {
@@ -80,6 +80,7 @@ export class RelativeDateInput extends React.Component {
     var newValue = this.state.value
     newValue[input] = event.target.value
     this.setState({ value: newValue })
+    this.updateFilter(this.state.value)
   }
 
   onBlur() {

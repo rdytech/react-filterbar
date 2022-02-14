@@ -16,7 +16,7 @@ export class FilterBarStore {
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
-    this.filters = configuration.filters;
+    this.filters = configuration.filters || {};
     this.activeFilters = configuration.activeFilters || [];
     this.quickFilters = configuration.quickFilters || {};
 
@@ -212,13 +212,12 @@ export class FilterBarStore {
   }
 
   addGroupFilter(filterUid, groupKey, value) {
-    const filter = this.filters[filterUid];
+    const filterTemplate = this.filters[filterUid];
+    const filter = { ...filterTemplate };
+
     filter.filterUid = filterUid;
     filter.uid = filterUid;
-
-    if (value) {
-      filter.value = value
-    }
+    filter.value = value;
 
     if (groupKey == undefined) {
       this.activeFilters.push([filter])

@@ -1,5 +1,4 @@
-React Components Structure
---------------------------
+### React Components Structure
 
 FilterBar
   -> FilterList
@@ -8,22 +7,52 @@ FilterBar
   -> ClearFiltersButton
   -> SaveFiltersButton
   -> SavedSearchesList
-  -> ConfigurationButton *
-  -> ExportResultsButton *
+  -> ConfigurationButton
+  -> ExportResultsButton
   -> BatchActionsList
   -> FilterDisplay
       -> FilterGroup
-          -> FilterItem
-          -> FilterButton
-      -> FilterButton
+          -> FilterInput
+          -> FilterButton ("ADD" button)
+              -> FilterListOption
+      -> FilterButton ("ADD FILTER" or "OR" button)
+          -> FilterListOption
 
 
-{} - available filters
-[] - default filters
-[
-  [filter1] -> when adding new add new filter1
+
+### Filters Structure
+Class _FilterBarStore_ has the following varables:
+```(javascript)
+activeFilters = [] // as array of active groups with filters
+filters = {} // as initial hash with available filters
+```
+
+#### Examples:
+##### Case 1
+Filter1
+
+```(javascript)
+activeFilters = [
+  [Filter1]
 ]
 
-[
-  [filter1, filter2] -> when adding "ADD" button and add new filter2
+```
+##### Case 2
+Filter1 and Filter2
+
+```(javascript)
+activeFilters = [
+  [Filter1, Filter2]
 ]
+
+```
+##### Case 3
+(Filter1 and Filter 2) or Filter2
+
+```(javascript)
+activeFilters = [
+  [Filter1, Filter2],
+  [Filter3]
+]
+
+```

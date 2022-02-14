@@ -39,7 +39,7 @@ export class FilterGroup extends React.Component {
       filters.push(
         (
         <div
-          style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px'} }
+          style={ { marginTop: 'auto', marginBottom: 'auto', padding: '10px', minWidth: '150px'} }
           key={ Math.random() }
         >
           <FilterInput
