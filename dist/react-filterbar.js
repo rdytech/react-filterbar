@@ -16940,7 +16940,7 @@ var FilterBarActor = /*#__PURE__*/function () {
     value: function loadSavedSearch(searchId) {
       this.disableAllFilters();
       var savedSearch = this.filterBarStore.getSavedSearch(searchId);
-      var filters = JSON.parse(savedSearch.configuration);
+      var filters = this.parseSavedSearch(savedSearch);
 
       if (this.verifySavedFilters(filters)) {
         this.filterBarStore.setActiveFilters(filters);
@@ -16951,21 +16951,29 @@ var FilterBarActor = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "verifySavedFilters",
-    value: function verifySavedFilters(filters) {
-      var filtersArr;
+    key: "parseSavedSearch",
+    value: function parseSavedSearch(savedSearch) {
+      var savedSearchFilters = JSON.parse(savedSearch.configuration);
+      var filters = savedSearchFilters;
 
-      if (filters instanceof Array) {
-        filtersArr = filters;
-      } else {
-        filtersArr = Object.keys(filters).map(function (name) {
+      if (!Array.isArray(savedSearchFilters)) {
+        filters = Object.keys(savedSearchFilters).map(function (name) {
           return {
             uid: name
           };
         });
       }
 
-      return new _FilterVerificator.FilterVerificator(this.filterBarStore.getFilters(), filtersArr).verify();
+      if (!Array.isArray(filters[0])) {
+        filters = [filters];
+      }
+
+      return filters;
+    }
+  }, {
+    key: "verifySavedFilters",
+    value: function verifySavedFilters(parsedFilters) {
+      return new _FilterVerificator.FilterVerificator(this.filterBarStore.getFilters(), parsedFilters).verify();
     }
   }, {
     key: "saveFilters",
@@ -17138,40 +17146,12 @@ function setupConfiguration(configuration) {
     var activeFilters = JSON.parse(url.query(true).q);
     configuration.filterBarConfiguration.activeFilters = [];
 
-    var _iterator = _createForOfIteratorHelper(activeFilters),
-        _step;
-
-    try {
-      var _loop = function _loop() {
-        groupFilters = _step.value;
-        var _groupFilters = [];
-        groupFilters.map(function (filter) {
-          var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
-
-          if (configFilter) {
-            configFilter.filterUid = filter.uid;
-            configFilter.uid = filter.uid;
-            configFilter.value = filter.value;
-
-            if (filter.operator) {
-              configFilter.operator = filter.operator;
-            }
-          }
-
-          _groupFilters.push(configFilter);
-        });
-        configuration.filterBarConfiguration.activeFilters.push(_groupFilters);
-      };
-
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var groupFilters;
-
-        _loop();
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
+    if (Array.isArray(activeFilters[0])) {
+      // Case 1: Filters with new format
+      configuration.filterBarConfiguration.activeFilters = parseQueryVersion2(activeFilters, configuration);
+    } else {
+      // Case 2: Filters with old format
+      configuration.filterBarConfiguration.activeFilters = parseQueryVersion1(activeFilters, configuration);
     }
   }
 
@@ -17185,6 +17165,74 @@ function setupConfiguration(configuration) {
   }
 
   return configuration;
+}
+
+function parseQueryVersion1(activeFilters, configuration) {
+  var _groupFilters = [];
+
+  var _iterator = _createForOfIteratorHelper(activeFilters),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var filter = _step.value;
+      var configFilter = parseAndGetFilter(filter, configuration);
+
+      _groupFilters.push(configFilter);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return [_groupFilters];
+}
+
+function parseQueryVersion2(activeFilters, configuration) {
+  var results = [];
+
+  var _iterator2 = _createForOfIteratorHelper(activeFilters),
+      _step2;
+
+  try {
+    var _loop = function _loop() {
+      var groupFilters = _step2.value;
+      var _groupFilters = [];
+      groupFilters.map(function (filter) {
+        var configFilter = parseAndGetFilter(filter, configuration);
+
+        _groupFilters.push(configFilter);
+      });
+      results.push(_groupFilters);
+    };
+
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      _loop();
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+
+  return results;
+}
+
+function parseAndGetFilter(filter, configuration) {
+  var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
+
+  if (configFilter) {
+    configFilter.filterUid = filter.uid;
+    configFilter.uid = filter.uid;
+    configFilter.value = filter.value;
+
+    if (filter.operator) {
+      configFilter.operator = filter.operator;
+    }
+  }
+
+  return configFilter;
 }
 
 document.addEventListener("DOMContentLoaded", function () {

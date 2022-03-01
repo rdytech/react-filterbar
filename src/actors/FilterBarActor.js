@@ -106,8 +106,8 @@ export class FilterBarActor {
   loadSavedSearch(searchId) {
     this.disableAllFilters();
 
-    var savedSearch = this.filterBarStore.getSavedSearch(searchId);
-    var filters = JSON.parse(savedSearch.configuration);
+    const savedSearch = this.filterBarStore.getSavedSearch(searchId);
+    const filters = this.parseSavedSearch(savedSearch);
 
     if (this.verifySavedFilters(filters)) {
       this.filterBarStore.setActiveFilters(filters);
@@ -118,19 +118,26 @@ export class FilterBarActor {
     }
   }
 
-  verifySavedFilters(filters) {
-    var filtersArr;
+  parseSavedSearch(savedSearch) {
+    const savedSearchFilters = JSON.parse(savedSearch.configuration)
+    var filters = savedSearchFilters;
 
-    if (filters instanceof Array) {
-      filtersArr = filters;
-    } else {
-      filtersArr = Object.keys(filters)
+    if (!Array.isArray(savedSearchFilters)) {
+      filters = Object.keys(savedSearchFilters)
         .map(function (name) {
           return { uid: name }
       });
     }
 
-    return new FilterVerificator(this.filterBarStore.getFilters(), filtersArr).verify();
+    if (!Array.isArray(filters[0])) {
+      filters = [filters]
+    }
+
+    return filters;
+  }
+
+  verifySavedFilters(parsedFilters) {
+    return new FilterVerificator(this.filterBarStore.getFilters(), parsedFilters).verify();
   }
 
   saveFilters(name) {
