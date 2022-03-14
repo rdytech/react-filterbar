@@ -133,6 +133,14 @@ export class FilterBarActor {
       filters = [filters]
     }
 
+    const ctrl = this;
+
+    filters.map(function(groups) {
+      groups.map(function(filter) {
+        filter.label = ctrl.filterBarStore.getFilter(filter.uid).label;
+      });
+    });
+
     return filters;
   }
 

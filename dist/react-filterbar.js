@@ -16968,6 +16968,12 @@ var FilterBarActor = /*#__PURE__*/function () {
         filters = [filters];
       }
 
+      var ctrl = this;
+      filters.map(function (groups) {
+        groups.map(function (filter) {
+          filter.label = ctrl.filterBarStore.getFilter(filter.uid).label;
+        });
+      });
       return filters;
     }
   }, {
