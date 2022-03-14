@@ -17852,6 +17852,7 @@ var FilterBar = /*#__PURE__*/function (_React$Component) {
   _createClass(FilterBar, [{
     key: "render",
     value: function render() {
+      console.log("react-filterbar 3.2.1");
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
         className: "btn-group margin-bottom-sm"
       }, /*#__PURE__*/React.createElement(_ApplyFiltersButton.ApplyFiltersButton, {

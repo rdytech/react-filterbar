@@ -14,6 +14,8 @@ export class FilterBar extends React.Component {
   }
 
   render() {
+    console.log("react-filterbar 3.2.1");
+
     return (
       <div>
         <div>
