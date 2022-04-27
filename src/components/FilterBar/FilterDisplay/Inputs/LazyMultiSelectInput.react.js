@@ -72,6 +72,7 @@ export class LazyMultiSelectInput extends React.Component {
     } else {
       filter.value = event.target.value.split(",");
     }
+    this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, filter.value);
   }
 
   render() {

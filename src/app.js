@@ -48,17 +48,15 @@ function setupConfiguration(configuration) {
   configuration.tableConfiguration.page = Number(url.query(true).page);
 
   if (url.query(true).q !== "") {
-    for (var filter of JSON.parse(url.query(true).q)) {
-      var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
+    const activeFilters = JSON.parse(url.query(true).q);
+    configuration.filterBarConfiguration.activeFilters = [];
 
-      if (configFilter) {
-        configFilter.enabled = true;
-        configFilter.value = filter.value;
-
-        if (filter.operator) {
-          configFilter.operator = filter.operator;
-        }
-      }
+    if (Array.isArray(activeFilters[0])) {
+      // Case 1: Filters with new format
+      configuration.filterBarConfiguration.activeFilters = parseQueryVersion2(activeFilters, configuration);
+    } else {
+      // Case 2: Filters with old format
+      configuration.filterBarConfiguration.activeFilters = parseQueryVersion1(activeFilters, configuration);
     }
   }
 
@@ -71,6 +69,48 @@ function setupConfiguration(configuration) {
   }
 
   return configuration;
+}
+
+function parseQueryVersion1(activeFilters, configuration) {
+  const _groupFilters = [];
+
+  for (const filter of activeFilters) {
+    const configFilter = parseAndGetFilter(filter, configuration)
+    _groupFilters.push(configFilter);
+  }
+
+  return [_groupFilters];
+}
+
+function parseQueryVersion2(activeFilters, configuration) {
+  const results = [];
+
+  for (const groupFilters of activeFilters) {
+    const _groupFilters = []
+    groupFilters.map(function(filter) {
+      const configFilter = parseAndGetFilter(filter, configuration)
+      _groupFilters.push(configFilter);
+    });
+    results.push(_groupFilters);
+  }
+
+  return results;
+}
+
+function parseAndGetFilter(filter, configuration) {
+  const configFilter = configuration.filterBarConfiguration.filters[filter.uid];
+
+  if (configFilter) {
+    configFilter.filterUid = filter.uid;
+    configFilter.uid = filter.uid;
+    configFilter.value = filter.value;
+
+    if (filter.operator) {
+      configFilter.operator = filter.operator;
+    }
+  }
+
+  return configFilter;
 }
 
 document.addEventListener("DOMContentLoaded", function(){

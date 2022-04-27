@@ -24,7 +24,7 @@ export class TextInput extends React.Component {
   // to the fact that they unique key is the timestamp, so we would otherwise
   // lose focus on every keystroke.
   onBlur() {
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+    this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
   }
 
   render() {

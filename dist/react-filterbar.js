@@ -16817,20 +16817,6 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -16864,11 +16850,6 @@ var FilterBarActor = /*#__PURE__*/function () {
       this.filterBarStore.enableFilter(filterUid, value);
     }
   }, {
-    key: "disableFilter",
-    value: function disableFilter(filterUid) {
-      this.filterBarStore.disableFilter(filterUid);
-    }
-  }, {
     key: "disableAllFilters",
     value: function disableAllFilters() {
       this.filterBarStore.disableAllFilters();
@@ -16882,8 +16863,13 @@ var FilterBarActor = /*#__PURE__*/function () {
     }
   }, {
     key: "updateFilter",
-    value: function updateFilter(filterUid, propKey, propValue) {
-      this.filterBarStore.updateFilter(filterUid, propKey, propValue);
+    value: function updateFilter(groupKey, inputKey, value) {
+      this.filterBarStore.updateFilter(groupKey, inputKey, value);
+    }
+  }, {
+    key: "clearActiveFilter",
+    value: function clearActiveFilter(groupKey, inputKey) {
+      this.filterBarStore.clearActiveFilter(groupKey, inputKey);
     }
   }, {
     key: "applyFilters",
@@ -16910,7 +16896,8 @@ var FilterBarActor = /*#__PURE__*/function () {
       }
 
       this.filterBarStore.enableQuickFilter(quickFilterName, blockName);
-      this.enableFilter(filterName, value);
+      this.filterBarStore.setActiveFilters([]);
+      this.filterBarStore.addGroupFilter(filterName, undefined, value);
       this.applyFilters();
     }
   }, {
@@ -16951,72 +16938,53 @@ var FilterBarActor = /*#__PURE__*/function () {
   }, {
     key: "loadSavedSearch",
     value: function loadSavedSearch(searchId) {
-      var _this = this;
-
       this.disableAllFilters();
       var savedSearch = this.filterBarStore.getSavedSearch(searchId);
-      var filters = JSON.parse(savedSearch.configuration);
+      var filters = this.parseSavedSearch(savedSearch);
 
       if (this.verifySavedFilters(filters)) {
-        if (filters instanceof Array) {
-          filters.forEach(function (filter) {
-            return _this.enableFilter(filter.uid, filter.value);
-          });
-        } else {
-          for (var filter in filters) {
-            this.enableFilter(filter, filters[filter]);
-          }
-        }
-
+        this.filterBarStore.setActiveFilters(filters);
         this.applyFilters();
+        this.filterBarStore.emitChange();
       } else {
         this.deleteSavedSearch(searchId, 'One of the filters in this saved search cannot be applied anymore. Remove saved search?');
       }
     }
   }, {
-    key: "verifySavedFilters",
-    value: function verifySavedFilters(filters) {
-      var filtersArr;
+    key: "parseSavedSearch",
+    value: function parseSavedSearch(savedSearch) {
+      var savedSearchFilters = JSON.parse(savedSearch.configuration);
+      var filters = savedSearchFilters;
 
-      if (filters instanceof Array) {
-        filtersArr = filters;
-      } else {
-        filtersArr = Object.keys(filters).map(function (name) {
+      if (!Array.isArray(savedSearchFilters)) {
+        filters = Object.keys(savedSearchFilters).map(function (name) {
           return {
             uid: name
           };
         });
       }
 
-      return new _FilterVerificator.FilterVerificator(this.filterBarStore.getFilters(), filtersArr).verify();
+      if (!Array.isArray(filters[0])) {
+        filters = [filters];
+      }
+
+      var ctrl = this;
+      filters.map(function (groups) {
+        groups.map(function (filter) {
+          filter.label = ctrl.filterBarStore.getFilter(filter.uid).label;
+        });
+      });
+      return filters;
+    }
+  }, {
+    key: "verifySavedFilters",
+    value: function verifySavedFilters(parsedFilters) {
+      return new _FilterVerificator.FilterVerificator(this.filterBarStore.getFilters(), parsedFilters).verify();
     }
   }, {
     key: "saveFilters",
     value: function saveFilters(name) {
-      var filters = [];
-
-      var _iterator = _createForOfIteratorHelper(this.filterBarStore.enabledFilters()),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var _step$value = _slicedToArray(_step.value, 2),
-              filterUid = _step$value[0],
-              filter = _step$value[1];
-
-          filters.push({
-            uid: filterUid,
-            type: filter.type,
-            field: filter.field,
-            value: filter.value
-          });
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-
+      var filters = this.filterBarStore.getActiveFilters();
       var savedSearchPacket = {
         saved_search: {
           filters: JSON.stringify(filters),
@@ -17063,7 +17031,7 @@ var FilterBarActor = /*#__PURE__*/function () {
 
 exports.FilterBarActor = FilterBarActor;
 
-},{"../clients/SearchClient":435,"../helpers/FilterVerificator":476,"../helpers/URLHelper":478}],433:[function(require,module,exports){
+},{"../clients/SearchClient":435,"../helpers/FilterVerificator":478,"../helpers/URLHelper":480}],433:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17181,27 +17149,15 @@ function setupConfiguration(configuration) {
   configuration.tableConfiguration.page = Number(url.query(true).page);
 
   if (url.query(true).q !== "") {
-    var _iterator = _createForOfIteratorHelper(JSON.parse(url.query(true).q)),
-        _step;
+    var activeFilters = JSON.parse(url.query(true).q);
+    configuration.filterBarConfiguration.activeFilters = [];
 
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var filter = _step.value;
-        var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
-
-        if (configFilter) {
-          configFilter.enabled = true;
-          configFilter.value = filter.value;
-
-          if (filter.operator) {
-            configFilter.operator = filter.operator;
-          }
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
+    if (Array.isArray(activeFilters[0])) {
+      // Case 1: Filters with new format
+      configuration.filterBarConfiguration.activeFilters = parseQueryVersion2(activeFilters, configuration);
+    } else {
+      // Case 2: Filters with old format
+      configuration.filterBarConfiguration.activeFilters = parseQueryVersion1(activeFilters, configuration);
     }
   }
 
@@ -17217,6 +17173,74 @@ function setupConfiguration(configuration) {
   return configuration;
 }
 
+function parseQueryVersion1(activeFilters, configuration) {
+  var _groupFilters = [];
+
+  var _iterator = _createForOfIteratorHelper(activeFilters),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var filter = _step.value;
+      var configFilter = parseAndGetFilter(filter, configuration);
+
+      _groupFilters.push(configFilter);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return [_groupFilters];
+}
+
+function parseQueryVersion2(activeFilters, configuration) {
+  var results = [];
+
+  var _iterator2 = _createForOfIteratorHelper(activeFilters),
+      _step2;
+
+  try {
+    var _loop = function _loop() {
+      var groupFilters = _step2.value;
+      var _groupFilters = [];
+      groupFilters.map(function (filter) {
+        var configFilter = parseAndGetFilter(filter, configuration);
+
+        _groupFilters.push(configFilter);
+      });
+      results.push(_groupFilters);
+    };
+
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      _loop();
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+
+  return results;
+}
+
+function parseAndGetFilter(filter, configuration) {
+  var configFilter = configuration.filterBarConfiguration.filters[filter.uid];
+
+  if (configFilter) {
+    configFilter.filterUid = filter.uid;
+    configFilter.uid = filter.uid;
+    configFilter.value = filter.value;
+
+    if (filter.operator) {
+      configFilter.operator = filter.operator;
+    }
+  }
+
+  return configFilter;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   var configuration = {},
       filterableTableNode = document.getElementsByClassName("react-filterable-table")[0];
@@ -17229,7 +17253,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }), filterableTableNode);
 });
 
-},{"./components/FilterableTable.react":461,"./helpers/FilterVerificator":476,"URIjs":3,"core-js/stable":430,"regenerator-runtime/runtime":431}],435:[function(require,module,exports){
+},{"./components/FilterableTable.react":463,"./helpers/FilterVerificator":478,"URIjs":3,"core-js/stable":430,"regenerator-runtime/runtime":431}],435:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17494,7 +17518,7 @@ BatchActionsList.contextTypes = {
   batchActionsStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../helpers/ModalHelper":477,"../../../helpers/URLHelper":478,"./BatchActionsListItem.react":438}],438:[function(require,module,exports){
+},{"../../../helpers/ModalHelper":479,"../../../helpers/URLHelper":480,"./BatchActionsListItem.react":438}],438:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17700,7 +17724,7 @@ ConfigurationButton.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../helpers/ModalHelper":477}],441:[function(require,module,exports){
+},{"../../helpers/ModalHelper":479}],441:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17828,11 +17852,10 @@ var FilterBar = /*#__PURE__*/function (_React$Component) {
   _createClass(FilterBar, [{
     key: "render",
     value: function render() {
+      console.log("react-filterbar 3.2.1");
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
         className: "btn-group margin-bottom-sm"
-      }, /*#__PURE__*/React.createElement(_FilterList.FilterList, {
-        disabledFilters: this.context.filterBarStore.getDisabled()
-      }), /*#__PURE__*/React.createElement(_ApplyFiltersButton.ApplyFiltersButton, {
+      }, /*#__PURE__*/React.createElement(_ApplyFiltersButton.ApplyFiltersButton, {
         filterBarActor: this.context.filterBarActor
       }), /*#__PURE__*/React.createElement(_ClearFiltersButton.ClearFiltersButton, {
         filterBarActor: this.context.filterBarActor
@@ -17847,7 +17870,8 @@ var FilterBar = /*#__PURE__*/function (_React$Component) {
         filterBarActor: this.context.filterBarActor
       }), /*#__PURE__*/React.createElement(_BatchActionsList.BatchActionsList, null)), /*#__PURE__*/React.createElement(_FilterDisplay.FilterDisplay, {
         filterBarActor: this.context.filterBarActor,
-        filterBarStore: this.context.filterBarStore
+        filterBarStore: this.context.filterBarStore,
+        filters: this.context.filterBarStore.getActiveFilters()
       })));
     }
   }]);
@@ -17863,7 +17887,122 @@ FilterBar.contextTypes = {
   batchActionsStore: React.PropTypes.object
 };
 
-},{"./ApplyFiltersButton.react":436,"./BatchActionsList/BatchActionsList.react":437,"./ClearFiltersButton.react":439,"./ConfigurationButton.react":440,"./ExportResultsButton.react":441,"./FilterDisplay/FilterDisplay.react":443,"./FilterList/FilterList.react":456,"./SaveFiltersButton.react":458,"./SavedSearchesList/SavedSearchesList.react":459}],443:[function(require,module,exports){
+},{"./ApplyFiltersButton.react":436,"./BatchActionsList/BatchActionsList.react":437,"./ClearFiltersButton.react":439,"./ConfigurationButton.react":440,"./ExportResultsButton.react":441,"./FilterDisplay/FilterDisplay.react":444,"./FilterList/FilterList.react":458,"./SaveFiltersButton.react":460,"./SavedSearchesList/SavedSearchesList.react":461}],443:[function(require,module,exports){
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FilterButton = void 0;
+
+var _FilterListOption = require("../FilterList/FilterListOption.react");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var FilterButton = /*#__PURE__*/function (_React$Component) {
+  _inherits(FilterButton, _React$Component);
+
+  var _super = _createSuper(FilterButton);
+
+  function FilterButton(props) {
+    var _this;
+
+    _classCallCheck(this, FilterButton);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      filters: props.filters
+    };
+    return _this;
+  }
+
+  _createClass(FilterButton, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.context.filterBarStore.addChangeListener(this.onChange.bind(this));
+    }
+  }, {
+    key: "onChange",
+    value: function onChange() {
+      this.setState(this.getStateFromStores());
+    }
+  }, {
+    key: "getStateFromStores",
+    value: function getStateFromStores() {
+      return {
+        filters: this.context.filterBarStore.getFilters()
+      };
+    }
+  }, {
+    key: "onClick",
+    value: function onClick(filterUid) {
+      this.props.onClick(filterUid);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var optionKey = "";
+      var filterOptions = Object.keys(this.state.filters).map(function (filterUid) {
+        optionKey = "option-" + filterUid;
+        return /*#__PURE__*/React.createElement(_FilterListOption.FilterListOption, {
+          onClick: this.onClick.bind(this),
+          filterUid: filterUid,
+          key: optionKey,
+          label: this.state.filters[filterUid].label
+        });
+      }, this);
+      return /*#__PURE__*/React.createElement("div", {
+        className: "btn-group"
+      }, /*#__PURE__*/React.createElement("button", {
+        className: "btn btn-default dropdown-toggle",
+        "data-toggle": "dropdown",
+        type: "button"
+      }, /*#__PURE__*/React.createElement("span", null, this.props.title), /*#__PURE__*/React.createElement("i", {
+        className: "icon icon-add"
+      })), /*#__PURE__*/React.createElement("div", {
+        className: "dropdown-menu",
+        role: "menu"
+      }, /*#__PURE__*/React.createElement("ul", {
+        className: "filter-options"
+      }, filterOptions)));
+    }
+  }]);
+
+  return FilterButton;
+}(React.Component);
+
+exports.FilterButton = FilterButton;
+FilterButton.propTypes = {
+  filters: React.PropTypes.object.isRequired,
+  onClick: React.PropTypes.func.isRequired,
+  title: React.PropTypes.string.isRequired
+};
+FilterButton.contextTypes = {
+  filterBarActor: React.PropTypes.object,
+  filterBarStore: React.PropTypes.object
+};
+
+},{"../FilterList/FilterListOption.react":459}],444:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17874,6 +18013,12 @@ Object.defineProperty(exports, "__esModule", {
 exports.FilterDisplay = void 0;
 
 var _FilterInput = require("./FilterInput.react");
+
+var _FilterButton = require("./FilterButton.react");
+
+var _FilterGroup = require("./FilterGroup.react");
+
+var _FilterList = require("../FilterList/FilterList.react");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -17907,34 +18052,18 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      filters: props.enabledFilters
+      filters: props.filters
     };
     return _this;
   }
 
   _createClass(FilterDisplay, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      var self = this;
-      var quickFilters = this.context.filterBarStore.quickFilters;
-      Object.keys(this.getStateFromStores().filters).map(function (filterUid) {
-        Object.keys(quickFilters).map(function (blockName) {
-          Object.keys(quickFilters[blockName]).map(function (filterName) {
-            var quickFilter = quickFilters[blockName][filterName];
-
-            if (quickFilter.filters && quickFilter.filters[filterUid]) {
-              if (self.getStateFromStores().filters[filterUid].type == 'multi_select') {
-                if (self.getStateFromStores().filters[filterUid].value.join(",") === quickFilter.filters[filterUid].value) quickFilter.active = true;
-              } else {
-                if (self.getStateFromStores().filters[filterUid].value === quickFilter.filters[filterUid].value) {
-                  quickFilter.active = true;
-                }
-              }
-            }
-          });
-        });
-      });
-      this.context.filterBarStore.addChangeListener(this.onChange.bind(this));
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // TODO: Potential memory leak issue
+      // https://github.com/facebook/react/issues/6266#issuecomment-196998237
+      this.onChange = this.onChange.bind(this);
+      this.context.filterBarStore.addChangeListener(this.onChange);
     }
   }, {
     key: "onChange",
@@ -17942,36 +18071,108 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
       this.setState(this.getStateFromStores());
     }
   }, {
+    key: "onFilterRemove",
+    value: function onFilterRemove(groupKey, inputKey) {
+      this.context.filterBarActor.clearActiveFilter(groupKey, inputKey);
+    }
+  }, {
+    key: "onButtonClick",
+    value: function onButtonClick(filterUid, groupKey) {
+      this.context.filterBarStore.addGroupFilter(filterUid, groupKey);
+    }
+  }, {
     key: "getStateFromStores",
     value: function getStateFromStores() {
       return {
-        filters: this.context.filterBarStore.getEnabled()
+        filters: this.context.filterBarStore.getActiveFilters()
       };
+    }
+  }, {
+    key: "getActiveFilters",
+    value: function getActiveFilters() {
+      return this.context.filterBarStore.getActiveFilters();
+    }
+  }, {
+    key: "getFilters",
+    value: function getFilters() {
+      return this.context.filterBarStore.getFilters();
+    }
+  }, {
+    key: "addGroup",
+    value: function addGroup(filterUid) {
+      this.context.filterBarStore.addGroupFilter(filterUid);
     }
   }, {
     key: "render",
     value: function render() {
-      var filters = Object.keys(this.state.filters).map(function (filterUid) {
-        var filter = this.state.filters[filterUid];
-        return /*#__PURE__*/React.createElement(_FilterInput.FilterInput, {
-          filterUid: filterUid,
-          key: filterUid,
-          label: filter.label,
-          type: filter.type,
-          value: filter.value,
-          operator: filter.operator
-        });
-      }, this);
+      var filters = [];
+      var ctrl = this;
+      this.state.filters.map(function (groupFilters, idx) {
+        if (idx > 0) {
+          filters.push( /*#__PURE__*/React.createElement("div", {
+            key: Math.random(),
+            style: {
+              marginTop: 'auto',
+              marginBottom: 'auto',
+              padding: '10px'
+            }
+          }, "OR"));
+        }
+
+        filters.push( /*#__PURE__*/React.createElement(_FilterGroup.FilterGroup, {
+          key: Math.random(),
+          groupKey: idx,
+          filters: groupFilters,
+          onFilterRemove: ctrl.onFilterRemove.bind(ctrl),
+          onButtonClick: ctrl.onButtonClick.bind(ctrl)
+        }));
+      });
 
       if (filters.length === 0) {
-        filters = /*#__PURE__*/React.createElement("div", null, "No Filters Enabled!");
+        filters.push( /*#__PURE__*/React.createElement("div", {
+          style: {
+            marginTop: 'auto',
+            marginBottom: 'auto',
+            padding: '10px'
+          },
+          key: Math.random()
+        }, /*#__PURE__*/React.createElement(_FilterButton.FilterButton, {
+          key: Math.random(),
+          filters: this.getFilters(),
+          title: "ADD FILTER",
+          onClick: this.addGroup.bind(this)
+        })));
+      } else {
+        filters.push( /*#__PURE__*/React.createElement("div", {
+          style: {
+            marginTop: 'auto',
+            marginBottom: 'auto',
+            padding: '10px'
+          },
+          key: Math.random()
+        }, /*#__PURE__*/React.createElement(_FilterButton.FilterButton, {
+          key: Math.random(),
+          filters: this.getFilters(),
+          title: "OR",
+          onClick: this.addGroup.bind(this)
+        })));
       }
 
       return /*#__PURE__*/React.createElement("div", {
         className: "navbar filterbar"
       }, /*#__PURE__*/React.createElement("div", {
-        className: "panel panel-default"
-      }, filters));
+        className: "panel panel-default",
+        style: {
+          paddingTop: 'unset',
+          paddingBottom: 'unset'
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          display: 'flex',
+          "float": 'left',
+          flexWrap: 'wrap'
+        }
+      }, filters)));
     }
   }]);
 
@@ -17980,17 +18181,162 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
 
 exports.FilterDisplay = FilterDisplay;
 FilterDisplay.propTypes = {
-  enabledFilters: React.PropTypes.object.isRequired
+  filters: React.PropTypes.array.isRequired
 };
 FilterDisplay.defaultProps = {
-  enabledFilters: {}
+  filters: []
 };
 FilterDisplay.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired,
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{"./FilterInput.react":444}],444:[function(require,module,exports){
+},{"../FilterList/FilterList.react":458,"./FilterButton.react":443,"./FilterGroup.react":445,"./FilterInput.react":446}],445:[function(require,module,exports){
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FilterGroup = void 0;
+
+var _FilterInput = require("./FilterInput.react");
+
+var _FilterButton = require("./FilterButton.react");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var FilterGroup = /*#__PURE__*/function (_React$Component) {
+  _inherits(FilterGroup, _React$Component);
+
+  var _super = _createSuper(FilterGroup);
+
+  function FilterGroup(props) {
+    var _this;
+
+    _classCallCheck(this, FilterGroup);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      filters: props.filters
+    };
+    return _this;
+  }
+
+  _createClass(FilterGroup, [{
+    key: "getFilters",
+    value: function getFilters() {
+      return this.context.filterBarStore.getFilters();
+    }
+  }, {
+    key: "onButtonClick",
+    value: function onButtonClick(filterUid) {
+      this.props.onButtonClick(filterUid, this.props.groupKey);
+    }
+  }, {
+    key: "onFilterRemove",
+    value: function onFilterRemove(groupKey, inputKey) {
+      this.props.onFilterRemove(groupKey, inputKey);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var groupKey = this.props.groupKey;
+      var ctrl = this;
+      var filters = [];
+      this.state.filters.map(function (filter, idx) {
+        if (idx > 0) {
+          filters.push( /*#__PURE__*/React.createElement("div", {
+            key: Math.random(),
+            style: {
+              marginTop: 'auto',
+              marginBottom: 'auto',
+              padding: '10px'
+            }
+          }, "AND"));
+        }
+
+        filters.push( /*#__PURE__*/React.createElement("div", {
+          style: {
+            marginTop: 'auto',
+            marginBottom: 'auto',
+            padding: '10px',
+            minWidth: '150px'
+          },
+          key: Math.random()
+        }, /*#__PURE__*/React.createElement(_FilterInput.FilterInput, {
+          key: idx,
+          groupKey: groupKey,
+          inputKey: idx,
+          onFilterRemove: ctrl.onFilterRemove.bind(ctrl),
+          filterUid: filter.uid,
+          label: filter.label,
+          type: filter.type,
+          value: filter.value || "",
+          operator: filter.operator
+        })));
+      });
+      filters.push( /*#__PURE__*/React.createElement("div", {
+        style: {
+          marginTop: 'auto',
+          marginBottom: 'auto',
+          padding: '10px'
+        },
+        key: Math.random()
+      }, /*#__PURE__*/React.createElement(_FilterButton.FilterButton, {
+        key: Math.random(),
+        filters: this.getFilters(),
+        title: "ADD",
+        onClick: ctrl.onButtonClick.bind(ctrl)
+      })));
+      return /*#__PURE__*/React.createElement("div", {
+        style: {
+          display: 'flex',
+          flexWrap: 'wrap',
+          borderRadius: '5px',
+          border: '1px solid #c0c0c0',
+          backgroundColor: '#eee',
+          marginTop: '7px',
+          marginBottom: '7px'
+        }
+      }, filters);
+    }
+  }]);
+
+  return FilterGroup;
+}(React.Component);
+
+exports.FilterGroup = FilterGroup;
+FilterGroup.propTypes = {
+  groupKey: React.PropTypes.number.isRequired,
+  filters: React.PropTypes.array.isRequired,
+  onFilterRemove: React.PropTypes.func.isRequired
+};
+FilterGroup.contextTypes = {
+  filterBarActor: React.PropTypes.object,
+  filterBarStore: React.PropTypes.object
+};
+
+},{"./FilterButton.react":443,"./FilterInput.react":446}],446:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18036,16 +18382,20 @@ var FilterInput = /*#__PURE__*/function (_React$Component) {
   _createClass(FilterInput, [{
     key: "onClick",
     value: function onClick() {
-      this.context.filterBarActor.disableFilter(this.props.filterUid);
+      var _this$props = this.props,
+          groupKey = _this$props.groupKey,
+          inputKey = _this$props.inputKey;
+      this.props.onFilterRemove(groupKey, inputKey);
     }
   }, {
     key: "objectProperties",
     value: function objectProperties() {
-      var key = Date.now();
       return {
         filterUid: this.props.filterUid,
-        key: key,
-        value: this.props.value,
+        groupKey: this.props.groupKey,
+        inputKey: this.props.inputKey,
+        key: Math.random(),
+        value: this.props.value || "",
         type: this.props.type,
         operator: this.props.operator
       };
@@ -18056,11 +18406,14 @@ var FilterInput = /*#__PURE__*/function (_React$Component) {
       var propObject = this.objectProperties();
       var inputs = new _FilterInputFactory.FilterInputFactory(propObject);
       return /*#__PURE__*/React.createElement("div", {
-        className: "col-lg-3 col-md-4 col-sm-6 col-xs-12 filter"
+        className: "filter"
       }, /*#__PURE__*/React.createElement("ul", {
         className: this.filterKey
       }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("i", {
         className: "btn btn-circle-primary btn-xs icon icon-close remove-filter",
+        style: {
+          lineHeight: '16px'
+        },
         onClick: this.onClick.bind(this)
       }), /*#__PURE__*/React.createElement("label", null, this.props.label)), inputs));
     }
@@ -18074,14 +18427,17 @@ FilterInput.propTypes = {
   filterUid: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,
-  value: React.PropTypes.node.isRequired
+  value: React.PropTypes.node.isRequired,
+  groupKey: React.PropTypes.number.isRequired,
+  inputKey: React.PropTypes.number.isRequired,
+  onFilterRemove: React.PropTypes.func.isRequired
 };
 FilterInput.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired,
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"./FilterInputFactory.react":445}],445:[function(require,module,exports){
+},{"./FilterInputFactory.react":447}],447:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18131,7 +18487,7 @@ function FilterInputFactory(propObject) {
   }
 }
 
-},{"./Inputs/DateInput.react":446,"./Inputs/DateTimeInput.react":447,"./Inputs/LazyMultiSelectInput.react":448,"./Inputs/LazySelectInput.react":449,"./Inputs/MultiSelectInput.react":450,"./Inputs/RangeInput.react":451,"./Inputs/RelativeDateInput.react":452,"./Inputs/SelectInput.react":453,"./Inputs/SingleDateTimeInput.react":454,"./Inputs/TextInput.react":455}],446:[function(require,module,exports){
+},{"./Inputs/DateInput.react":448,"./Inputs/DateTimeInput.react":449,"./Inputs/LazyMultiSelectInput.react":450,"./Inputs/LazySelectInput.react":451,"./Inputs/MultiSelectInput.react":452,"./Inputs/RangeInput.react":453,"./Inputs/RelativeDateInput.react":454,"./Inputs/SelectInput.react":455,"./Inputs/SingleDateTimeInput.react":456,"./Inputs/TextInput.react":457}],448:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18202,7 +18558,11 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+      if (this.props.onBlur) {
+        this.props.onBlur();
+      } else {
+        this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
+      }
     }
   }, {
     key: "componentDidMount",
@@ -18290,7 +18650,7 @@ DateInput.defaultProps = {
   disabled: false
 };
 
-},{}],447:[function(require,module,exports){
+},{}],449:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18358,7 +18718,7 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
     }
   }, {
     key: "componentDidMount",
@@ -18443,7 +18803,7 @@ DateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],448:[function(require,module,exports){
+},{}],450:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18569,6 +18929,8 @@ var LazyMultiSelectInput = /*#__PURE__*/function (_React$Component) {
       } else {
         filter.value = event.target.value.split(",");
       }
+
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, filter.value);
     }
   }, {
     key: "render",
@@ -18594,7 +18956,7 @@ LazyMultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],449:[function(require,module,exports){
+},{}],451:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18700,6 +19062,7 @@ var LazySelectInput = /*#__PURE__*/function (_React$Component) {
     value: function onSelect(event) {
       var filter = this.context.filterBarStore.getFilter(this.props.filterUid);
       filter.value = event.target.value;
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, filter.value);
     }
   }, {
     key: "render",
@@ -18725,7 +19088,7 @@ LazySelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],450:[function(require,module,exports){
+},{}],452:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18815,6 +19178,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
     key: "onSelect",
     value: function onSelect(event) {
       this.getFilterFromFilterBarStore().value = this.getSelectedValues();
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.getSelectedValues());
     }
   }, {
     key: "getSelectedValues",
@@ -18896,7 +19260,7 @@ MultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],451:[function(require,module,exports){
+},{}],453:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18962,7 +19326,7 @@ var RangeInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
     }
   }, {
     key: "render",
@@ -19002,7 +19366,7 @@ RangeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],452:[function(require,module,exports){
+},{}],454:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19053,7 +19417,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       }
     };
 
-    _this.setDisplayDates(_this.props.value['value']);
+    _this.setDisplayDates(_this.state.value['value']);
 
     return _this;
   } // If relative option selected, set dates for the datepickers to display
@@ -19077,9 +19441,9 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       var newValue = {
         value: selectedOption.val()
       };
-      this.state = {
+      this.setState({
         value: newValue
-      };
+      });
       this.updateFilter(newValue);
     }
   }, {
@@ -19099,6 +19463,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       this.setState({
         value: newValue
       });
+      this.updateFilter(this.state.value);
     }
   }, {
     key: "relativeValueSelected",
@@ -19112,7 +19477,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updateFilter",
     value: function updateFilter(newValue) {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, newValue);
     }
   }, {
     key: "intToMoment",
@@ -19146,6 +19511,12 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       this.setState({
         value: newValue
       });
+      this.updateFilter(this.state.value);
+    }
+  }, {
+    key: "onBlur",
+    value: function onBlur() {
+      this.updateFilter(this.state.value);
     }
   }, {
     key: "showRelativeRangeInputs",
@@ -19194,8 +19565,9 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         filterUid: this.props.filterUid,
         displayFrom: this.state.displayFrom,
         displayTo: this.state.displayTo,
-        onDateChangeCustom: this.onDatePickerChange,
-        disabled: this.relativeValueSelected()
+        onDateChangeCustom: this.onDatePickerChange.bind(this),
+        disabled: this.relativeValueSelected(),
+        onBlur: this.onBlur.bind(this)
       }));
     }
   }, {
@@ -19290,7 +19662,7 @@ function relativeOptions() {
   };
 }
 
-},{"./DateInput.react":446}],453:[function(require,module,exports){
+},{"./DateInput.react":448}],455:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19381,7 +19753,7 @@ var SelectInput = /*#__PURE__*/function (_React$Component) {
       this.setState({
         value: event.target.value
       });
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", event.target.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, event.target.value);
     }
   }, {
     key: "displayOption",
@@ -19434,7 +19806,7 @@ SelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],454:[function(require,module,exports){
+},{}],456:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19505,7 +19877,7 @@ var SingleDateTimeInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
     }
   }, {
     key: "componentDidMount",
@@ -19554,7 +19926,7 @@ SingleDateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],455:[function(require,module,exports){
+},{}],457:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19627,7 +19999,7 @@ var TextInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur() {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
     }
   }, {
     key: "render",
@@ -19655,7 +20027,7 @@ TextInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],456:[function(require,module,exports){
+},{}],458:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19781,7 +20153,7 @@ FilterList.propTypes = {
   disabledFilters: React.PropTypes.object.isRequired
 };
 
-},{"./FilterListOption.react":457}],457:[function(require,module,exports){
+},{"./FilterListOption.react":459}],459:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19825,7 +20197,7 @@ var FilterListOption = /*#__PURE__*/function (_React$Component) {
   _createClass(FilterListOption, [{
     key: "onClick",
     value: function onClick() {
-      this.context.filterBarActor.enableFilter(this.props.filterUid);
+      this.props.onClick(this.props.filterUid);
     }
   }, {
     key: "render",
@@ -19851,7 +20223,7 @@ FilterListOption.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],458:[function(require,module,exports){
+},{}],460:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19971,7 +20343,7 @@ SaveFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],459:[function(require,module,exports){
+},{}],461:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20079,7 +20451,7 @@ SavedSearchesList.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"./SavedSearchesListItem.react":460}],460:[function(require,module,exports){
+},{"./SavedSearchesListItem.react":462}],462:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20173,7 +20545,7 @@ SavedSearchesListItem.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],461:[function(require,module,exports){
+},{}],463:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20266,7 +20638,7 @@ FilterableTable.childContextTypes = {
   tableActor: React.PropTypes.object
 };
 
-},{"../actors/FilterBarActor":432,"../actors/TableActor":433,"../stores/BatchActionsStore":479,"../stores/FilterBarStore":480,"../stores/TableStore":481,"./FilterBar/FilterBar.react":442,"./Table/Table.react":473}],462:[function(require,module,exports){
+},{"../actors/FilterBarActor":432,"../actors/TableActor":433,"../stores/BatchActionsStore":481,"../stores/FilterBarStore":482,"../stores/TableStore":483,"./FilterBar/FilterBar.react":442,"./Table/Table.react":475}],464:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20315,8 +20687,9 @@ var QuickFilters = /*#__PURE__*/function (_React$Component) {
       var quickFilters = this.context.filterBarStore.quickFilters;
 
       if (quickFilters !== undefined) {
-        var filterBlocks = Object.keys(quickFilters).map(function (filter) {
+        var filterBlocks = Object.keys(quickFilters).map(function (filter, idx) {
           return /*#__PURE__*/React.createElement(_QuickFiltersBlock.QuickFiltersBlock, {
+            key: idx,
             filters: quickFilters[filter],
             name: filter,
             label: quickFilters[filter].label
@@ -20340,7 +20713,7 @@ QuickFilters.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{"./QuickFiltersBlock/QuickFiltersBlock.react":463}],463:[function(require,module,exports){
+},{"./QuickFiltersBlock/QuickFiltersBlock.react":465}],465:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20394,9 +20767,10 @@ var QuickFiltersBlock = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var filters = this.props.filters;
-      var buttons = Object.keys(filters).map(function (filter) {
+      var buttons = Object.keys(filters).map(function (filter, idx) {
         if (filter != "label") {
           return /*#__PURE__*/React.createElement(_QuickFiltersButton.QuickFiltersButton, {
+            key: idx,
             filters: filters[filter],
             name: filter,
             blockName: this.state.name
@@ -20414,7 +20788,7 @@ var QuickFiltersBlock = /*#__PURE__*/function (_React$Component) {
 
 exports.QuickFiltersBlock = QuickFiltersBlock;
 
-},{"./QuickFiltersButton.react":464}],464:[function(require,module,exports){
+},{"./QuickFiltersButton.react":466}],466:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20473,7 +20847,6 @@ var QuickFiltersButton = /*#__PURE__*/function (_React$Component) {
       if (this.state.disabled) {
         e.stopPropagation();
       } else {
-        this.context.filterBarActor.disableBlockFilters(this.state.blockName);
         Object.keys(this.state.filters).map(function (filter) {
           var clonedFilter = JSON.parse(JSON.stringify(this.state.filters[filter])); // avoid value to be overwritten when filter changes
 
@@ -20497,8 +20870,7 @@ var QuickFiltersButton = /*#__PURE__*/function (_React$Component) {
     key: "buttonClasses",
     value: function buttonClasses() {
       var klasses = 'btn quick-filters-button';
-      if (this.state.quickFilterButton.active === true) klasses += ' btn-primary disabled';else klasses += ' btn-default';
-      if (this.state.disabled) klasses += ' btn-danger';
+      if (this.state.quickFilterButton.active === true) klasses += ' btn-primary';else if (this.state.disabled) klasses += ' btn-secondary disabled';else klasses += ' btn-default';
       return klasses;
     }
   }, {
@@ -20550,7 +20922,7 @@ QuickFiltersButton.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{}],465:[function(require,module,exports){
+},{}],467:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20619,7 +20991,7 @@ Body.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyRow.react":467}],466:[function(require,module,exports){
+},{"./BodyRow.react":469}],468:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20688,7 +21060,7 @@ BodyCell.propTypes = {
   value: React.PropTypes.string.isRequired
 };
 
-},{}],467:[function(require,module,exports){
+},{}],469:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20806,7 +21178,7 @@ BodyRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyCell.react":466,"./BodySelectable.react":468}],468:[function(require,module,exports){
+},{"./BodyCell.react":468,"./BodySelectable.react":470}],470:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20908,7 +21280,7 @@ BodySelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],469:[function(require,module,exports){
+},{}],471:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21006,7 +21378,7 @@ HeadingCell.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],470:[function(require,module,exports){
+},{}],472:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21121,7 +21493,7 @@ HeadingRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./HeadingCell.react":469,"./HeadingSelectable.react":471}],471:[function(require,module,exports){
+},{"./HeadingCell.react":471,"./HeadingSelectable.react":473}],473:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21219,7 +21591,7 @@ HeadingSelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],472:[function(require,module,exports){
+},{}],474:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21351,7 +21723,7 @@ Pagination.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{}],473:[function(require,module,exports){
+},{}],475:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21519,7 +21891,7 @@ Table.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{"../../events/TableEvent":475,"./Body.react":465,"./HeadingRow.react":470,"./Pagination.react":472,"./TableCaption.react":474}],474:[function(require,module,exports){
+},{"../../events/TableEvent":477,"./Body.react":467,"./HeadingRow.react":472,"./Pagination.react":474,"./TableCaption.react":476}],476:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21603,7 +21975,7 @@ var TableCaption = /*#__PURE__*/function (_React$Component) {
 
 exports.TableCaption = TableCaption;
 
-},{"../QuickFilters/QuickFilters.react":462}],475:[function(require,module,exports){
+},{"../QuickFilters/QuickFilters.react":464}],477:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21617,7 +21989,7 @@ function tableUpdated() {
   document.dispatchEvent(event);
 }
 
-},{}],476:[function(require,module,exports){
+},{}],478:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21674,7 +22046,7 @@ var FilterVerificator = /*#__PURE__*/function () {
 
 exports.FilterVerificator = FilterVerificator;
 
-},{"URIjs":3}],477:[function(require,module,exports){
+},{"URIjs":3}],479:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21692,7 +22064,7 @@ function displayModalForData(data) {
   modal.modal();
 }
 
-},{}],478:[function(require,module,exports){
+},{}],480:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21717,7 +22089,7 @@ function redirectUrl(url) {
   window.location.href = url;
 }
 
-},{"URIjs":3}],479:[function(require,module,exports){
+},{"URIjs":3}],481:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21750,7 +22122,7 @@ var BatchActionsStore = /*#__PURE__*/function () {
 
 exports.BatchActionsStore = BatchActionsStore;
 
-},{}],480:[function(require,module,exports){
+},{}],482:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21761,6 +22133,12 @@ exports.FilterBarStore = void 0;
 var _SearchClient = require("../clients/SearchClient");
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
@@ -21790,7 +22168,8 @@ var FilterBarStore = /*#__PURE__*/function () {
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
-    this.filters = configuration.filters;
+    this.filters = configuration.filters || {};
+    this.activeFilters = configuration.activeFilters || [];
     this.quickFilters = configuration.quickFilters || {};
 
     if (this.savedSearchesUrl !== undefined) {
@@ -22062,18 +22441,29 @@ var FilterBarStore = /*#__PURE__*/function () {
       return enabledFilters;
     }
   }, {
+    key: "getActiveFilters",
+    value: function getActiveFilters() {
+      return this.activeFilters;
+    }
+  }, {
+    key: "setActiveFilters",
+    value: function setActiveFilters(filters) {
+      this.activeFilters = filters;
+    }
+  }, {
     key: "getQuery",
     value: function getQuery() {
-      var enabledFilters = Object.keys(this.getEnabled()).map(function (filterUid) {
-        var filter = this.getFilter(filterUid);
-        return {
-          uid: filterUid,
-          type: filter.type,
-          field: filter.field,
-          value: filter.value,
-          operator: filter.operator
-        };
-      }, this);
+      var enabledFilters = this.activeFilters.map(function (filters) {
+        return filters.map(function (filter) {
+          return {
+            uid: filter.uid,
+            type: filter.type,
+            field: filter.field,
+            value: filter.value,
+            operator: filter.operator
+          };
+        });
+      });
       return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : "";
     }
   }, {
@@ -22095,12 +22485,7 @@ var FilterBarStore = /*#__PURE__*/function () {
   }, {
     key: "disableAllFilters",
     value: function disableAllFilters() {
-      var enabledFilters = this.getEnabled();
-
-      for (var filterUid in enabledFilters) {
-        this.disableFilter(filterUid);
-      }
-
+      this.activeFilters = [];
       this.emitChange();
     }
   }, {
@@ -22121,11 +22506,11 @@ var FilterBarStore = /*#__PURE__*/function () {
   }, {
     key: "enableQuickFilter",
     value: function enableQuickFilter(quickFilterName, blockName) {
-      var self = this;
-      Object.keys(this.quickFilters[blockName]).map(function (filterName) {
-        if (_typeof(self.quickFilters[blockName][filterName]) == "object") {
-          self.quickFilters[blockName][filterName].active = false;
-        }
+      var ctrl = this;
+      Object.keys(ctrl.quickFilters).map(function (groupName) {
+        Object.keys(ctrl.quickFilters[groupName]).map(function (filterName) {
+          ctrl.quickFilters[groupName][filterName].active = false;
+        });
       });
       this.quickFilters[blockName][quickFilterName].active = true;
     }
@@ -22140,10 +22525,38 @@ var FilterBarStore = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "clearActiveFilter",
+    value: function clearActiveFilter(groupKey, inputKey) {
+      this.activeFilters[groupKey].splice(inputKey, 1);
+
+      if (this.activeFilters[groupKey].length === 0) {
+        this.activeFilters.splice(groupKey, 1);
+      }
+
+      this.emitChange();
+    }
+  }, {
     key: "updateFilter",
-    value: function updateFilter(filterUid, propKey, propValue) {
-      this.filters[filterUid][propKey] = propValue;
-      if (propKey === 'value') this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
+    value: function updateFilter(groupKey, inputKey, value) {
+      this.activeFilters[groupKey][inputKey].value = value;
+    }
+  }, {
+    key: "addGroupFilter",
+    value: function addGroupFilter(filterUid, groupKey, value) {
+      var filterTemplate = this.filters[filterUid];
+
+      var filter = _objectSpread({}, filterTemplate);
+
+      filter.filterUid = filterUid;
+      filter.uid = filterUid;
+      filter.value = value;
+
+      if (groupKey == undefined) {
+        this.activeFilters.push([filter]);
+      } else {
+        this.activeFilters[groupKey].push(filter);
+      }
+
       this.emitChange();
     }
   }, {
@@ -22248,7 +22661,7 @@ var FilterBarStore = /*#__PURE__*/function () {
 
 exports.FilterBarStore = FilterBarStore;
 
-},{"../clients/SearchClient":435}],481:[function(require,module,exports){
+},{"../clients/SearchClient":435}],483:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

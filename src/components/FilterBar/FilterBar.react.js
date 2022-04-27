@@ -14,14 +14,12 @@ export class FilterBar extends React.Component {
   }
 
   render() {
+    console.log("react-filterbar 3.2.1");
+
     return (
       <div>
         <div>
           <div className="btn-group margin-bottom-sm">
-            <FilterList
-              disabledFilters={this.context.filterBarStore.getDisabled()}
-            />
-
             <ApplyFiltersButton
               filterBarActor={this.context.filterBarActor}
             />
@@ -57,6 +55,7 @@ export class FilterBar extends React.Component {
           <FilterDisplay
             filterBarActor={this.context.filterBarActor}
             filterBarStore={this.context.filterBarStore}
+            filters={ this.context.filterBarStore.getActiveFilters() }
           />
         </div>
       </div>

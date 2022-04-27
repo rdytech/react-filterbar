@@ -1,0 +1,10 @@
+---
+New Format: '[[{"field":"title","type":"text","label":"Title","filterUid":"title","uid":"title","value":"Book
+  10"}]]'
+Old Format: '[{"uid":"author","type":"select","field":"author","value":"Author 35"},{"uid":"title","type":"text","field":"title","value":"Book
+  10"}]'
+Old Fromat 2: '[{"uid":"author_multi_test","type":"multi_select","field":"author","value":["Author
+  10"]},{"uid":"author_multi_test","type":"multi_select","field":"author","value":["Author
+  20"]},{"uid":"author_multi_test","type":"multi_select","field":"author","value":["Author
+  30"]},{"uid":"author_multi_test","type":"multi_select","field":"author","value":["Author
+  40"]}]'

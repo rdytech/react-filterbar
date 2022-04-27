@@ -37,6 +37,7 @@ export class MultiSelectInput extends React.Component {
 
   onSelect(event) {
     this.getFilterFromFilterBarStore().value = this.getSelectedValues()
+    this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.getSelectedValues());
   }
 
   getSelectedValues() {

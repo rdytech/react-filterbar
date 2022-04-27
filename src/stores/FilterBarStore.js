@@ -16,7 +16,8 @@ export class FilterBarStore {
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
-    this.filters = configuration.filters;
+    this.filters = configuration.filters || {};
+    this.activeFilters = configuration.activeFilters || [];
     this.quickFilters = configuration.quickFilters || {};
 
     if (this.savedSearchesUrl !== undefined) {
@@ -122,17 +123,26 @@ export class FilterBarStore {
     return enabledFilters;
   }
 
+  getActiveFilters() {
+    return this.activeFilters;
+  }
+
+  setActiveFilters(filters) {
+    this.activeFilters = filters;
+  }
+
   getQuery() {
-    var enabledFilters = Object.keys(this.getEnabled()).map(function(filterUid) {
-      var filter = this.getFilter(filterUid);
-      return {
-        uid: filterUid,
-        type: filter.type,
-        field: filter.field,
-        value: filter.value,
-        operator: filter.operator,
-      };
-    }, this);
+    var enabledFilters = this.activeFilters.map(function(filters) {
+      return filters.map(function(filter) {
+          return {
+            uid: filter.uid,
+            type: filter.type,
+            field: filter.field,
+            value: filter.value,
+            operator: filter.operator,
+          };
+        })
+    });
     return enabledFilters.length > 0 ? JSON.stringify(enabledFilters) : "";
   }
 
@@ -150,11 +160,7 @@ export class FilterBarStore {
   }
 
   disableAllFilters() {
-    var enabledFilters = this.getEnabled();
-
-    for (var filterUid in enabledFilters) {
-      this.disableFilter(filterUid);
-    }
+    this.activeFilters = []
     this.emitChange();
   }
 
@@ -172,12 +178,14 @@ export class FilterBarStore {
   }
 
   enableQuickFilter(quickFilterName, blockName) {
-    var self = this;
-    Object.keys(this.quickFilters[blockName]).map(function(filterName) {
-      if (typeof self.quickFilters[blockName][filterName] == "object") {
-        self.quickFilters[blockName][filterName].active = false
-      }
+    const ctrl = this;
+
+    Object.keys(ctrl.quickFilters).map(function(groupName) {
+      Object.keys(ctrl.quickFilters[groupName]).map(function(filterName) {
+        ctrl.quickFilters[groupName][filterName].active = false
+      });
     })
+
     this.quickFilters[blockName][quickFilterName].active = true
   }
 
@@ -190,10 +198,32 @@ export class FilterBarStore {
     })
   }
 
-  updateFilter(filterUid, propKey, propValue) {
-    this.filters[filterUid][propKey] = propValue;
-    if(propKey === 'value')
-      this.deactivateQuickFiltersBasedOnFilterValue(filterUid, propValue, this.activeQuickFilters());
+  clearActiveFilter(groupKey, inputKey) {
+    this.activeFilters[groupKey].splice(inputKey, 1);
+    if (this.activeFilters[groupKey].length === 0) {
+      this.activeFilters.splice(groupKey, 1);
+    }
+
+    this.emitChange();
+  }
+
+  updateFilter(groupKey, inputKey, value) {
+    this.activeFilters[groupKey][inputKey].value = value;
+  }
+
+  addGroupFilter(filterUid, groupKey, value) {
+    const filterTemplate = this.filters[filterUid];
+    const filter = { ...filterTemplate };
+
+    filter.filterUid = filterUid;
+    filter.uid = filterUid;
+    filter.value = value;
+
+    if (groupKey == undefined) {
+      this.activeFilters.push([filter])
+    } else {
+      this.activeFilters[groupKey].push(filter);
+    }
 
     this.emitChange();
   }

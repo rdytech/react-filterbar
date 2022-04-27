@@ -24,7 +24,11 @@ export class DateInput extends React.Component {
   }
 
   onBlur() {
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+    if (this.props.onBlur) {
+      this.props.onBlur();
+    } else {
+      this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, this.state.value);
+    }
   }
 
   componentDidMount() {

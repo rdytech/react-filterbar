@@ -16,7 +16,6 @@ export class QuickFiltersButton extends React.Component {
     if(this.state.disabled) {
       e.stopPropagation();
     } else {
-      this.context.filterBarActor.disableBlockFilters(this.state.blockName)
       Object.keys(this.state.filters).map(function(filter) {
         let clonedFilter = JSON.parse(JSON.stringify(this.state.filters[filter])); // avoid value to be overwritten when filter changes
         let value = clonedFilter.value;
@@ -36,13 +35,13 @@ export class QuickFiltersButton extends React.Component {
 
   buttonClasses() {
     let klasses = 'btn quick-filters-button';
-    if(this.state.quickFilterButton.active === true)
-      klasses += ' btn-primary disabled';
+    if (this.state.quickFilterButton.active === true)
+      klasses += ' btn-primary';
     else
-      klasses += ' btn-default';
-
-    if(this.state.disabled)
-      klasses += ' btn-danger';
+      if (this.state.disabled)
+        klasses += ' btn-secondary disabled';
+      else
+        klasses += ' btn-default';
 
     return klasses;
   }

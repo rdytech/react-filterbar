@@ -37,7 +37,7 @@ export class SelectInput extends React.Component {
 
   onSelect(event) {
     this.setState({value: event.target.value});
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", event.target.value);
+    this.context.filterBarActor.updateFilter(this.props.groupKey, this.props.inputKey, event.target.value);
   }
 
   displayOption(option) {

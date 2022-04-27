@@ -23,10 +23,6 @@ export class FilterBarActor {
     this.filterBarStore.enableFilter(filterUid, value);
   }
 
-  disableFilter(filterUid) {
-    this.filterBarStore.disableFilter(filterUid);
-  }
-
   disableAllFilters() {
     this.filterBarStore.disableAllFilters();
     this.filterBarStore.disableAllQuickFilters();
@@ -37,8 +33,12 @@ export class FilterBarActor {
     this.applyFilters();
   }
 
-  updateFilter(filterUid, propKey, propValue) {
-    this.filterBarStore.updateFilter(filterUid, propKey, propValue);
+  updateFilter(groupKey, inputKey, value) {
+    this.filterBarStore.updateFilter(groupKey, inputKey, value);
+  }
+
+  clearActiveFilter(groupKey, inputKey) {
+    this.filterBarStore.clearActiveFilter(groupKey, inputKey)
   }
 
   applyFilters() {
@@ -59,14 +59,17 @@ export class FilterBarActor {
   }
 
   applyQuickFilter(filterName, value, quickFilterName, blockName) {
-    let filter = this.filterBarStore.getFilter(filterName)
+    var filter = this.filterBarStore.getFilter(filterName)
+
     if (filter.type === 'multi_select') {
       value = value.split(",").map(function (string) {
         return string.trim();
       });
     }
+
     this.filterBarStore.enableQuickFilter(quickFilterName, blockName);
-    this.enableFilter(filterName, value);
+    this.filterBarStore.setActiveFilters([]);
+    this.filterBarStore.addGroupFilter(filterName, undefined, value);
     this.applyFilters();
   }
 
@@ -103,51 +106,50 @@ export class FilterBarActor {
   loadSavedSearch(searchId) {
     this.disableAllFilters();
 
-    var savedSearch = this.filterBarStore.getSavedSearch(searchId);
-    var filters = JSON.parse(savedSearch.configuration);
+    const savedSearch = this.filterBarStore.getSavedSearch(searchId);
+    const filters = this.parseSavedSearch(savedSearch);
 
     if (this.verifySavedFilters(filters)) {
-      if (filters instanceof Array) {
-        filters.forEach((filter) =>
-          this.enableFilter(filter.uid, filter.value)
-        );
-      } else {
-        for (var filter in filters) {
-          this.enableFilter(filter, filters[filter]);
-        }
-      }
-
+      this.filterBarStore.setActiveFilters(filters);
       this.applyFilters();
+      this.filterBarStore.emitChange();
     } else {
       this.deleteSavedSearch(searchId, 'One of the filters in this saved search cannot be applied anymore. Remove saved search?');
     }
   }
 
-  verifySavedFilters(filters) {
-    var filtersArr;
+  parseSavedSearch(savedSearch) {
+    const savedSearchFilters = JSON.parse(savedSearch.configuration)
+    var filters = savedSearchFilters;
 
-    if (filters instanceof Array) {
-      filtersArr = filters;
-    } else {
-      filtersArr = Object.keys(filters)
+    if (!Array.isArray(savedSearchFilters)) {
+      filters = Object.keys(savedSearchFilters)
         .map(function (name) {
           return { uid: name }
       });
     }
 
-    return new FilterVerificator(this.filterBarStore.getFilters(), filtersArr).verify();
+    if (!Array.isArray(filters[0])) {
+      filters = [filters]
+    }
+
+    const ctrl = this;
+
+    filters.map(function(groups) {
+      groups.map(function(filter) {
+        filter.label = ctrl.filterBarStore.getFilter(filter.uid).label;
+      });
+    });
+
+    return filters;
+  }
+
+  verifySavedFilters(parsedFilters) {
+    return new FilterVerificator(this.filterBarStore.getFilters(), parsedFilters).verify();
   }
 
   saveFilters(name) {
-    var filters = [];
-    for (var [filterUid, filter] of this.filterBarStore.enabledFilters()) {
-      filters.push({
-        uid: filterUid,
-        type: filter.type,
-        field: filter.field,
-        value: filter.value,
-      });
-    }
+    const filters = this.filterBarStore.getActiveFilters();
 
     var savedSearchPacket = {
       saved_search: {
