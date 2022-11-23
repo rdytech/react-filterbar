@@ -17907,7 +17907,7 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      filters: props.enabledFilters
+      filters: props.filterBarStore.getEnabled()
     };
     return _this;
   }

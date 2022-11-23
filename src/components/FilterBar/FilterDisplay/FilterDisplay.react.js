@@ -4,7 +4,7 @@ export class FilterDisplay extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { filters: props.enabledFilters };
+    this.state = { filters: props.filterBarStore.getEnabled() };
   }
 
   componentWillMount() {
