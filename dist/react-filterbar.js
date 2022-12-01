@@ -17846,8 +17846,7 @@ var FilterBar = /*#__PURE__*/function (_React$Component) {
       }), this.context.filterBarStore.isExportable() && /*#__PURE__*/React.createElement(_ExportResultsButton.ExportResultsButton, {
         filterBarActor: this.context.filterBarActor
       }), /*#__PURE__*/React.createElement(_BatchActionsList.BatchActionsList, null)), /*#__PURE__*/React.createElement(_FilterDisplay.FilterDisplay, {
-        filterBarActor: this.context.filterBarActor,
-        filterBarStore: this.context.filterBarStore
+        enabledFilters: this.context.filterBarStore.getEnabled()
       })));
     }
   }]);
