@@ -17008,7 +17008,8 @@ var FilterBarActor = /*#__PURE__*/function () {
             uid: filterUid,
             type: filter.type,
             field: filter.field,
-            value: filter.value
+            value: filter.value,
+            operator: filter.operator
           });
         }
       } catch (err) {

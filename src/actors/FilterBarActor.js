@@ -146,6 +146,7 @@ export class FilterBarActor {
         type: filter.type,
         field: filter.field,
         value: filter.value,
+        operator: filter.operator,
       });
     }
 
