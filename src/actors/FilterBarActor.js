@@ -19,8 +19,8 @@ export class FilterBarActor {
     this.tableStore = tableStore;
   }
 
-  enableFilter(filterUid, value) {
-    this.filterBarStore.enableFilter(filterUid, value);
+  enableFilter(filterUid, value, operator = null) {
+    this.filterBarStore.enableFilter(filterUid, value, operator);
   }
 
   disableFilter(filterUid) {
@@ -109,7 +109,7 @@ export class FilterBarActor {
     if (this.verifySavedFilters(filters)) {
       if (filters instanceof Array) {
         filters.forEach((filter) =>
-          this.enableFilter(filter.uid, filter.value)
+          this.enableFilter(filter.uid, filter.value, filter.operator)
         );
       } else {
         for (var filter in filters) {
@@ -146,6 +146,7 @@ export class FilterBarActor {
         type: filter.type,
         field: filter.field,
         value: filter.value,
+        operator: filter.operator,
       });
     }
 

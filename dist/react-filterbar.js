@@ -16861,7 +16861,8 @@ var FilterBarActor = /*#__PURE__*/function () {
   _createClass(FilterBarActor, [{
     key: "enableFilter",
     value: function enableFilter(filterUid, value) {
-      this.filterBarStore.enableFilter(filterUid, value);
+      var operator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      this.filterBarStore.enableFilter(filterUid, value, operator);
     }
   }, {
     key: "disableFilter",
@@ -16960,7 +16961,7 @@ var FilterBarActor = /*#__PURE__*/function () {
       if (this.verifySavedFilters(filters)) {
         if (filters instanceof Array) {
           filters.forEach(function (filter) {
-            return _this.enableFilter(filter.uid, filter.value);
+            return _this.enableFilter(filter.uid, filter.value, filter.operator);
           });
         } else {
           for (var filter in filters) {
@@ -17008,7 +17009,8 @@ var FilterBarActor = /*#__PURE__*/function () {
             uid: filterUid,
             type: filter.type,
             field: filter.field,
-            value: filter.value
+            value: filter.value,
+            operator: filter.operator
           });
         }
       } catch (err) {
@@ -22113,8 +22115,10 @@ var FilterBarStore = /*#__PURE__*/function () {
   }, {
     key: "enableFilter",
     value: function enableFilter(filterUid, value) {
+      var operator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       this.filters[filterUid].enabled = true;
       this.filters[filterUid].value = value || this.filters[filterUid].value || "";
+      if (operator) this.filters[filterUid].operator = operator;
       this.emitChange();
     }
   }, {

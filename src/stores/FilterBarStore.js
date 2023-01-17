@@ -165,9 +165,10 @@ export class FilterBarStore {
     this.emitChange();
   }
 
-  enableFilter(filterUid, value) {
+  enableFilter(filterUid, value, operator = null) {
     this.filters[filterUid].enabled = true;
     this.filters[filterUid].value = value || this.filters[filterUid].value || "";
+    if (operator) this.filters[filterUid].operator = operator;
     this.emitChange();
   }
 

@@ -254,7 +254,7 @@ bundle exec rackup -p 4567 -o 0.0.0.0
 
 ### Making Changes
 
-Run `node_modules/.bin/gulp` to deploy your changes to /example application.
+In your docker bash session run `npm install && node_modules/.bin/gulp` to deploy your changes to /example application.
 
 ## Deployment
 When your code is ready for distribuition, run: `node_modules/.bin/gulp dist`
