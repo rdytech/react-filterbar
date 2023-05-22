@@ -16044,6 +16044,1103 @@ require('../modules/web.url-search-params');
 module.exports = require('../internals/path');
 
 },{"../internals/path":147,"../modules/es.aggregate-error":200,"../modules/es.array-buffer.constructor":201,"../modules/es.array-buffer.is-view":202,"../modules/es.array-buffer.slice":203,"../modules/es.array.at":204,"../modules/es.array.concat":205,"../modules/es.array.copy-within":206,"../modules/es.array.every":207,"../modules/es.array.fill":208,"../modules/es.array.filter":209,"../modules/es.array.find":211,"../modules/es.array.find-index":210,"../modules/es.array.flat":213,"../modules/es.array.flat-map":212,"../modules/es.array.for-each":214,"../modules/es.array.from":215,"../modules/es.array.includes":216,"../modules/es.array.index-of":217,"../modules/es.array.is-array":218,"../modules/es.array.iterator":219,"../modules/es.array.join":220,"../modules/es.array.last-index-of":221,"../modules/es.array.map":222,"../modules/es.array.of":223,"../modules/es.array.reduce":225,"../modules/es.array.reduce-right":224,"../modules/es.array.reverse":226,"../modules/es.array.slice":227,"../modules/es.array.some":228,"../modules/es.array.sort":229,"../modules/es.array.species":230,"../modules/es.array.splice":231,"../modules/es.array.unscopables.flat":233,"../modules/es.array.unscopables.flat-map":232,"../modules/es.data-view":234,"../modules/es.date.get-year":235,"../modules/es.date.now":236,"../modules/es.date.set-year":237,"../modules/es.date.to-gmt-string":238,"../modules/es.date.to-iso-string":239,"../modules/es.date.to-json":240,"../modules/es.date.to-primitive":241,"../modules/es.date.to-string":242,"../modules/es.escape":243,"../modules/es.function.bind":244,"../modules/es.function.has-instance":245,"../modules/es.function.name":246,"../modules/es.global-this":247,"../modules/es.json.stringify":248,"../modules/es.json.to-string-tag":249,"../modules/es.map":250,"../modules/es.math.acosh":251,"../modules/es.math.asinh":252,"../modules/es.math.atanh":253,"../modules/es.math.cbrt":254,"../modules/es.math.clz32":255,"../modules/es.math.cosh":256,"../modules/es.math.expm1":257,"../modules/es.math.fround":258,"../modules/es.math.hypot":259,"../modules/es.math.imul":260,"../modules/es.math.log10":261,"../modules/es.math.log1p":262,"../modules/es.math.log2":263,"../modules/es.math.sign":264,"../modules/es.math.sinh":265,"../modules/es.math.tanh":266,"../modules/es.math.to-string-tag":267,"../modules/es.math.trunc":268,"../modules/es.number.constructor":269,"../modules/es.number.epsilon":270,"../modules/es.number.is-finite":271,"../modules/es.number.is-integer":272,"../modules/es.number.is-nan":273,"../modules/es.number.is-safe-integer":274,"../modules/es.number.max-safe-integer":275,"../modules/es.number.min-safe-integer":276,"../modules/es.number.parse-float":277,"../modules/es.number.parse-int":278,"../modules/es.number.to-fixed":279,"../modules/es.number.to-precision":280,"../modules/es.object.assign":281,"../modules/es.object.create":282,"../modules/es.object.define-getter":283,"../modules/es.object.define-properties":284,"../modules/es.object.define-property":285,"../modules/es.object.define-setter":286,"../modules/es.object.entries":287,"../modules/es.object.freeze":288,"../modules/es.object.from-entries":289,"../modules/es.object.get-own-property-descriptor":290,"../modules/es.object.get-own-property-descriptors":291,"../modules/es.object.get-own-property-names":292,"../modules/es.object.get-prototype-of":293,"../modules/es.object.has-own":294,"../modules/es.object.is":298,"../modules/es.object.is-extensible":295,"../modules/es.object.is-frozen":296,"../modules/es.object.is-sealed":297,"../modules/es.object.keys":299,"../modules/es.object.lookup-getter":300,"../modules/es.object.lookup-setter":301,"../modules/es.object.prevent-extensions":302,"../modules/es.object.seal":303,"../modules/es.object.set-prototype-of":304,"../modules/es.object.to-string":305,"../modules/es.object.values":306,"../modules/es.parse-float":307,"../modules/es.parse-int":308,"../modules/es.promise":312,"../modules/es.promise.all-settled":309,"../modules/es.promise.any":310,"../modules/es.promise.finally":311,"../modules/es.reflect.apply":313,"../modules/es.reflect.construct":314,"../modules/es.reflect.define-property":315,"../modules/es.reflect.delete-property":316,"../modules/es.reflect.get":319,"../modules/es.reflect.get-own-property-descriptor":317,"../modules/es.reflect.get-prototype-of":318,"../modules/es.reflect.has":320,"../modules/es.reflect.is-extensible":321,"../modules/es.reflect.own-keys":322,"../modules/es.reflect.prevent-extensions":323,"../modules/es.reflect.set":325,"../modules/es.reflect.set-prototype-of":324,"../modules/es.reflect.to-string-tag":326,"../modules/es.regexp.constructor":327,"../modules/es.regexp.dot-all":328,"../modules/es.regexp.exec":329,"../modules/es.regexp.flags":330,"../modules/es.regexp.sticky":331,"../modules/es.regexp.test":332,"../modules/es.regexp.to-string":333,"../modules/es.set":334,"../modules/es.string.anchor":335,"../modules/es.string.at-alternative":336,"../modules/es.string.big":337,"../modules/es.string.blink":338,"../modules/es.string.bold":339,"../modules/es.string.code-point-at":340,"../modules/es.string.ends-with":341,"../modules/es.string.fixed":342,"../modules/es.string.fontcolor":343,"../modules/es.string.fontsize":344,"../modules/es.string.from-code-point":345,"../modules/es.string.includes":346,"../modules/es.string.italics":347,"../modules/es.string.iterator":348,"../modules/es.string.link":349,"../modules/es.string.match":351,"../modules/es.string.match-all":350,"../modules/es.string.pad-end":352,"../modules/es.string.pad-start":353,"../modules/es.string.raw":354,"../modules/es.string.repeat":355,"../modules/es.string.replace":357,"../modules/es.string.replace-all":356,"../modules/es.string.search":358,"../modules/es.string.small":359,"../modules/es.string.split":360,"../modules/es.string.starts-with":361,"../modules/es.string.strike":362,"../modules/es.string.sub":363,"../modules/es.string.substr":364,"../modules/es.string.sup":365,"../modules/es.string.trim":368,"../modules/es.string.trim-end":366,"../modules/es.string.trim-start":367,"../modules/es.symbol":374,"../modules/es.symbol.async-iterator":369,"../modules/es.symbol.description":370,"../modules/es.symbol.has-instance":371,"../modules/es.symbol.is-concat-spreadable":372,"../modules/es.symbol.iterator":373,"../modules/es.symbol.match":376,"../modules/es.symbol.match-all":375,"../modules/es.symbol.replace":377,"../modules/es.symbol.search":378,"../modules/es.symbol.species":379,"../modules/es.symbol.split":380,"../modules/es.symbol.to-primitive":381,"../modules/es.symbol.to-string-tag":382,"../modules/es.symbol.unscopables":383,"../modules/es.typed-array.at":384,"../modules/es.typed-array.copy-within":385,"../modules/es.typed-array.every":386,"../modules/es.typed-array.fill":387,"../modules/es.typed-array.filter":388,"../modules/es.typed-array.find":390,"../modules/es.typed-array.find-index":389,"../modules/es.typed-array.float32-array":391,"../modules/es.typed-array.float64-array":392,"../modules/es.typed-array.for-each":393,"../modules/es.typed-array.from":394,"../modules/es.typed-array.includes":395,"../modules/es.typed-array.index-of":396,"../modules/es.typed-array.int16-array":397,"../modules/es.typed-array.int32-array":398,"../modules/es.typed-array.int8-array":399,"../modules/es.typed-array.iterator":400,"../modules/es.typed-array.join":401,"../modules/es.typed-array.last-index-of":402,"../modules/es.typed-array.map":403,"../modules/es.typed-array.of":404,"../modules/es.typed-array.reduce":406,"../modules/es.typed-array.reduce-right":405,"../modules/es.typed-array.reverse":407,"../modules/es.typed-array.set":408,"../modules/es.typed-array.slice":409,"../modules/es.typed-array.some":410,"../modules/es.typed-array.sort":411,"../modules/es.typed-array.subarray":412,"../modules/es.typed-array.to-locale-string":413,"../modules/es.typed-array.to-string":414,"../modules/es.typed-array.uint16-array":415,"../modules/es.typed-array.uint32-array":416,"../modules/es.typed-array.uint8-array":417,"../modules/es.typed-array.uint8-clamped-array":418,"../modules/es.unescape":419,"../modules/es.weak-map":420,"../modules/es.weak-set":421,"../modules/web.dom-collections.for-each":422,"../modules/web.dom-collections.iterator":423,"../modules/web.immediate":424,"../modules/web.queue-microtask":425,"../modules/web.timers":426,"../modules/web.url":428,"../modules/web.url-search-params":427,"../modules/web.url.to-json":429}],431:[function(require,module,exports){
+// I18n.js
+// =======
+//
+// This small library provides the Rails I18n API on the Javascript.
+// You don't actually have to use Rails (or even Ruby) to use I18n.js.
+// Just make sure you export all translations in an object like this:
+//
+//     I18n.translations.en = {
+//       hello: "Hello World"
+//     };
+//
+// See tests for specific formatting like numbers and dates.
+//
+
+// Using UMD pattern from
+// https://github.com/umdjs/umd#regular-module
+// `returnExports.js` version
+;(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define("i18n", function(){ return factory(root);});
+  } else if (typeof module === 'object' && module.exports) {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(root);
+  } else {
+    // Browser globals (root is window)
+    root.I18n = factory(root);
+  }
+}(this, function(global) {
+  "use strict";
+
+  // Use previously defined object if exists in current scope
+  var I18n = global && global.I18n || {};
+
+  // Just cache the Array#slice function.
+  var slice = Array.prototype.slice;
+
+  // Apply number padding.
+  var padding = function(number) {
+    return ("0" + number.toString()).substr(-2);
+  };
+
+  // Improved toFixed number rounding function with support for unprecise floating points
+  // JavaScript's standard toFixed function does not round certain numbers correctly (for example 0.105 with precision 2).
+  var toFixed = function(number, precision) {
+    return decimalAdjust('round', number, -precision).toFixed(precision);
+  };
+
+  // Is a given variable an object?
+  // Borrowed from Underscore.js
+  var isObject = function(obj) {
+    var type = typeof obj;
+    return type === 'function' || type === 'object'
+  };
+
+  var isFunction = function(func) {
+    var type = typeof func;
+    return type === 'function'
+  };
+
+  // Check if value is different than undefined and null;
+  var isSet = function(value) {
+    return typeof(value) !== 'undefined' && value !== null;
+  };
+
+  // Is a given value an array?
+  // Borrowed from Underscore.js
+  var isArray = function(val) {
+    if (Array.isArray) {
+      return Array.isArray(val);
+    }
+    return Object.prototype.toString.call(val) === '[object Array]';
+  };
+
+  var isString = function(val) {
+    return typeof val === 'string' || Object.prototype.toString.call(val) === '[object String]';
+  };
+
+  var isNumber = function(val) {
+    return typeof val === 'number' || Object.prototype.toString.call(val) === '[object Number]';
+  };
+
+  var isBoolean = function(val) {
+    return val === true || val === false;
+  };
+
+  var isNull = function(val) {
+    return val === null;
+  };
+
+  var decimalAdjust = function(type, value, exp) {
+    // If the exp is undefined or zero...
+    if (typeof exp === 'undefined' || +exp === 0) {
+      return Math[type](value);
+    }
+    value = +value;
+    exp = +exp;
+    // If the value is not a number or the exp is not an integer...
+    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+      return NaN;
+    }
+    // Shift
+    value = value.toString().split('e');
+    value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+    // Shift back
+    value = value.toString().split('e');
+    return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+  };
+
+  var lazyEvaluate = function(message, scope) {
+    if (isFunction(message)) {
+      return message(scope);
+    } else {
+      return message;
+    }
+  };
+
+  var merge = function (dest, obj) {
+    var key, value;
+    for (key in obj) if (obj.hasOwnProperty(key)) {
+      value = obj[key];
+      if (isString(value) || isNumber(value) || isBoolean(value) || isArray(value) || isNull(value)) {
+        dest[key] = value;
+      } else {
+        if (dest[key] == null) dest[key] = {};
+        merge(dest[key], value);
+      }
+    }
+    return dest;
+  };
+
+  // Set default days/months translations.
+  var DATE = {
+      day_names: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    , abbr_day_names: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    , month_names: [null, "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    , abbr_month_names: [null, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    , meridian: ["AM", "PM"]
+  };
+
+  // Set default number format.
+  var NUMBER_FORMAT = {
+      precision: 3
+    , separator: "."
+    , delimiter: ","
+    , strip_insignificant_zeros: false
+  };
+
+  // Set default currency format.
+  var CURRENCY_FORMAT = {
+      unit: "$"
+    , precision: 2
+    , format: "%u%n"
+    , sign_first: true
+    , delimiter: ","
+    , separator: "."
+  };
+
+  // Set default percentage format.
+  var PERCENTAGE_FORMAT = {
+      unit: "%"
+    , precision: 3
+    , format: "%n%u"
+    , separator: "."
+    , delimiter: ""
+  };
+
+  // Set default size units.
+  var SIZE_UNITS = [null, "kb", "mb", "gb", "tb"];
+
+  // Other default options
+  var DEFAULT_OPTIONS = {
+    // Set default locale. This locale will be used when fallback is enabled and
+    // the translation doesn't exist in a particular locale.
+      defaultLocale: "en"
+    // Set the current locale to `en`.
+    , locale: "en"
+    // Set the translation key separator.
+    , defaultSeparator: "."
+    // Set the placeholder format. Accepts `{{placeholder}}` and `%{placeholder}`.
+    , placeholder: /(?:\{\{|%\{)(.*?)(?:\}\}?)/gm
+    // Set if engine should fallback to the default locale when a translation
+    // is missing.
+    , fallbacks: false
+    // Set the default translation object.
+    , translations: {}
+    // Set missing translation behavior. 'message' will display a message
+    // that the translation is missing, 'guess' will try to guess the string
+    , missingBehaviour: 'message'
+    // if you use missingBehaviour with 'message', but want to know that the
+    // string is actually missing for testing purposes, you can prefix the
+    // guessed string by setting the value here. By default, no prefix!
+    , missingTranslationPrefix: ''
+  };
+
+  // Set default locale. This locale will be used when fallback is enabled and
+  // the translation doesn't exist in a particular locale.
+  I18n.reset = function() {
+    var key;
+    for (key in DEFAULT_OPTIONS) {
+      this[key] = DEFAULT_OPTIONS[key];
+    }
+  };
+
+  // Much like `reset`, but only assign options if not already assigned
+  I18n.initializeOptions = function() {
+    var key;
+    for (key in DEFAULT_OPTIONS) if (!isSet(this[key])) {
+      this[key] = DEFAULT_OPTIONS[key];
+    }
+  };
+  I18n.initializeOptions();
+
+  // Return a list of all locales that must be tried before returning the
+  // missing translation message. By default, this will consider the inline option,
+  // current locale and fallback locale.
+  //
+  //     I18n.locales.get("de-DE");
+  //     // ["de-DE", "de", "en"]
+  //
+  // You can define custom rules for any locale. Just make sure you return a array
+  // containing all locales.
+  //
+  //     // Default the Wookie locale to English.
+  //     I18n.locales["wk"] = function(locale) {
+  //       return ["en"];
+  //     };
+  //
+  I18n.locales = {};
+
+  // Retrieve locales based on inline locale, current locale or default to
+  // I18n's detection.
+  I18n.locales.get = function(locale) {
+    var result = this[locale] || this[I18n.locale] || this["default"];
+
+    if (isFunction(result)) {
+      result = result(locale);
+    }
+
+    if (isArray(result) === false) {
+      result = [result];
+    }
+
+    return result;
+  };
+
+  // The default locale list.
+  I18n.locales["default"] = function(locale) {
+    var locales = []
+      , list = []
+    ;
+
+    // Handle the inline locale option that can be provided to
+    // the `I18n.t` options.
+    if (locale) {
+      locales.push(locale);
+    }
+
+    // Add the current locale to the list.
+    if (!locale && I18n.locale) {
+      locales.push(I18n.locale);
+    }
+
+    // Add the default locale if fallback strategy is enabled.
+    if (I18n.fallbacks && I18n.defaultLocale) {
+      locales.push(I18n.defaultLocale);
+    }
+
+    // Locale code format 1:
+    // According to RFC4646 (https://www.ietf.org/rfc/rfc4646.txt)
+    // language codes for Traditional Chinese should be `zh-Hant`
+    //
+    // But due to backward compatibility
+    // We use older version of IETF language tag
+    // @see https://www.w3.org/TR/html401/struct/dirlang.html
+    // @see https://en.wikipedia.org/wiki/IETF_language_tag
+    //
+    // Format: `language-code = primary-code ( "-" subcode )*`
+    //
+    // primary-code uses ISO639-1
+    // @see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+    // @see https://www.iso.org/iso/home/standards/language_codes.htm
+    //
+    // subcode uses ISO 3166-1 alpha-2
+    // @see https://en.wikipedia.org/wiki/ISO_3166
+    // @see https://www.iso.org/iso/country_codes.htm
+    //
+    // @note
+    //   subcode can be in upper case or lower case
+    //   defining it in upper case is a convention only
+
+
+    // Locale code format 2:
+    // Format: `code = primary-code ( "-" region-code )*`
+    // primary-code uses ISO 639-1
+    // script-code uses ISO 15924
+    // region-code uses ISO 3166-1 alpha-2
+    // Example: zh-Hant-TW, en-HK, zh-Hant-CN
+    //
+    // It is similar to RFC4646 (or actually the same),
+    // but seems to be limited to language, script, region
+
+    // Compute each locale with its country code.
+    // So this will return an array containing
+    // `de-DE` and `de`
+    // or
+    // `zh-hans-tw`, `zh-hans`, `zh`
+    // locales.
+    locales.forEach(function(locale) {
+      var localeParts = locale.split("-");
+      var firstFallback = null;
+      var secondFallback = null;
+      if (localeParts.length === 3) {
+        firstFallback = [
+          localeParts[0],
+          localeParts[1]
+        ].join("-");
+        secondFallback = localeParts[0];
+      }
+      else if (localeParts.length === 2) {
+        firstFallback = localeParts[0];
+      }
+
+      if (list.indexOf(locale) === -1) {
+        list.push(locale);
+      }
+
+      if (! I18n.fallbacks) {
+        return;
+      }
+
+      [
+        firstFallback,
+        secondFallback
+      ].forEach(function(nullableFallbackLocale) {
+        // We don't want null values
+        if (typeof nullableFallbackLocale === "undefined") { return; }
+        if (nullableFallbackLocale === null) { return; }
+        // We don't want duplicate values
+        //
+        // Comparing with `locale` first is faster than
+        // checking whether value's presence in the list
+        if (nullableFallbackLocale === locale) { return; }
+        if (list.indexOf(nullableFallbackLocale) !== -1) { return; }
+
+        list.push(nullableFallbackLocale);
+      });
+    });
+
+    // No locales set? English it is.
+    if (!locales.length) {
+      locales.push("en");
+    }
+
+    return list;
+  };
+
+  // Hold pluralization rules.
+  I18n.pluralization = {};
+
+  // Return the pluralizer for a specific locale.
+  // If no specify locale is found, then I18n's default will be used.
+  I18n.pluralization.get = function(locale) {
+    return this[locale] || this[I18n.locale] || this["default"];
+  };
+
+  // The default pluralizer rule.
+  // It detects the `zero`, `one`, and `other` scopes.
+  I18n.pluralization["default"] = function(count) {
+    switch (count) {
+      case 0: return ["zero", "other"];
+      case 1: return ["one"];
+      default: return ["other"];
+    }
+  };
+
+  // Return current locale. If no locale has been set, then
+  // the current locale will be the default locale.
+  I18n.currentLocale = function() {
+    return this.locale || this.defaultLocale;
+  };
+
+  // Check if value is different than undefined and null;
+  I18n.isSet = isSet;
+
+  // Find and process the translation using the provided scope and options.
+  // This is used internally by some functions and should not be used as an
+  // public API.
+  I18n.lookup = function(scope, options) {
+    options = options || {};
+
+    var locales = this.locales.get(options.locale).slice()
+      , locale
+      , scopes
+      , fullScope
+      , translations
+    ;
+
+    fullScope = this.getFullScope(scope, options);
+
+    while (locales.length) {
+      locale = locales.shift();
+      scopes = fullScope.split(options.separator || this.defaultSeparator);
+      translations = this.translations[locale];
+
+      if (!translations) {
+        continue;
+      }
+      while (scopes.length) {
+        translations = translations[scopes.shift()];
+
+        if (translations === undefined || translations === null) {
+          break;
+        }
+      }
+
+      if (translations !== undefined && translations !== null) {
+        return translations;
+      }
+    }
+
+    if (isSet(options.defaultValue)) {
+      return lazyEvaluate(options.defaultValue, scope);
+    }
+  };
+
+  // lookup pluralization rule key into translations
+  I18n.pluralizationLookupWithoutFallback = function(count, locale, translations) {
+    var pluralizer = this.pluralization.get(locale)
+      , pluralizerKeys = pluralizer(count)
+      , pluralizerKey
+      , message;
+
+    if (translations && isObject(translations)) {
+      while (pluralizerKeys.length) {
+        pluralizerKey = pluralizerKeys.shift();
+        if (isSet(translations[pluralizerKey])) {
+          message = translations[pluralizerKey];
+          break;
+        }
+      }
+    }
+
+    return message;
+  };
+
+  // Lookup dedicated to pluralization
+  I18n.pluralizationLookup = function(count, scope, options) {
+    options = options || {};
+    var locales = this.locales.get(options.locale).slice()
+      , locale
+      , scopes
+      , translations
+      , message
+    ;
+    scope = this.getFullScope(scope, options);
+
+    while (locales.length) {
+      locale = locales.shift();
+      scopes = scope.split(options.separator || this.defaultSeparator);
+      translations = this.translations[locale];
+
+      if (!translations) {
+        continue;
+      }
+
+      while (scopes.length) {
+        translations = translations[scopes.shift()];
+        if (!isObject(translations)) {
+          break;
+        }
+        if (scopes.length === 0) {
+          message = this.pluralizationLookupWithoutFallback(count, locale, translations);
+        }
+      }
+      if (typeof message !== "undefined" && message !== null) {
+        break;
+      }
+    }
+
+    if (typeof message === "undefined" || message === null) {
+      if (isSet(options.defaultValue)) {
+        if (isObject(options.defaultValue)) {
+          message = this.pluralizationLookupWithoutFallback(count, options.locale, options.defaultValue);
+        } else {
+          message = options.defaultValue;
+        }
+        translations = options.defaultValue;
+      }
+    }
+
+    return { message: message, translations: translations };
+  };
+
+  // Rails changed the way the meridian is stored.
+  // It started with `date.meridian` returning an array,
+  // then it switched to `time.am` and `time.pm`.
+  // This function abstracts this difference and returns
+  // the correct meridian or the default value when none is provided.
+  I18n.meridian = function() {
+    var time = this.lookup("time");
+    var date = this.lookup("date");
+
+    if (time && time.am && time.pm) {
+      return [time.am, time.pm];
+    } else if (date && date.meridian) {
+      return date.meridian;
+    } else {
+      return DATE.meridian;
+    }
+  };
+
+  // Merge serveral hash options, checking if value is set before
+  // overwriting any value. The precedence is from left to right.
+  //
+  //     I18n.prepareOptions({name: "John Doe"}, {name: "Mary Doe", role: "user"});
+  //     #=> {name: "John Doe", role: "user"}
+  //
+  I18n.prepareOptions = function() {
+    var args = slice.call(arguments)
+      , options = {}
+      , subject
+    ;
+
+    while (args.length) {
+      subject = args.shift();
+
+      if (typeof(subject) != "object") {
+        continue;
+      }
+
+      for (var attr in subject) {
+        if (!subject.hasOwnProperty(attr)) {
+          continue;
+        }
+
+        if (isSet(options[attr])) {
+          continue;
+        }
+
+        options[attr] = subject[attr];
+      }
+    }
+
+    return options;
+  };
+
+  // Generate a list of translation options for default fallbacks.
+  // `defaultValue` is also deleted from options as it is returned as part of
+  // the translationOptions array.
+  I18n.createTranslationOptions = function(scope, options) {
+    var translationOptions = [{scope: scope}];
+
+    // Defaults should be an array of hashes containing either
+    // fallback scopes or messages
+    if (isSet(options.defaults)) {
+      translationOptions = translationOptions.concat(options.defaults);
+    }
+
+    // Maintain support for defaultValue. Since it is always a message
+    // insert it in to the translation options as such.
+    if (isSet(options.defaultValue)) {
+      translationOptions.push({ message: options.defaultValue });
+    }
+
+    return translationOptions;
+  };
+
+  // Translate the given scope with the provided options.
+  I18n.translate = function(scope, options) {
+    options = options || {};
+
+    var translationOptions = this.createTranslationOptions(scope, options);
+
+    var translation;
+    var usedScope = scope;
+
+    var optionsWithoutDefault = this.prepareOptions(options)
+    delete optionsWithoutDefault.defaultValue
+
+    // Iterate through the translation options until a translation
+    // or message is found.
+    var translationFound =
+      translationOptions.some(function(translationOption) {
+        if (isSet(translationOption.scope)) {
+          usedScope = translationOption.scope;
+          translation = this.lookup(usedScope, optionsWithoutDefault);
+        } else if (isSet(translationOption.message)) {
+          translation = lazyEvaluate(translationOption.message, scope);
+        }
+
+        if (translation !== undefined && translation !== null) {
+          return true;
+        }
+      }, this);
+
+    if (!translationFound) {
+      return this.missingTranslation(scope, options);
+    }
+
+    if (typeof(translation) === "string") {
+      translation = this.interpolate(translation, options);
+    } else if (isArray(translation)) {
+      translation = translation.map(function(t) {
+        return (typeof(t) === "string" ? this.interpolate(t, options) : t);
+      }, this);
+    } else if (isObject(translation) && isSet(options.count)) {
+      translation = this.pluralize(options.count, usedScope, options);
+    }
+
+    return translation;
+  };
+
+  // This function interpolates the all variables in the given message.
+  I18n.interpolate = function(message, options) {
+    if (message == null) {
+      return message;
+    }
+
+    options = options || {};
+    var matches = message.match(this.placeholder)
+      , placeholder
+      , value
+      , name
+      , regex
+    ;
+
+    if (!matches) {
+      return message;
+    }
+
+    while (matches.length) {
+      placeholder = matches.shift();
+      name = placeholder.replace(this.placeholder, "$1");
+
+      if (isSet(options[name])) {
+        value = options[name].toString().replace(/\$/gm, "_#$#_");
+      } else if (name in options) {
+        value = this.nullPlaceholder(placeholder, message, options);
+      } else {
+        value = this.missingPlaceholder(placeholder, message, options);
+      }
+
+      regex = new RegExp(placeholder.replace(/{/gm, "\\{").replace(/}/gm, "\\}"));
+      message = message.replace(regex, value);
+    }
+
+    return message.replace(/_#\$#_/g, "$");
+  };
+
+  // Pluralize the given scope using the `count` value.
+  // The pluralized translation may have other placeholders,
+  // which will be retrieved from `options`.
+  I18n.pluralize = function(count, scope, options) {
+    options = this.prepareOptions({count: String(count)}, options)
+    var pluralizer, result;
+
+    result = this.pluralizationLookup(count, scope, options);
+    if (typeof result.translations === "undefined" || result.translations == null) {
+      return this.missingTranslation(scope, options);
+    }
+
+    if (typeof result.message !== "undefined" && result.message != null) {
+      return this.interpolate(result.message, options);
+    }
+    else {
+      pluralizer = this.pluralization.get(options.locale);
+      return this.missingTranslation(scope + '.' + pluralizer(count)[0], options);
+    }
+  };
+
+  // Return a missing translation message for the given parameters.
+  I18n.missingTranslation = function(scope, options) {
+    //guess intended string
+    if(this.missingBehaviour === 'guess'){
+      //get only the last portion of the scope
+      var s = scope.split('.').slice(-1)[0];
+      //replace underscore with space && camelcase with space and lowercase letter
+      return (this.missingTranslationPrefix.length > 0 ? this.missingTranslationPrefix : '') +
+          s.replace(/_/g,' ').replace(/([a-z])([A-Z])/g,
+          function(match, p1, p2) {return p1 + ' ' + p2.toLowerCase()} );
+    }
+
+    var localeForTranslation = (options != null && options.locale != null) ? options.locale : this.currentLocale();
+    var fullScope           = this.getFullScope(scope, options);
+    var fullScopeWithLocale = [localeForTranslation, fullScope].join(options.separator || this.defaultSeparator);
+
+    return '[missing "' + fullScopeWithLocale + '" translation]';
+  };
+
+  // Return a missing placeholder message for given parameters
+  I18n.missingPlaceholder = function(placeholder, message, options) {
+    return "[missing " + placeholder + " value]";
+  };
+
+  I18n.nullPlaceholder = function() {
+    return I18n.missingPlaceholder.apply(I18n, arguments);
+  };
+
+  // Format number using localization rules.
+  // The options will be retrieved from the `number.format` scope.
+  // If this isn't present, then the following options will be used:
+  //
+  // - `precision`: `3`
+  // - `separator`: `"."`
+  // - `delimiter`: `","`
+  // - `strip_insignificant_zeros`: `false`
+  //
+  // You can also override these options by providing the `options` argument.
+  //
+  I18n.toNumber = function(number, options) {
+    options = this.prepareOptions(
+        options
+      , this.lookup("number.format")
+      , NUMBER_FORMAT
+    );
+
+    var negative = number < 0
+      , string = toFixed(Math.abs(number), options.precision).toString()
+      , parts = string.split(".")
+      , precision
+      , buffer = []
+      , formattedNumber
+      , format = options.format || "%n"
+      , sign = negative ? "-" : ""
+    ;
+
+    number = parts[0];
+    precision = parts[1];
+
+    while (number.length > 0) {
+      buffer.unshift(number.substr(Math.max(0, number.length - 3), 3));
+      number = number.substr(0, number.length -3);
+    }
+
+    formattedNumber = buffer.join(options.delimiter);
+
+    if (options.strip_insignificant_zeros && precision) {
+      precision = precision.replace(/0+$/, "");
+    }
+
+    if (options.precision > 0 && precision) {
+      formattedNumber += options.separator + precision;
+    }
+
+    if (options.sign_first) {
+      format = "%s" + format;
+    }
+    else {
+      format = format.replace("%n", "%s%n");
+    }
+
+    formattedNumber = format
+      .replace("%u", options.unit)
+      .replace("%n", formattedNumber)
+      .replace("%s", sign)
+    ;
+
+    return formattedNumber;
+  };
+
+  // Format currency with localization rules.
+  // The options will be retrieved from the `number.currency.format` and
+  // `number.format` scopes, in that order.
+  //
+  // Any missing option will be retrieved from the `I18n.toNumber` defaults and
+  // the following options:
+  //
+  // - `unit`: `"$"`
+  // - `precision`: `2`
+  // - `format`: `"%u%n"`
+  // - `delimiter`: `","`
+  // - `separator`: `"."`
+  //
+  // You can also override these options by providing the `options` argument.
+  //
+  I18n.toCurrency = function(number, options) {
+    options = this.prepareOptions(
+        options
+      , this.lookup("number.currency.format", options)
+      , this.lookup("number.format", options)
+      , CURRENCY_FORMAT
+    );
+
+    return this.toNumber(number, options);
+  };
+
+  // Localize several values.
+  // You can provide the following scopes: `currency`, `number`, or `percentage`.
+  // If you provide a scope that matches the `/^(date|time)/` regular expression
+  // then the `value` will be converted by using the `I18n.toTime` function.
+  //
+  // It will default to the value's `toString` function.
+  //
+  I18n.localize = function(scope, value, options) {
+    options || (options = {});
+
+    switch (scope) {
+      case "currency":
+        return this.toCurrency(value, options);
+      case "number":
+        scope = this.lookup("number.format", options);
+        return this.toNumber(value, scope);
+      case "percentage":
+        return this.toPercentage(value, options);
+      default:
+        var localizedValue;
+
+        if (scope.match(/^(date|time)/)) {
+          localizedValue = this.toTime(scope, value, options);
+        } else {
+          localizedValue = value.toString();
+        }
+
+        return this.interpolate(localizedValue, options);
+    }
+  };
+
+  // Parse a given `date` string into a JavaScript Date object.
+  // This function is time zone aware.
+  //
+  // The following string formats are recognized:
+  //
+  //    yyyy-mm-dd
+  //    yyyy-mm-dd[ T]hh:mm::ss
+  //    yyyy-mm-dd[ T]hh:mm::ss
+  //    yyyy-mm-dd[ T]hh:mm::ssZ
+  //    yyyy-mm-dd[ T]hh:mm::ss+0000
+  //    yyyy-mm-dd[ T]hh:mm::ss+00:00
+  //    yyyy-mm-dd[ T]hh:mm::ss.123Z
+  //
+  I18n.parseDate = function(date) {
+    var matches, convertedDate, fraction;
+    // A date input of `null` or `undefined` will be returned as-is
+    if (date == null) {
+      return date;
+    }
+    // we have a date, so just return it.
+    if (typeof(date) === "object") {
+      return date;
+    }
+
+    matches = date.toString().match(/(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}):(\d{2})([\.,]\d{1,3})?)?(Z|\+00:?00)?/);
+
+    if (matches) {
+      for (var i = 1; i <= 6; i++) {
+        matches[i] = parseInt(matches[i], 10) || 0;
+      }
+
+      // month starts on 0
+      matches[2] -= 1;
+
+      fraction = matches[7] ? 1000 * ("0" + matches[7]) : null;
+
+      if (matches[8]) {
+        convertedDate = new Date(Date.UTC(matches[1], matches[2], matches[3], matches[4], matches[5], matches[6], fraction));
+      } else {
+        convertedDate = new Date(matches[1], matches[2], matches[3], matches[4], matches[5], matches[6], fraction);
+      }
+    } else if (typeof(date) == "number") {
+      // UNIX timestamp
+      convertedDate = new Date();
+      convertedDate.setTime(date);
+    } else if (date.match(/([A-Z][a-z]{2}) ([A-Z][a-z]{2}) (\d+) (\d+:\d+:\d+) ([+-]\d+) (\d+)/)) {
+      // This format `Wed Jul 20 13:03:39 +0000 2011` is parsed by
+      // webkit/firefox, but not by IE, so we must parse it manually.
+      convertedDate = new Date();
+      convertedDate.setTime(Date.parse([
+        RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$6, RegExp.$4, RegExp.$5
+      ].join(" ")));
+    } else if (date.match(/\d+ \d+:\d+:\d+ [+-]\d+ \d+/)) {
+      // a valid javascript format with timezone info
+      convertedDate = new Date();
+      convertedDate.setTime(Date.parse(date));
+    } else {
+      // an arbitrary javascript string
+      convertedDate = new Date();
+      convertedDate.setTime(Date.parse(date));
+    }
+
+    return convertedDate;
+  };
+
+  // Formats time according to the directives in the given format string.
+  // The directives begins with a percent (%) character. Any text not listed as a
+  // directive will be passed through to the output string.
+  //
+  // The accepted formats are:
+  //
+  //     %a     - The abbreviated weekday name (Sun)
+  //     %A     - The full weekday name (Sunday)
+  //     %b     - The abbreviated month name (Jan)
+  //     %B     - The full month name (January)
+  //     %c     - The preferred local date and time representation
+  //     %d     - Day of the month (01..31)
+  //     %-d    - Day of the month (1..31)
+  //     %H     - Hour of the day, 24-hour clock (00..23)
+  //     %-H/%k - Hour of the day, 24-hour clock (0..23)
+  //     %I     - Hour of the day, 12-hour clock (01..12)
+  //     %-I/%l - Hour of the day, 12-hour clock (1..12)
+  //     %m     - Month of the year (01..12)
+  //     %-m    - Month of the year (1..12)
+  //     %M     - Minute of the hour (00..59)
+  //     %-M    - Minute of the hour (0..59)
+  //     %p     - Meridian indicator (AM  or  PM)
+  //     %P     - Meridian indicator (am  or  pm)
+  //     %S     - Second of the minute (00..60)
+  //     %-S    - Second of the minute (0..60)
+  //     %w     - Day of the week (Sunday is 0, 0..6)
+  //     %y     - Year without a century (00..99)
+  //     %-y    - Year without a century (0..99)
+  //     %Y     - Year with century
+  //     %z/%Z  - Timezone offset (+0545)
+  //
+  I18n.strftime = function(date, format, options) {
+    var options = this.lookup("date", options)
+      , meridianOptions = I18n.meridian()
+    ;
+
+    if (!options) {
+      options = {};
+    }
+
+    options = this.prepareOptions(options, DATE);
+
+    if (isNaN(date.getTime())) {
+      throw new Error('I18n.strftime() requires a valid date object, but received an invalid date.');
+    }
+
+    var weekDay = date.getDay()
+      , day = date.getDate()
+      , year = date.getFullYear()
+      , month = date.getMonth() + 1
+      , hour = date.getHours()
+      , hour12 = hour
+      , meridian = hour > 11 ? 1 : 0
+      , secs = date.getSeconds()
+      , mins = date.getMinutes()
+      , offset = date.getTimezoneOffset()
+      , absOffsetHours = Math.floor(Math.abs(offset / 60))
+      , absOffsetMinutes = Math.abs(offset) - (absOffsetHours * 60)
+      , timezoneoffset = (offset > 0 ? "-" : "+") +
+          (absOffsetHours.toString().length < 2 ? "0" + absOffsetHours : absOffsetHours) +
+          (absOffsetMinutes.toString().length < 2 ? "0" + absOffsetMinutes : absOffsetMinutes)
+    ;
+
+    if (hour12 > 12) {
+      hour12 = hour12 - 12;
+    } else if (hour12 === 0) {
+      hour12 = 12;
+    }
+
+    format = format.replace("%a", options.abbr_day_names[weekDay]);
+    format = format.replace("%A", options.day_names[weekDay]);
+    format = format.replace("%b", options.abbr_month_names[month]);
+    format = format.replace("%B", options.month_names[month]);
+    format = format.replace("%d", padding(day));
+    format = format.replace("%e", day);
+    format = format.replace("%-d", day);
+    format = format.replace("%H", padding(hour));
+    format = format.replace("%-H", hour);
+    format = format.replace("%k", hour);
+    format = format.replace("%I", padding(hour12));
+    format = format.replace("%-I", hour12);
+    format = format.replace("%l", hour12);
+    format = format.replace("%m", padding(month));
+    format = format.replace("%-m", month);
+    format = format.replace("%M", padding(mins));
+    format = format.replace("%-M", mins);
+    format = format.replace("%p", meridianOptions[meridian]);
+    format = format.replace("%P", meridianOptions[meridian].toLowerCase());
+    format = format.replace("%S", padding(secs));
+    format = format.replace("%-S", secs);
+    format = format.replace("%w", weekDay);
+    format = format.replace("%y", padding(year));
+    format = format.replace("%-y", padding(year).replace(/^0+/, ""));
+    format = format.replace("%Y", year);
+    format = format.replace("%z", timezoneoffset);
+    format = format.replace("%Z", timezoneoffset);
+
+    return format;
+  };
+
+  // Convert the given dateString into a formatted date.
+  I18n.toTime = function(scope, dateString, options) {
+    var date = this.parseDate(dateString)
+      , format = this.lookup(scope, options)
+    ;
+
+    // A date input of `null` or `undefined` will be returned as-is
+    if (date == null) {
+      return date;
+    }
+
+    var date_string = date.toString()
+    if (date_string.match(/invalid/i)) {
+      return date_string;
+    }
+
+    if (!format) {
+      return date_string;
+    }
+
+    return this.strftime(date, format, options);
+  };
+
+  // Convert a number into a formatted percentage value.
+  I18n.toPercentage = function(number, options) {
+    options = this.prepareOptions(
+        options
+      , this.lookup("number.percentage.format", options)
+      , this.lookup("number.format", options)
+      , PERCENTAGE_FORMAT
+    );
+
+    return this.toNumber(number, options);
+  };
+
+  // Convert a number into a readable size representation.
+  I18n.toHumanSize = function(number, options) {
+    var kb = 1024
+      , size = number
+      , iterations = 0
+      , unit
+      , precision
+      , fullScope
+    ;
+
+    while (size >= kb && iterations < 4) {
+      size = size / kb;
+      iterations += 1;
+    }
+
+    if (iterations === 0) {
+      fullScope = this.getFullScope("number.human.storage_units.units.byte", options);
+      unit = this.t(fullScope, {count: size});
+      precision = 0;
+    } else {
+      fullScope = this.getFullScope("number.human.storage_units.units." + SIZE_UNITS[iterations], options);
+      unit = this.t(fullScope);
+      precision = (size - Math.floor(size) === 0) ? 0 : 1;
+    }
+
+    options = this.prepareOptions(
+        options
+      , {unit: unit, precision: precision, format: "%n%u", delimiter: ""}
+    );
+
+    return this.toNumber(size, options);
+  };
+
+  I18n.getFullScope = function(scope, options) {
+    options = options || {};
+
+    // Deal with the scope as an array.
+    if (isArray(scope)) {
+      scope = scope.join(options.separator || this.defaultSeparator);
+    }
+
+    // Deal with the scope option provided through the second argument.
+    //
+    //    I18n.t('hello', {scope: 'greetings'});
+    //
+    if (options.scope) {
+      scope = [options.scope, scope].join(options.separator || this.defaultSeparator);
+    }
+
+    return scope;
+  };
+  /**
+   * Merge obj1 with obj2 (shallow merge), without modifying inputs
+   * @param {Object} obj1
+   * @param {Object} obj2
+   * @returns {Object} Merged values of obj1 and obj2
+   *
+   * In order to support ES3, `Object.prototype.hasOwnProperty.call` is used
+   * Idea is from:
+   * https://stackoverflow.com/questions/8157700/object-has-no-hasownproperty-method-i-e-its-undefined-ie8
+   */
+  I18n.extend = function ( obj1, obj2 ) {
+    if (typeof(obj1) === "undefined" && typeof(obj2) === "undefined") {
+      return {};
+    }
+    return merge(obj1, obj2);
+  };
+
+  // Set aliases, so we can save some typing.
+  I18n.t = I18n.translate.bind(I18n);
+  I18n.l = I18n.localize.bind(I18n);
+  I18n.p = I18n.pluralize.bind(I18n);
+
+  return I18n;
+}));
+
+},{}],432:[function(require,module,exports){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -16799,7 +17896,7 @@ try {
   }
 }
 
-},{}],432:[function(require,module,exports){
+},{}],433:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17065,7 +18162,7 @@ var FilterBarActor = /*#__PURE__*/function () {
 
 exports.FilterBarActor = FilterBarActor;
 
-},{"../clients/SearchClient":435,"../helpers/FilterVerificator":476,"../helpers/URLHelper":478}],433:[function(require,module,exports){
+},{"../clients/SearchClient":436,"../helpers/FilterVerificator":477,"../helpers/URLHelper":479}],434:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17117,7 +18214,7 @@ var TableActor = /*#__PURE__*/function () {
 
 exports.TableActor = TableActor;
 
-},{"../clients/SearchClient":435}],434:[function(require,module,exports){
+},{"../clients/SearchClient":436}],435:[function(require,module,exports){
 "use strict";
 
 require("core-js/stable");
@@ -17231,7 +18328,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }), filterableTableNode);
 });
 
-},{"./components/FilterableTable.react":461,"./helpers/FilterVerificator":476,"URIjs":3,"core-js/stable":430,"regenerator-runtime/runtime":431}],435:[function(require,module,exports){
+},{"./components/FilterableTable.react":462,"./helpers/FilterVerificator":477,"URIjs":3,"core-js/stable":430,"regenerator-runtime/runtime":432}],436:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17290,7 +18387,7 @@ function deleteSearch(url, _success4) {
   });
 }
 
-},{}],436:[function(require,module,exports){
+},{}],437:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17356,7 +18453,7 @@ ApplyFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],437:[function(require,module,exports){
+},{}],438:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17496,7 +18593,7 @@ BatchActionsList.contextTypes = {
   batchActionsStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../helpers/ModalHelper":477,"../../../helpers/URLHelper":478,"./BatchActionsListItem.react":438}],438:[function(require,module,exports){
+},{"../../../helpers/ModalHelper":478,"../../../helpers/URLHelper":479,"./BatchActionsListItem.react":439}],439:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17557,7 +18654,7 @@ BatchActionsListItem.propTypes = {
   url: React.PropTypes.string.isRequired
 };
 
-},{}],439:[function(require,module,exports){
+},{}],440:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17623,7 +18720,7 @@ ClearFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],440:[function(require,module,exports){
+},{}],441:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17702,7 +18799,7 @@ ConfigurationButton.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../helpers/ModalHelper":477}],441:[function(require,module,exports){
+},{"../../helpers/ModalHelper":478}],442:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17768,7 +18865,7 @@ ExportResultsButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],442:[function(require,module,exports){
+},{}],443:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17864,7 +18961,7 @@ FilterBar.contextTypes = {
   batchActionsStore: React.PropTypes.object
 };
 
-},{"./ApplyFiltersButton.react":436,"./BatchActionsList/BatchActionsList.react":437,"./ClearFiltersButton.react":439,"./ConfigurationButton.react":440,"./ExportResultsButton.react":441,"./FilterDisplay/FilterDisplay.react":443,"./FilterList/FilterList.react":456,"./SaveFiltersButton.react":458,"./SavedSearchesList/SavedSearchesList.react":459}],443:[function(require,module,exports){
+},{"./ApplyFiltersButton.react":437,"./BatchActionsList/BatchActionsList.react":438,"./ClearFiltersButton.react":440,"./ConfigurationButton.react":441,"./ExportResultsButton.react":442,"./FilterDisplay/FilterDisplay.react":444,"./FilterList/FilterList.react":457,"./SaveFiltersButton.react":459,"./SavedSearchesList/SavedSearchesList.react":460}],444:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -17991,7 +19088,7 @@ FilterDisplay.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{"./FilterInput.react":444}],444:[function(require,module,exports){
+},{"./FilterInput.react":445}],445:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18082,7 +19179,7 @@ FilterInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"./FilterInputFactory.react":445}],445:[function(require,module,exports){
+},{"./FilterInputFactory.react":446}],446:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18132,7 +19229,7 @@ function FilterInputFactory(propObject) {
   }
 }
 
-},{"./Inputs/DateInput.react":446,"./Inputs/DateTimeInput.react":447,"./Inputs/LazyMultiSelectInput.react":448,"./Inputs/LazySelectInput.react":449,"./Inputs/MultiSelectInput.react":450,"./Inputs/RangeInput.react":451,"./Inputs/RelativeDateInput.react":452,"./Inputs/SelectInput.react":453,"./Inputs/SingleDateTimeInput.react":454,"./Inputs/TextInput.react":455}],446:[function(require,module,exports){
+},{"./Inputs/DateInput.react":447,"./Inputs/DateTimeInput.react":448,"./Inputs/LazyMultiSelectInput.react":449,"./Inputs/LazySelectInput.react":450,"./Inputs/MultiSelectInput.react":451,"./Inputs/RangeInput.react":452,"./Inputs/RelativeDateInput.react":453,"./Inputs/SelectInput.react":454,"./Inputs/SingleDateTimeInput.react":455,"./Inputs/TextInput.react":456}],447:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18291,7 +19388,7 @@ DateInput.defaultProps = {
   disabled: false
 };
 
-},{}],447:[function(require,module,exports){
+},{}],448:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18444,7 +19541,7 @@ DateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],448:[function(require,module,exports){
+},{}],449:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18595,7 +19692,7 @@ LazyMultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],449:[function(require,module,exports){
+},{}],450:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18726,7 +19823,7 @@ LazySelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],450:[function(require,module,exports){
+},{}],451:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18897,7 +19994,7 @@ MultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],451:[function(require,module,exports){
+},{}],452:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19003,7 +20100,7 @@ RangeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],452:[function(require,module,exports){
+},{}],453:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19291,7 +20388,7 @@ function relativeOptions() {
   };
 }
 
-},{"./DateInput.react":446}],453:[function(require,module,exports){
+},{"./DateInput.react":447}],454:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19435,7 +20532,7 @@ SelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],454:[function(require,module,exports){
+},{}],455:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19555,7 +20652,7 @@ SingleDateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],455:[function(require,module,exports){
+},{}],456:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19656,7 +20753,7 @@ TextInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],456:[function(require,module,exports){
+},{}],457:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19782,7 +20879,7 @@ FilterList.propTypes = {
   disabledFilters: React.PropTypes.object.isRequired
 };
 
-},{"./FilterListOption.react":457}],457:[function(require,module,exports){
+},{"./FilterListOption.react":458}],458:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19852,7 +20949,7 @@ FilterListOption.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],458:[function(require,module,exports){
+},{}],459:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19972,7 +21069,7 @@ SaveFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],459:[function(require,module,exports){
+},{}],460:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20080,7 +21177,7 @@ SavedSearchesList.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"./SavedSearchesListItem.react":460}],460:[function(require,module,exports){
+},{"./SavedSearchesListItem.react":461}],461:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20174,7 +21271,7 @@ SavedSearchesListItem.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],461:[function(require,module,exports){
+},{}],462:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20267,7 +21364,7 @@ FilterableTable.childContextTypes = {
   tableActor: React.PropTypes.object
 };
 
-},{"../actors/FilterBarActor":432,"../actors/TableActor":433,"../stores/BatchActionsStore":479,"../stores/FilterBarStore":480,"../stores/TableStore":481,"./FilterBar/FilterBar.react":442,"./Table/Table.react":473}],462:[function(require,module,exports){
+},{"../actors/FilterBarActor":433,"../actors/TableActor":434,"../stores/BatchActionsStore":482,"../stores/FilterBarStore":483,"../stores/TableStore":484,"./FilterBar/FilterBar.react":443,"./Table/Table.react":474}],463:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20341,7 +21438,7 @@ QuickFilters.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{"./QuickFiltersBlock/QuickFiltersBlock.react":463}],463:[function(require,module,exports){
+},{"./QuickFiltersBlock/QuickFiltersBlock.react":464}],464:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20415,7 +21512,7 @@ var QuickFiltersBlock = /*#__PURE__*/function (_React$Component) {
 
 exports.QuickFiltersBlock = QuickFiltersBlock;
 
-},{"./QuickFiltersButton.react":464}],464:[function(require,module,exports){
+},{"./QuickFiltersButton.react":465}],465:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20551,7 +21648,7 @@ QuickFiltersButton.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{}],465:[function(require,module,exports){
+},{}],466:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20620,7 +21717,7 @@ Body.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyRow.react":467}],466:[function(require,module,exports){
+},{"./BodyRow.react":468}],467:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20689,7 +21786,7 @@ BodyCell.propTypes = {
   value: React.PropTypes.string.isRequired
 };
 
-},{}],467:[function(require,module,exports){
+},{}],468:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20807,7 +21904,7 @@ BodyRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyCell.react":466,"./BodySelectable.react":468}],468:[function(require,module,exports){
+},{"./BodyCell.react":467,"./BodySelectable.react":469}],469:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20909,7 +22006,7 @@ BodySelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],469:[function(require,module,exports){
+},{}],470:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21007,7 +22104,7 @@ HeadingCell.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],470:[function(require,module,exports){
+},{}],471:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21122,7 +22219,7 @@ HeadingRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./HeadingCell.react":469,"./HeadingSelectable.react":471}],471:[function(require,module,exports){
+},{"./HeadingCell.react":470,"./HeadingSelectable.react":472}],472:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21220,7 +22317,7 @@ HeadingSelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],472:[function(require,module,exports){
+},{}],473:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21229,6 +22326,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Pagination = void 0;
+
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -21291,7 +22392,7 @@ var Pagination = /*#__PURE__*/function (_React$Component) {
         style: {
           cursor: "pointer"
         }
-      }, "First")));
+      }, (0, _i18n["default"])('pagination.first'))));
       var lowestPageLink = 1,
           highestPageLink = 1;
 
@@ -21332,7 +22433,7 @@ var Pagination = /*#__PURE__*/function (_React$Component) {
         style: {
           cursor: "pointer"
         }
-      }, "Last")));
+      }, (0, _i18n["default"])('pagination.last'))));
       return /*#__PURE__*/React.createElement("nav", null, /*#__PURE__*/React.createElement("ul", {
         className: "pagination"
       }, pageLinks));
@@ -21352,7 +22453,7 @@ Pagination.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{}],473:[function(require,module,exports){
+},{"../../locales/i18n":481}],474:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21520,7 +22621,7 @@ Table.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{"../../events/TableEvent":475,"./Body.react":465,"./HeadingRow.react":470,"./Pagination.react":472,"./TableCaption.react":474}],474:[function(require,module,exports){
+},{"../../events/TableEvent":476,"./Body.react":466,"./HeadingRow.react":471,"./Pagination.react":473,"./TableCaption.react":475}],475:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21604,7 +22705,7 @@ var TableCaption = /*#__PURE__*/function (_React$Component) {
 
 exports.TableCaption = TableCaption;
 
-},{"../QuickFilters/QuickFilters.react":462}],475:[function(require,module,exports){
+},{"../QuickFilters/QuickFilters.react":463}],476:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21618,7 +22719,7 @@ function tableUpdated() {
   document.dispatchEvent(event);
 }
 
-},{}],476:[function(require,module,exports){
+},{}],477:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21675,7 +22776,7 @@ var FilterVerificator = /*#__PURE__*/function () {
 
 exports.FilterVerificator = FilterVerificator;
 
-},{"URIjs":3}],477:[function(require,module,exports){
+},{"URIjs":3}],478:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21693,7 +22794,7 @@ function displayModalForData(data) {
   modal.modal();
 }
 
-},{}],478:[function(require,module,exports){
+},{}],479:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21718,7 +22819,46 @@ function redirectUrl(url) {
   window.location.href = url;
 }
 
-},{"URIjs":3}],479:[function(require,module,exports){
+},{"URIjs":3}],480:[function(require,module,exports){
+module.exports={
+  "en": {
+    "pagination": {
+      "first": "First",
+      "last":"Last"
+    }
+  }
+}
+},{}],481:[function(require,module,exports){
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var defaultTranslations = _interopRequireWildcard(require("./en/translations.json"));
+
+var I18nJs = _interopRequireWildcard(require("i18n-js"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function t(key) {
+  if (typeof I18n !== 'undefined') {
+    return I18n.t(key);
+  }
+
+  I18nJs.translations["en"] = defaultTranslations["en"];
+  return I18nJs.t(key);
+}
+
+var _default = t;
+exports["default"] = _default;
+
+},{"./en/translations.json":480,"i18n-js":431}],482:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21751,7 +22891,7 @@ var BatchActionsStore = /*#__PURE__*/function () {
 
 exports.BatchActionsStore = BatchActionsStore;
 
-},{}],480:[function(require,module,exports){
+},{}],483:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22251,7 +23391,7 @@ var FilterBarStore = /*#__PURE__*/function () {
 
 exports.FilterBarStore = FilterBarStore;
 
-},{"../clients/SearchClient":435}],481:[function(require,module,exports){
+},{"../clients/SearchClient":436}],484:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22456,4 +23596,4 @@ var TableStore = /*#__PURE__*/function () {
 
 exports.TableStore = TableStore;
 
-},{"URIjs":3}]},{},[434]);
+},{"URIjs":3}]},{},[435]);

@@ -266,3 +266,4 @@ When your code is ready for distribuition, run: `node_modules/.bin/gulp dist`
 * Back button in browser
 
 ## Notes
+* I18n: Please re-define translation in your app following the format via: `locales/en/translations.json`
