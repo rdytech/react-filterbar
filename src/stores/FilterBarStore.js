@@ -18,6 +18,7 @@ export class FilterBarStore {
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
     this.quickFilters = configuration.quickFilters || {};
+    this.localizations = configuration.localizations || {};
 
     if (this.savedSearchesUrl !== undefined) {
       getSavedSearches(this.savedSearchesUrl, this.setSavedSearches.bind(this));

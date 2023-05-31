@@ -30,13 +30,15 @@ export class SaveFiltersButton extends React.Component {
           data-toggle="dropdown"
           type="button"
         >
-          Save Search
+          {this.context.filterBarStore?.localizations?.save_search || 'Save Search'}
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">
           <li>
             <form style={{margin: `0 16px`}}>
-              <label>Search Title</label>
+              <label>
+                {this.context.filterBarStore?.localizations?.search_title || 'Search Title'}
+              </label>
               <input
                 className="form-control"
                 onChange={this.onChange.bind(this)}
@@ -49,7 +51,7 @@ export class SaveFiltersButton extends React.Component {
                 onClick={this.onClick.bind(this)}
                 type="button"
               >
-                Save
+                {this.context.filterBarStore?.localizations?.save || 'Save'}
               </button>
             </form>
           </li>
@@ -60,5 +62,6 @@ export class SaveFiltersButton extends React.Component {
 }
 
 SaveFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object
 };

@@ -17339,12 +17339,14 @@ var ApplyFiltersButton = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$context$filterB, _this$context$filterB2;
+
       return /*#__PURE__*/React.createElement("button", {
         className: "btn btn-primary",
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-tick"
-      }), "Apply");
+      }), ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.apply) || 'Apply');
     }
   }]);
 
@@ -17353,7 +17355,8 @@ var ApplyFiltersButton = /*#__PURE__*/function (_React$Component) {
 
 exports.ApplyFiltersButton = ApplyFiltersButton;
 ApplyFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object
 };
 
 },{}],437:[function(require,module,exports){
@@ -17460,6 +17463,8 @@ var BatchActionsList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$context$filterB, _this$context$filterB2;
+
       var buttonClass = "btn btn-default dropdown-toggle";
       var batchActions = this.context.batchActionsStore.getActions();
 
@@ -17476,7 +17481,7 @@ var BatchActionsList = /*#__PURE__*/function (_React$Component) {
         className: buttonClass,
         "data-toggle": "dropdown",
         type: "button"
-      }, "Bulk Actions", /*#__PURE__*/React.createElement("i", {
+      }, ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.bulk_actions) || 'Bulk Actions', /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -17606,12 +17611,14 @@ var ClearFiltersButton = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$context$filterB, _this$context$filterB2;
+
       return /*#__PURE__*/React.createElement("button", {
         className: "btn btn-warning",
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-delete"
-      }), "Clear");
+      }), ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.clear) || 'Clear');
     }
   }]);
 
@@ -17620,7 +17627,8 @@ var ClearFiltersButton = /*#__PURE__*/function (_React$Component) {
 
 exports.ClearFiltersButton = ClearFiltersButton;
 ClearFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object
 };
 
 },{}],440:[function(require,module,exports){
@@ -17751,12 +17759,14 @@ var ExportResultsButton = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$context$filterB, _this$context$filterB2;
+
       return /*#__PURE__*/React.createElement("button", {
         className: "btn btn-default",
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-download"
-      }), "Export CSV");
+      }), ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.export_csv) || 'Export CSV');
     }
   }]);
 
@@ -17765,7 +17775,8 @@ var ExportResultsButton = /*#__PURE__*/function (_React$Component) {
 
 exports.ExportResultsButton = ExportResultsButton;
 ExportResultsButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object
 };
 
 },{}],442:[function(require,module,exports){
@@ -17965,7 +17976,9 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
       }, this);
 
       if (filters.length === 0) {
-        filters = /*#__PURE__*/React.createElement("div", null, "No Filters Enabled!");
+        var _this$context$filterB, _this$context$filterB2;
+
+        filters = /*#__PURE__*/React.createElement("div", null, ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.no_filters_enabled) || 'No Filters Enabled!');
       }
 
       return /*#__PURE__*/React.createElement("div", {
@@ -19733,6 +19746,8 @@ var FilterList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$context$filterB, _this$context$filterB2;
+
       var optionKey = "";
       var filters = this.state.filters;
       var term = this.state.searchTerm;
@@ -19755,7 +19770,7 @@ var FilterList = /*#__PURE__*/function (_React$Component) {
         type: "button"
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-add"
-      }), "Add Filter!", /*#__PURE__*/React.createElement("i", {
+      }), ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.add_filter) || "Add Filter", /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("div", {
         className: "dropdown-menu",
@@ -19779,7 +19794,8 @@ FilterList.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 FilterList.propTypes = {
-  disabledFilters: React.PropTypes.object.isRequired
+  disabledFilters: React.PropTypes.object.isRequired,
+  addFilterLabel: React.PropTypes.text
 };
 
 },{"./FilterListOption.react":457}],457:[function(require,module,exports){
@@ -19933,13 +19949,15 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$context$filterB, _this$context$filterB2, _this$context$filterB3, _this$context$filterB4, _this$context$filterB5, _this$context$filterB6;
+
       return /*#__PURE__*/React.createElement("div", {
         className: "btn-group"
       }, /*#__PURE__*/React.createElement("button", {
         className: "btn btn-default dropdown-toggle",
         "data-toggle": "dropdown",
         type: "button"
-      }, "Save Search", /*#__PURE__*/React.createElement("i", {
+      }, ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.save_search) || 'Save Search', /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -19948,7 +19966,7 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
         style: {
           margin: "0 16px"
         }
-      }, /*#__PURE__*/React.createElement("label", null, "Search Title"), /*#__PURE__*/React.createElement("input", {
+      }, /*#__PURE__*/React.createElement("label", null, ((_this$context$filterB3 = this.context.filterBarStore) === null || _this$context$filterB3 === void 0 ? void 0 : (_this$context$filterB4 = _this$context$filterB3.localizations) === null || _this$context$filterB4 === void 0 ? void 0 : _this$context$filterB4.search_title) || 'Search Title'), /*#__PURE__*/React.createElement("input", {
         className: "form-control",
         onChange: this.onChange.bind(this),
         type: "text",
@@ -19960,7 +19978,7 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
         },
         onClick: this.onClick.bind(this),
         type: "button"
-      }, "Save")))));
+      }, ((_this$context$filterB5 = this.context.filterBarStore) === null || _this$context$filterB5 === void 0 ? void 0 : (_this$context$filterB6 = _this$context$filterB5.localizations) === null || _this$context$filterB6 === void 0 ? void 0 : _this$context$filterB6.save) || 'Save')))));
     }
   }]);
 
@@ -19969,7 +19987,8 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
 
 exports.SaveFiltersButton = SaveFiltersButton;
 SaveFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object
 };
 
 },{}],459:[function(require,module,exports){
@@ -20040,6 +20059,8 @@ var SavedSearchesList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$context$filterB, _this$context$filterB2;
+
       var buttonClass = "btn btn-default dropdown-toggle";
 
       if (this.state.savedSearches.length === 0) {
@@ -20062,7 +20083,7 @@ var SavedSearchesList = /*#__PURE__*/function (_React$Component) {
         type: "button"
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-save"
-      }), "Saved Searches", /*#__PURE__*/React.createElement("i", {
+      }), ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.saved_searches) || 'Saved Searches', /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -20229,6 +20250,7 @@ var FilterableTable = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, FilterableTable);
 
     _this = _super.call(this, props);
+    console.log(props);
     _this.filterBarStore = new _FilterBarStore.FilterBarStore(props.filterBarConfiguration);
     _this.tableStore = new _TableStore.TableStore(props.tableConfiguration);
     _this.batchActionsStore = new _BatchActionsStore.BatchActionsStore(props.batchActionsConfiguration);
@@ -21793,6 +21815,7 @@ var FilterBarStore = /*#__PURE__*/function () {
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
     this.quickFilters = configuration.quickFilters || {};
+    this.localizations = configuration.localizations || {};
 
     if (this.savedSearchesUrl !== undefined) {
       (0, _SearchClient.getSavedSearches)(this.savedSearchesUrl, this.setSavedSearches.bind(this));

@@ -57,7 +57,7 @@ export class FilterDisplay extends React.Component {
     }, this);
 
     if (filters.length === 0) {
-      filters = (<div>No Filters Enabled!</div>);
+      filters = (<div>{this.context.filterBarStore?.localizations?.no_filters_enabled || 'No Filters Enabled!'}</div>);
     }
 
     return (

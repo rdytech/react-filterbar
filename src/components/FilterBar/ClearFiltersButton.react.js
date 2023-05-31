@@ -11,12 +11,13 @@ export class ClearFiltersButton extends React.Component {
     return (
       <button className="btn btn-warning" onClick={this.onClick.bind(this)}>
         <i className="icon icon-delete" />
-        Clear
+        {this.context.filterBarStore?.localizations?.clear || 'Clear'}
       </button>
     );
   }
 }
 
 ClearFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object
 };

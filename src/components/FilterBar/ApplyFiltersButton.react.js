@@ -11,12 +11,13 @@ export class ApplyFiltersButton extends React.Component {
     return (
       <button className="btn btn-primary" onClick={this.onClick.bind(this)}>
         <i className="icon icon-tick" />
-        Apply
+        {this.context.filterBarStore?.localizations?.apply || 'Apply'}
       </button>
     );
   }
 }
 
 ApplyFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object
 };

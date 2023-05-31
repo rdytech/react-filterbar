@@ -48,7 +48,7 @@ export class SavedSearchesList extends React.Component {
             type="button"
           >
             <i className="icon icon-save" />
-            Saved Searches
+            {this.context.filterBarStore?.localizations?.saved_searches || 'Saved Searches'}
             <i className="icon icon-chevron-down" />
           </button>
           <ul className="dropdown-menu" role="menu">

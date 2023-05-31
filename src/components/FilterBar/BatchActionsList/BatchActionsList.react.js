@@ -76,7 +76,7 @@ export class BatchActionsList extends React.Component {
           data-toggle="dropdown"
           type="button"
         >
-          Bulk Actions
+          {this.context.filterBarStore?.localizations?.bulk_actions || 'Bulk Actions'}
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">
