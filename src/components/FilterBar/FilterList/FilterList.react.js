@@ -49,7 +49,7 @@ export class FilterList extends React.Component {
       <div className="btn-group">
         <button className="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
           <i className="icon icon-add" />
-          Add Filter
+          Add Filter!
           <i className="icon icon-chevron-down" />
         </button>
         <div className="dropdown-menu" role="menu">

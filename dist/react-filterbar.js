@@ -19755,7 +19755,7 @@ var FilterList = /*#__PURE__*/function (_React$Component) {
         type: "button"
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-add"
-      }), "Add Filter", /*#__PURE__*/React.createElement("i", {
+      }), "Add Filter!", /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("div", {
         className: "dropdown-menu",
