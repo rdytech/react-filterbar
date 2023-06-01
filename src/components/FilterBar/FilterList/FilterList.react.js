@@ -72,6 +72,5 @@ FilterList.contextTypes = {
 };
 
 FilterList.propTypes = {
-  disabledFilters: React.PropTypes.object.isRequired,
-  addFilterLabel: React.PropTypes.text
+  disabledFilters: React.PropTypes.object.isRequired
 };

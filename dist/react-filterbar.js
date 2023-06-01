@@ -20900,8 +20900,7 @@ FilterList.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 FilterList.propTypes = {
-  disabledFilters: React.PropTypes.object.isRequired,
-  addFilterLabel: React.PropTypes.text
+  disabledFilters: React.PropTypes.object.isRequired
 };
 
 },{"../../../locales/i18n":481,"./FilterListOption.react":458}],458:[function(require,module,exports){
