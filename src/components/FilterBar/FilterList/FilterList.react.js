@@ -1,4 +1,5 @@
 import {FilterListOption} from "./FilterListOption.react";
+import t from "../../../locales/i18n";
 
 export class FilterList extends React.Component {
   constructor(props) {
@@ -49,7 +50,7 @@ export class FilterList extends React.Component {
       <div className="btn-group">
         <button className="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
           <i className="icon icon-add" />
-          { this.context.filterBarStore?.localizations?.add_filter || "Add Filter"}
+          { t('buttons.add_filter') }
           <i className="icon icon-chevron-down" />
         </button>
         <div className="dropdown-menu" role="menu">

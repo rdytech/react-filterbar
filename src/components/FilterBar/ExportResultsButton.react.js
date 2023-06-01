@@ -1,3 +1,5 @@
+import t from "../../locales/i18n";
+
 export class ExportResultsButton extends React.Component {
   constructor(props) {
     super(props);
@@ -11,13 +13,12 @@ export class ExportResultsButton extends React.Component {
     return (
       <button className="btn btn-default" onClick={this.onClick.bind(this)}>
         <i className="icon icon-download" />
-        {this.context.filterBarStore?.localizations?.export_csv || 'Export CSV'}
+        {t('buttons.export_csv')}
       </button>
     );
   }
 }
 
 ExportResultsButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired,
-  filterBarStore: React.PropTypes.object
+  filterBarActor: React.PropTypes.object.isRequired
 };

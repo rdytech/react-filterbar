@@ -12,8 +12,6 @@ export class FilterableTable extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log(props);
-
     this.filterBarStore = new FilterBarStore(props.filterBarConfiguration);
     this.tableStore = new TableStore(props.tableConfiguration);
     this.batchActionsStore = new BatchActionsStore(props.batchActionsConfiguration);

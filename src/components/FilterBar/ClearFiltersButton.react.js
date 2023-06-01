@@ -1,3 +1,5 @@
+import t from "../../locales/i18n";
+
 export class ClearFiltersButton extends React.Component {
   constructor(props) {
     super(props);
@@ -11,13 +13,12 @@ export class ClearFiltersButton extends React.Component {
     return (
       <button className="btn btn-warning" onClick={this.onClick.bind(this)}>
         <i className="icon icon-delete" />
-        {this.context.filterBarStore?.localizations?.clear || 'Clear'}
+        {t('buttons.clear')}
       </button>
     );
   }
 }
 
 ClearFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired,
-  filterBarStore: React.PropTypes.object
+  filterBarActor: React.PropTypes.object.isRequired
 };

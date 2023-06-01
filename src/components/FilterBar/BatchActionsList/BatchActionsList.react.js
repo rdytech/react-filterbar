@@ -1,6 +1,7 @@
 import {BatchActionsListItem} from "./BatchActionsListItem.react";
 import * as URLHelper from "../../../helpers/URLHelper";
 import * as ModalHelper from "../../../helpers/ModalHelper";
+import t from "../../../locales/i18n";
 
 export class BatchActionsList extends React.Component {
   constructor(props) {
@@ -76,7 +77,7 @@ export class BatchActionsList extends React.Component {
           data-toggle="dropdown"
           type="button"
         >
-          {this.context.filterBarStore?.localizations?.bulk_actions || 'Bulk Actions'}
+          {t('buttons.bulk_actions')}
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">

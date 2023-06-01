@@ -1,3 +1,5 @@
+import t from "../../locales/i18n";
+
 export class ApplyFiltersButton extends React.Component {
   constructor(props) {
     super(props);
@@ -11,13 +13,12 @@ export class ApplyFiltersButton extends React.Component {
     return (
       <button className="btn btn-primary" onClick={this.onClick.bind(this)}>
         <i className="icon icon-tick" />
-        {this.context.filterBarStore?.localizations?.apply || 'Apply'}
+        { t('buttons.apply') }
       </button>
     );
   }
 }
 
 ApplyFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired,
-  filterBarStore: React.PropTypes.object
+  filterBarActor: React.PropTypes.object.isRequired
 };

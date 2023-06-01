@@ -1,3 +1,5 @@
+import t from "../../locales/i18n";
+
 export class SaveFiltersButton extends React.Component {
   constructor(props) {
     super(props);
@@ -30,14 +32,14 @@ export class SaveFiltersButton extends React.Component {
           data-toggle="dropdown"
           type="button"
         >
-          {this.context.filterBarStore?.localizations?.save_search || 'Save Search'}
+          {t('buttons.save_search')}
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">
           <li>
             <form style={{margin: `0 16px`}}>
               <label>
-                {this.context.filterBarStore?.localizations?.search_title || 'Search Title'}
+                {t('buttons.search_title')}
               </label>
               <input
                 className="form-control"
@@ -51,7 +53,7 @@ export class SaveFiltersButton extends React.Component {
                 onClick={this.onClick.bind(this)}
                 type="button"
               >
-                {this.context.filterBarStore?.localizations?.save || 'Save'}
+                {t('buttons.save')}
               </button>
             </form>
           </li>
@@ -62,6 +64,5 @@ export class SaveFiltersButton extends React.Component {
 }
 
 SaveFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired,
-  filterBarStore: React.PropTypes.object
+  filterBarActor: React.PropTypes.object.isRequired
 };

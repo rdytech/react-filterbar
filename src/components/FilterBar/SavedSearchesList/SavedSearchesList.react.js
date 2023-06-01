@@ -1,4 +1,5 @@
 import {SavedSearchesListItem} from "./SavedSearchesListItem.react";
+import t from "../../../locales/i18n";
 
 export class SavedSearchesList extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ export class SavedSearchesList extends React.Component {
             type="button"
           >
             <i className="icon icon-save" />
-            {this.context.filterBarStore?.localizations?.saved_searches || 'Saved Searches'}
+            {t('buttons.saved_searches')}
             <i className="icon icon-chevron-down" />
           </button>
           <ul className="dropdown-menu" role="menu">

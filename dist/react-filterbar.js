@@ -18397,6 +18397,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ApplyFiltersButton = void 0;
 
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -18436,14 +18440,12 @@ var ApplyFiltersButton = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$context$filterB, _this$context$filterB2;
-
       return /*#__PURE__*/React.createElement("button", {
         className: "btn btn-primary",
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-tick"
-      }), ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.apply) || 'Apply');
+      }), (0, _i18n["default"])('buttons.apply'));
     }
   }]);
 
@@ -18452,11 +18454,10 @@ var ApplyFiltersButton = /*#__PURE__*/function (_React$Component) {
 
 exports.ApplyFiltersButton = ApplyFiltersButton;
 ApplyFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired,
-  filterBarStore: React.PropTypes.object
+  filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],438:[function(require,module,exports){
+},{"../../locales/i18n":481}],438:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18471,6 +18472,10 @@ var _BatchActionsListItem = require("./BatchActionsListItem.react");
 var URLHelper = _interopRequireWildcard(require("../../../helpers/URLHelper"));
 
 var ModalHelper = _interopRequireWildcard(require("../../../helpers/ModalHelper"));
+
+var _i18n = _interopRequireDefault(require("../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
@@ -18560,8 +18565,6 @@ var BatchActionsList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$context$filterB, _this$context$filterB2;
-
       var buttonClass = "btn btn-default dropdown-toggle";
       var batchActions = this.context.batchActionsStore.getActions();
 
@@ -18578,7 +18581,7 @@ var BatchActionsList = /*#__PURE__*/function (_React$Component) {
         className: buttonClass,
         "data-toggle": "dropdown",
         type: "button"
-      }, ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.bulk_actions) || 'Bulk Actions', /*#__PURE__*/React.createElement("i", {
+      }, (0, _i18n["default"])('buttons.bulk_actions'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -18598,7 +18601,7 @@ BatchActionsList.contextTypes = {
   batchActionsStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../helpers/ModalHelper":478,"../../../helpers/URLHelper":479,"./BatchActionsListItem.react":439}],439:[function(require,module,exports){
+},{"../../../helpers/ModalHelper":478,"../../../helpers/URLHelper":479,"../../../locales/i18n":481,"./BatchActionsListItem.react":439}],439:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18669,6 +18672,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ClearFiltersButton = void 0;
 
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -18708,14 +18715,12 @@ var ClearFiltersButton = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$context$filterB, _this$context$filterB2;
-
       return /*#__PURE__*/React.createElement("button", {
         className: "btn btn-warning",
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-delete"
-      }), ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.clear) || 'Clear');
+      }), (0, _i18n["default"])('buttons.clear'));
     }
   }]);
 
@@ -18724,11 +18729,10 @@ var ClearFiltersButton = /*#__PURE__*/function (_React$Component) {
 
 exports.ClearFiltersButton = ClearFiltersButton;
 ClearFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired,
-  filterBarStore: React.PropTypes.object
+  filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],441:[function(require,module,exports){
+},{"../../locales/i18n":481}],441:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18817,6 +18821,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ExportResultsButton = void 0;
 
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -18856,14 +18864,12 @@ var ExportResultsButton = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$context$filterB, _this$context$filterB2;
-
       return /*#__PURE__*/React.createElement("button", {
         className: "btn btn-default",
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-download"
-      }), ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.export_csv) || 'Export CSV');
+      }), (0, _i18n["default"])('buttons.export_csv'));
     }
   }]);
 
@@ -18872,11 +18878,10 @@ var ExportResultsButton = /*#__PURE__*/function (_React$Component) {
 
 exports.ExportResultsButton = ExportResultsButton;
 ExportResultsButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired,
-  filterBarStore: React.PropTypes.object
+  filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],443:[function(require,module,exports){
+},{"../../locales/i18n":481}],443:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18984,6 +18989,10 @@ exports.FilterDisplay = void 0;
 
 var _FilterInput = require("./FilterInput.react");
 
+var _i18n = _interopRequireDefault(require("../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -19073,9 +19082,7 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
       }, this);
 
       if (filters.length === 0) {
-        var _this$context$filterB, _this$context$filterB2;
-
-        filters = /*#__PURE__*/React.createElement("div", null, ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.no_filters_enabled) || 'No Filters Enabled!');
+        filters = /*#__PURE__*/React.createElement("div", null, (0, _i18n["default"])('buttons.no_filters_enabled'));
       }
 
       return /*#__PURE__*/React.createElement("div", {
@@ -19101,7 +19108,7 @@ FilterDisplay.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{"./FilterInput.react":445}],445:[function(require,module,exports){
+},{"../../../locales/i18n":481,"./FilterInput.react":445}],445:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20778,6 +20785,10 @@ exports.FilterList = void 0;
 
 var _FilterListOption = require("./FilterListOption.react");
 
+var _i18n = _interopRequireDefault(require("../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -20843,8 +20854,6 @@ var FilterList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$context$filterB, _this$context$filterB2;
-
       var optionKey = "";
       var filters = this.state.filters;
       var term = this.state.searchTerm;
@@ -20867,7 +20876,7 @@ var FilterList = /*#__PURE__*/function (_React$Component) {
         type: "button"
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-add"
-      }), ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.add_filter) || "Add Filter", /*#__PURE__*/React.createElement("i", {
+      }), (0, _i18n["default"])('buttons.add_filter'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("div", {
         className: "dropdown-menu",
@@ -20895,7 +20904,7 @@ FilterList.propTypes = {
   addFilterLabel: React.PropTypes.text
 };
 
-},{"./FilterListOption.react":458}],458:[function(require,module,exports){
+},{"../../../locales/i18n":481,"./FilterListOption.react":458}],458:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20975,6 +20984,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.SaveFiltersButton = void 0;
 
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -21046,15 +21059,13 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$context$filterB, _this$context$filterB2, _this$context$filterB3, _this$context$filterB4, _this$context$filterB5, _this$context$filterB6;
-
       return /*#__PURE__*/React.createElement("div", {
         className: "btn-group"
       }, /*#__PURE__*/React.createElement("button", {
         className: "btn btn-default dropdown-toggle",
         "data-toggle": "dropdown",
         type: "button"
-      }, ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.save_search) || 'Save Search', /*#__PURE__*/React.createElement("i", {
+      }, (0, _i18n["default"])('buttons.save_search'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -21063,7 +21074,7 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
         style: {
           margin: "0 16px"
         }
-      }, /*#__PURE__*/React.createElement("label", null, ((_this$context$filterB3 = this.context.filterBarStore) === null || _this$context$filterB3 === void 0 ? void 0 : (_this$context$filterB4 = _this$context$filterB3.localizations) === null || _this$context$filterB4 === void 0 ? void 0 : _this$context$filterB4.search_title) || 'Search Title'), /*#__PURE__*/React.createElement("input", {
+      }, /*#__PURE__*/React.createElement("label", null, (0, _i18n["default"])('buttons.search_title')), /*#__PURE__*/React.createElement("input", {
         className: "form-control",
         onChange: this.onChange.bind(this),
         type: "text",
@@ -21075,7 +21086,7 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
         },
         onClick: this.onClick.bind(this),
         type: "button"
-      }, ((_this$context$filterB5 = this.context.filterBarStore) === null || _this$context$filterB5 === void 0 ? void 0 : (_this$context$filterB6 = _this$context$filterB5.localizations) === null || _this$context$filterB6 === void 0 ? void 0 : _this$context$filterB6.save) || 'Save')))));
+      }, (0, _i18n["default"])('buttons.save'))))));
     }
   }]);
 
@@ -21084,11 +21095,10 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
 
 exports.SaveFiltersButton = SaveFiltersButton;
 SaveFiltersButton.contextTypes = {
-  filterBarActor: React.PropTypes.object.isRequired,
-  filterBarStore: React.PropTypes.object
+  filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],460:[function(require,module,exports){
+},{"../../locales/i18n":481}],460:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21099,6 +21109,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.SavedSearchesList = void 0;
 
 var _SavedSearchesListItem = require("./SavedSearchesListItem.react");
+
+var _i18n = _interopRequireDefault(require("../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -21156,8 +21170,6 @@ var SavedSearchesList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$context$filterB, _this$context$filterB2;
-
       var buttonClass = "btn btn-default dropdown-toggle";
 
       if (this.state.savedSearches.length === 0) {
@@ -21180,7 +21192,7 @@ var SavedSearchesList = /*#__PURE__*/function (_React$Component) {
         type: "button"
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-save"
-      }), ((_this$context$filterB = this.context.filterBarStore) === null || _this$context$filterB === void 0 ? void 0 : (_this$context$filterB2 = _this$context$filterB.localizations) === null || _this$context$filterB2 === void 0 ? void 0 : _this$context$filterB2.saved_searches) || 'Saved Searches', /*#__PURE__*/React.createElement("i", {
+      }), (0, _i18n["default"])('buttons.saved_searches'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -21198,7 +21210,7 @@ SavedSearchesList.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"./SavedSearchesListItem.react":461}],461:[function(require,module,exports){
+},{"../../../locales/i18n":481,"./SavedSearchesListItem.react":461}],461:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21347,7 +21359,6 @@ var FilterableTable = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, FilterableTable);
 
     _this = _super.call(this, props);
-    console.log(props);
     _this.filterBarStore = new _FilterBarStore.FilterBarStore(props.filterBarConfiguration);
     _this.tableStore = new _TableStore.TableStore(props.tableConfiguration);
     _this.batchActionsStore = new _BatchActionsStore.BatchActionsStore(props.batchActionsConfiguration);
@@ -22847,6 +22858,19 @@ module.exports={
     "pagination": {
       "first": "First",
       "last":"Last"
+    },
+    "buttons": {
+      "add_filter": "Add Filter",
+      "search": "Search",
+      "apply": "Apply",
+      "clear": "Clear",
+      "save_search": "Save Search",
+      "search_title": "Search Title",
+      "save": "Save",
+      "saved_searches": "Saved Searches",
+      "export_csv": "Export CSV",
+      "bulk_actions": "Bulk Actions",
+      "no_filters_enabled": "No Filters Enabled!"
     }
   }
 }
@@ -22957,7 +22981,6 @@ var FilterBarStore = /*#__PURE__*/function () {
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
     this.quickFilters = configuration.quickFilters || {};
-    this.localizations = configuration.localizations || {};
 
     if (this.savedSearchesUrl !== undefined) {
       (0, _SearchClient.getSavedSearches)(this.savedSearchesUrl, this.setSavedSearches.bind(this));

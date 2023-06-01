@@ -3,6 +3,19 @@
     "pagination": {
       "first": "First",
       "last":"Last"
+    },
+    "buttons": {
+      "add_filter": "Add Filter",
+      "search": "Search",
+      "apply": "Apply",
+      "clear": "Clear",
+      "save_search": "Save Search",
+      "search_title": "Search Title",
+      "save": "Save",
+      "saved_searches": "Saved Searches",
+      "export_csv": "Export CSV",
+      "bulk_actions": "Bulk Actions",
+      "no_filters_enabled": "No Filters Enabled!"
     }
   }
 }
