@@ -1,3 +1,5 @@
+import t from "../../locales/i18n";
+
 export class Pagination extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ export class Pagination extends React.Component {
 
     pageLinks.push(
       <li key="first">
-        <a onClick={this.goToFirstPage.bind(this)} style={ {cursor: "pointer"} }>First</a>
+        <a onClick={this.goToFirstPage.bind(this)} style={ {cursor: "pointer"} }>{ t('pagination.first') }</a>
       </li>
     );
 
@@ -55,7 +57,7 @@ export class Pagination extends React.Component {
 
     pageLinks.push(
       <li key="last">
-        <a onClick={this.goToLastPage.bind(this)} style={ {cursor: "pointer"} }>Last</a>
+        <a onClick={this.goToLastPage.bind(this)} style={ {cursor: "pointer"} }>{ t('pagination.last') }</a>
       </li>
     );
 
