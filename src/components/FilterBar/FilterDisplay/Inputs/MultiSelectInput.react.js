@@ -1,3 +1,5 @@
+import t from "../../../../locales/i18n";
+
 export class MultiSelectInput extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -88,7 +90,7 @@ export class MultiSelectInput extends React.Component {
                 checked={this.state.operator == "any"}
                 onChange={this.updateOperator.bind(this)}
               />
-              ANY selected
+              { t('buttons.any_selected') }
             </label>
             <label className="radio-inline">
               <input
@@ -98,7 +100,7 @@ export class MultiSelectInput extends React.Component {
                 checked={this.state.operator == "all"}
                 onChange={this.updateOperator.bind(this)}
               />
-              ALL selected
+              { t('buttons.all_selected') }
             </label>
             <label className="radio-inline">
               <input
@@ -108,7 +110,7 @@ export class MultiSelectInput extends React.Component {
                 checked={this.state.operator == "none"}
                 onChange={this.updateOperator.bind(this)}
               />
-              MISSING ANY selected
+              { t('buttons.missing_any_selected') }
             </label>
           </div>
         )}

@@ -8,14 +8,14 @@ export class SaveFiltersButton extends React.Component {
 
   onClick() {
     if(this.state.configurationName.trim() === '') {
-      $.bootstrapGrowl("Search title can't be blank", { type: "danger" });
+      $.bootstrapGrowl(t('prompts.search_title_blank'), { type: "danger" });
       return;
     }
     if(this.context.filterBarActor.saveFilters(this.state.configurationName.trim())) {
-      $.bootstrapGrowl("Search saved sucessfully", { type: "success" });
+      $.bootstrapGrowl(t('prompts.search_saved'), { type: "success" });
     }
     else{
-      $.bootstrapGrowl("No filters enabled, please add filter", { type: "danger" });
+      $.bootstrapGrowl(t('prompts.no_filters_enabled'), { type: "danger" });
     }
     this.setState({configurationName: ''});
   }

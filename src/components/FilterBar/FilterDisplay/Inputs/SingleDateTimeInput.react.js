@@ -1,3 +1,5 @@
+import t from "../../../../locales/i18n";
+
 export class SingleDateTimeInput extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +51,7 @@ export class SingleDateTimeInput extends React.Component {
           <span className="input-group-addon">
             <span aria-hidden="true" className="icon-calendar icon" />
             <span className="sr-only icon icon-calendar">
-              Calendar
+              { t('buttons.calendar') }
             </span>
           </span>
         </div>

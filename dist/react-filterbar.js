@@ -17910,6 +17910,10 @@ var URLHelper = _interopRequireWildcard(require("../helpers/URLHelper"));
 
 var _FilterVerificator = require("../helpers/FilterVerificator");
 
+var _i18n = _interopRequireDefault(require("../locales/i18n.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -18068,7 +18072,7 @@ var FilterBarActor = /*#__PURE__*/function () {
 
         this.applyFilters();
       } else {
-        this.deleteSavedSearch(searchId, 'One of the filters in this saved search cannot be applied anymore. Remove saved search?');
+        this.deleteSavedSearch(searchId, (0, _i18n["default"])('prompts.search_not_found_delete'));
       }
     }
   }, {
@@ -18141,7 +18145,9 @@ var FilterBarActor = /*#__PURE__*/function () {
       }
 
       if (confirmationMessage === undefined) {
-        confirmationMessage = 'Are you sure remove saved search "' + savedSearch.name + '"?';
+        confirmationMessage = (0, _i18n["default"])('prompts.confirm_remove_saved_search', {
+          name: savedSearch.name
+        });
       }
 
       var confirmation = confirm(confirmationMessage);
@@ -18162,7 +18168,7 @@ var FilterBarActor = /*#__PURE__*/function () {
 
 exports.FilterBarActor = FilterBarActor;
 
-},{"../clients/SearchClient":436,"../helpers/FilterVerificator":477,"../helpers/URLHelper":479}],434:[function(require,module,exports){
+},{"../clients/SearchClient":436,"../helpers/FilterVerificator":477,"../helpers/URLHelper":479,"../locales/i18n.js":481}],434:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18530,7 +18536,7 @@ var BatchActionsList = /*#__PURE__*/function (_React$Component) {
           }.bind(this)
         });
       } else {
-        alert('No rows selected. Please select rows before running bulk actions.');
+        alert((0, _i18n["default"])('prompts.no_rows_selected'));
       }
     }
   }, {
@@ -18744,6 +18750,10 @@ exports.ConfigurationButton = void 0;
 
 var ModalHelper = _interopRequireWildcard(require("../../helpers/ModalHelper"));
 
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -18799,7 +18809,7 @@ var ConfigurationButton = /*#__PURE__*/function (_React$Component) {
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-edit-outline"
-      }), "Columns");
+      }), (0, _i18n["default"])('buttons.columns'));
     }
   }]);
 
@@ -18811,7 +18821,7 @@ ConfigurationButton.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../helpers/ModalHelper":478}],442:[function(require,module,exports){
+},{"../../helpers/ModalHelper":478,"../../locales/i18n":481}],442:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19259,6 +19269,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DateInput = void 0;
 
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -19368,7 +19382,7 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, "Calendar"))), /*#__PURE__*/React.createElement("div", {
+      }, (0, _i18n["default"])('buttons.calendar')))), /*#__PURE__*/React.createElement("div", {
         className: "input-group datepicker dateRangeTo",
         ref: "dateRangeTo"
       }, /*#__PURE__*/React.createElement("input", {
@@ -19388,7 +19402,7 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, "Calendar"))));
+      }, (0, _i18n["default"])('buttons.calendar')))));
     }
   }]);
 
@@ -19408,7 +19422,7 @@ DateInput.defaultProps = {
   disabled: false
 };
 
-},{}],448:[function(require,module,exports){
+},{"../../../../locales/i18n":481}],448:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19417,6 +19431,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.DateTimeInput = void 0;
+
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -19525,7 +19543,7 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, "Calendar"))), /*#__PURE__*/React.createElement("div", {
+      }, (0, _i18n["default"])('buttons.calendar')))), /*#__PURE__*/React.createElement("div", {
         className: "input-group datepicker dateTimeRangeTo",
         ref: "dateTimeRangeTo"
       }, /*#__PURE__*/React.createElement("input", {
@@ -19544,7 +19562,7 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, "Calendar"))));
+      }, (0, _i18n["default"])('buttons.calendar')))));
     }
   }]);
 
@@ -19561,7 +19579,7 @@ DateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],449:[function(require,module,exports){
+},{"../../../../locales/i18n":481}],449:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19853,6 +19871,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MultiSelectInput = void 0;
 
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -19981,7 +20003,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         value: "any",
         checked: this.state.operator == "any",
         onChange: this.updateOperator.bind(this)
-      }), "ANY selected"), /*#__PURE__*/React.createElement("label", {
+      }), (0, _i18n["default"])('buttons.any_selected')), /*#__PURE__*/React.createElement("label", {
         className: "radio-inline"
       }, /*#__PURE__*/React.createElement("input", {
         type: "radio",
@@ -19989,7 +20011,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         value: "all",
         checked: this.state.operator == "all",
         onChange: this.updateOperator.bind(this)
-      }), "ALL selected"), /*#__PURE__*/React.createElement("label", {
+      }), (0, _i18n["default"])('buttons.all_selected')), /*#__PURE__*/React.createElement("label", {
         className: "radio-inline"
       }, /*#__PURE__*/React.createElement("input", {
         type: "radio",
@@ -19997,7 +20019,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         value: "none",
         checked: this.state.operator == "none",
         onChange: this.updateOperator.bind(this)
-      }), "MISSING ANY selected")));
+      }), (0, _i18n["default"])('buttons.missing_any_selected'))));
     }
   }]);
 
@@ -20014,7 +20036,7 @@ MultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],452:[function(require,module,exports){
+},{"../../../../locales/i18n":481}],452:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20131,6 +20153,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.RelativeDateInput = void 0;
 
 var _DateInput = require("./DateInput.react");
+
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -20274,7 +20300,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         className: "input-group"
       }, /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, "Today"), /*#__PURE__*/React.createElement("input", {
+      }, (0, _i18n["default"])('buttons.today')), /*#__PURE__*/React.createElement("input", {
         type: "number",
         className: "form-control",
         onChange: function onChange(e) {
@@ -20284,13 +20310,13 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         value: this.state.value.from
       }), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, "day(s)"), /*#__PURE__*/React.createElement("span", {
+      }, (0, _i18n["default"])('buttons.days')), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
       }, this.momentFormatted(this.state.value.from))), /*#__PURE__*/React.createElement("div", {
         className: "input-group"
       }, /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, "Today"), /*#__PURE__*/React.createElement("input", {
+      }, (0, _i18n["default"])('buttons.today')), /*#__PURE__*/React.createElement("input", {
         type: "number",
         className: "form-control",
         onChange: function onChange(e) {
@@ -20300,7 +20326,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         value: this.state.value.to
       }), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, "day(s)"), /*#__PURE__*/React.createElement("span", {
+      }, (0, _i18n["default"])('buttons.days')), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
       }, this.momentFormatted(this.state.value.to))));
     }
@@ -20339,7 +20365,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         ref: "relativeSelect"
       }, Object.keys(this.props.relativeOptions).map(function (optionKey) {
         return _this3.relativeOption(optionKey);
-      })), this.state.value.value == "Relative from today" ? this.showRelativeRangeInputs() : this.showDateInputs());
+      })), this.state.value.value == (0, _i18n["default"])('periods.relative_from_today') ? this.showRelativeRangeInputs() : this.showDateInputs());
     }
   }]);
 
@@ -20362,53 +20388,53 @@ RelativeDateInput.defaultProps = {
 
 function relativeOptions() {
   var lastWeek = moment().subtract(1, 'week');
-  return {
-    'Custom Period': {
-      value: '',
-      from: null,
-      to: null
-    },
-    'None': {},
-    'Today': {
-      from: moment(),
-      to: moment()
-    },
-    'Last Week': {
-      from: lastWeek.clone().startOf('isoWeek'),
-      to: lastWeek.clone().endOf('isoWeek')
-    },
-    'This Week': {
-      from: moment().startOf('isoWeek'),
-      to: moment().endOf('isoWeek')
-    },
-    'Older than 7 days': {
-      from: null,
-      to: moment().subtract(8, 'day')
-    },
-    'Older than 14 days': {
-      from: null,
-      to: moment().subtract(15, 'day')
-    },
-    'Older than 20 days': {
-      from: null,
-      to: moment().subtract(21, 'day')
-    },
-    'Older than 30 days': {
-      from: null,
-      to: moment().subtract(31, 'day')
-    },
-    'Older than 42 days (6 weeks)': {
-      from: null,
-      to: moment().subtract(43, 'day')
-    },
-    'Relative from today': {
-      from: null,
-      to: null
-    }
+  var options = {};
+  options[(0, _i18n["default"])('periods.custom_period')] = {
+    value: '',
+    from: null,
+    to: null
   };
+  options[(0, _i18n["default"])('periods.none')] = {};
+  options[(0, _i18n["default"])('periods.today')] = {
+    from: moment(),
+    to: moment()
+  };
+  options[(0, _i18n["default"])('periods.last_week')] = {
+    from: lastWeek.clone().startOf('isoWeek'),
+    to: lastWeek.clone().endOf('isoWeek')
+  };
+  options[(0, _i18n["default"])('periods.this_week')] = {
+    from: moment().startOf('isoWeek'),
+    to: moment().endOf('isoWeek')
+  };
+  options[(0, _i18n["default"])('periods.older_than_7_days')] = {
+    from: null,
+    to: moment().subtract(8, 'day')
+  };
+  options[(0, _i18n["default"])('periods.older_than_14_days')] = {
+    from: null,
+    to: moment().subtract(15, 'day')
+  };
+  options[(0, _i18n["default"])('periods.older_than_20_days')] = {
+    from: null,
+    to: moment().subtract(21, 'day')
+  };
+  options[(0, _i18n["default"])('periods.older_than_30_days')] = {
+    from: null,
+    to: moment().subtract(31, 'day')
+  };
+  options[(0, _i18n["default"])('periods.older_than_42_days')] = {
+    from: null,
+    to: moment().subtract(43, 'day')
+  };
+  options[(0, _i18n["default"])('periods.relative_from_today')] = {
+    from: null,
+    to: null
+  };
+  return options;
 }
 
-},{"./DateInput.react":447}],454:[function(require,module,exports){
+},{"../../../../locales/i18n":481,"./DateInput.react":447}],454:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20562,6 +20588,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.SingleDateTimeInput = void 0;
 
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -20655,7 +20685,7 @@ var SingleDateTimeInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, "Calendar"))));
+      }, (0, _i18n["default"])('buttons.calendar')))));
     }
   }]);
 
@@ -20672,7 +20702,7 @@ SingleDateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],456:[function(require,module,exports){
+},{"../../../../locales/i18n":481}],456:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21028,18 +21058,18 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
     key: "onClick",
     value: function onClick() {
       if (this.state.configurationName.trim() === '') {
-        $.bootstrapGrowl("Search title can't be blank", {
+        $.bootstrapGrowl((0, _i18n["default"])('prompts.search_title_blank'), {
           type: "danger"
         });
         return;
       }
 
       if (this.context.filterBarActor.saveFilters(this.state.configurationName.trim())) {
-        $.bootstrapGrowl("Search saved sucessfully", {
+        $.bootstrapGrowl((0, _i18n["default"])('prompts.search_saved'), {
           type: "success"
         });
       } else {
-        $.bootstrapGrowl("No filters enabled, please add filter", {
+        $.bootstrapGrowl((0, _i18n["default"])('prompts.no_filters_enabled'), {
           type: "danger"
         });
       }
@@ -22869,7 +22899,35 @@ module.exports={
       "saved_searches": "Saved Searches",
       "export_csv": "Export CSV",
       "bulk_actions": "Bulk Actions",
-      "no_filters_enabled": "No Filters Enabled!"
+      "no_filters_enabled": "No Filters Enabled!",
+      "calendar": "Calendar",
+      "any_selected": "ANY selected",
+      "all_selected": "ALL selected",
+      "missing_any_selected": "MISSING ANY selected",
+      "today": "Today",
+      "days": "day(s)",
+      "columns": "Columns"
+    },
+    "periods": {
+      "custom_period": "Custom Period",
+      "none": "None",
+      "today": "Today",
+      "last_week": "Last Week",
+      "this_week": "This Week",
+      "older_than_7_days": "Older than 7 days",
+      "older_than_14_days": "Older than 14 days",
+      "older_than_20_days": "Older than 20 days",
+      "older_than_30_days": "Older than 30 days",
+      "older_than_42_days": "Older than 42 days (6 weeks)",
+      "relative_from_today": "Relative from today"
+    },
+    "prompts": {
+      "search_not_found_delete": "One of the filters in this saved search cannot be applied anymore. Remove saved search?",
+      "confirm_remove_saved_search": "Are you sure you want to remove saved search \"%{name}\"?",
+      "no_rows_selected": "No rows selected. Please select rows before running bulk actions.",
+      "search_title_blank": "Search title can't be blank",
+      "search_saved": "Search saved sucessfully",
+      "no_filters_enabled": "No filters enabled, please add filter"
     }
   }
 }
@@ -22894,12 +22952,14 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 I18nJs.translations["en"] = defaultTranslations["en"];
 
-function t(key) {
+function t() {
   if (typeof I18n !== 'undefined') {
-    return I18n.t(key);
+    var _I18n;
+
+    return (_I18n = I18n).t.apply(_I18n, arguments);
   }
 
-  return I18nJs.t(key);
+  return I18nJs.t.apply(I18nJs, arguments);
 }
 
 var _default = t;

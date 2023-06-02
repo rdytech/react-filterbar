@@ -22,7 +22,7 @@ export class BatchActionsList extends React.Component {
       });
     }
     else {
-      alert('No rows selected. Please select rows before running bulk actions.');
+      alert(t('prompts.no_rows_selected'));
     }
   }
 

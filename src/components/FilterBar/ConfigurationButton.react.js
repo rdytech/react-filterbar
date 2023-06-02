@@ -1,4 +1,5 @@
 import * as ModalHelper from "../../helpers/ModalHelper";
+import t from "../../locales/i18n";
 
 export class ConfigurationButton extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ export class ConfigurationButton extends React.Component {
     return (
       <button className="btn btn-default" onClick={this.onClick.bind(this)}>
         <i className="icon icon-edit-outline" />
-        Columns
+        { t('buttons.columns') }
       </button>
     );
   }
