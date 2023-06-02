@@ -18072,7 +18072,7 @@ var FilterBarActor = /*#__PURE__*/function () {
 
         this.applyFilters();
       } else {
-        this.deleteSavedSearch(searchId, (0, _i18n["default"])('prompts.search_not_found_delete'));
+        this.deleteSavedSearch(searchId, (0, _i18n["default"])('filterbar.prompts.search_not_found_delete'));
       }
     }
   }, {
@@ -18145,7 +18145,7 @@ var FilterBarActor = /*#__PURE__*/function () {
       }
 
       if (confirmationMessage === undefined) {
-        confirmationMessage = (0, _i18n["default"])('prompts.confirm_remove_saved_search', {
+        confirmationMessage = (0, _i18n["default"])('filterbar.prompts.confirm_remove_saved_search', {
           name: savedSearch.name
         });
       }
@@ -18451,7 +18451,7 @@ var ApplyFiltersButton = /*#__PURE__*/function (_React$Component) {
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-tick"
-      }), (0, _i18n["default"])('buttons.apply'));
+      }), (0, _i18n["default"])('filterbar.buttons.apply'));
     }
   }]);
 
@@ -18536,7 +18536,7 @@ var BatchActionsList = /*#__PURE__*/function (_React$Component) {
           }.bind(this)
         });
       } else {
-        alert((0, _i18n["default"])('prompts.no_rows_selected'));
+        alert((0, _i18n["default"])('filterbar.prompts.no_rows_selected'));
       }
     }
   }, {
@@ -18587,7 +18587,7 @@ var BatchActionsList = /*#__PURE__*/function (_React$Component) {
         className: buttonClass,
         "data-toggle": "dropdown",
         type: "button"
-      }, (0, _i18n["default"])('buttons.bulk_actions'), /*#__PURE__*/React.createElement("i", {
+      }, (0, _i18n["default"])('filterbar.buttons.bulk_actions'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -18726,7 +18726,7 @@ var ClearFiltersButton = /*#__PURE__*/function (_React$Component) {
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-delete"
-      }), (0, _i18n["default"])('buttons.clear'));
+      }), (0, _i18n["default"])('filterbar.buttons.clear'));
     }
   }]);
 
@@ -18809,7 +18809,7 @@ var ConfigurationButton = /*#__PURE__*/function (_React$Component) {
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-edit-outline"
-      }), (0, _i18n["default"])('buttons.columns'));
+      }), (0, _i18n["default"])('filterbar.buttons.columns'));
     }
   }]);
 
@@ -18879,7 +18879,7 @@ var ExportResultsButton = /*#__PURE__*/function (_React$Component) {
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-download"
-      }), (0, _i18n["default"])('buttons.export_csv'));
+      }), (0, _i18n["default"])('filterbar.buttons.export_csv'));
     }
   }]);
 
@@ -19092,7 +19092,7 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
       }, this);
 
       if (filters.length === 0) {
-        filters = /*#__PURE__*/React.createElement("div", null, (0, _i18n["default"])('buttons.no_filters_enabled'));
+        filters = /*#__PURE__*/React.createElement("div", null, (0, _i18n["default"])('filterbar.buttons.no_filters_enabled'));
       }
 
       return /*#__PURE__*/React.createElement("div", {
@@ -19322,9 +19322,9 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
       var newValue = this.state.value;
 
       if (event.type === "dp") {
-        newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+        newValue[event.target.querySelector("input").getAttribute("data-attr")] = event.target.querySelector("input").value;
       } else if (event.type === "input") {
-        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+        newValue[event.target.getAttribute("data-attr")] = event.target.value;
       }
 
       this.setState({
@@ -19371,7 +19371,8 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
         "data-date-format": "DD/MM/YYYY",
         onBlur: this.onBlur.bind(this),
         onChange: this.handleDateChange,
-        placeholder: "from",
+        "data-attr": "from",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.from'),
         type: "text",
         disabled: this.props.disabled,
         value: this.state.displayFrom || this.state.value.from
@@ -19382,7 +19383,7 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, (0, _i18n["default"])('buttons.calendar')))), /*#__PURE__*/React.createElement("div", {
+      }, (0, _i18n["default"])('filterbar.buttons.calendar')))), /*#__PURE__*/React.createElement("div", {
         className: "input-group datepicker dateRangeTo",
         ref: "dateRangeTo"
       }, /*#__PURE__*/React.createElement("input", {
@@ -19391,7 +19392,8 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
         "data-date-format": "DD/MM/YYYY",
         onBlur: this.onBlur.bind(this),
         onChange: this.handleDateChange,
-        placeholder: "to",
+        "data-attr": "to",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.to'),
         type: "text",
         disabled: this.props.disabled,
         value: this.state.displayTo || this.state.value.to
@@ -19402,7 +19404,7 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, (0, _i18n["default"])('buttons.calendar')))));
+      }, (0, _i18n["default"])('filterbar.buttons.calendar')))));
     }
   }]);
 
@@ -19482,9 +19484,9 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
       var newValue = this.state.value;
 
       if (event.type === "dp") {
-        newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+        newValue[event.target.querySelector("input").getAttribute("data-attr")] = event.target.querySelector("input").value;
       } else if (event.type === "input") {
-        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+        newValue[event.target.getAttribute("data-attr")] = event.target.value;
       }
 
       this.setState({
@@ -19533,7 +19535,8 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
         "data-date-format": "DD/MM/YYYY HH:mm",
         onBlur: this.onBlur.bind(this),
         onChange: this.onChange.bind(this),
-        placeholder: "from",
+        "data-attr": "from",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.from'),
         type: "text",
         value: this.state.value.from
       }), /*#__PURE__*/React.createElement("span", {
@@ -19543,7 +19546,7 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, (0, _i18n["default"])('buttons.calendar')))), /*#__PURE__*/React.createElement("div", {
+      }, (0, _i18n["default"])('filterbar.buttons.calendar')))), /*#__PURE__*/React.createElement("div", {
         className: "input-group datepicker dateTimeRangeTo",
         ref: "dateTimeRangeTo"
       }, /*#__PURE__*/React.createElement("input", {
@@ -19552,7 +19555,8 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
         "data-date-format": "DD/MM/YYYY HH:mm",
         onBlur: this.onBlur.bind(this),
         onChange: this.onChange.bind(this),
-        placeholder: "to",
+        "data-attr": "to",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.to'),
         type: "text",
         value: this.state.value.to
       }), /*#__PURE__*/React.createElement("span", {
@@ -19562,7 +19566,7 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, (0, _i18n["default"])('buttons.calendar')))));
+      }, (0, _i18n["default"])('filterbar.buttons.calendar')))));
     }
   }]);
 
@@ -20003,7 +20007,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         value: "any",
         checked: this.state.operator == "any",
         onChange: this.updateOperator.bind(this)
-      }), (0, _i18n["default"])('buttons.any_selected')), /*#__PURE__*/React.createElement("label", {
+      }), (0, _i18n["default"])('filterbar.buttons.any_selected')), /*#__PURE__*/React.createElement("label", {
         className: "radio-inline"
       }, /*#__PURE__*/React.createElement("input", {
         type: "radio",
@@ -20011,7 +20015,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         value: "all",
         checked: this.state.operator == "all",
         onChange: this.updateOperator.bind(this)
-      }), (0, _i18n["default"])('buttons.all_selected')), /*#__PURE__*/React.createElement("label", {
+      }), (0, _i18n["default"])('filterbar.buttons.all_selected')), /*#__PURE__*/React.createElement("label", {
         className: "radio-inline"
       }, /*#__PURE__*/React.createElement("input", {
         type: "radio",
@@ -20019,7 +20023,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         value: "none",
         checked: this.state.operator == "none",
         onChange: this.updateOperator.bind(this)
-      }), (0, _i18n["default"])('buttons.missing_any_selected'))));
+      }), (0, _i18n["default"])('filterbar.buttons.missing_any_selected'))));
     }
   }]);
 
@@ -20045,6 +20049,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.RangeInput = void 0;
+
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -20092,7 +20100,7 @@ var RangeInput = /*#__PURE__*/function (_React$Component) {
       var newValue = this.state.value;
 
       if (event.type === "input") {
-        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+        newValue[event.target.getAttribute("data-attr")] = event.target.value;
       }
 
       this.setState({
@@ -20115,7 +20123,8 @@ var RangeInput = /*#__PURE__*/function (_React$Component) {
         className: "form-control",
         onBlur: this.onBlur.bind(this),
         onChange: this.onChange.bind(this),
-        placeholder: "from",
+        "data-attr": "from",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.from'),
         value: this.state.value.from
       })), /*#__PURE__*/React.createElement("div", {
         className: "col-xs-6"
@@ -20123,7 +20132,8 @@ var RangeInput = /*#__PURE__*/function (_React$Component) {
         className: "form-control",
         onBlur: this.onBlur.bind(this),
         onChange: this.onChange.bind(this),
-        placeholder: "to",
+        "data-attr": "to",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.to'),
         value: this.state.value.to
       }))));
     }
@@ -20142,7 +20152,7 @@ RangeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],453:[function(require,module,exports){
+},{"../../../../locales/i18n":481}],453:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20235,9 +20245,9 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       };
 
       if (event.type === "dp") {
-        newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+        newValue[event.target.querySelector("input").getAttribute("attribute")] = event.target.querySelector("input").value;
       } else if (event.type === "input") {
-        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+        newValue[event.target.getAttribute("attribute")] = event.target.value;
       }
 
       this.setState({
@@ -20300,33 +20310,33 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         className: "input-group"
       }, /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, (0, _i18n["default"])('buttons.today')), /*#__PURE__*/React.createElement("input", {
+      }, (0, _i18n["default"])('filterbar.buttons.today')), /*#__PURE__*/React.createElement("input", {
         type: "number",
         className: "form-control",
         onChange: function onChange(e) {
           return _this2.handleInputChange(e, 'from');
         },
-        placeholder: "+/- days",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.plus_minus_days'),
         value: this.state.value.from
       }), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, (0, _i18n["default"])('buttons.days')), /*#__PURE__*/React.createElement("span", {
+      }, (0, _i18n["default"])('filterbar.buttons.days')), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
       }, this.momentFormatted(this.state.value.from))), /*#__PURE__*/React.createElement("div", {
         className: "input-group"
       }, /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, (0, _i18n["default"])('buttons.today')), /*#__PURE__*/React.createElement("input", {
+      }, (0, _i18n["default"])('filterbar.buttons.today')), /*#__PURE__*/React.createElement("input", {
         type: "number",
         className: "form-control",
         onChange: function onChange(e) {
           return _this2.handleInputChange(e, 'to');
         },
-        placeholder: "+/- days",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.plus_minus_days'),
         value: this.state.value.to
       }), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, (0, _i18n["default"])('buttons.days')), /*#__PURE__*/React.createElement("span", {
+      }, (0, _i18n["default"])('filterbar.buttons.days')), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
       }, this.momentFormatted(this.state.value.to))));
     }
@@ -20365,7 +20375,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         ref: "relativeSelect"
       }, Object.keys(this.props.relativeOptions).map(function (optionKey) {
         return _this3.relativeOption(optionKey);
-      })), this.state.value.value == (0, _i18n["default"])('periods.relative_from_today') ? this.showRelativeRangeInputs() : this.showDateInputs());
+      })), this.state.value.value == (0, _i18n["default"])('filterbar.periods.relative_from_today') ? this.showRelativeRangeInputs() : this.showDateInputs());
     }
   }]);
 
@@ -20389,45 +20399,45 @@ RelativeDateInput.defaultProps = {
 function relativeOptions() {
   var lastWeek = moment().subtract(1, 'week');
   var options = {};
-  options[(0, _i18n["default"])('periods.custom_period')] = {
+  options[(0, _i18n["default"])('filterbar.periods.custom_period')] = {
     value: '',
     from: null,
     to: null
   };
-  options[(0, _i18n["default"])('periods.none')] = {};
-  options[(0, _i18n["default"])('periods.today')] = {
+  options[(0, _i18n["default"])('filterbar.periods.none')] = {};
+  options[(0, _i18n["default"])('filterbar.periods.today')] = {
     from: moment(),
     to: moment()
   };
-  options[(0, _i18n["default"])('periods.last_week')] = {
+  options[(0, _i18n["default"])('filterbar.periods.last_week')] = {
     from: lastWeek.clone().startOf('isoWeek'),
     to: lastWeek.clone().endOf('isoWeek')
   };
-  options[(0, _i18n["default"])('periods.this_week')] = {
+  options[(0, _i18n["default"])('filterbar.periods.this_week')] = {
     from: moment().startOf('isoWeek'),
     to: moment().endOf('isoWeek')
   };
-  options[(0, _i18n["default"])('periods.older_than_7_days')] = {
+  options[(0, _i18n["default"])('filterbar.periods.older_than_7_days')] = {
     from: null,
     to: moment().subtract(8, 'day')
   };
-  options[(0, _i18n["default"])('periods.older_than_14_days')] = {
+  options[(0, _i18n["default"])('filterbar.periods.older_than_14_days')] = {
     from: null,
     to: moment().subtract(15, 'day')
   };
-  options[(0, _i18n["default"])('periods.older_than_20_days')] = {
+  options[(0, _i18n["default"])('filterbar.periods.older_than_20_days')] = {
     from: null,
     to: moment().subtract(21, 'day')
   };
-  options[(0, _i18n["default"])('periods.older_than_30_days')] = {
+  options[(0, _i18n["default"])('filterbar.periods.older_than_30_days')] = {
     from: null,
     to: moment().subtract(31, 'day')
   };
-  options[(0, _i18n["default"])('periods.older_than_42_days')] = {
+  options[(0, _i18n["default"])('filterbar.periods.older_than_42_days')] = {
     from: null,
     to: moment().subtract(43, 'day')
   };
-  options[(0, _i18n["default"])('periods.relative_from_today')] = {
+  options[(0, _i18n["default"])('filterbar.periods.relative_from_today')] = {
     from: null,
     to: null
   };
@@ -20685,7 +20695,7 @@ var SingleDateTimeInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, (0, _i18n["default"])('buttons.calendar')))));
+      }, (0, _i18n["default"])('filterbar.buttons.calendar')))));
     }
   }]);
 
@@ -20906,14 +20916,14 @@ var FilterList = /*#__PURE__*/function (_React$Component) {
         type: "button"
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-add"
-      }), (0, _i18n["default"])('buttons.add_filter'), /*#__PURE__*/React.createElement("i", {
+      }), (0, _i18n["default"])('filterbar.buttons.add_filter'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("div", {
         className: "dropdown-menu",
         role: "menu"
       }, /*#__PURE__*/React.createElement("input", {
         type: "text",
-        placeholder: "Search",
+        placeholder: (0, _i18n["default"])('filterbar.buttons.search'),
         onChange: this.onSearchTermChange.bind(this)
       }), /*#__PURE__*/React.createElement("ul", {
         className: "filter-options"
@@ -21058,18 +21068,18 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
     key: "onClick",
     value: function onClick() {
       if (this.state.configurationName.trim() === '') {
-        $.bootstrapGrowl((0, _i18n["default"])('prompts.search_title_blank'), {
+        $.bootstrapGrowl((0, _i18n["default"])('filterbar.prompts.search_title_blank'), {
           type: "danger"
         });
         return;
       }
 
       if (this.context.filterBarActor.saveFilters(this.state.configurationName.trim())) {
-        $.bootstrapGrowl((0, _i18n["default"])('prompts.search_saved'), {
+        $.bootstrapGrowl((0, _i18n["default"])('filterbar.prompts.search_saved'), {
           type: "success"
         });
       } else {
-        $.bootstrapGrowl((0, _i18n["default"])('prompts.no_filters_enabled'), {
+        $.bootstrapGrowl((0, _i18n["default"])('filterbar.prompts.no_filters_enabled'), {
           type: "danger"
         });
       }
@@ -21094,7 +21104,7 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
         className: "btn btn-default dropdown-toggle",
         "data-toggle": "dropdown",
         type: "button"
-      }, (0, _i18n["default"])('buttons.save_search'), /*#__PURE__*/React.createElement("i", {
+      }, (0, _i18n["default"])('filterbar.buttons.save_search'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -21103,7 +21113,7 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
         style: {
           margin: "0 16px"
         }
-      }, /*#__PURE__*/React.createElement("label", null, (0, _i18n["default"])('buttons.search_title')), /*#__PURE__*/React.createElement("input", {
+      }, /*#__PURE__*/React.createElement("label", null, (0, _i18n["default"])('filterbar.buttons.search_title')), /*#__PURE__*/React.createElement("input", {
         className: "form-control",
         onChange: this.onChange.bind(this),
         type: "text",
@@ -21115,7 +21125,7 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
         },
         onClick: this.onClick.bind(this),
         type: "button"
-      }, (0, _i18n["default"])('buttons.save'))))));
+      }, (0, _i18n["default"])('filterbar.buttons.save'))))));
     }
   }]);
 
@@ -21221,7 +21231,7 @@ var SavedSearchesList = /*#__PURE__*/function (_React$Component) {
         type: "button"
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-save"
-      }), (0, _i18n["default"])('buttons.saved_searches'), /*#__PURE__*/React.createElement("i", {
+      }), (0, _i18n["default"])('filterbar.buttons.saved_searches'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -22454,7 +22464,7 @@ var Pagination = /*#__PURE__*/function (_React$Component) {
         style: {
           cursor: "pointer"
         }
-      }, (0, _i18n["default"])('pagination.first'))));
+      }, (0, _i18n["default"])('filterbar.pagination.first'))));
       var lowestPageLink = 1,
           highestPageLink = 1;
 
@@ -22495,7 +22505,7 @@ var Pagination = /*#__PURE__*/function (_React$Component) {
         style: {
           cursor: "pointer"
         }
-      }, (0, _i18n["default"])('pagination.last'))));
+      }, (0, _i18n["default"])('filterbar.pagination.last'))));
       return /*#__PURE__*/React.createElement("nav", null, /*#__PURE__*/React.createElement("ul", {
         className: "pagination"
       }, pageLinks));
@@ -22884,50 +22894,58 @@ function redirectUrl(url) {
 },{"URIjs":3}],480:[function(require,module,exports){
 module.exports={
   "en": {
-    "pagination": {
-      "first": "First",
-      "last":"Last"
-    },
-    "buttons": {
-      "add_filter": "Add Filter",
-      "search": "Search",
-      "apply": "Apply",
-      "clear": "Clear",
-      "save_search": "Save Search",
-      "search_title": "Search Title",
-      "save": "Save",
-      "saved_searches": "Saved Searches",
-      "export_csv": "Export CSV",
-      "bulk_actions": "Bulk Actions",
-      "no_filters_enabled": "No Filters Enabled!",
-      "calendar": "Calendar",
-      "any_selected": "ANY selected",
-      "all_selected": "ALL selected",
-      "missing_any_selected": "MISSING ANY selected",
-      "today": "Today",
-      "days": "day(s)",
-      "columns": "Columns"
-    },
-    "periods": {
-      "custom_period": "Custom Period",
-      "none": "None",
-      "today": "Today",
-      "last_week": "Last Week",
-      "this_week": "This Week",
-      "older_than_7_days": "Older than 7 days",
-      "older_than_14_days": "Older than 14 days",
-      "older_than_20_days": "Older than 20 days",
-      "older_than_30_days": "Older than 30 days",
-      "older_than_42_days": "Older than 42 days (6 weeks)",
-      "relative_from_today": "Relative from today"
-    },
-    "prompts": {
-      "search_not_found_delete": "One of the filters in this saved search cannot be applied anymore. Remove saved search?",
-      "confirm_remove_saved_search": "Are you sure you want to remove saved search \"%{name}\"?",
-      "no_rows_selected": "No rows selected. Please select rows before running bulk actions.",
-      "search_title_blank": "Search title can't be blank",
-      "search_saved": "Search saved sucessfully",
-      "no_filters_enabled": "No filters enabled, please add filter"
+    "filterbar": {
+      "pagination": {
+        "first": "First",
+        "last":"Last"
+      },
+      "placeholders": {
+        "search": "Search",
+        "plus_minus_days": "+/- days",
+        "from": "From",
+        "to": "To"
+      },
+      "buttons": {
+        "add_filter": "Add Filter",
+        "search": "Search",
+        "apply": "Apply",
+        "clear": "Clear",
+        "save_search": "Save Search",
+        "search_title": "Search Title",
+        "save": "Save",
+        "saved_searches": "Saved Searches",
+        "export_csv": "Export CSV",
+        "bulk_actions": "Bulk Actions",
+        "no_filters_enabled": "No Filters Enabled!",
+        "calendar": "Calendar",
+        "any_selected": "ANY selected",
+        "all_selected": "ALL selected",
+        "missing_any_selected": "MISSING ANY selected",
+        "today": "Today",
+        "days": "day(s)",
+        "columns": "Columns"
+      },
+      "periods": {
+        "custom_period": "Custom Period",
+        "none": "None",
+        "today": "Today",
+        "last_week": "Last Week",
+        "this_week": "This Week",
+        "older_than_7_days": "Older than 7 days",
+        "older_than_14_days": "Older than 14 days",
+        "older_than_20_days": "Older than 20 days",
+        "older_than_30_days": "Older than 30 days",
+        "older_than_42_days": "Older than 42 days (6 weeks)",
+        "relative_from_today": "Relative from today"
+      },
+      "prompts": {
+        "search_not_found_delete": "One of the filters in this saved search cannot be applied anymore. Remove saved search?",
+        "confirm_remove_saved_search": "Are you sure you want to remove saved search \"%{name}\"?",
+        "no_rows_selected": "No rows selected. Please select rows before running bulk actions.",
+        "search_title_blank": "Search title can't be blank",
+        "search_saved": "Search saved sucessfully",
+        "no_filters_enabled": "No filters enabled, please add filter"
+      }
     }
   }
 }

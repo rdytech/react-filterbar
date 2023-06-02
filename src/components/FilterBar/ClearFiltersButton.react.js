@@ -13,7 +13,7 @@ export class ClearFiltersButton extends React.Component {
     return (
       <button className="btn btn-warning" onClick={this.onClick.bind(this)}>
         <i className="icon icon-delete" />
-        {t('buttons.clear')}
+        {t('filterbar.buttons.clear')}
       </button>
     );
   }

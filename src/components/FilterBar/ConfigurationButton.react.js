@@ -21,7 +21,7 @@ export class ConfigurationButton extends React.Component {
     return (
       <button className="btn btn-default" onClick={this.onClick.bind(this)}>
         <i className="icon icon-edit-outline" />
-        { t('buttons.columns') }
+        { t('filterbar.buttons.columns') }
       </button>
     );
   }

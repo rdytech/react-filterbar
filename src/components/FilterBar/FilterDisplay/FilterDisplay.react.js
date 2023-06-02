@@ -58,7 +58,7 @@ export class FilterDisplay extends React.Component {
     }, this);
 
     if (filters.length === 0) {
-      filters = (<div>{t('buttons.no_filters_enabled')}</div>);
+      filters = (<div>{t('filterbar.buttons.no_filters_enabled')}</div>);
     }
 
     return (

@@ -120,7 +120,7 @@ export class FilterBarActor {
 
       this.applyFilters();
     } else {
-      this.deleteSavedSearch(searchId, t('prompts.search_not_found_delete'));
+      this.deleteSavedSearch(searchId, t('filterbar.prompts.search_not_found_delete'));
     }
   }
 
@@ -180,7 +180,7 @@ export class FilterBarActor {
     }
 
     if(confirmationMessage === undefined) {
-      confirmationMessage = t('prompts.confirm_remove_saved_search', { name: savedSearch.name });
+      confirmationMessage = t('filterbar.prompts.confirm_remove_saved_search', { name: savedSearch.name });
     }
 
     var confirmation = confirm(confirmationMessage);

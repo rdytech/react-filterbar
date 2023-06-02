@@ -50,12 +50,12 @@ export class FilterList extends React.Component {
       <div className="btn-group">
         <button className="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
           <i className="icon icon-add" />
-          { t('buttons.add_filter') }
+          { t('filterbar.buttons.add_filter') }
           <i className="icon icon-chevron-down" />
         </button>
         <div className="dropdown-menu" role="menu">
           <input type="text"
-            placeholder="Search"
+            placeholder={ t('filterbar.buttons.search') }
             onChange={this.onSearchTermChange.bind(this)} />
           <ul className="filter-options">
             {filterOptions}

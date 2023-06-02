@@ -13,7 +13,7 @@ export class ExportResultsButton extends React.Component {
     return (
       <button className="btn btn-default" onClick={this.onClick.bind(this)}>
         <i className="icon icon-download" />
-        {t('buttons.export_csv')}
+        {t('filterbar.buttons.export_csv')}
       </button>
     );
   }

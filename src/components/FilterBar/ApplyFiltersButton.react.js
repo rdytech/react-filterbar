@@ -13,7 +13,7 @@ export class ApplyFiltersButton extends React.Component {
     return (
       <button className="btn btn-primary" onClick={this.onClick.bind(this)}>
         <i className="icon icon-tick" />
-        { t('buttons.apply') }
+        { t('filterbar.buttons.apply') }
       </button>
     );
   }

@@ -90,7 +90,7 @@ export class MultiSelectInput extends React.Component {
                 checked={this.state.operator == "any"}
                 onChange={this.updateOperator.bind(this)}
               />
-              { t('buttons.any_selected') }
+              { t('filterbar.buttons.any_selected') }
             </label>
             <label className="radio-inline">
               <input
@@ -100,7 +100,7 @@ export class MultiSelectInput extends React.Component {
                 checked={this.state.operator == "all"}
                 onChange={this.updateOperator.bind(this)}
               />
-              { t('buttons.all_selected') }
+              { t('filterbar.buttons.all_selected') }
             </label>
             <label className="radio-inline">
               <input
@@ -110,7 +110,7 @@ export class MultiSelectInput extends React.Component {
                 checked={this.state.operator == "none"}
                 onChange={this.updateOperator.bind(this)}
               />
-              { t('buttons.missing_any_selected') }
+              { t('filterbar.buttons.missing_any_selected') }
             </label>
           </div>
         )}

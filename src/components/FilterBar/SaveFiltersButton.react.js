@@ -8,14 +8,14 @@ export class SaveFiltersButton extends React.Component {
 
   onClick() {
     if(this.state.configurationName.trim() === '') {
-      $.bootstrapGrowl(t('prompts.search_title_blank'), { type: "danger" });
+      $.bootstrapGrowl(t('filterbar.prompts.search_title_blank'), { type: "danger" });
       return;
     }
     if(this.context.filterBarActor.saveFilters(this.state.configurationName.trim())) {
-      $.bootstrapGrowl(t('prompts.search_saved'), { type: "success" });
+      $.bootstrapGrowl(t('filterbar.prompts.search_saved'), { type: "success" });
     }
     else{
-      $.bootstrapGrowl(t('prompts.no_filters_enabled'), { type: "danger" });
+      $.bootstrapGrowl(t('filterbar.prompts.no_filters_enabled'), { type: "danger" });
     }
     this.setState({configurationName: ''});
   }
@@ -32,14 +32,14 @@ export class SaveFiltersButton extends React.Component {
           data-toggle="dropdown"
           type="button"
         >
-          {t('buttons.save_search')}
+          {t('filterbar.buttons.save_search')}
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">
           <li>
             <form style={{margin: `0 16px`}}>
               <label>
-                {t('buttons.search_title')}
+                {t('filterbar.buttons.search_title')}
               </label>
               <input
                 className="form-control"
@@ -53,7 +53,7 @@ export class SaveFiltersButton extends React.Component {
                 onClick={this.onClick.bind(this)}
                 type="button"
               >
-                {t('buttons.save')}
+                {t('filterbar.buttons.save')}
               </button>
             </form>
           </li>

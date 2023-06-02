@@ -49,7 +49,7 @@ export class SavedSearchesList extends React.Component {
             type="button"
           >
             <i className="icon icon-save" />
-            {t('buttons.saved_searches')}
+            {t('filterbar.buttons.saved_searches')}
             <i className="icon icon-chevron-down" />
           </button>
           <ul className="dropdown-menu" role="menu">

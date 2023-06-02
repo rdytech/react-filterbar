@@ -23,7 +23,7 @@ export class Pagination extends React.Component {
 
     pageLinks.push(
       <li key="first">
-        <a onClick={this.goToFirstPage.bind(this)} style={ {cursor: "pointer"} }>{ t('pagination.first') }</a>
+        <a onClick={this.goToFirstPage.bind(this)} style={ {cursor: "pointer"} }>{ t('filterbar.pagination.first') }</a>
       </li>
     );
 
@@ -57,7 +57,7 @@ export class Pagination extends React.Component {
 
     pageLinks.push(
       <li key="last">
-        <a onClick={this.goToLastPage.bind(this)} style={ {cursor: "pointer"} }>{ t('pagination.last') }</a>
+        <a onClick={this.goToLastPage.bind(this)} style={ {cursor: "pointer"} }>{ t('filterbar.pagination.last') }</a>
       </li>
     );
 

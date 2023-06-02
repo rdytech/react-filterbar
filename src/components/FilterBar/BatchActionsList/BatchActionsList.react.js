@@ -22,7 +22,7 @@ export class BatchActionsList extends React.Component {
       });
     }
     else {
-      alert(t('prompts.no_rows_selected'));
+      alert(t('filterbar.prompts.no_rows_selected'));
     }
   }
 
@@ -77,7 +77,7 @@ export class BatchActionsList extends React.Component {
           data-toggle="dropdown"
           type="button"
         >
-          {t('buttons.bulk_actions')}
+          {t('filterbar.buttons.bulk_actions')}
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">

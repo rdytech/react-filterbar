@@ -51,7 +51,7 @@ export class SingleDateTimeInput extends React.Component {
           <span className="input-group-addon">
             <span aria-hidden="true" className="icon-calendar icon" />
             <span className="sr-only icon icon-calendar">
-              { t('buttons.calendar') }
+              { t('filterbar.buttons.calendar') }
             </span>
           </span>
         </div>

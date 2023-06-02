@@ -17,9 +17,9 @@ export class DateInput extends React.Component {
     var newValue = this.state.value;
 
     if(event.type === "dp") {
-      newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+      newValue[event.target.querySelector("input").getAttribute("data-attr")] = event.target.querySelector("input").value;
     } else if (event.type === "input") {
-      newValue[event.target.getAttribute("placeholder")] = event.target.value;
+      newValue[event.target.getAttribute("data-attr")] = event.target.value;
     }
 
     this.setState({value: newValue});
@@ -53,7 +53,8 @@ export class DateInput extends React.Component {
             data-date-format="DD/MM/YYYY"
             onBlur={this.onBlur.bind(this)}
             onChange={this.handleDateChange}
-            placeholder="from"
+            data-attr="from"
+            placeholder={ t('filterbar.placeholders.from') }
             type="text"
             disabled={this.props.disabled}
             value={this.state.displayFrom || this.state.value.from}
@@ -61,7 +62,7 @@ export class DateInput extends React.Component {
           <span className="input-group-addon">
             <span aria-hidden="true" className="icon-calendar icon" />
             <span className="sr-only icon icon-calendar">
-              {t('buttons.calendar')}
+              {t('filterbar.buttons.calendar')}
             </span>
           </span>
         </div>
@@ -72,7 +73,8 @@ export class DateInput extends React.Component {
             data-date-format="DD/MM/YYYY"
             onBlur={this.onBlur.bind(this)}
             onChange={this.handleDateChange}
-            placeholder="to"
+            data-attr="to"
+            placeholder={ t('filterbar.placeholders.to') }
             type="text"
             disabled={this.props.disabled}
             value={this.state.displayTo || this.state.value.to}
@@ -80,7 +82,7 @@ export class DateInput extends React.Component {
           <span className="input-group-addon">
             <span aria-hidden="true" className="icon-calendar icon" />
             <span className="sr-only icon icon-calendar">
-              {t('buttons.calendar')}
+              {t('filterbar.buttons.calendar')}
             </span>
           </span>
         </div>
