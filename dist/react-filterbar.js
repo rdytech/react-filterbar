@@ -20245,9 +20245,9 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       };
 
       if (event.type === "dp") {
-        newValue[event.target.querySelector("input").getAttribute("attribute")] = event.target.querySelector("input").value;
+        newValue[event.target.querySelector("input").getAttribute("data-attr")] = event.target.querySelector("input").value;
       } else if (event.type === "input") {
-        newValue[event.target.getAttribute("attribute")] = event.target.value;
+        newValue[event.target.getAttribute("data-attr")] = event.target.value;
       }
 
       this.setState({
