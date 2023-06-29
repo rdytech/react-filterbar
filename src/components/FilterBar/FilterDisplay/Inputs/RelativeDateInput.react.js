@@ -6,6 +6,7 @@ export class RelativeDateInput extends React.Component {
     super(props);
     this.state = { value: this.props.value || { from: null, to: null, value: null } };
     this.setDisplayDates(this.props.value['value']);
+    this.props.relativeOptions = relativeOptions();
   }
 
   // If relative option selected, set dates for the datepickers to display
@@ -180,9 +181,7 @@ RelativeDateInput.defaultProps = {
 
 function relativeOptions() {
   var lastWeek = moment().subtract(1, 'week');
-
   var options = {};
-
     options[t('filterbar.periods.custom_period')] =       { value: '', from: null, to: null };
     options[t('filterbar.periods.none')] =                {};
     options[t('filterbar.periods.today')] =               { from: moment(), to: moment() };

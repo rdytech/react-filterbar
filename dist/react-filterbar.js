@@ -20209,6 +20209,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
 
     _this.setDisplayDates(_this.props.value['value']);
 
+    _this.props.relativeOptions = relativeOptions();
     return _this;
   } // If relative option selected, set dates for the datepickers to display
 
