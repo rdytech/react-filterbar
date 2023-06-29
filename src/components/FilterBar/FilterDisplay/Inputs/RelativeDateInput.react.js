@@ -5,19 +5,22 @@ export class RelativeDateInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: this.props.value || { from: null, to: null, value: null } };
-    this.setDisplayDates(this.props.value['value']);
     this.props.relativeOptions = relativeOptions();
+    this.setDisplayDates(this.props.value['value']);
   }
 
   // If relative option selected, set dates for the datepickers to display
   setDisplayDates(relativeDateSelection) {
-    if(!this.relativeValueSelected(relativeDateSelection) || relativeDateSelection == 'None') {
+    if(!this.relativeValueSelected(relativeDateSelection) || relativeDateSelection == t('filterbar.periods.none')) {
       return;
     }
 
     var selected            = this.props.relativeOptions[relativeDateSelection];
-    this.state.displayFrom  = selected.from && selected.from.format(this.props.dateFormat);
-    this.state.displayTo    = selected.to   && selected.to.format(this.props.dateFormat);
+
+    if(selected){
+      this.state.displayFrom  = selected.from && selected.from.format(this.props.dateFormat);
+      this.state.displayTo    = selected.to   && selected.to.format(this.props.dateFormat);
+    }
   }
 
   onRelativeChange(event) {

@@ -20206,10 +20206,10 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         value: null
       }
     };
+    _this.props.relativeOptions = relativeOptions();
 
     _this.setDisplayDates(_this.props.value['value']);
 
-    _this.props.relativeOptions = relativeOptions();
     return _this;
   } // If relative option selected, set dates for the datepickers to display
 
@@ -20217,13 +20217,16 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
   _createClass(RelativeDateInput, [{
     key: "setDisplayDates",
     value: function setDisplayDates(relativeDateSelection) {
-      if (!this.relativeValueSelected(relativeDateSelection) || relativeDateSelection == 'None') {
+      if (!this.relativeValueSelected(relativeDateSelection) || relativeDateSelection == (0, _i18n["default"])('filterbar.periods.none')) {
         return;
       }
 
       var selected = this.props.relativeOptions[relativeDateSelection];
-      this.state.displayFrom = selected.from && selected.from.format(this.props.dateFormat);
-      this.state.displayTo = selected.to && selected.to.format(this.props.dateFormat);
+
+      if (selected) {
+        this.state.displayFrom = selected.from && selected.from.format(this.props.dateFormat);
+        this.state.displayTo = selected.to && selected.to.format(this.props.dateFormat);
+      }
     }
   }, {
     key: "onRelativeChange",
