@@ -1,3 +1,5 @@
+import t from "../../locales/i18n";
+
 export class ApplyFiltersButton extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +13,7 @@ export class ApplyFiltersButton extends React.Component {
     return (
       <button className="btn btn-primary" onClick={this.onClick.bind(this)}>
         <i className="icon icon-tick" />
-        Apply
+        { t('filterbar.buttons.apply') }
       </button>
     );
   }

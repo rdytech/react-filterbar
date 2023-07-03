@@ -1,3 +1,5 @@
+import t from "../../locales/i18n";
+
 export class SaveFiltersButton extends React.Component {
   constructor(props) {
     super(props);
@@ -6,14 +8,14 @@ export class SaveFiltersButton extends React.Component {
 
   onClick() {
     if(this.state.configurationName.trim() === '') {
-      $.bootstrapGrowl("Search title can't be blank", { type: "danger" });
+      $.bootstrapGrowl(t('filterbar.prompts.search_title_blank'), { type: "danger" });
       return;
     }
     if(this.context.filterBarActor.saveFilters(this.state.configurationName.trim())) {
-      $.bootstrapGrowl("Search saved sucessfully", { type: "success" });
+      $.bootstrapGrowl(t('filterbar.prompts.search_saved'), { type: "success" });
     }
     else{
-      $.bootstrapGrowl("No filters enabled, please add filter", { type: "danger" });
+      $.bootstrapGrowl(t('filterbar.prompts.no_filters_enabled'), { type: "danger" });
     }
     this.setState({configurationName: ''});
   }
@@ -30,13 +32,15 @@ export class SaveFiltersButton extends React.Component {
           data-toggle="dropdown"
           type="button"
         >
-          Save Search
+          {t('filterbar.buttons.save_search')}
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">
           <li>
             <form style={{margin: `0 16px`}}>
-              <label>Search Title</label>
+              <label>
+                {t('filterbar.buttons.search_title')}
+              </label>
               <input
                 className="form-control"
                 onChange={this.onChange.bind(this)}
@@ -49,7 +53,7 @@ export class SaveFiltersButton extends React.Component {
                 onClick={this.onClick.bind(this)}
                 type="button"
               >
-                Save
+                {t('filterbar.buttons.save')}
               </button>
             </form>
           </li>

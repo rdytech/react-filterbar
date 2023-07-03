@@ -1,3 +1,5 @@
+import t from "../../../../locales/i18n";
+
 export class RangeInput extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +11,7 @@ export class RangeInput extends React.Component {
     var newValue = this.state.value;
 
     if (event.type === "input") {
-      newValue[event.target.getAttribute("placeholder")] = event.target.value;
+      newValue[event.target.getAttribute("data-attr")] = event.target.value;
     }
 
     this.setState({value: newValue});
@@ -28,7 +30,8 @@ export class RangeInput extends React.Component {
               className="form-control"
               onBlur={this.onBlur.bind(this)}
               onChange={this.onChange.bind(this)}
-              placeholder="from"
+              data-attr="from"
+              placeholder={ t('filterbar.placeholders.from') }
               value={this.state.value.from}
             />
           </div>
@@ -37,7 +40,8 @@ export class RangeInput extends React.Component {
               className="form-control"
               onBlur={this.onBlur.bind(this)}
               onChange={this.onChange.bind(this)}
-              placeholder="to"
+              data-attr="to"
+              placeholder={ t('filterbar.placeholders.to') }
               value={this.state.value.to}
             />
           </div>

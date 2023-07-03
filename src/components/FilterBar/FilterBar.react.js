@@ -67,5 +67,5 @@ FilterBar.contextTypes = {
   filterBarActor: React.PropTypes.object,
   filterBarStore: React.PropTypes.object,
   tableStore: React.PropTypes.object,
-  batchActionsStore: React.PropTypes.object
+  batchActionsStore: React.PropTypes.object,
 };

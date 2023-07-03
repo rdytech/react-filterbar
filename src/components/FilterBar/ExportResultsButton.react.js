@@ -1,3 +1,5 @@
+import t from "../../locales/i18n";
+
 export class ExportResultsButton extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +13,7 @@ export class ExportResultsButton extends React.Component {
     return (
       <button className="btn btn-default" onClick={this.onClick.bind(this)}>
         <i className="icon icon-download" />
-        Export CSV
+        {t('filterbar.buttons.export_csv')}
       </button>
     );
   }

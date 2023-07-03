@@ -1,4 +1,5 @@
 import {FilterInput} from "./FilterInput.react";
+import t from "../../../locales/i18n";
 
 export class FilterDisplay extends React.Component {
   constructor(props) {
@@ -57,7 +58,7 @@ export class FilterDisplay extends React.Component {
     }, this);
 
     if (filters.length === 0) {
-      filters = (<div>No Filters Enabled!</div>);
+      filters = (<div>{t('filterbar.buttons.no_filters_enabled')}</div>);
     }
 
     return (

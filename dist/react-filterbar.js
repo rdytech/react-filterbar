@@ -17910,6 +17910,10 @@ var URLHelper = _interopRequireWildcard(require("../helpers/URLHelper"));
 
 var _FilterVerificator = require("../helpers/FilterVerificator");
 
+var _i18n = _interopRequireDefault(require("../locales/i18n.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -18068,7 +18072,7 @@ var FilterBarActor = /*#__PURE__*/function () {
 
         this.applyFilters();
       } else {
-        this.deleteSavedSearch(searchId, 'One of the filters in this saved search cannot be applied anymore. Remove saved search?');
+        this.deleteSavedSearch(searchId, (0, _i18n["default"])('filterbar.prompts.search_not_found_delete'));
       }
     }
   }, {
@@ -18141,7 +18145,9 @@ var FilterBarActor = /*#__PURE__*/function () {
       }
 
       if (confirmationMessage === undefined) {
-        confirmationMessage = 'Are you sure remove saved search "' + savedSearch.name + '"?';
+        confirmationMessage = (0, _i18n["default"])('filterbar.prompts.confirm_remove_saved_search', {
+          name: savedSearch.name
+        });
       }
 
       var confirmation = confirm(confirmationMessage);
@@ -18162,7 +18168,7 @@ var FilterBarActor = /*#__PURE__*/function () {
 
 exports.FilterBarActor = FilterBarActor;
 
-},{"../clients/SearchClient":436,"../helpers/FilterVerificator":477,"../helpers/URLHelper":479}],434:[function(require,module,exports){
+},{"../clients/SearchClient":436,"../helpers/FilterVerificator":477,"../helpers/URLHelper":479,"../locales/i18n.js":481}],434:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18397,6 +18403,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ApplyFiltersButton = void 0;
 
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -18441,7 +18451,7 @@ var ApplyFiltersButton = /*#__PURE__*/function (_React$Component) {
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-tick"
-      }), "Apply");
+      }), (0, _i18n["default"])('filterbar.buttons.apply'));
     }
   }]);
 
@@ -18453,7 +18463,7 @@ ApplyFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],438:[function(require,module,exports){
+},{"../../locales/i18n":481}],438:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18468,6 +18478,10 @@ var _BatchActionsListItem = require("./BatchActionsListItem.react");
 var URLHelper = _interopRequireWildcard(require("../../../helpers/URLHelper"));
 
 var ModalHelper = _interopRequireWildcard(require("../../../helpers/ModalHelper"));
+
+var _i18n = _interopRequireDefault(require("../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
@@ -18522,7 +18536,7 @@ var BatchActionsList = /*#__PURE__*/function (_React$Component) {
           }.bind(this)
         });
       } else {
-        alert('No rows selected. Please select rows before running bulk actions.');
+        alert((0, _i18n["default"])('filterbar.prompts.no_rows_selected'));
       }
     }
   }, {
@@ -18573,7 +18587,7 @@ var BatchActionsList = /*#__PURE__*/function (_React$Component) {
         className: buttonClass,
         "data-toggle": "dropdown",
         type: "button"
-      }, "Bulk Actions", /*#__PURE__*/React.createElement("i", {
+      }, (0, _i18n["default"])('filterbar.buttons.bulk_actions'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -18593,7 +18607,7 @@ BatchActionsList.contextTypes = {
   batchActionsStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../helpers/ModalHelper":478,"../../../helpers/URLHelper":479,"./BatchActionsListItem.react":439}],439:[function(require,module,exports){
+},{"../../../helpers/ModalHelper":478,"../../../helpers/URLHelper":479,"../../../locales/i18n":481,"./BatchActionsListItem.react":439}],439:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18664,6 +18678,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ClearFiltersButton = void 0;
 
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -18708,7 +18726,7 @@ var ClearFiltersButton = /*#__PURE__*/function (_React$Component) {
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-delete"
-      }), "Clear");
+      }), (0, _i18n["default"])('filterbar.buttons.clear'));
     }
   }]);
 
@@ -18720,7 +18738,7 @@ ClearFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],441:[function(require,module,exports){
+},{"../../locales/i18n":481}],441:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18731,6 +18749,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.ConfigurationButton = void 0;
 
 var ModalHelper = _interopRequireWildcard(require("../../helpers/ModalHelper"));
+
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
@@ -18787,7 +18809,7 @@ var ConfigurationButton = /*#__PURE__*/function (_React$Component) {
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-edit-outline"
-      }), "Columns");
+      }), (0, _i18n["default"])('filterbar.buttons.columns'));
     }
   }]);
 
@@ -18799,7 +18821,7 @@ ConfigurationButton.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../helpers/ModalHelper":478}],442:[function(require,module,exports){
+},{"../../helpers/ModalHelper":478,"../../locales/i18n":481}],442:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18808,6 +18830,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.ExportResultsButton = void 0;
+
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -18853,7 +18879,7 @@ var ExportResultsButton = /*#__PURE__*/function (_React$Component) {
         onClick: this.onClick.bind(this)
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-download"
-      }), "Export CSV");
+      }), (0, _i18n["default"])('filterbar.buttons.export_csv'));
     }
   }]);
 
@@ -18865,7 +18891,7 @@ ExportResultsButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],443:[function(require,module,exports){
+},{"../../locales/i18n":481}],443:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18973,6 +18999,10 @@ exports.FilterDisplay = void 0;
 
 var _FilterInput = require("./FilterInput.react");
 
+var _i18n = _interopRequireDefault(require("../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -19062,7 +19092,7 @@ var FilterDisplay = /*#__PURE__*/function (_React$Component) {
       }, this);
 
       if (filters.length === 0) {
-        filters = /*#__PURE__*/React.createElement("div", null, "No Filters Enabled!");
+        filters = /*#__PURE__*/React.createElement("div", null, (0, _i18n["default"])('filterbar.buttons.no_filters_enabled'));
       }
 
       return /*#__PURE__*/React.createElement("div", {
@@ -19088,7 +19118,7 @@ FilterDisplay.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{"./FilterInput.react":445}],445:[function(require,module,exports){
+},{"../../../locales/i18n":481,"./FilterInput.react":445}],445:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19239,6 +19269,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DateInput = void 0;
 
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -19288,9 +19322,9 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
       var newValue = this.state.value;
 
       if (event.type === "dp") {
-        newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+        newValue[event.target.querySelector("input").getAttribute("data-attr")] = event.target.querySelector("input").value;
       } else if (event.type === "input") {
-        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+        newValue[event.target.getAttribute("data-attr")] = event.target.value;
       }
 
       this.setState({
@@ -19337,7 +19371,8 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
         "data-date-format": "DD/MM/YYYY",
         onBlur: this.onBlur.bind(this),
         onChange: this.handleDateChange,
-        placeholder: "from",
+        "data-attr": "from",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.from'),
         type: "text",
         disabled: this.props.disabled,
         value: this.state.displayFrom || this.state.value.from
@@ -19348,7 +19383,7 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, "Calendar"))), /*#__PURE__*/React.createElement("div", {
+      }, (0, _i18n["default"])('filterbar.buttons.calendar')))), /*#__PURE__*/React.createElement("div", {
         className: "input-group datepicker dateRangeTo",
         ref: "dateRangeTo"
       }, /*#__PURE__*/React.createElement("input", {
@@ -19357,7 +19392,8 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
         "data-date-format": "DD/MM/YYYY",
         onBlur: this.onBlur.bind(this),
         onChange: this.handleDateChange,
-        placeholder: "to",
+        "data-attr": "to",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.to'),
         type: "text",
         disabled: this.props.disabled,
         value: this.state.displayTo || this.state.value.to
@@ -19368,7 +19404,7 @@ var DateInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, "Calendar"))));
+      }, (0, _i18n["default"])('filterbar.buttons.calendar')))));
     }
   }]);
 
@@ -19388,7 +19424,7 @@ DateInput.defaultProps = {
   disabled: false
 };
 
-},{}],448:[function(require,module,exports){
+},{"../../../../locales/i18n":481}],448:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19397,6 +19433,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.DateTimeInput = void 0;
+
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -19444,9 +19484,9 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
       var newValue = this.state.value;
 
       if (event.type === "dp") {
-        newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+        newValue[event.target.querySelector("input").getAttribute("data-attr")] = event.target.querySelector("input").value;
       } else if (event.type === "input") {
-        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+        newValue[event.target.getAttribute("data-attr")] = event.target.value;
       }
 
       this.setState({
@@ -19495,7 +19535,8 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
         "data-date-format": "DD/MM/YYYY HH:mm",
         onBlur: this.onBlur.bind(this),
         onChange: this.onChange.bind(this),
-        placeholder: "from",
+        "data-attr": "from",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.from'),
         type: "text",
         value: this.state.value.from
       }), /*#__PURE__*/React.createElement("span", {
@@ -19505,7 +19546,7 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, "Calendar"))), /*#__PURE__*/React.createElement("div", {
+      }, (0, _i18n["default"])('filterbar.buttons.calendar')))), /*#__PURE__*/React.createElement("div", {
         className: "input-group datepicker dateTimeRangeTo",
         ref: "dateTimeRangeTo"
       }, /*#__PURE__*/React.createElement("input", {
@@ -19514,7 +19555,8 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
         "data-date-format": "DD/MM/YYYY HH:mm",
         onBlur: this.onBlur.bind(this),
         onChange: this.onChange.bind(this),
-        placeholder: "to",
+        "data-attr": "to",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.to'),
         type: "text",
         value: this.state.value.to
       }), /*#__PURE__*/React.createElement("span", {
@@ -19524,7 +19566,7 @@ var DateTimeInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, "Calendar"))));
+      }, (0, _i18n["default"])('filterbar.buttons.calendar')))));
     }
   }]);
 
@@ -19541,7 +19583,7 @@ DateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],449:[function(require,module,exports){
+},{"../../../../locales/i18n":481}],449:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19833,6 +19875,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MultiSelectInput = void 0;
 
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -19961,7 +20007,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         value: "any",
         checked: this.state.operator == "any",
         onChange: this.updateOperator.bind(this)
-      }), "ANY selected"), /*#__PURE__*/React.createElement("label", {
+      }), (0, _i18n["default"])('filterbar.buttons.any_selected')), /*#__PURE__*/React.createElement("label", {
         className: "radio-inline"
       }, /*#__PURE__*/React.createElement("input", {
         type: "radio",
@@ -19969,7 +20015,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         value: "all",
         checked: this.state.operator == "all",
         onChange: this.updateOperator.bind(this)
-      }), "ALL selected"), /*#__PURE__*/React.createElement("label", {
+      }), (0, _i18n["default"])('filterbar.buttons.all_selected')), /*#__PURE__*/React.createElement("label", {
         className: "radio-inline"
       }, /*#__PURE__*/React.createElement("input", {
         type: "radio",
@@ -19977,7 +20023,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         value: "none",
         checked: this.state.operator == "none",
         onChange: this.updateOperator.bind(this)
-      }), "MISSING ANY selected")));
+      }), (0, _i18n["default"])('filterbar.buttons.missing_any_selected'))));
     }
   }]);
 
@@ -19994,7 +20040,7 @@ MultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],452:[function(require,module,exports){
+},{"../../../../locales/i18n":481}],452:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20003,6 +20049,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.RangeInput = void 0;
+
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -20050,7 +20100,7 @@ var RangeInput = /*#__PURE__*/function (_React$Component) {
       var newValue = this.state.value;
 
       if (event.type === "input") {
-        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+        newValue[event.target.getAttribute("data-attr")] = event.target.value;
       }
 
       this.setState({
@@ -20073,7 +20123,8 @@ var RangeInput = /*#__PURE__*/function (_React$Component) {
         className: "form-control",
         onBlur: this.onBlur.bind(this),
         onChange: this.onChange.bind(this),
-        placeholder: "from",
+        "data-attr": "from",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.from'),
         value: this.state.value.from
       })), /*#__PURE__*/React.createElement("div", {
         className: "col-xs-6"
@@ -20081,7 +20132,8 @@ var RangeInput = /*#__PURE__*/function (_React$Component) {
         className: "form-control",
         onBlur: this.onBlur.bind(this),
         onChange: this.onChange.bind(this),
-        placeholder: "to",
+        "data-attr": "to",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.to'),
         value: this.state.value.to
       }))));
     }
@@ -20100,7 +20152,7 @@ RangeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],453:[function(require,module,exports){
+},{"../../../../locales/i18n":481}],453:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20111,6 +20163,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.RelativeDateInput = void 0;
 
 var _DateInput = require("./DateInput.react");
+
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -20150,6 +20206,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         value: null
       }
     };
+    _this.props.relativeOptions = relativeOptions();
 
     _this.setDisplayDates(_this.props.value['value']);
 
@@ -20160,13 +20217,16 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
   _createClass(RelativeDateInput, [{
     key: "setDisplayDates",
     value: function setDisplayDates(relativeDateSelection) {
-      if (!this.relativeValueSelected(relativeDateSelection) || relativeDateSelection == 'None') {
+      if (!this.relativeValueSelected(relativeDateSelection) || relativeDateSelection == (0, _i18n["default"])('filterbar.periods.none')) {
         return;
       }
 
       var selected = this.props.relativeOptions[relativeDateSelection];
-      this.state.displayFrom = selected.from && selected.from.format(this.props.dateFormat);
-      this.state.displayTo = selected.to && selected.to.format(this.props.dateFormat);
+
+      if (selected) {
+        this.state.displayFrom = selected.from && selected.from.format(this.props.dateFormat);
+        this.state.displayTo = selected.to && selected.to.format(this.props.dateFormat);
+      }
     }
   }, {
     key: "onRelativeChange",
@@ -20189,9 +20249,9 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       };
 
       if (event.type === "dp") {
-        newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+        newValue[event.target.querySelector("input").getAttribute("data-attr")] = event.target.querySelector("input").value;
       } else if (event.type === "input") {
-        newValue[event.target.getAttribute("placeholder")] = event.target.value;
+        newValue[event.target.getAttribute("data-attr")] = event.target.value;
       }
 
       this.setState({
@@ -20254,33 +20314,33 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         className: "input-group"
       }, /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, "Today"), /*#__PURE__*/React.createElement("input", {
+      }, (0, _i18n["default"])('filterbar.buttons.today')), /*#__PURE__*/React.createElement("input", {
         type: "number",
         className: "form-control",
         onChange: function onChange(e) {
           return _this2.handleInputChange(e, 'from');
         },
-        placeholder: "+/- days",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.plus_minus_days'),
         value: this.state.value.from
       }), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, "day(s)"), /*#__PURE__*/React.createElement("span", {
+      }, (0, _i18n["default"])('filterbar.buttons.days')), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
       }, this.momentFormatted(this.state.value.from))), /*#__PURE__*/React.createElement("div", {
         className: "input-group"
       }, /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, "Today"), /*#__PURE__*/React.createElement("input", {
+      }, (0, _i18n["default"])('filterbar.buttons.today')), /*#__PURE__*/React.createElement("input", {
         type: "number",
         className: "form-control",
         onChange: function onChange(e) {
           return _this2.handleInputChange(e, 'to');
         },
-        placeholder: "+/- days",
+        placeholder: (0, _i18n["default"])('filterbar.placeholders.plus_minus_days'),
         value: this.state.value.to
       }), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, "day(s)"), /*#__PURE__*/React.createElement("span", {
+      }, (0, _i18n["default"])('filterbar.buttons.days')), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
       }, this.momentFormatted(this.state.value.to))));
     }
@@ -20319,7 +20379,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         ref: "relativeSelect"
       }, Object.keys(this.props.relativeOptions).map(function (optionKey) {
         return _this3.relativeOption(optionKey);
-      })), this.state.value.value == "Relative from today" ? this.showRelativeRangeInputs() : this.showDateInputs());
+      })), this.state.value.value == (0, _i18n["default"])('filterbar.periods.relative_from_today') ? this.showRelativeRangeInputs() : this.showDateInputs());
     }
   }]);
 
@@ -20342,53 +20402,53 @@ RelativeDateInput.defaultProps = {
 
 function relativeOptions() {
   var lastWeek = moment().subtract(1, 'week');
-  return {
-    'Custom Period': {
-      value: '',
-      from: null,
-      to: null
-    },
-    'None': {},
-    'Today': {
-      from: moment(),
-      to: moment()
-    },
-    'Last Week': {
-      from: lastWeek.clone().startOf('isoWeek'),
-      to: lastWeek.clone().endOf('isoWeek')
-    },
-    'This Week': {
-      from: moment().startOf('isoWeek'),
-      to: moment().endOf('isoWeek')
-    },
-    'Older than 7 days': {
-      from: null,
-      to: moment().subtract(8, 'day')
-    },
-    'Older than 14 days': {
-      from: null,
-      to: moment().subtract(15, 'day')
-    },
-    'Older than 20 days': {
-      from: null,
-      to: moment().subtract(21, 'day')
-    },
-    'Older than 30 days': {
-      from: null,
-      to: moment().subtract(31, 'day')
-    },
-    'Older than 42 days (6 weeks)': {
-      from: null,
-      to: moment().subtract(43, 'day')
-    },
-    'Relative from today': {
-      from: null,
-      to: null
-    }
+  var options = {};
+  options[(0, _i18n["default"])('filterbar.periods.custom_period')] = {
+    value: '',
+    from: null,
+    to: null
   };
+  options[(0, _i18n["default"])('filterbar.periods.none')] = {};
+  options[(0, _i18n["default"])('filterbar.periods.today')] = {
+    from: moment(),
+    to: moment()
+  };
+  options[(0, _i18n["default"])('filterbar.periods.last_week')] = {
+    from: lastWeek.clone().startOf('isoWeek'),
+    to: lastWeek.clone().endOf('isoWeek')
+  };
+  options[(0, _i18n["default"])('filterbar.periods.this_week')] = {
+    from: moment().startOf('isoWeek'),
+    to: moment().endOf('isoWeek')
+  };
+  options[(0, _i18n["default"])('filterbar.periods.older_than_7_days')] = {
+    from: null,
+    to: moment().subtract(8, 'day')
+  };
+  options[(0, _i18n["default"])('filterbar.periods.older_than_14_days')] = {
+    from: null,
+    to: moment().subtract(15, 'day')
+  };
+  options[(0, _i18n["default"])('filterbar.periods.older_than_20_days')] = {
+    from: null,
+    to: moment().subtract(21, 'day')
+  };
+  options[(0, _i18n["default"])('filterbar.periods.older_than_30_days')] = {
+    from: null,
+    to: moment().subtract(31, 'day')
+  };
+  options[(0, _i18n["default"])('filterbar.periods.older_than_42_days')] = {
+    from: null,
+    to: moment().subtract(43, 'day')
+  };
+  options[(0, _i18n["default"])('filterbar.periods.relative_from_today')] = {
+    from: null,
+    to: null
+  };
+  return options;
 }
 
-},{"./DateInput.react":447}],454:[function(require,module,exports){
+},{"../../../../locales/i18n":481,"./DateInput.react":447}],454:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20542,6 +20602,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.SingleDateTimeInput = void 0;
 
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -20635,7 +20699,7 @@ var SingleDateTimeInput = /*#__PURE__*/function (_React$Component) {
         className: "icon-calendar icon"
       }), /*#__PURE__*/React.createElement("span", {
         className: "sr-only icon icon-calendar"
-      }, "Calendar"))));
+      }, (0, _i18n["default"])('filterbar.buttons.calendar')))));
     }
   }]);
 
@@ -20652,7 +20716,7 @@ SingleDateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],456:[function(require,module,exports){
+},{"../../../../locales/i18n":481}],456:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20765,6 +20829,10 @@ exports.FilterList = void 0;
 
 var _FilterListOption = require("./FilterListOption.react");
 
+var _i18n = _interopRequireDefault(require("../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -20852,14 +20920,14 @@ var FilterList = /*#__PURE__*/function (_React$Component) {
         type: "button"
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-add"
-      }), "Add Filter", /*#__PURE__*/React.createElement("i", {
+      }), (0, _i18n["default"])('filterbar.buttons.add_filter'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("div", {
         className: "dropdown-menu",
         role: "menu"
       }, /*#__PURE__*/React.createElement("input", {
         type: "text",
-        placeholder: "Search",
+        placeholder: (0, _i18n["default"])('filterbar.buttons.search'),
         onChange: this.onSearchTermChange.bind(this)
       }), /*#__PURE__*/React.createElement("ul", {
         className: "filter-options"
@@ -20879,7 +20947,7 @@ FilterList.propTypes = {
   disabledFilters: React.PropTypes.object.isRequired
 };
 
-},{"./FilterListOption.react":458}],458:[function(require,module,exports){
+},{"../../../locales/i18n":481,"./FilterListOption.react":458}],458:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20959,6 +21027,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.SaveFiltersButton = void 0;
 
+var _i18n = _interopRequireDefault(require("../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -21000,18 +21072,18 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
     key: "onClick",
     value: function onClick() {
       if (this.state.configurationName.trim() === '') {
-        $.bootstrapGrowl("Search title can't be blank", {
+        $.bootstrapGrowl((0, _i18n["default"])('filterbar.prompts.search_title_blank'), {
           type: "danger"
         });
         return;
       }
 
       if (this.context.filterBarActor.saveFilters(this.state.configurationName.trim())) {
-        $.bootstrapGrowl("Search saved sucessfully", {
+        $.bootstrapGrowl((0, _i18n["default"])('filterbar.prompts.search_saved'), {
           type: "success"
         });
       } else {
-        $.bootstrapGrowl("No filters enabled, please add filter", {
+        $.bootstrapGrowl((0, _i18n["default"])('filterbar.prompts.no_filters_enabled'), {
           type: "danger"
         });
       }
@@ -21036,7 +21108,7 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
         className: "btn btn-default dropdown-toggle",
         "data-toggle": "dropdown",
         type: "button"
-      }, "Save Search", /*#__PURE__*/React.createElement("i", {
+      }, (0, _i18n["default"])('filterbar.buttons.save_search'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -21045,7 +21117,7 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
         style: {
           margin: "0 16px"
         }
-      }, /*#__PURE__*/React.createElement("label", null, "Search Title"), /*#__PURE__*/React.createElement("input", {
+      }, /*#__PURE__*/React.createElement("label", null, (0, _i18n["default"])('filterbar.buttons.search_title')), /*#__PURE__*/React.createElement("input", {
         className: "form-control",
         onChange: this.onChange.bind(this),
         type: "text",
@@ -21057,7 +21129,7 @@ var SaveFiltersButton = /*#__PURE__*/function (_React$Component) {
         },
         onClick: this.onClick.bind(this),
         type: "button"
-      }, "Save")))));
+      }, (0, _i18n["default"])('filterbar.buttons.save'))))));
     }
   }]);
 
@@ -21069,7 +21141,7 @@ SaveFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],460:[function(require,module,exports){
+},{"../../locales/i18n":481}],460:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21080,6 +21152,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.SavedSearchesList = void 0;
 
 var _SavedSearchesListItem = require("./SavedSearchesListItem.react");
+
+var _i18n = _interopRequireDefault(require("../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -21159,7 +21235,7 @@ var SavedSearchesList = /*#__PURE__*/function (_React$Component) {
         type: "button"
       }, /*#__PURE__*/React.createElement("i", {
         className: "icon icon-save"
-      }), "Saved Searches", /*#__PURE__*/React.createElement("i", {
+      }), (0, _i18n["default"])('filterbar.buttons.saved_searches'), /*#__PURE__*/React.createElement("i", {
         className: "icon icon-chevron-down"
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
@@ -21177,7 +21253,7 @@ SavedSearchesList.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"./SavedSearchesListItem.react":461}],461:[function(require,module,exports){
+},{"../../../locales/i18n":481,"./SavedSearchesListItem.react":461}],461:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -22392,7 +22468,7 @@ var Pagination = /*#__PURE__*/function (_React$Component) {
         style: {
           cursor: "pointer"
         }
-      }, (0, _i18n["default"])('pagination.first'))));
+      }, (0, _i18n["default"])('filterbar.pagination.first'))));
       var lowestPageLink = 1,
           highestPageLink = 1;
 
@@ -22433,7 +22509,7 @@ var Pagination = /*#__PURE__*/function (_React$Component) {
         style: {
           cursor: "pointer"
         }
-      }, (0, _i18n["default"])('pagination.last'))));
+      }, (0, _i18n["default"])('filterbar.pagination.last'))));
       return /*#__PURE__*/React.createElement("nav", null, /*#__PURE__*/React.createElement("ul", {
         className: "pagination"
       }, pageLinks));
@@ -22822,9 +22898,58 @@ function redirectUrl(url) {
 },{"URIjs":3}],480:[function(require,module,exports){
 module.exports={
   "en": {
-    "pagination": {
-      "first": "First",
-      "last":"Last"
+    "filterbar": {
+      "pagination": {
+        "first": "First",
+        "last":"Last"
+      },
+      "placeholders": {
+        "search": "Search",
+        "plus_minus_days": "+/- days",
+        "from": "From",
+        "to": "To"
+      },
+      "buttons": {
+        "add_filter": "Add Filter",
+        "search": "Search",
+        "apply": "Apply",
+        "clear": "Clear",
+        "save_search": "Save Search",
+        "search_title": "Search Title",
+        "save": "Save",
+        "saved_searches": "Saved Searches",
+        "export_csv": "Export CSV",
+        "bulk_actions": "Bulk Actions",
+        "no_filters_enabled": "No Filters Enabled!",
+        "calendar": "Calendar",
+        "any_selected": "ANY selected",
+        "all_selected": "ALL selected",
+        "missing_any_selected": "MISSING ANY selected",
+        "today": "Today",
+        "days": "day(s)",
+        "columns": "Columns"
+      },
+      "periods": {
+        "custom_period": "Custom Period",
+        "none": "None",
+        "today": "Today",
+        "last_week": "Last Week",
+        "this_week": "This Week",
+        "older_than_7_days": "Older than 7 days",
+        "older_than_14_days": "Older than 14 days",
+        "older_than_20_days": "Older than 20 days",
+        "older_than_30_days": "Older than 30 days",
+        "older_than_42_days": "Older than 42 days (6 weeks)",
+        "relative_from_today": "Relative from today"
+      },
+      "prompts": {
+        "search_not_found_delete": "One of the filters in this saved search cannot be applied anymore. Remove saved search?",
+        "confirm_remove_saved_search": "Are you sure you want to remove saved search \"%{name}\"?",
+        "no_rows_selected": "No rows selected. Please select rows before running bulk actions.",
+        "search_title_blank": "Search title can't be blank",
+        "search_saved": "Search saved sucessfully",
+        "no_filters_enabled": "No filters enabled, please add filter"
+      }
     }
   }
 }
@@ -22849,12 +22974,14 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 I18nJs.translations["en"] = defaultTranslations["en"];
 
-function t(key) {
+function t() {
   if (typeof I18n !== 'undefined') {
-    return I18n.t(key);
+    var _I18n;
+
+    return (_I18n = I18n).t.apply(_I18n, arguments);
   }
 
-  return I18nJs.t(key);
+  return I18nJs.t.apply(I18nJs, arguments);
 }
 
 var _default = t;

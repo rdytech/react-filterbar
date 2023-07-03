@@ -1,6 +1,7 @@
 import * as SearchClient from "../clients/SearchClient";
 import * as URLHelper from "../helpers/URLHelper";
 import {FilterVerificator} from "../helpers/FilterVerificator";
+import t from '../locales/i18n.js';
 
 function updateTable(tableStore) {
   return function (tableStateObject) {
@@ -119,7 +120,7 @@ export class FilterBarActor {
 
       this.applyFilters();
     } else {
-      this.deleteSavedSearch(searchId, 'One of the filters in this saved search cannot be applied anymore. Remove saved search?');
+      this.deleteSavedSearch(searchId, t('filterbar.prompts.search_not_found_delete'));
     }
   }
 
@@ -179,7 +180,7 @@ export class FilterBarActor {
     }
 
     if(confirmationMessage === undefined) {
-      confirmationMessage = 'Are you sure remove saved search "' + savedSearch.name + '"?';
+      confirmationMessage = t('filterbar.prompts.confirm_remove_saved_search', { name: savedSearch.name });
     }
 
     var confirmation = confirm(confirmationMessage);

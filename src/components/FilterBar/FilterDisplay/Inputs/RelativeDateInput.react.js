@@ -1,21 +1,26 @@
 import {DateInput} from "./DateInput.react";
+import t from "../../../../locales/i18n";
 
 export class RelativeDateInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: this.props.value || { from: null, to: null, value: null } };
+    this.props.relativeOptions = relativeOptions();
     this.setDisplayDates(this.props.value['value']);
   }
 
   // If relative option selected, set dates for the datepickers to display
   setDisplayDates(relativeDateSelection) {
-    if(!this.relativeValueSelected(relativeDateSelection) || relativeDateSelection == 'None') {
+    if(!this.relativeValueSelected(relativeDateSelection) || relativeDateSelection == t('filterbar.periods.none')) {
       return;
     }
 
     var selected            = this.props.relativeOptions[relativeDateSelection];
-    this.state.displayFrom  = selected.from && selected.from.format(this.props.dateFormat);
-    this.state.displayTo    = selected.to   && selected.to.format(this.props.dateFormat);
+
+    if(selected){
+      this.state.displayFrom  = selected.from && selected.from.format(this.props.dateFormat);
+      this.state.displayTo    = selected.to   && selected.to.format(this.props.dateFormat);
+    }
   }
 
   onRelativeChange(event) {
@@ -32,9 +37,9 @@ export class RelativeDateInput extends React.Component {
     };
 
     if(event.type === "dp") {
-      newValue[event.target.querySelector("input").getAttribute("placeholder")] = event.target.querySelector("input").value;
+      newValue[event.target.querySelector("input").getAttribute("data-attr")] = event.target.querySelector("input").value;
     } else if (event.type === "input") {
-      newValue[event.target.getAttribute("placeholder")] = event.target.value;
+      newValue[event.target.getAttribute("data-attr")] = event.target.value;
     }
 
     this.setState({value: newValue});
@@ -85,17 +90,17 @@ export class RelativeDateInput extends React.Component {
       <div>
         <div className="input-group">
           <span className="input-group-addon">
-            Today
+            { t('filterbar.buttons.today') }
           </span>
           <input
             type="number"
             className="form-control"
             onChange={(e) => this.handleInputChange(e, 'from')}
-            placeholder="+/- days"
+            placeholder={ t('filterbar.placeholders.plus_minus_days') }
             value={this.state.value.from}
           />
           <span className="input-group-addon">
-            day(s)
+            { t('filterbar.buttons.days') }
           </span>
           <span className="input-group-addon">
             {this.momentFormatted(this.state.value.from)}
@@ -103,17 +108,17 @@ export class RelativeDateInput extends React.Component {
         </div>
         <div className="input-group">
           <span className="input-group-addon">
-            Today
+            { t('filterbar.buttons.today') }
           </span>
           <input
             type="number"
             className="form-control"
             onChange={(e) => this.handleInputChange(e, 'to')}
-            placeholder="+/- days"
+            placeholder={ t('filterbar.placeholders.plus_minus_days') }
             value={this.state.value.to}
           />
           <span className="input-group-addon">
-            day(s)
+            { t('filterbar.buttons.days') }
           </span>
           <span className="input-group-addon">
             {this.momentFormatted(this.state.value.to)}
@@ -155,7 +160,7 @@ export class RelativeDateInput extends React.Component {
           ))}
         </select>
         {
-          this.state.value.value == "Relative from today" ? this.showRelativeRangeInputs() : this.showDateInputs()
+          this.state.value.value == t('filterbar.periods.relative_from_today') ? this.showRelativeRangeInputs() : this.showDateInputs()
         }
       </div>
     )
@@ -178,19 +183,19 @@ RelativeDateInput.defaultProps = {
 }
 
 function relativeOptions() {
-    var lastWeek = moment().subtract(1, 'week');
+  var lastWeek = moment().subtract(1, 'week');
+  var options = {};
+    options[t('filterbar.periods.custom_period')] =       { value: '', from: null, to: null };
+    options[t('filterbar.periods.none')] =                {};
+    options[t('filterbar.periods.today')] =               { from: moment(), to: moment() };
+    options[t('filterbar.periods.last_week')] =           { from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') };
+    options[t('filterbar.periods.this_week')] =           { from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') };
+    options[t('filterbar.periods.older_than_7_days')] =   { from: null, to: moment().subtract(8, 'day') };
+    options[t('filterbar.periods.older_than_14_days')] =  { from: null, to: moment().subtract(15, 'day') };
+    options[t('filterbar.periods.older_than_20_days')] =  { from: null, to: moment().subtract(21, 'day') };
+    options[t('filterbar.periods.older_than_30_days')] =  { from: null, to: moment().subtract(31, 'day') };
+    options[t('filterbar.periods.older_than_42_days')] =  { from: null, to: moment().subtract(43, 'day') };
+    options[t('filterbar.periods.relative_from_today')] = { from: null, to: null };
 
-    return {
-      'Custom Period':                { value: '', from: null, to: null },
-      'None':                         {},
-      'Today':                        { from: moment(), to: moment() },
-      'Last Week':                    { from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') },
-      'This Week':                    { from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') },
-      'Older than 7 days':            { from: null, to: moment().subtract(8, 'day') },
-      'Older than 14 days':           { from: null, to: moment().subtract(15, 'day') },
-      'Older than 20 days':           { from: null, to: moment().subtract(21, 'day') },
-      'Older than 30 days':           { from: null, to: moment().subtract(31, 'day') },
-      'Older than 42 days (6 weeks)': { from: null, to: moment().subtract(43, 'day') },
-      'Relative from today':          { from: null, to: null },
-    }
+  return options;
 }
