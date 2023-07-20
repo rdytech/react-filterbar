@@ -1,0 +1,4 @@
+---
+'1': '[{"uid":"author_multi_lazy_with_item_url","type":"lazy_multi_select","field":"author","value":["Author
+  1","Author 3","Author 6"]},{"uid":"author_multi_lazy","type":"lazy_multi_select","field":"author","value":["Author
+  1","Author 3"]}]'

@@ -41,6 +41,13 @@
                   %dt.saved-searches-url{ data: { value: '/saved_searches' } }
                   %dt.export-results-url{ data: { value: '/export_results' } }
                   %dl.filters
+                    %dl.author_multi_lazy_with_item_url
+                      %dt.field{ data: { value: "author" } }
+                      %dt.label{ data: { value: "Lazy Author Multi With Label" } }
+                      %dt.type{ data: { value: "lazy_multi_select" } }
+                      %dt.url{ data: { value: "/authors_with_label" } }
+                      %dt.itemUrl{ data: { value: "/author" } }
+                      %dt.minimumInputLength{ data: { value: 2 } }
                     %dl.author_multi_lazy
                       %dt.field{ data: { value: "author" } }
                       %dt.label{ data: { value: "Lazy Author Multi" } }
