@@ -152,6 +152,19 @@ The label to show in the filter dropdown list, and when the filter is displayed.
 
 This is only a required field for a select type. This is the endpoint to hit to get the options to fill the select. This API contract is defined at [Filter Options API](#filter-options-api).
 
+###### dt.itemUrl
+
+This is an optional field for a lazy_multi_select type. If the label and the id are not the same, for example, the label is supplier name, id is supplier id, we need this endpoint to get the label to show on the UI when the component is initialized.
+
+The endpoint should accept HTTP GET request: url/:id, and return a json
+
+```javascript
+  {
+    "id": VALUE,
+    "text": LABEL // support text or name
+  }
+```
+
 ###### dt.default
 
 This is an optional field for a select type. If the field is present, the input will be preselected with the value from that field.

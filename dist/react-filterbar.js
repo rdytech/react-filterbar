@@ -19674,14 +19674,29 @@ var LazyMultiSelectInput = /*#__PURE__*/function (_React$Component) {
           }
         },
         initSelection: function initSelection(element, callback) {
-          var data = [];
-          element.attr('value').split(',').forEach(function (value) {
-            data.push({
-              id: value,
-              text: value
+          var values = [];
+
+          if (filter.itemUrl) {
+            Promise.all(element.attr('value').split(',').filter(Boolean).map(function (value) {
+              return $.getJSON(filter.itemUrl + "/" + value, null, function (data) {
+                if (data.name) {
+                  data.text = data.name;
+                }
+
+                return data;
+              });
+            })).then(function (values) {
+              return callback(values);
             });
-          });
-          callback(data);
+          } else {
+            element.attr('value').split(',').forEach(function (value) {
+              return values.push({
+                id: value,
+                text: value
+              });
+            });
+            callback(values);
+          }
         }
       });
       multiSelectInput.on('change', this.onSelect.bind(this));

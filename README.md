@@ -259,6 +259,26 @@ In your docker bash session run `npm install && node_modules/.bin/gulp` to deplo
 ## Deployment
 When your code is ready for distribuition, run: `node_modules/.bin/gulp dist`
 
+Push test tag to github 
+
+```
+git tag -a -m "2.3.3.rc1" 2.3.3.rc1
+git push origin 2.3.3.rc1 --tags
+```
+
+Update the Bowerfile in neptune side and ready for QA
+
+```
+asset "react-filterbar", "2.3.3.rc1", git: "git@github.com:rdytech/react-filterbar.git"
+```
+
+After QA pass, push the release tag and update the Bowerfile in neptune again.
+
+```
+git tag -a -m "2.3.3" 2.3.3
+git push origin 2.3.3 --tags
+```
+
 ## Common Problems / Bugs
 
 * Datetimepicker popups z-index bug.
