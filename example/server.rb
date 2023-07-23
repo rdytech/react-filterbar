@@ -21,7 +21,7 @@ class Server < Sinatra::Base
             label: "Label Author #{n}",
             value: "Author #{n}",
           }
-        end.to_json
+        end.push({ label: 'none', value: 'none'}).to_json
       end
     end
   end
@@ -40,6 +40,8 @@ class Server < Sinatra::Base
   end
 
   get '/author/:id' do |id|
+    halt 404 and return unless id.include? 'Author'
+
     respond_to do |format|
       format.json do
         {

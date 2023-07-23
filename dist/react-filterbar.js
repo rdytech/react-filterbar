@@ -19678,12 +19678,25 @@ var LazyMultiSelectInput = /*#__PURE__*/function (_React$Component) {
 
           if (filter.itemUrl) {
             Promise.all(element.attr('value').split(',').filter(Boolean).map(function (value) {
-              return $.getJSON(filter.itemUrl + "/" + value, null, function (data) {
+              return fetch(filter.itemUrl + "/" + value, {
+                credentials: "include",
+                headers: {
+                  Accept: "application/json",
+                  "X-Requested-With": "XMLHttpRequest"
+                }
+              }).then(function (res) {
+                return res.json();
+              }).then(function (data) {
                 if (data.name) {
                   data.text = data.name;
                 }
 
                 return data;
+              })["catch"](function (err) {
+                return {
+                  id: value,
+                  text: value
+                };
               });
             })).then(function (values) {
               return callback(values);
