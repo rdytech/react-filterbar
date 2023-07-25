@@ -54,7 +54,13 @@ export class LazyMultiSelectInput extends React.Component {
                   "X-Requested-With": "XMLHttpRequest"
                 },
               })
-              .then(res => res.json())
+              .then(res => {
+                if(res.ok) {
+                  return res.json()
+                } else {
+                  throw new Error(res.statusText)
+                }
+              })
               .then(data => {
                 if(data.name) {
                   data.text = data.name;
