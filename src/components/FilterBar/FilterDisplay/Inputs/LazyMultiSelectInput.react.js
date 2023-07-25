@@ -17,9 +17,30 @@ export class LazyMultiSelectInput extends React.Component {
     return(this.context.filterBarStore.getFilter(this.props.filterUid));
   }
 
+  async processSingleRequest(value) {
+    let result = { id: value, text: value}
+    try {
+      const url = this.getFilterFromFilterBarStore().itemUrl + "/" + value
+      const response = await fetch(url, {
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "X-Requested-With": "XMLHttpRequest"
+        }}
+      )
+      const data = await response.json()
+      if(data.name) {
+        data.text = data.name;
+      }
+      result = data;
+    } catch (err) {}
+    return result;
+  }
+
   componentDidUpdate() {
     let multiSelectInput = $(React.findDOMNode(this.refs.reactLazyMultiSelect));
     let filter = this.getFilterFromFilterBarStore();
+    let that = this;
     multiSelectInput.select2({
       minimumInputLength: filter.minimumInputLength || 3,
       multiple: true,
@@ -43,26 +64,15 @@ export class LazyMultiSelectInput extends React.Component {
           };
         }
       },
-      initSelection: function(element, callback) {
+      initSelection: async function(element, callback) {
         var values = [];
         if(filter.itemUrl) {
-          Promise.all(element.attr('value').split(',').filter(Boolean).map(value => {
-            return fetch(filter.itemUrl+ "/" + value, {
-                credentials: "include",
-                headers: {
-                  Accept: "application/json",
-                  "X-Requested-With": "XMLHttpRequest"
-                },
-              })
-              .then(res => res.json())
-              .then(data => {
-                if(data.name) {
-                  data.text = data.name;
-                }
-                return data
-              }).catch(err => { return { id: value, text: value} })
-
-          })).then(values => callback(values))
+          const arr = element.attr('value').split(',').filter(Boolean)
+          for (const value of arr) {
+            const singleResult = await that.processSingleRequest(value)
+            values.push(singleResult);
+          }
+          callback(values);
         } else {
           element.attr('value').split(',').forEach(value => values.push({id: value, text: value }));
           callback(values);

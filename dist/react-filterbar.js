@@ -19593,6 +19593,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LazyMultiSelectInput = void 0;
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -19646,10 +19656,72 @@ var LazyMultiSelectInput = /*#__PURE__*/function (_React$Component) {
       return this.context.filterBarStore.getFilter(this.props.filterUid);
     }
   }, {
+    key: "processSingleRequest",
+    value: function () {
+      var _processSingleRequest = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(value) {
+        var result, url, response, data;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                result = {
+                  id: value,
+                  text: value
+                };
+                _context.prev = 1;
+                url = this.getFilterFromFilterBarStore().itemUrl + "/" + value;
+                _context.next = 5;
+                return fetch(url, {
+                  credentials: "include",
+                  headers: {
+                    Accept: "application/json",
+                    "X-Requested-With": "XMLHttpRequest"
+                  }
+                });
+
+              case 5:
+                response = _context.sent;
+                _context.next = 8;
+                return response.json();
+
+              case 8:
+                data = _context.sent;
+
+                if (data.name) {
+                  data.text = data.name;
+                }
+
+                result = data;
+                _context.next = 15;
+                break;
+
+              case 13:
+                _context.prev = 13;
+                _context.t0 = _context["catch"](1);
+
+              case 15:
+                return _context.abrupt("return", result);
+
+              case 16:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[1, 13]]);
+      }));
+
+      function processSingleRequest(_x) {
+        return _processSingleRequest.apply(this, arguments);
+      }
+
+      return processSingleRequest;
+    }()
+  }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
       var multiSelectInput = $(React.findDOMNode(this.refs.reactLazyMultiSelect));
       var filter = this.getFilterFromFilterBarStore();
+      var that = this;
       multiSelectInput.select2({
         minimumInputLength: filter.minimumInputLength || 3,
         multiple: true,
@@ -19673,44 +19745,90 @@ var LazyMultiSelectInput = /*#__PURE__*/function (_React$Component) {
             };
           }
         },
-        initSelection: function initSelection(element, callback) {
-          var values = [];
+        initSelection: function () {
+          var _initSelection = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(element, callback) {
+            var values, arr, _iterator, _step, value, singleResult;
 
-          if (filter.itemUrl) {
-            Promise.all(element.attr('value').split(',').filter(Boolean).map(function (value) {
-              return fetch(filter.itemUrl + "/" + value, {
-                credentials: "include",
-                headers: {
-                  Accept: "application/json",
-                  "X-Requested-With": "XMLHttpRequest"
-                }
-              }).then(function (res) {
-                return res.json();
-              }).then(function (data) {
-                if (data.name) {
-                  data.text = data.name;
-                }
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    values = [];
 
-                return data;
-              })["catch"](function (err) {
-                return {
-                  id: value,
-                  text: value
-                };
-              });
-            })).then(function (values) {
-              return callback(values);
-            });
-          } else {
-            element.attr('value').split(',').forEach(function (value) {
-              return values.push({
-                id: value,
-                text: value
-              });
-            });
-            callback(values);
+                    if (!filter.itemUrl) {
+                      _context2.next = 25;
+                      break;
+                    }
+
+                    arr = element.attr('value').split(',').filter(Boolean);
+                    _iterator = _createForOfIteratorHelper(arr);
+                    _context2.prev = 4;
+
+                    _iterator.s();
+
+                  case 6:
+                    if ((_step = _iterator.n()).done) {
+                      _context2.next = 14;
+                      break;
+                    }
+
+                    value = _step.value;
+                    _context2.next = 10;
+                    return that.processSingleRequest(value);
+
+                  case 10:
+                    singleResult = _context2.sent;
+                    values.push(singleResult);
+
+                  case 12:
+                    _context2.next = 6;
+                    break;
+
+                  case 14:
+                    _context2.next = 19;
+                    break;
+
+                  case 16:
+                    _context2.prev = 16;
+                    _context2.t0 = _context2["catch"](4);
+
+                    _iterator.e(_context2.t0);
+
+                  case 19:
+                    _context2.prev = 19;
+
+                    _iterator.f();
+
+                    return _context2.finish(19);
+
+                  case 22:
+                    callback(values);
+                    _context2.next = 27;
+                    break;
+
+                  case 25:
+                    element.attr('value').split(',').forEach(function (value) {
+                      return values.push({
+                        id: value,
+                        text: value
+                      });
+                    });
+                    callback(values);
+
+                  case 27:
+                  case "end":
+                    return _context2.stop();
+                }
+              }
+            }, _callee2, null, [[4, 16, 19, 22]]);
+          }));
+
+          function initSelection(_x2, _x3) {
+            return _initSelection.apply(this, arguments);
           }
-        }
+
+          return initSelection;
+        }()
       });
       multiSelectInput.on('change', this.onSelect.bind(this));
     }
