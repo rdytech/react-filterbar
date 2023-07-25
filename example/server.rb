@@ -13,6 +13,19 @@ class Server < Sinatra::Base
     end
   end
 
+  get '/authors_with_label' do
+    respond_to do |format|
+      format.json do
+        (1..99).collect do |n|
+          {
+            label: "Label Author #{n}",
+            value: "Author #{n}",
+          }
+        end.push({ label: 'none', value: 'none'}).to_json
+      end
+    end
+  end
+
   get '/authors' do
     respond_to do |format|
       format.json do
@@ -22,6 +35,19 @@ class Server < Sinatra::Base
             value: "Author #{n}",
           }
         end.to_json
+      end
+    end
+  end
+
+  get '/author/:id' do |id|
+    halt 404 and return unless id.include? 'Author'
+
+    respond_to do |format|
+      format.json do
+        {
+          name: "Label #{id}",
+          id: id,
+        }.to_json
       end
     end
   end

@@ -44,13 +44,30 @@ export class LazyMultiSelectInput extends React.Component {
         }
       },
       initSelection: function(element, callback) {
-        var data = [];
-        element.attr('value').split(',').forEach(function(value) {
-          data.push({id: value, text: value })
-        });
-        callback(data);
-      }
-    });
+        var values = [];
+        if(filter.itemUrl) {
+          Promise.all(element.attr('value').split(',').filter(Boolean).map(value => {
+            return fetch(filter.itemUrl+ "/" + value, {
+                credentials: "include",
+                headers: {
+                  Accept: "application/json",
+                  "X-Requested-With": "XMLHttpRequest"
+                },
+              })
+              .then(res => res.json())
+              .then(data => {
+                if(data.name) {
+                  data.text = data.name;
+                }
+                return data
+              }).catch(err => { return { id: value, text: value} })
+
+          })).then(values => callback(values))
+        } else {
+          element.attr('value').split(',').forEach(value => values.push({id: value, text: value }));
+          callback(values);
+        }
+    }});
     multiSelectInput.on('change', this.onSelect.bind(this));
   }
 
