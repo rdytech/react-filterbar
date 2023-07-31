@@ -19685,7 +19685,11 @@ var LazyMultiSelectInput = /*#__PURE__*/function (_React$Component) {
                   "X-Requested-With": "XMLHttpRequest"
                 }
               }).then(function (res) {
-                return res.json();
+                if (res.ok) {
+                  return res.json();
+                } else {
+                  throw new Error(res.statusText);
+                }
               }).then(function (data) {
                 if (data.name) {
                   data.text = data.name;
