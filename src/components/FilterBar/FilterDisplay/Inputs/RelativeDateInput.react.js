@@ -25,13 +25,20 @@ export class RelativeDateInput extends React.Component {
 
   onRelativeChange(event) {
     var selectedOption = $(event.target.childNodes[event.target.selectedIndex]);
-    var newValue = { value: selectedOption.val() };
-    this.state = { value: newValue }
-    this.updateFilter(newValue);
+    var newValue = { value: selectedOption.val(), from: null, to: null };
+    this.setState(
+      (prevState) => ({
+        value: { ...prevState.value, ...newValue },
+      }),
+      () => {
+        this.updateFilter();
+      },
+    );
   }
 
   onDatePickerChange(event) {
     var newValue = {
+      value: null,
       from: this.state.value.from || this.state.displayFrom,
       to: this.state.value.to || this.state.displayTo
     };
@@ -42,7 +49,9 @@ export class RelativeDateInput extends React.Component {
       newValue[event.target.getAttribute("data-attr")] = event.target.value;
     }
 
-    this.setState({value: newValue});
+    this.setState((prevState) => ({
+      value: { ...prevState.value, ...newValue },
+    }));
   }
 
   relativeValueSelected(selection) {
@@ -53,8 +62,12 @@ export class RelativeDateInput extends React.Component {
     return selection !== undefined && selection !== null && selection != '';
   }
 
-  updateFilter(newValue) {
-    this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
+  updateFilter() {
+    this.context.filterBarActor.updateFilter(
+      this.props.filterUid,
+      "value",
+      this.state.value,
+    );
   }
 
   intToMoment(value) {
@@ -80,9 +93,10 @@ export class RelativeDateInput extends React.Component {
   }
 
   handleInputChange(event, input) {
-    var newValue = this.state.value
-    newValue[input] = event.target.value
-    this.setState({ value: newValue })
+    var newValue = this.state.value;
+    newValue[input] = event.target.value;
+    this.setState({ value: newValue });
+    this.updateFilter();
   }
 
   showRelativeRangeInputs() {

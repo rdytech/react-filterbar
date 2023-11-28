@@ -115,6 +115,8 @@ class Server < Sinatra::Base
       end
     when :date_relative
       search_date_relative(haystack, field, value)
+    when :count_in_date_range
+      search_count_in_date_range(haystack, field, value)
     when :id, :select, :lazy_select
       haystack.select do |hay|
         hay.send(field).to_s == value
@@ -180,6 +182,29 @@ class Server < Sinatra::Base
   end
 
   def search_date_relative(haystack, field, value)
+    relative_value = value['value']
+    if(relative_value == 'None')
+      search_blank_values(haystack, field)
+    else
+      if(relative_value.present?)
+        if relative_value == "Relative from today"
+          from = Date.current.advance(days: value["from"].to_i)
+          to = Date.current.advance(days: value["to"].to_i)
+        else
+          from, to = calculate_relative_dates(relative_value)
+        end
+      else
+        from = Date.parse(value["from"])
+        to = Date.parse(value["to"])
+      end
+      haystack.select do |hay|
+        (from..to) === hay.send(field)
+      end
+    end
+  end
+
+  def search_count_in_date_range(haystack, field, value)
+    # binding.pry
     relative_value = value['value']
     if(relative_value == 'None')
       search_blank_values(haystack, field)
