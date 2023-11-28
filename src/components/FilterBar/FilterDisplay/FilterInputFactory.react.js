@@ -1,6 +1,7 @@
 import {TextInput} from "./Inputs/TextInput.react";
 import {DateInput} from "./Inputs/DateInput.react";
 import {RelativeDateInput} from "./Inputs/RelativeDateInput.react";
+import {CountInDateRangeInput} from "./Inputs/CountInDateRangeInput.react";
 import {DateTimeInput} from "./Inputs/DateTimeInput.react";
 import {SingleDateTimeInput} from "./Inputs/SingleDateTimeInput.react";
 import {SelectInput} from "./Inputs/SelectInput.react";
@@ -18,6 +19,7 @@ export function FilterInputFactory(propObject) {
     id: React.createElement(TextInput, propObject),
     date: React.createElement(DateInput, propObject),
     date_relative: React.createElement(RelativeDateInput, propObject),
+    count_in_date_range: React.createElement(CountInDateRangeInput, propObject),
     date_time: React.createElement(DateTimeInput, propObject),
     single_datetime: React.createElement(SingleDateTimeInput, propObject),
     select: React.createElement(SelectInput, propObject),

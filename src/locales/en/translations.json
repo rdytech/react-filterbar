@@ -9,7 +9,9 @@
         "search": "Search",
         "plus_minus_days": "+/- days",
         "from": "From",
-        "to": "To"
+        "to": "To",
+        "count": "Count",
+        "operator": "Operator",
       },
       "buttons": {
         "add_filter": "Add Filter",
@@ -30,6 +32,11 @@
         "today": "Today",
         "days": "day(s)",
         "columns": "Columns"
+      },
+      "operators": {
+        "greater_than": "Greater than",
+        "less_than": "Less than",
+        "equal_to": "Equals",
       },
       "periods": {
         "custom_period": "Custom Period",

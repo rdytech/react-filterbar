@@ -18168,7 +18168,7 @@ var FilterBarActor = /*#__PURE__*/function () {
 
 exports.FilterBarActor = FilterBarActor;
 
-},{"../clients/SearchClient":436,"../helpers/FilterVerificator":477,"../helpers/URLHelper":479,"../locales/i18n.js":481}],434:[function(require,module,exports){
+},{"../clients/SearchClient":436,"../helpers/FilterVerificator":478,"../helpers/URLHelper":480,"../locales/i18n.js":482}],434:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18334,7 +18334,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }), filterableTableNode);
 });
 
-},{"./components/FilterableTable.react":462,"./helpers/FilterVerificator":477,"URIjs":3,"core-js/stable":430,"regenerator-runtime/runtime":432}],436:[function(require,module,exports){
+},{"./components/FilterableTable.react":463,"./helpers/FilterVerificator":478,"URIjs":3,"core-js/stable":430,"regenerator-runtime/runtime":432}],436:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18463,7 +18463,7 @@ ApplyFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{"../../locales/i18n":481}],438:[function(require,module,exports){
+},{"../../locales/i18n":482}],438:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18607,7 +18607,7 @@ BatchActionsList.contextTypes = {
   batchActionsStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../helpers/ModalHelper":478,"../../../helpers/URLHelper":479,"../../../locales/i18n":481,"./BatchActionsListItem.react":439}],439:[function(require,module,exports){
+},{"../../../helpers/ModalHelper":479,"../../../helpers/URLHelper":480,"../../../locales/i18n":482,"./BatchActionsListItem.react":439}],439:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18738,7 +18738,7 @@ ClearFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{"../../locales/i18n":481}],441:[function(require,module,exports){
+},{"../../locales/i18n":482}],441:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18821,7 +18821,7 @@ ConfigurationButton.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../helpers/ModalHelper":478,"../../locales/i18n":481}],442:[function(require,module,exports){
+},{"../../helpers/ModalHelper":479,"../../locales/i18n":482}],442:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18891,7 +18891,7 @@ ExportResultsButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{"../../locales/i18n":481}],443:[function(require,module,exports){
+},{"../../locales/i18n":482}],443:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18987,7 +18987,7 @@ FilterBar.contextTypes = {
   batchActionsStore: React.PropTypes.object
 };
 
-},{"./ApplyFiltersButton.react":437,"./BatchActionsList/BatchActionsList.react":438,"./ClearFiltersButton.react":440,"./ConfigurationButton.react":441,"./ExportResultsButton.react":442,"./FilterDisplay/FilterDisplay.react":444,"./FilterList/FilterList.react":457,"./SaveFiltersButton.react":459,"./SavedSearchesList/SavedSearchesList.react":460}],444:[function(require,module,exports){
+},{"./ApplyFiltersButton.react":437,"./BatchActionsList/BatchActionsList.react":438,"./ClearFiltersButton.react":440,"./ConfigurationButton.react":441,"./ExportResultsButton.react":442,"./FilterDisplay/FilterDisplay.react":444,"./FilterList/FilterList.react":458,"./SaveFiltersButton.react":460,"./SavedSearchesList/SavedSearchesList.react":461}],444:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19118,7 +19118,7 @@ FilterDisplay.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{"../../../locales/i18n":481,"./FilterInput.react":445}],445:[function(require,module,exports){
+},{"../../../locales/i18n":482,"./FilterInput.react":445}],445:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19223,6 +19223,8 @@ var _DateInput = require("./Inputs/DateInput.react");
 
 var _RelativeDateInput = require("./Inputs/RelativeDateInput.react");
 
+var _CountInDateRangeInput = require("./Inputs/CountInDateRangeInput.react");
+
 var _DateTimeInput = require("./Inputs/DateTimeInput.react");
 
 var _SingleDateTimeInput = require("./Inputs/SingleDateTimeInput.react");
@@ -19245,6 +19247,7 @@ function FilterInputFactory(propObject) {
     id: React.createElement(_TextInput.TextInput, propObject),
     date: React.createElement(_DateInput.DateInput, propObject),
     date_relative: React.createElement(_RelativeDateInput.RelativeDateInput, propObject),
+    count_in_date_range: React.createElement(_CountInDateRangeInput.CountInDateRangeInput, propObject),
     date_time: React.createElement(_DateTimeInput.DateTimeInput, propObject),
     single_datetime: React.createElement(_SingleDateTimeInput.SingleDateTimeInput, propObject),
     select: React.createElement(_SelectInput.SelectInput, propObject),
@@ -19259,7 +19262,159 @@ function FilterInputFactory(propObject) {
   }
 }
 
-},{"./Inputs/DateInput.react":447,"./Inputs/DateTimeInput.react":448,"./Inputs/LazyMultiSelectInput.react":449,"./Inputs/LazySelectInput.react":450,"./Inputs/MultiSelectInput.react":451,"./Inputs/RangeInput.react":452,"./Inputs/RelativeDateInput.react":453,"./Inputs/SelectInput.react":454,"./Inputs/SingleDateTimeInput.react":455,"./Inputs/TextInput.react":456}],447:[function(require,module,exports){
+},{"./Inputs/CountInDateRangeInput.react":447,"./Inputs/DateInput.react":448,"./Inputs/DateTimeInput.react":449,"./Inputs/LazyMultiSelectInput.react":450,"./Inputs/LazySelectInput.react":451,"./Inputs/MultiSelectInput.react":452,"./Inputs/RangeInput.react":453,"./Inputs/RelativeDateInput.react":454,"./Inputs/SelectInput.react":455,"./Inputs/SingleDateTimeInput.react":456,"./Inputs/TextInput.react":457}],447:[function(require,module,exports){
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = exports.CountInDateRangeInput = void 0;
+
+var _RelativeDateInput = require("./RelativeDateInput.react");
+
+var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var CountInDateRangeInput = /*#__PURE__*/function (_React$Component) {
+  _inherits(CountInDateRangeInput, _React$Component);
+
+  var _super = _createSuper(CountInDateRangeInput);
+
+  function CountInDateRangeInput(props) {
+    var _this;
+
+    _classCallCheck(this, CountInDateRangeInput);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      value: _this.props.value || {
+        operator: null,
+        from: null,
+        to: null,
+        value: null,
+        count: null
+      }
+    };
+    return _this;
+  }
+
+  _createClass(CountInDateRangeInput, [{
+    key: "handleInputChange",
+    value: function handleInputChange(event, input) {
+      var newValue = this.state.value;
+      newValue[input] = event.target.value;
+      this.setState({
+        value: newValue
+      });
+      this.updateFilter();
+    }
+  }, {
+    key: "updateFilter",
+    value: function updateFilter() {
+      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return /*#__PURE__*/React.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "col-xs-6"
+      }, /*#__PURE__*/React.createElement("input", {
+        className: "form-control",
+        onBlur: function onBlur(e) {
+          return _this2.handleInputChange(e, "count");
+        },
+        type: "text",
+        defaultValue: this.state.value.count,
+        placeholder: (0, _i18n["default"])("filterbar.placeholders.count"),
+        required: true
+      }), /*#__PURE__*/React.createElement("select", {
+        className: "form-control",
+        onChange: function onChange(e) {
+          return _this2.handleInputChange(e, "operator");
+        },
+        selected: this.state.value.operator,
+        value: this.state.value.operator,
+        required: true
+      }, /*#__PURE__*/React.createElement("option", {
+        value: "",
+        disabled: true,
+        selected: true,
+        hidden: true
+      }, (0, _i18n["default"])("filterbar.placeholders.operator")), this.props.operatorOptions.map(function (option) {
+        return /*#__PURE__*/React.createElement("option", {
+          key: option.value,
+          value: option.value
+        }, option.label);
+      }))), /*#__PURE__*/React.createElement("div", {
+        className: "col-xs-6"
+      }, /*#__PURE__*/React.createElement(_RelativeDateInput.RelativeDateInput, {
+        value: this.state.value,
+        filterUid: this.props.filterUid
+      })));
+    }
+  }]);
+
+  return CountInDateRangeInput;
+}(React.Component);
+
+exports.CountInDateRangeInput = CountInDateRangeInput;
+CountInDateRangeInput.propTypes = {
+  filterUid: React.PropTypes.string.isRequired,
+  value: React.PropTypes.node.isRequired
+};
+CountInDateRangeInput.contextTypes = {
+  filterBarActor: React.PropTypes.object.isRequired,
+  filterBarStore: React.PropTypes.object.isRequired
+};
+CountInDateRangeInput.defaultProps = {
+  dateFormat: "DD/MM/YYYY",
+  operatorOptions: operatorOptions()
+};
+
+function operatorOptions() {
+  return [{
+    label: (0, _i18n["default"])("filterbar.operators.greater_than"),
+    value: ">"
+  }, {
+    label: (0, _i18n["default"])("filterbar.operators.less_than"),
+    value: "<"
+  }, {
+    label: (0, _i18n["default"])("filterbar.operators.equal_to"),
+    value: "="
+  }];
+}
+
+var _default = CountInDateRangeInput;
+exports["default"] = _default;
+
+},{"../../../../locales/i18n":482,"./RelativeDateInput.react":454}],448:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19424,7 +19579,7 @@ DateInput.defaultProps = {
   disabled: false
 };
 
-},{"../../../../locales/i18n":481}],448:[function(require,module,exports){
+},{"../../../../locales/i18n":482}],449:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19583,7 +19738,7 @@ DateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../../locales/i18n":481}],449:[function(require,module,exports){
+},{"../../../../locales/i18n":482}],450:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19766,7 +19921,7 @@ LazyMultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],450:[function(require,module,exports){
+},{}],451:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -19897,7 +20052,7 @@ LazySelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],451:[function(require,module,exports){
+},{}],452:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20072,7 +20227,7 @@ MultiSelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../../locales/i18n":481}],452:[function(require,module,exports){
+},{"../../../../locales/i18n":482}],453:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20184,7 +20339,7 @@ RangeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../../locales/i18n":481}],453:[function(require,module,exports){
+},{"../../../../locales/i18n":482}],454:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20199,6 +20354,12 @@ var _DateInput = require("./DateInput.react");
 var _i18n = _interopRequireDefault(require("../../../../locales/i18n"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -20263,19 +20424,27 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onRelativeChange",
     value: function onRelativeChange(event) {
+      var _this2 = this;
+
       var selectedOption = $(event.target.childNodes[event.target.selectedIndex]);
       var newValue = {
-        value: selectedOption.val()
+        value: selectedOption.val(),
+        from: null,
+        to: null
       };
-      this.state = {
-        value: newValue
-      };
-      this.updateFilter(newValue);
+      this.setState(function (prevState) {
+        return {
+          value: _objectSpread(_objectSpread({}, prevState.value), newValue)
+        };
+      }, function () {
+        _this2.updateFilter();
+      });
     }
   }, {
     key: "onDatePickerChange",
     value: function onDatePickerChange(event) {
       var newValue = {
+        value: null,
         from: this.state.value.from || this.state.displayFrom,
         to: this.state.value.to || this.state.displayTo
       };
@@ -20286,8 +20455,10 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         newValue[event.target.getAttribute("data-attr")] = event.target.value;
       }
 
-      this.setState({
-        value: newValue
+      this.setState(function (prevState) {
+        return {
+          value: _objectSpread(_objectSpread({}, prevState.value), newValue)
+        };
       });
     }
   }, {
@@ -20301,8 +20472,8 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "updateFilter",
-    value: function updateFilter(newValue) {
-      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", newValue);
+    value: function updateFilter() {
+      this.context.filterBarActor.updateFilter(this.props.filterUid, "value", this.state.value);
     }
   }, {
     key: "intToMoment",
@@ -20336,11 +20507,12 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       this.setState({
         value: newValue
       });
+      this.updateFilter();
     }
   }, {
     key: "showRelativeRangeInputs",
     value: function showRelativeRangeInputs() {
-      var _this2 = this;
+      var _this3 = this;
 
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
         className: "input-group"
@@ -20350,7 +20522,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         type: "number",
         className: "form-control",
         onChange: function onChange(e) {
-          return _this2.handleInputChange(e, 'from');
+          return _this3.handleInputChange(e, 'from');
         },
         placeholder: (0, _i18n["default"])('filterbar.placeholders.plus_minus_days'),
         value: this.state.value.from
@@ -20366,7 +20538,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         type: "number",
         className: "form-control",
         onChange: function onChange(e) {
-          return _this2.handleInputChange(e, 'to');
+          return _this3.handleInputChange(e, 'to');
         },
         placeholder: (0, _i18n["default"])('filterbar.placeholders.plus_minus_days'),
         value: this.state.value.to
@@ -20402,7 +20574,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("select", {
         className: "form-control",
@@ -20410,7 +20582,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         value: this.state.value.value,
         ref: "relativeSelect"
       }, Object.keys(this.props.relativeOptions).map(function (optionKey) {
-        return _this3.relativeOption(optionKey);
+        return _this4.relativeOption(optionKey);
       })), this.state.value.value == (0, _i18n["default"])('filterbar.periods.relative_from_today') ? this.showRelativeRangeInputs() : this.showDateInputs());
     }
   }]);
@@ -20480,7 +20652,7 @@ function relativeOptions() {
   return options;
 }
 
-},{"../../../../locales/i18n":481,"./DateInput.react":447}],454:[function(require,module,exports){
+},{"../../../../locales/i18n":482,"./DateInput.react":448}],455:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20624,7 +20796,7 @@ SelectInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],455:[function(require,module,exports){
+},{}],456:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20748,7 +20920,7 @@ SingleDateTimeInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../../locales/i18n":481}],456:[function(require,module,exports){
+},{"../../../../locales/i18n":482}],457:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20849,7 +21021,7 @@ TextInput.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{}],457:[function(require,module,exports){
+},{}],458:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -20979,7 +21151,7 @@ FilterList.propTypes = {
   disabledFilters: React.PropTypes.object.isRequired
 };
 
-},{"../../../locales/i18n":481,"./FilterListOption.react":458}],458:[function(require,module,exports){
+},{"../../../locales/i18n":482,"./FilterListOption.react":459}],459:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21049,7 +21221,7 @@ FilterListOption.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],459:[function(require,module,exports){
+},{}],460:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21173,7 +21345,7 @@ SaveFiltersButton.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{"../../locales/i18n":481}],460:[function(require,module,exports){
+},{"../../locales/i18n":482}],461:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21285,7 +21457,7 @@ SavedSearchesList.contextTypes = {
   filterBarStore: React.PropTypes.object.isRequired
 };
 
-},{"../../../locales/i18n":481,"./SavedSearchesListItem.react":461}],461:[function(require,module,exports){
+},{"../../../locales/i18n":482,"./SavedSearchesListItem.react":462}],462:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21379,7 +21551,7 @@ SavedSearchesListItem.contextTypes = {
   filterBarActor: React.PropTypes.object.isRequired
 };
 
-},{}],462:[function(require,module,exports){
+},{}],463:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21472,7 +21644,7 @@ FilterableTable.childContextTypes = {
   tableActor: React.PropTypes.object
 };
 
-},{"../actors/FilterBarActor":433,"../actors/TableActor":434,"../stores/BatchActionsStore":482,"../stores/FilterBarStore":483,"../stores/TableStore":484,"./FilterBar/FilterBar.react":443,"./Table/Table.react":474}],463:[function(require,module,exports){
+},{"../actors/FilterBarActor":433,"../actors/TableActor":434,"../stores/BatchActionsStore":483,"../stores/FilterBarStore":484,"../stores/TableStore":485,"./FilterBar/FilterBar.react":443,"./Table/Table.react":475}],464:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21546,7 +21718,7 @@ QuickFilters.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{"./QuickFiltersBlock/QuickFiltersBlock.react":464}],464:[function(require,module,exports){
+},{"./QuickFiltersBlock/QuickFiltersBlock.react":465}],465:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21620,7 +21792,7 @@ var QuickFiltersBlock = /*#__PURE__*/function (_React$Component) {
 
 exports.QuickFiltersBlock = QuickFiltersBlock;
 
-},{"./QuickFiltersButton.react":465}],465:[function(require,module,exports){
+},{"./QuickFiltersButton.react":466}],466:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21756,7 +21928,7 @@ QuickFiltersButton.contextTypes = {
   filterBarStore: React.PropTypes.object
 };
 
-},{}],466:[function(require,module,exports){
+},{}],467:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21825,7 +21997,7 @@ Body.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyRow.react":468}],467:[function(require,module,exports){
+},{"./BodyRow.react":469}],468:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -21894,7 +22066,7 @@ BodyCell.propTypes = {
   value: React.PropTypes.string.isRequired
 };
 
-},{}],468:[function(require,module,exports){
+},{}],469:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -22012,7 +22184,7 @@ BodyRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./BodyCell.react":467,"./BodySelectable.react":469}],469:[function(require,module,exports){
+},{"./BodyCell.react":468,"./BodySelectable.react":470}],470:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -22114,7 +22286,7 @@ BodySelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],470:[function(require,module,exports){
+},{}],471:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -22212,7 +22384,7 @@ HeadingCell.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],471:[function(require,module,exports){
+},{}],472:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -22327,7 +22499,7 @@ HeadingRow.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{"./HeadingCell.react":470,"./HeadingSelectable.react":472}],472:[function(require,module,exports){
+},{"./HeadingCell.react":471,"./HeadingSelectable.react":473}],473:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -22425,7 +22597,7 @@ HeadingSelectable.contextTypes = {
   tableActor: React.PropTypes.object.isRequired
 };
 
-},{}],473:[function(require,module,exports){
+},{}],474:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -22561,7 +22733,7 @@ Pagination.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{"../../locales/i18n":481}],474:[function(require,module,exports){
+},{"../../locales/i18n":482}],475:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -22729,7 +22901,7 @@ Table.contextTypes = {
   tableStore: React.PropTypes.object.isRequired
 };
 
-},{"../../events/TableEvent":476,"./Body.react":466,"./HeadingRow.react":471,"./Pagination.react":473,"./TableCaption.react":475}],475:[function(require,module,exports){
+},{"../../events/TableEvent":477,"./Body.react":467,"./HeadingRow.react":472,"./Pagination.react":474,"./TableCaption.react":476}],476:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -22813,7 +22985,7 @@ var TableCaption = /*#__PURE__*/function (_React$Component) {
 
 exports.TableCaption = TableCaption;
 
-},{"../QuickFilters/QuickFilters.react":463}],476:[function(require,module,exports){
+},{"../QuickFilters/QuickFilters.react":464}],477:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22827,7 +22999,7 @@ function tableUpdated() {
   document.dispatchEvent(event);
 }
 
-},{}],477:[function(require,module,exports){
+},{}],478:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22884,7 +23056,7 @@ var FilterVerificator = /*#__PURE__*/function () {
 
 exports.FilterVerificator = FilterVerificator;
 
-},{"URIjs":3}],478:[function(require,module,exports){
+},{"URIjs":3}],479:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22902,7 +23074,7 @@ function displayModalForData(data) {
   modal.modal();
 }
 
-},{}],479:[function(require,module,exports){
+},{}],480:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22927,7 +23099,7 @@ function redirectUrl(url) {
   window.location.href = url;
 }
 
-},{"URIjs":3}],480:[function(require,module,exports){
+},{"URIjs":3}],481:[function(require,module,exports){
 module.exports={
   "en": {
     "filterbar": {
@@ -22939,7 +23111,9 @@ module.exports={
         "search": "Search",
         "plus_minus_days": "+/- days",
         "from": "From",
-        "to": "To"
+        "to": "To",
+        "count": "Count",
+        "operator": "Operator",
       },
       "buttons": {
         "add_filter": "Add Filter",
@@ -22960,6 +23134,11 @@ module.exports={
         "today": "Today",
         "days": "day(s)",
         "columns": "Columns"
+      },
+      "operators": {
+        "greater_than": "Greater than",
+        "less_than": "Less than",
+        "equal_to": "Equals",
       },
       "periods": {
         "custom_period": "Custom Period",
@@ -22986,7 +23165,7 @@ module.exports={
   }
 }
 
-},{}],481:[function(require,module,exports){
+},{}],482:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -23019,7 +23198,7 @@ function t() {
 var _default = t;
 exports["default"] = _default;
 
-},{"./en/translations.json":480,"i18n-js":431}],482:[function(require,module,exports){
+},{"./en/translations.json":481,"i18n-js":431}],483:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -23052,7 +23231,7 @@ var BatchActionsStore = /*#__PURE__*/function () {
 
 exports.BatchActionsStore = BatchActionsStore;
 
-},{}],483:[function(require,module,exports){
+},{}],484:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -23552,7 +23731,7 @@ var FilterBarStore = /*#__PURE__*/function () {
 
 exports.FilterBarStore = FilterBarStore;
 
-},{"../clients/SearchClient":436}],484:[function(require,module,exports){
+},{"../clients/SearchClient":436}],485:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
