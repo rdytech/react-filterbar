@@ -34,14 +34,6 @@ export class CountInDateRangeInput extends React.Component {
     return (
       <div className="row">
         <div className="col-xs-6">
-          <input
-            className="form-control"
-            onBlur={(e) => this.handleInputChange(e, "count")}
-            type="text"
-            defaultValue={this.state.value.count}
-            placeholder={t("filterbar.placeholders.count")}
-            required
-          />
           <select
             className="form-control"
             onChange={(e) => this.handleInputChange(e, "operator")}
@@ -58,6 +50,14 @@ export class CountInDateRangeInput extends React.Component {
               </option>
             ))}
           </select>
+          <input
+            className="form-control"
+            onBlur={(e) => this.handleInputChange(e, "count")}
+            type="text"
+            defaultValue={this.state.value.count}
+            placeholder={t("filterbar.placeholders.count")}
+            required
+          />
         </div>
         <div className="col-xs-6">
           <RelativeDateInput
@@ -89,7 +89,7 @@ function operatorOptions() {
   return [
     { label: t("filterbar.operators.greater_than"), value: ">" },
     { label: t("filterbar.operators.less_than"), value: "<" },
-    { label: t("filterbar.operators.equal_to"), value: "=" },
+    { label: t("filterbar.operators.equal_to"), value: "==" },
   ];
 }
 

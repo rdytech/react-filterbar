@@ -19345,16 +19345,7 @@ var CountInDateRangeInput = /*#__PURE__*/function (_React$Component) {
         className: "row"
       }, /*#__PURE__*/React.createElement("div", {
         className: "col-xs-6"
-      }, /*#__PURE__*/React.createElement("input", {
-        className: "form-control",
-        onBlur: function onBlur(e) {
-          return _this2.handleInputChange(e, "count");
-        },
-        type: "text",
-        defaultValue: this.state.value.count,
-        placeholder: (0, _i18n["default"])("filterbar.placeholders.count"),
-        required: true
-      }), /*#__PURE__*/React.createElement("select", {
+      }, /*#__PURE__*/React.createElement("select", {
         className: "form-control",
         onChange: function onChange(e) {
           return _this2.handleInputChange(e, "operator");
@@ -19372,7 +19363,16 @@ var CountInDateRangeInput = /*#__PURE__*/function (_React$Component) {
           key: option.value,
           value: option.value
         }, option.label);
-      }))), /*#__PURE__*/React.createElement("div", {
+      })), /*#__PURE__*/React.createElement("input", {
+        className: "form-control",
+        onBlur: function onBlur(e) {
+          return _this2.handleInputChange(e, "count");
+        },
+        type: "text",
+        defaultValue: this.state.value.count,
+        placeholder: (0, _i18n["default"])("filterbar.placeholders.count"),
+        required: true
+      })), /*#__PURE__*/React.createElement("div", {
         className: "col-xs-6"
       }, /*#__PURE__*/React.createElement(_RelativeDateInput.RelativeDateInput, {
         value: this.state.value,
@@ -19407,7 +19407,7 @@ function operatorOptions() {
     value: "<"
   }, {
     label: (0, _i18n["default"])("filterbar.operators.equal_to"),
-    value: "="
+    value: "=="
   }];
 }
 
