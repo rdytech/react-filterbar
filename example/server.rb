@@ -113,7 +113,7 @@ class Server < Sinatra::Base
       haystack.select do |hay|
         (Date.parse(value["from"])..Date.parse(value["to"])) === hay.send(field)
       end
-    when :date_relative
+    when :date_relative, :count_in_date_range
       search_date_relative(haystack, field, value)
     when :id, :select, :lazy_select
       haystack.select do |hay|
