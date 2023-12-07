@@ -198,12 +198,15 @@ RelativeDateInput.defaultProps = {
 
 function relativeOptions() {
   var lastWeek = moment().subtract(1, 'week');
+  var lastMonth = moment().subtract(1, 'month');
   var options = {};
     options[t('filterbar.periods.custom_period')] =       { value: '', from: null, to: null };
     options[t('filterbar.periods.none')] =                {};
     options[t('filterbar.periods.today')] =               { from: moment(), to: moment() };
     options[t('filterbar.periods.last_week')] =           { from: lastWeek.clone().startOf('isoWeek'), to: lastWeek.clone().endOf('isoWeek') };
     options[t('filterbar.periods.this_week')] =           { from: moment().startOf('isoWeek'), to: moment().endOf('isoWeek') };
+    options[t('filterbar.periods.last_month')] =          { from: lastMonth.clone().startOf('month'), to: lastMonth.clone().endOf('month') };
+    options[t('filterbar.periods.this_month')] =          { from: moment().startOf('month'), to: moment().endOf('month') };
     options[t('filterbar.periods.older_than_7_days')] =   { from: null, to: moment().subtract(8, 'day') };
     options[t('filterbar.periods.older_than_14_days')] =  { from: null, to: moment().subtract(15, 'day') };
     options[t('filterbar.periods.older_than_20_days')] =  { from: null, to: moment().subtract(21, 'day') };
