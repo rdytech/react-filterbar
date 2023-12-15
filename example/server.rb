@@ -212,6 +212,12 @@ class Server < Sinatra::Base
     when 'This Week'
       from = Date.today.beginning_of_week
       to   = from.end_of_week
+    when 'Last Month'
+      from = Date.today.last_month
+      to   = from.end_of_month
+    when 'This Month'
+      from = Date.today.beginning_of_month
+      to   = from.end_of_month
     end
     return [from, to]
   end

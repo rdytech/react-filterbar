@@ -44,6 +44,8 @@
         "today": "Today",
         "last_week": "Last Week",
         "this_week": "This Week",
+        "last_month": "Last Month",
+        "this_month": "This Month",
         "older_than_7_days": "Older than 7 days",
         "older_than_14_days": "Older than 14 days",
         "older_than_20_days": "Older than 20 days",
