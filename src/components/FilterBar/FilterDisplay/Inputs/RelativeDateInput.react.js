@@ -103,9 +103,6 @@ export class RelativeDateInput extends React.Component {
     return (
       <div>
         <div className="input-group">
-          <span className="input-group-addon">
-            { t('filterbar.buttons.today') }
-          </span>
           <input
             type="number"
             className="form-control"
@@ -114,16 +111,10 @@ export class RelativeDateInput extends React.Component {
             value={this.state.value.from}
           />
           <span className="input-group-addon">
-            { t('filterbar.buttons.days') }
-          </span>
-          <span className="input-group-addon">
             {this.momentFormatted(this.state.value.from)}
           </span>
         </div>
         <div className="input-group">
-          <span className="input-group-addon">
-            { t('filterbar.buttons.today') }
-          </span>
           <input
             type="number"
             className="form-control"
@@ -131,9 +122,6 @@ export class RelativeDateInput extends React.Component {
             placeholder={ t('filterbar.placeholders.plus_minus_days') }
             value={this.state.value.to}
           />
-          <span className="input-group-addon">
-            { t('filterbar.buttons.days') }
-          </span>
           <span className="input-group-addon">
             {this.momentFormatted(this.state.value.to)}
           </span>
