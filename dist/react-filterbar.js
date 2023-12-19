@@ -19344,7 +19344,10 @@ var CountInDateRangeInput = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/React.createElement("div", {
         className: "row"
       }, /*#__PURE__*/React.createElement("div", {
-        className: "col-xs-6"
+        className: "col-xs-6",
+        style: {
+          paddingRight: "4px"
+        }
       }, /*#__PURE__*/React.createElement("select", {
         className: "form-control",
         onChange: function onChange(e) {
@@ -19373,7 +19376,10 @@ var CountInDateRangeInput = /*#__PURE__*/function (_React$Component) {
         placeholder: (0, _i18n["default"])("filterbar.placeholders.count"),
         required: true
       })), /*#__PURE__*/React.createElement("div", {
-        className: "col-xs-6"
+        className: "col-xs-6",
+        style: {
+          paddingLeft: "4px"
+        }
       }, /*#__PURE__*/React.createElement(_RelativeDateInput.RelativeDateInput, {
         value: this.state.value,
         filterUid: this.props.filterUid
@@ -20516,9 +20522,7 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
 
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
         className: "input-group"
-      }, /*#__PURE__*/React.createElement("span", {
-        className: "input-group-addon"
-      }, (0, _i18n["default"])('filterbar.buttons.today')), /*#__PURE__*/React.createElement("input", {
+      }, /*#__PURE__*/React.createElement("input", {
         type: "number",
         className: "form-control",
         onChange: function onChange(e) {
@@ -20528,13 +20532,9 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         value: this.state.value.from
       }), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
-      }, (0, _i18n["default"])('filterbar.buttons.days')), /*#__PURE__*/React.createElement("span", {
-        className: "input-group-addon"
       }, this.momentFormatted(this.state.value.from))), /*#__PURE__*/React.createElement("div", {
         className: "input-group"
-      }, /*#__PURE__*/React.createElement("span", {
-        className: "input-group-addon"
-      }, (0, _i18n["default"])('filterbar.buttons.today')), /*#__PURE__*/React.createElement("input", {
+      }, /*#__PURE__*/React.createElement("input", {
         type: "number",
         className: "form-control",
         onChange: function onChange(e) {
@@ -20543,8 +20543,6 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
         placeholder: (0, _i18n["default"])('filterbar.placeholders.plus_minus_days'),
         value: this.state.value.to
       }), /*#__PURE__*/React.createElement("span", {
-        className: "input-group-addon"
-      }, (0, _i18n["default"])('filterbar.buttons.days')), /*#__PURE__*/React.createElement("span", {
         className: "input-group-addon"
       }, this.momentFormatted(this.state.value.to))));
     }

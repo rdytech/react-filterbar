@@ -33,7 +33,7 @@ export class CountInDateRangeInput extends React.Component {
   render() {
     return (
       <div className="row">
-        <div className="col-xs-6">
+        <div className="col-xs-6" style={{ paddingRight: "4px" }}>
           <select
             className="form-control"
             onChange={(e) => this.handleInputChange(e, "operator")}
@@ -59,7 +59,7 @@ export class CountInDateRangeInput extends React.Component {
             required
           />
         </div>
-        <div className="col-xs-6">
+        <div className="col-xs-6" style={{ paddingLeft: "4px" }}>
           <RelativeDateInput
             value={this.state.value}
             filterUid={this.props.filterUid}
