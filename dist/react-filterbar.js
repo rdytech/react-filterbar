@@ -20513,7 +20513,6 @@ var RelativeDateInput = /*#__PURE__*/function (_React$Component) {
       this.setState({
         value: newValue
       });
-      this.updateFilter();
     }
   }, {
     key: "showRelativeRangeInputs",
