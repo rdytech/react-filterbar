@@ -96,7 +96,6 @@ export class RelativeDateInput extends React.Component {
     var newValue = this.state.value;
     newValue[input] = event.target.value;
     this.setState({ value: newValue });
-    this.updateFilter();
   }
 
   showRelativeRangeInputs() {
