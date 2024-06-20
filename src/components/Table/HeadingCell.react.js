@@ -30,10 +30,16 @@ export class HeadingCell extends React.Component {
     }
   }
 
-  render() {
-    var content = this.props.value;
-    console.log(this.props);
+  tooltip() {
+    return (
+      <ReactBootstrap.Tooltip id="header-tooltip">
+        <div dangerouslySetInnerHTML={{ __html: this.props.tooltip }} />
+      </ReactBootstrap.Tooltip>
+    );
+  }
 
+  headerContent() {
+    var content = this.props.value;
     if (this.props.sortable !== undefined) {
       var style = {cursor: "pointer"}
       return (
@@ -41,7 +47,6 @@ export class HeadingCell extends React.Component {
           className={["sortable", this.currentSortOrder()].join(" ")}
           onClick={this.sortTable.bind(this)}
           style={Object.assign(style, this.props.style)}
-          tooltip={this.props.tooltip}
         >
           {content}
         </th>
@@ -51,11 +56,23 @@ export class HeadingCell extends React.Component {
       return (
         <th
           style={this.props.style}
-          tooltip={this.props.tooltip}
         >
           {content}
         </th>
       );
+    }
+  }
+
+  render() {
+    if (this.props.tooltip !== undefined) {
+      return (
+        <ReactBootstrap.OverlayTrigger placement="top" overlay={this.tooltip()}>
+          {this.headerContent()}
+        </ReactBootstrap.OverlayTrigger>
+      );
+    }
+    else {
+      return this.headerContent();
     }
   }
 }
