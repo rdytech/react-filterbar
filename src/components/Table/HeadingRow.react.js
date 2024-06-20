@@ -54,6 +54,7 @@ export class HeadingRow extends React.Component {
           type={this.props.cells[cellId].type}
           value={this.props.cells[cellId].heading}
           sortable={this.props.cells[cellId].sortable}
+          tooltip={this.props.cells[cellId].tooltip}
           style={cellStyles}
         />
       );
