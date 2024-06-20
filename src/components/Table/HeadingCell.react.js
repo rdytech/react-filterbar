@@ -32,6 +32,7 @@ export class HeadingCell extends React.Component {
 
   render() {
     var content = this.props.value;
+    console.log(this.props);
 
     if (this.props.sortable !== undefined) {
       var style = {cursor: "pointer"}
