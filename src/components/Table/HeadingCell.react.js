@@ -33,7 +33,7 @@ export class HeadingCell extends React.Component {
   tooltip() {
     return (
       <ReactBootstrap.Tooltip id="header-tooltip">
-        <div dangerouslySetInnerHTML={{ __html: this.props.tooltip }} />
+        <div className="header-tooltip-container" dangerouslySetInnerHTML={{ __html: this.props.tooltip }} />
       </ReactBootstrap.Tooltip>
     );
   }
