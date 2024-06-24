@@ -33,7 +33,10 @@ export class HeadingCell extends React.Component {
   tooltip() {
     return (
       <ReactBootstrap.Tooltip id="header-tooltip">
-        <div className="header-tooltip-container" dangerouslySetInnerHTML={{ __html: this.props.tooltip }} />
+        {this.props.tooltipContentType === 'html' ?
+          <div className="header-tooltip-container" dangerouslySetInnerHTML={{ __html: this.props.tooltipContent }} /> :
+          <div className="header-tooltip-container">{this.props.tooltipContent}</div>
+        }
       </ReactBootstrap.Tooltip>
     );
   }
@@ -64,7 +67,7 @@ export class HeadingCell extends React.Component {
   }
 
   render() {
-    if (this.props.tooltip !== undefined) {
+    if (this.props.tooltipContent !== undefined) {
       return (
         <ReactBootstrap.OverlayTrigger placement="top" overlay={this.tooltip()}>
           {this.headerContent()}

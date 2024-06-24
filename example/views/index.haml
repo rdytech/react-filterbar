@@ -229,9 +229,13 @@
                       %dt.heading{ data: { value: "Published On" } }
                       %dt.field{ data: { value: "published_on" } }
                       %dt.sortable{ data: { value: "published_on" } }
+                      %dt.tooltipContent{ data: { value: "<div style='text-align: left;'>This is tooltip<br /><b>High:</b> Test<div>".html_safe }}
+                      %dt.tooltipContentType{ data: { value: "html" }}
                     %dl.rating
                       %dt.heading{ data: { value: "Rating" } }
                       %dt.field{ data: { value: "rating" } }
+                      %dt.tooltipContent{ data: { value: "Rating tooltip".html_safe }}
+                      %dt.tooltipContentType{ data: { value: "text" }}
 
                 %dl.batchActionsConfiguration
                   %dt.selectable{ data: { value: "title"} }
