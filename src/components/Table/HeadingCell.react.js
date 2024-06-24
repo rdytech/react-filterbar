@@ -30,19 +30,19 @@ export class HeadingCell extends React.Component {
     }
   }
 
-  tooltip() {
-    return (
-      <ReactBootstrap.Tooltip id="header-tooltip">
-        {this.props.tooltipContentType === 'html' ?
-          <div className="header-tooltip-container" dangerouslySetInnerHTML={{ __html: this.props.tooltipContent }} /> :
-          <div className="header-tooltip-container">{this.props.tooltipContent}</div>
-        }
-      </ReactBootstrap.Tooltip>
-    );
-  }
-
   headerContent() {
     var content = this.props.value;
+    if (this.props.headingType === 'html') {
+      return(
+        <div dangerouslySetInnerHTML={{ __html: content }} />
+      );
+    }
+    else {
+      return content;
+    }
+  }
+
+  render() {
     if (this.props.sortable !== undefined) {
       var style = {cursor: "pointer"}
       return (
@@ -51,7 +51,7 @@ export class HeadingCell extends React.Component {
           onClick={this.sortTable.bind(this)}
           style={Object.assign(style, this.props.style)}
         >
-          {content}
+          {this.headerContent()}
         </th>
       );
     }
@@ -60,22 +60,9 @@ export class HeadingCell extends React.Component {
         <th
           style={this.props.style}
         >
-          {content}
+          {this.headerContent()}
         </th>
       );
-    }
-  }
-
-  render() {
-    if (this.props.tooltipContent !== undefined) {
-      return (
-        <ReactBootstrap.OverlayTrigger placement="top" overlay={this.tooltip()}>
-          {this.headerContent()}
-        </ReactBootstrap.OverlayTrigger>
-      );
-    }
-    else {
-      return this.headerContent();
     }
   }
 }

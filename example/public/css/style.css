@@ -18,11 +18,3 @@
 select:required:invalid {
   color: #999999;
 }
-
-#header-tooltip > .tooltip-inner {
-  min-width: 300px;
-}
-
-.header-tooltip-container {
-  padding: 10px;
-}
