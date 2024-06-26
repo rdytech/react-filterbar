@@ -22357,10 +22357,23 @@ var HeadingCell = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "headerContent",
+    value: function headerContent() {
       var content = this.props.value;
 
+      if (this.props.headingType === 'html') {
+        return /*#__PURE__*/React.createElement("div", {
+          dangerouslySetInnerHTML: {
+            __html: content
+          }
+        });
+      } else {
+        return content;
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
       if (this.props.sortable !== undefined) {
         var style = {
           cursor: "pointer"
@@ -22369,11 +22382,11 @@ var HeadingCell = /*#__PURE__*/function (_React$Component) {
           className: ["sortable", this.currentSortOrder()].join(" "),
           onClick: this.sortTable.bind(this),
           style: Object.assign(style, this.props.style)
-        }, content);
+        }, this.headerContent());
       } else {
         return /*#__PURE__*/React.createElement("th", {
           style: this.props.style
-        }, content);
+        }, this.headerContent());
       }
     }
   }]);
@@ -22485,6 +22498,7 @@ var HeadingRow = /*#__PURE__*/function (_React$Component) {
           type: this.props.cells[cellId].type,
           value: this.props.cells[cellId].heading,
           sortable: this.props.cells[cellId].sortable,
+          headingType: this.props.cells[cellId].headingType,
           style: cellStyles
         });
       }, this);
