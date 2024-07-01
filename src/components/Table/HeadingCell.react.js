@@ -30,21 +30,37 @@ export class HeadingCell extends React.Component {
     }
   }
 
-  render() {
+  headerContent() {
     var content = this.props.value;
+    if (this.props.headingType === 'html') {
+      return(
+        <div dangerouslySetInnerHTML={{ __html: content }} />
+      );
+    }
+    else {
+      return content;
+    }
+  }
 
+  render() {
     if (this.props.sortable !== undefined) {
       var style = {cursor: "pointer"}
       return (
-        <th className={["sortable", this.currentSortOrder()].join(" ")} onClick={this.sortTable.bind(this)} style={Object.assign(style, this.props.style)}>
-          {content}
+        <th 
+          className={["sortable", this.currentSortOrder()].join(" ")}
+          onClick={this.sortTable.bind(this)}
+          style={Object.assign(style, this.props.style)}
+        >
+          {this.headerContent()}
         </th>
       );
     }
     else {
       return (
-        <th style={this.props.style}>
-          {content}
+        <th
+          style={this.props.style}
+        >
+          {this.headerContent()}
         </th>
       );
     }

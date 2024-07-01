@@ -226,12 +226,14 @@
                       %dt.heading{ data: { value: "Book Id" } }
                       %dt.field{ data: { value: "id" } }
                     %dl.published_on
-                      %dt.heading{ data: { value: "Published On" } }
+                      %dt.heading{ data: { value: "<i>Published On</i>" } }
                       %dt.field{ data: { value: "published_on" } }
                       %dt.sortable{ data: { value: "published_on" } }
+                      %dt.headingType{ data: { value: "html" }}
                     %dl.rating
                       %dt.heading{ data: { value: "Rating" } }
                       %dt.field{ data: { value: "rating" } }
+                      %dt.headingType{ data: { value: "text" }}
 
                 %dl.batchActionsConfiguration
                   %dt.selectable{ data: { value: "title"} }
