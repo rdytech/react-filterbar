@@ -36,7 +36,7 @@ export class ExportResultsList extends React.Component {
           </li>
           <li role="presentation">
             <a role="menuitem" onClick={() => this.onClick('all')}>
-            {t('filterbar.buttons.export_current_columns')}
+            {t('filterbar.buttons.export_all_columns')}
             </a>
           </li>
         </ul>
