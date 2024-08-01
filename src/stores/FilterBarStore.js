@@ -13,7 +13,8 @@ export class FilterBarStore {
     this.searchUrl = configuration.searchUrl;
     this.savedSearchesUrl = configuration.savedSearchesUrl;
     this.configurationUrl = configuration.configurationUrl;
-    this.exportResultsUrl = configuration.exportResultsUrl;
+    this.exportCurrentColumnsUrl = configuration.exportCurrentColumnsUrl;
+    this.exportAllColumnsUrl = configuration.exportAllColumnsUrl;
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
@@ -76,6 +77,14 @@ export class FilterBarStore {
 
   getExportResultsUrl() {
     return this.exportResultsUrl;
+  }
+
+  getExportCurrentColumnsUrl() {
+    return this.exportCurrentColumnsUrl;
+  }
+
+  getExportAllColumnsUrl() {
+    return this.exportAllColumnsUrl;
   }
 
   getExportPageLimit() {
@@ -141,7 +150,8 @@ export class FilterBarStore {
   }
 
   isExportable() {
-    return this.getExportResultsUrl() !== undefined;
+    return this.getExportCurrentColumnsUrl() !== undefined ||
+           this.getExportAllColumnsUrl() !== undefined;
   }
 
   setSavedSearches(savedSearches) {

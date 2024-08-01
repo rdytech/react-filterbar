@@ -85,11 +85,19 @@ export class FilterBarActor {
     });
   }
 
-  exportResults() {
+  exportCurrentColumns() {
     if (this.exportPageLimitExceeded()) {
       alert(this.filterBarStore.getExportPageLimitExceededMessage());
     } else if (this.filterBarStore.persistent) {
-      URLHelper.redirectUrl(this.exportUrl());
+      URLHelper.redirectUrl(this.exportCurrentColumnsUrl());
+    }
+  }
+
+  exportAllColumns() {
+    if (this.exportPageLimitExceeded()) {
+      alert(this.filterBarStore.getExportPageLimitExceededMessage());
+    } else if (this.filterBarStore.persistent) {
+      URLHelper.redirectUrl(this.exportAllColumnsUrl());
     }
   }
 
@@ -99,6 +107,14 @@ export class FilterBarActor {
 
   exportUrl() {
     return URLHelper.updateUrlSearch(this.filterBarStore.getExportResultsUrl(), "q", this.filterBarStore.getQuery()).toString();
+  }
+
+  exportCurrentColumnsUrl() {
+    return URLHelper.updateUrlSearch(this.filterBarStore.getExportCurrentColumnsUrl(), "q", this.filterBarStore.getQuery()).toString();
+  }
+
+  exportAllColumnsUrl() {
+    return URLHelper.updateUrlSearch(this.filterBarStore.getExportAllColumnsUrl(), "q", this.filterBarStore.getQuery()).toString();
   }
 
   loadSavedSearch(searchId) {

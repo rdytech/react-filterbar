@@ -2,7 +2,7 @@ import {FilterList} from "./FilterList/FilterList.react";
 import {FilterDisplay} from "./FilterDisplay/FilterDisplay.react";
 import {ApplyFiltersButton} from "./ApplyFiltersButton.react";
 import {ConfigurationButton} from "./ConfigurationButton.react";
-import {ExportResultsButton} from "./ExportResultsButton.react";
+import {ExportResultsList} from "./ExportResultsList.react";
 import {ClearFiltersButton} from "./ClearFiltersButton.react";
 import {SaveFiltersButton} from "./SaveFiltersButton.react";
 import {SavedSearchesList} from "./SavedSearchesList/SavedSearchesList.react";
@@ -46,7 +46,7 @@ export class FilterBar extends React.Component {
             }
 
             {this.context.filterBarStore.isExportable() &&
-              <ExportResultsButton
+              <ExportResultsList
                 filterBarActor={this.context.filterBarActor}
               />
             }
