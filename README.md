@@ -198,6 +198,16 @@ The following haml snippet is an example of the code to include on your html pag
         %dt.field{ :data => { value: "actions" } }
         %dt.type{ :data => { value: "html" } }
 
+  %dl.exportActionsConfiguration
+    %dt.selectable{ data: { value: "export_columns"} }
+    %dl.actions
+      %dl.export_current_columns
+        %dt.label{ data: { value: "Export Current Columns" } }
+        %dt.url{ data: { value: "/path/to/export_current_columns" } }
+      %dl.export_all_columns
+        %dt.label{ data: { value: "Export All Columns" } }
+        %dt.url{ data: { value: "/path/to/export_all_columns" } }
+
   %dl.batchActionsConfiguration
     %dt.selectable{ data: { value: "title"} }
     %dl.actions

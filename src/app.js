@@ -70,6 +70,15 @@ function setupConfiguration(configuration) {
     configuration.tableConfiguration.selectable = configuration.batchActionsConfiguration.selectable;
   }
 
+  if (configuration.exportActionsConfiguration === undefined) {
+    configuration.exportActionsConfiguration = { actions: [] };
+    configuration.tableConfiguration.selectable = undefined;
+  }
+  else {
+    configuration.tableConfiguration.selectable = configuration.exportActionsConfiguration.selectable;
+  }
+
+
   return configuration;
 }
 
@@ -86,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function(){
       {
         filterBarConfiguration: configuration.filterBarConfiguration,
         tableConfiguration: configuration.tableConfiguration,
+        exportActionsConfiguration: configuration.exportActionsConfiguration,
         batchActionsConfiguration: configuration.batchActionsConfiguration
       }
     ),
