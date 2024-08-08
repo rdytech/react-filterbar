@@ -47,7 +47,7 @@ export class FilterBar extends React.Component {
 
             {this.context.filterBarStore.isExportable() &&
               <ExportResultsList
-                exportActionsConfiguration={this.context.exportActionsConfiguration} // Pass as prop
+                filterBarActor={this.context.filterBarActor}
               />
             }
 
@@ -67,6 +67,5 @@ FilterBar.contextTypes = {
   filterBarActor: React.PropTypes.object,
   filterBarStore: React.PropTypes.object,
   tableStore: React.PropTypes.object,
-  batchActionsStore: React.PropTypes.object,
-  exportActionsConfiguration: React.PropTypes.object // Define context type
+  batchActionsStore: React.PropTypes.object
 };

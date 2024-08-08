@@ -18,8 +18,6 @@ export class FilterableTable extends React.Component {
 
     this.filterBarActor = new FilterBarActor(this.filterBarStore, this.tableStore);
     this.tableActor = new TableActor(this.filterBarStore, this.tableStore);
-
-    this.exportActionsConfiguration = props.exportActionsConfiguration; // Initialize here
   }
 
   getChildContext() {
@@ -28,8 +26,7 @@ export class FilterableTable extends React.Component {
       filterBarActor: this.filterBarActor,
       tableStore: this.tableStore,
       batchActionsStore: this.batchActionsStore,
-      tableActor: this.tableActor,
-      exportActionsConfiguration: this.exportActionsConfiguration // Add to context
+      tableActor: this.tableActor
     };
   }
 
@@ -48,6 +45,5 @@ FilterableTable.childContextTypes = {
   filterBarActor: React.PropTypes.object,
   tableStore: React.PropTypes.object,
   batchActionsStore: React.PropTypes.object,
-  tableActor: React.PropTypes.object,
-  exportActionsConfiguration: React.PropTypes.object // Define context type
+  tableActor: React.PropTypes.object
 };

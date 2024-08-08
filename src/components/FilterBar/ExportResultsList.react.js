@@ -15,8 +15,6 @@ export class ExportResultsList extends React.Component {
   }
 
   render() {
-    const { actions } = this.props.exportActionsConfiguration; // Use the prop
-
     return (
       <div className="btn-group">
         <button
@@ -31,13 +29,16 @@ export class ExportResultsList extends React.Component {
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">
-          {actions.map((action, index) => (
-            <li role="presentation" key={index}>
-              <a role="menuitem" onClick={() => this.onClick(action.type)}>
-                {t(`filterbar.buttons.${action.label}`)}
-              </a>
-            </li>
-          ))}
+          <li role="presentation">
+            <a role="menuitem" onClick={() => this.onClick('current')}>
+            {t('filterbar.buttons.export_current_columns')}
+            </a>
+          </li>
+          <li role="presentation">
+            <a role="menuitem" onClick={() => this.onClick('all')}>
+            {t('filterbar.buttons.export_current_columns')}
+            </a>
+          </li>
         </ul>
       </div>
     );
@@ -46,8 +47,4 @@ export class ExportResultsList extends React.Component {
 
 ExportResultsList.contextTypes = {
   filterBarActor: PropTypes.object.isRequired
-};
-
-ExportResultsList.propTypes = {
-  exportActionsConfiguration: PropTypes.object.isRequired // Define prop type
 };

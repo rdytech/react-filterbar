@@ -39,6 +39,8 @@
                   %dt.persistent{ data: { value: 'true' } }
                   %dt.search-url{ data: { value: '/' } }
                   %dt.saved-searches-url{ data: { value: '/saved_searches' } }
+                  %dt.export-current-columns-url{ data: { value: '/export_current_columns' } }
+                  %dt.export-all-columns-url{ data: { value: '/export_all_columns' } }
                   %dl.filters
                     %dl.author_multi_lazy_with_item_url
                       %dt.field{ data: { value: "author" } }
@@ -233,16 +235,6 @@
                       %dt.heading{ data: { value: "Rating" } }
                       %dt.field{ data: { value: "rating" } }
                       %dt.headingType{ data: { value: "text" }}
-
-                %dl.exportActionsConfiguration
-                  %dt.selectable{ data: { value: "export_columns"} }
-                  %dl.actions
-                    %dl.export_current_columns
-                      %dt.label{ data: { value: 'Export Current Columns' } }
-                      %dt.url{ data: { value: "/export_current_columns" } }
-                    %dl.export_all_columns
-                      %dt.label{ data: { value: 'Export All Columns' } }
-                      %dt.url{ data: { value: "/export_all_columns" } }
 
                 %dl.batchActionsConfiguration
                   %dt.selectable{ data: { value: "title"} }
