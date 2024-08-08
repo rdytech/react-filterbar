@@ -13,8 +13,6 @@ An example usage of the configuration API is:
     %dt.search-url{ data:  { value: '/books' } }
     %dt.saved-searches-url{ data:  { value: '/books/saved_searches' } }
     %dt.configuration-url{ data:  { value: '/filter_bar_configurations/books' } }
-    %dt.export-current-columns-url{ data: { value: '/books/export_current_columns' } }
-    %dt.export-all-columns-url{ data: { value: '/books/export_all_columns' } }
     %dt.export-page-limit{ data:  { value: '50' } }
     %dt.export-page-limit-exceeded-message{ data:  { value: 'Too many books.' } }
     %dl.filters
@@ -85,14 +83,6 @@ This setting is the endpoint the component should use to GET a list of saved sea
 #### dt.configuration-url
 
 This setting is a URL which allows the user to configure their filter bar. This URL will be rendered within a modal.
-
-*Allowed Values*: ['/resource', '://fqdn/resource']
-
-#### dt.export-current-columns-url
-This setting is the endpoint the component should use to export the current columns resultset. The API contract is defined at [Export Results API](#export-results-api)
-
-#### dt.export-all-columns-url
-This setting is the endpoint the component should use to export the all columns resultset. The API contract is defined at [Export Results API](#export-results-api)
 
 *Allowed Values*: ['/resource', '://fqdn/resource']
 

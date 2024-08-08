@@ -91,8 +91,6 @@ The following haml snippet is an example of the code to include on your html pag
     %dt.search-url{ :data => { value: '/books' } }
     %dt.save-search-url{ :data => { value: '/books/saved_searches' } }
     %dt.saved-searches-url{ :data => { value: '/books/saved_searches' } }
-    %dt.export-current-columns-url{ data: { value: '/books/export_current_columns' } }
-    %dt.export-all-columns-url{ data: { value: '/books/export_all_columns' } }
     %dt.export-page-limit{ data:  { value: '50' } }
     %dt.export-page-limit-exceeded-message{ data:  { value: 'Too many books.' } }
     %dl.filters
