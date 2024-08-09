@@ -12,9 +12,9 @@ An example usage of the configuration API is:
     %dt.persistent{ data:  { value: 'true' } }
     %dt.search-url{ data:  { value: '/books' } }
     %dt.saved-searches-url{ data:  { value: '/books/saved_searches' } }
+    %dt.configuration-url{ data:  { value: '/filter_bar_configurations/books' } }
     %dt.export-results-url{ data:  { value: '/books/export' } }
     %dt.export-all-options{data: { value: 'true' } }
-    %dt.configuration-url{ data:  { value: '/filter_bar_configurations/books' } }
     %dt.export-page-limit{ data:  { value: '50' } }
     %dt.export-page-limit-exceeded-message{ data:  { value: 'Too many books.' } }
     %dl.filters
@@ -70,11 +70,6 @@ This setting toggles url and localStorage persistence for the component. If it i
 
 *Allowed Values*: ['true', 'false']
 
-#### dt.export-results-url
-This setting is the endpoint the component should use to export the current resultset. The API contract is defined at [Export Results API](#export-results-api)
-
-*Allowed Values*: ['/resource', '://fqdn/resource']
-
 #### dt.search-url
 
 This setting is the endpoint the component should use to GET results from. The API contract is defined at [Search API](#search-api).
@@ -90,6 +85,11 @@ This setting is the endpoint the component should use to GET a list of saved sea
 #### dt.configuration-url
 
 This setting is a URL which allows the user to configure their filter bar. This URL will be rendered within a modal.
+
+*Allowed Values*: ['/resource', '://fqdn/resource']
+
+#### dt.export-results-url
+This setting is the endpoint the component should use to export the current resultset. The API contract is defined at [Export Results API](#export-results-api)
 
 *Allowed Values*: ['/resource', '://fqdn/resource']
 
