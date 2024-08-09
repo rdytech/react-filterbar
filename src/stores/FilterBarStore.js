@@ -2,6 +2,7 @@ import {getSavedSearches} from "../clients/SearchClient";
 
 export class FilterBarStore {
   constructor(configuration) {
+    debugger;
     this.CHANGE_EVENT = "change";
     this.eventEmitter = new EventEmitter();
 
@@ -13,8 +14,10 @@ export class FilterBarStore {
     this.searchUrl = configuration.searchUrl;
     this.savedSearchesUrl = configuration.savedSearchesUrl;
     this.configurationUrl = configuration.configurationUrl;
-    this.exportCurrentColumnsUrl = configuration.exportCurrentColumnsUrl;
-    this.exportAllColumnsUrl = configuration.exportAllColumnsUrl;
+    // this.exportCurrentColumnsUrl = configuration.exportCurrentColumnsUrl;
+    // this.exportAllColumnsUrl = configuration.exportAllColumnsUrl;
+    this.exportResultsUrl = configuration.exportResultsUrl;
+    this.exportAllOptions = configuration.exportAllOptions;
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
@@ -79,12 +82,15 @@ export class FilterBarStore {
     return this.exportResultsUrl;
   }
 
-  getExportCurrentColumnsUrl() {
-    return this.exportCurrentColumnsUrl;
-  }
+  // getExportCurrentColumnsUrl() {
+  //   return this.exportCurrentColumnsUrl;
+  // }
 
-  getExportAllColumnsUrl() {
-    return this.exportAllColumnsUrl;
+  // getExportAllColumnsUrl() {
+  //   return this.exportAllColumnsUrl;
+  // }
+  hasExportAllOptions() {
+    return this.exportAllOptions === 'true';
   }
 
   getExportPageLimit() {
@@ -149,9 +155,12 @@ export class FilterBarStore {
     return this.getConfigurationUrl() !== undefined;
   }
 
+  // isExportable() {
+  //   return this.getExportCurrentColumnsUrl() !== undefined ||
+  //          this.getExportAllColumnsUrl() !== undefined;
+  // }
   isExportable() {
-    return this.getExportCurrentColumnsUrl() !== undefined ||
-           this.getExportAllColumnsUrl() !== undefined;
+    return this.getExportResultsUrl() !== undefined;
   }
 
   setSavedSearches(savedSearches) {

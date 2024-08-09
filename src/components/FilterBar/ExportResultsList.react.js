@@ -7,11 +7,7 @@ export class ExportResultsList extends React.Component {
   }
 
   onClick(option) {
-    if (option === 'current') {
-      this.context.filterBarActor.exportCurrentColumns();
-    } else if (option === 'all') {
-      this.context.filterBarActor.exportAllColumns();
-    }
+    this.context.filterBarActor.exportResults(option);
   }
 
   render() {
@@ -29,14 +25,16 @@ export class ExportResultsList extends React.Component {
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">
-          <li role="presentation">
-            <a role="menuitem" onClick={() => this.onClick('current')}>
-            {t('filterbar.buttons.export_current_columns')}
-            </a>
-          </li>
+          {this.props.filterBarActor.filterBarStore.exportAllOptions === 'true' &&
+            <li role="presentation">
+              <a role="menuitem" onClick={() => this.onClick('current')}>
+              {t('filterbar.buttons.export_current_columns')}
+              </a>
+            </li>
+        }
           <li role="presentation">
             <a role="menuitem" onClick={() => this.onClick('all')}>
-            {t('filterbar.buttons.export_current_columns')}
+            {t('filterbar.buttons.export_all_columns')}
             </a>
           </li>
         </ul>
