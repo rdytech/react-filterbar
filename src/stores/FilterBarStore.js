@@ -2,7 +2,6 @@ import {getSavedSearches} from "../clients/SearchClient";
 
 export class FilterBarStore {
   constructor(configuration) {
-    debugger;
     this.CHANGE_EVENT = "change";
     this.eventEmitter = new EventEmitter();
 
