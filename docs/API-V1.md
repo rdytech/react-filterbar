@@ -12,6 +12,8 @@ An example usage of the configuration API is:
     %dt.persistent{ data:  { value: 'true' } }
     %dt.search-url{ data:  { value: '/books' } }
     %dt.saved-searches-url{ data:  { value: '/books/saved_searches' } }
+    %dt.export-results-url{ data:  { value: '/books/export' } }
+    %dt.export-all-options{data: { value: 'true' } }
     %dt.configuration-url{ data:  { value: '/filter_bar_configurations/books' } }
     %dt.export-page-limit{ data:  { value: '50' } }
     %dt.export-page-limit-exceeded-message{ data:  { value: 'Too many books.' } }
@@ -67,6 +69,11 @@ The filterBarConfiguration tree has several options, as well as a child tree con
 This setting toggles url and localStorage persistence for the component. If it is true, on applying a search the component will update both the url of the page and the localStorage value for the pathname to persist the current search. This allows a user to revisit these searches without saving or rebuilding them, through bookmarking or through copy and paste. It will also eventually allow navigation using back and forward events.
 
 *Allowed Values*: ['true', 'false']
+
+#### dt.export-results-url
+This setting is the endpoint the component should use to export the current resultset. The API contract is defined at [Export Results API](#export-results-api)
+
+*Allowed Values*: ['/resource', '://fqdn/resource']
 
 #### dt.search-url
 

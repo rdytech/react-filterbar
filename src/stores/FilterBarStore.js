@@ -14,8 +14,6 @@ export class FilterBarStore {
     this.searchUrl = configuration.searchUrl;
     this.savedSearchesUrl = configuration.savedSearchesUrl;
     this.configurationUrl = configuration.configurationUrl;
-    // this.exportCurrentColumnsUrl = configuration.exportCurrentColumnsUrl;
-    // this.exportAllColumnsUrl = configuration.exportAllColumnsUrl;
     this.exportResultsUrl = configuration.exportResultsUrl;
     this.exportAllOptions = configuration.exportAllOptions;
     this.exportPageLimit = configuration.exportPageLimit;
@@ -82,13 +80,6 @@ export class FilterBarStore {
     return this.exportResultsUrl;
   }
 
-  // getExportCurrentColumnsUrl() {
-  //   return this.exportCurrentColumnsUrl;
-  // }
-
-  // getExportAllColumnsUrl() {
-  //   return this.exportAllColumnsUrl;
-  // }
   hasExportAllOptions() {
     return this.exportAllOptions === 'true';
   }
@@ -155,10 +146,6 @@ export class FilterBarStore {
     return this.getConfigurationUrl() !== undefined;
   }
 
-  // isExportable() {
-  //   return this.getExportCurrentColumnsUrl() !== undefined ||
-  //          this.getExportAllColumnsUrl() !== undefined;
-  // }
   isExportable() {
     return this.getExportResultsUrl() !== undefined;
   }
