@@ -14,7 +14,7 @@ An example usage of the configuration API is:
     %dt.saved-searches-url{ data:  { value: '/books/saved_searches' } }
     %dt.configuration-url{ data:  { value: '/filter_bar_configurations/books' } }
     %dt.export-results-url{ data:  { value: '/books/export' } }
-    %dt.export-all-options{data: { value: 'true' } }
+    %dt.export-all-options{ data: { value: 'true' } }
     %dt.export-page-limit{ data:  { value: '50' } }
     %dt.export-page-limit-exceeded-message{ data:  { value: 'Too many books.' } }
     %dl.filters
