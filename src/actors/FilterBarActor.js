@@ -100,7 +100,7 @@ export class FilterBarActor {
       "q",
       this.filterBarStore.getQuery()
     ).toString();
-    url += `&export_partial=${exportPartial}`;
+    url = URLHelper.updateUrlSearch(url, "export_partial", exportPartial).toString();
     return url;
   }
 

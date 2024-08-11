@@ -3,6 +3,7 @@ import {FilterDisplay} from "./FilterDisplay/FilterDisplay.react";
 import {ApplyFiltersButton} from "./ApplyFiltersButton.react";
 import {ConfigurationButton} from "./ConfigurationButton.react";
 import {ExportResultsList} from "./ExportResultsList.react";
+import {ExportResultsButton} from "./ExportResultsButton.react"; // Import ExportResultsButton
 import {ClearFiltersButton} from "./ClearFiltersButton.react";
 import {SaveFiltersButton} from "./SaveFiltersButton.react";
 import {SavedSearchesList} from "./SavedSearchesList/SavedSearchesList.react";
@@ -14,6 +15,8 @@ export class FilterBar extends React.Component {
   }
 
   render() {
+    const exportAllOptions = this.context.filterBarStore.exportAllOptions === 'true';
+
     return (
       <div>
         <div>
@@ -46,9 +49,14 @@ export class FilterBar extends React.Component {
             }
 
             {this.context.filterBarStore.isExportable() &&
-              <ExportResultsList
-                filterBarActor={this.context.filterBarActor}
-              />
+              (exportAllOptions ? (
+                <ExportResultsList
+                  filterBarActor={this.context.filterBarActor}
+                  exportAllOptions={exportAllOptions}
+                />
+              ) : (
+                <ExportResultsButton />
+              ))
             }
 
             <BatchActionsList />

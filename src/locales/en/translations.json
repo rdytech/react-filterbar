@@ -24,6 +24,7 @@
         "saved_searches": "Saved Searches",
         "export": "Export",
         "export_all_columns": "Export All Columns",
+        "export_csv": "Export CSV",
         "export_current_columns": "Export Current Columns",
         "bulk_actions": "Bulk Actions",
         "no_filters_enabled": "No Filters Enabled!",
