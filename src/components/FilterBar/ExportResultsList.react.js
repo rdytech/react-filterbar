@@ -25,16 +25,14 @@ export class ExportResultsList extends React.Component {
           <i className="icon icon-chevron-down" />
         </button>
         <ul className="dropdown-menu" role="menu">
-          {this.props.exportAllOptions &&
-            <li role="presentation">
-              <a role="menuitem" onClick={() => this.onClick('current')}>
+          <li role="presentation">
+            <a role="menuitem" onClick={() => this.onClick('current')}>
               {t('filterbar.buttons.export_current_columns')}
-              </a>
-            </li>
-          }
+            </a>
+          </li>
           <li role="presentation">
             <a role="menuitem" onClick={() => this.onClick('all')}>
-            {t('filterbar.buttons.export_all_columns')}
+              {t('filterbar.buttons.export_all_columns')}
             </a>
           </li>
         </ul>
@@ -44,10 +42,5 @@ export class ExportResultsList extends React.Component {
 }
 
 ExportResultsList.contextTypes = {
-  filterBarActor: PropTypes.object.isRequired
-};
-
-ExportResultsList.propTypes = {
-  exportAllOptions: PropTypes.bool.isRequired,
   filterBarActor: PropTypes.object.isRequired
 };
