@@ -79,10 +79,6 @@ export class FilterBarStore {
     return this.exportResultsUrl;
   }
 
-  hasExportAllOptions() {
-    return this.exportAllOptions === 'true';
-  }
-
   getExportPageLimit() {
     return Number(this.exportPageLimit);
   }
