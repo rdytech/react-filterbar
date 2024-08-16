@@ -2,6 +2,7 @@ import {FilterList} from "./FilterList/FilterList.react";
 import {FilterDisplay} from "./FilterDisplay/FilterDisplay.react";
 import {ApplyFiltersButton} from "./ApplyFiltersButton.react";
 import {ConfigurationButton} from "./ConfigurationButton.react";
+import {ExportResultsList} from "./ExportResultsList.react";
 import {ExportResultsButton} from "./ExportResultsButton.react";
 import {ClearFiltersButton} from "./ClearFiltersButton.react";
 import {SaveFiltersButton} from "./SaveFiltersButton.react";
@@ -14,6 +15,8 @@ export class FilterBar extends React.Component {
   }
 
   render() {
+    const exportAllOptions = this.context.filterBarStore.exportAllOptions === 'true';
+
     return (
       <div>
         <div>
@@ -46,9 +49,11 @@ export class FilterBar extends React.Component {
             }
 
             {this.context.filterBarStore.isExportable() &&
-              <ExportResultsButton
-                filterBarActor={this.context.filterBarActor}
-              />
+              (exportAllOptions ? (
+                <ExportResultsList />
+              ) : (
+                <ExportResultsButton />
+              ))
             }
 
             <BatchActionsList />
@@ -67,5 +72,5 @@ FilterBar.contextTypes = {
   filterBarActor: React.PropTypes.object,
   filterBarStore: React.PropTypes.object,
   tableStore: React.PropTypes.object,
-  batchActionsStore: React.PropTypes.object,
+  batchActionsStore: React.PropTypes.object
 };

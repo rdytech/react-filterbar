@@ -85,21 +85,29 @@ export class FilterBarActor {
     });
   }
 
-  exportResults() {
+  exportResults(option) {
     if (this.exportPageLimitExceeded()) {
       alert(this.filterBarStore.getExportPageLimitExceededMessage());
     } else if (this.filterBarStore.persistent) {
-      URLHelper.redirectUrl(this.exportUrl());
+      URLHelper.redirectUrl(this.exportUrl(option));
     }
+  }
+
+  exportUrl(option) {
+    const exportPartial = option === 'current' ? 'true' : 'false';
+    let url = URLHelper.updateUrlSearch(
+      this.filterBarStore.getExportResultsUrl(),
+      "q",
+      this.filterBarStore.getQuery()
+    ).toString();
+    url = URLHelper.updateUrlSearch(url, "export_partial", exportPartial).toString();
+    return url;
   }
 
   exportPageLimitExceeded() {
     return this.filterBarStore.getExportPageLimit() !== NaN && this.tableStore.getTotalPages() > this.filterBarStore.getExportPageLimit();
   }
 
-  exportUrl() {
-    return URLHelper.updateUrlSearch(this.filterBarStore.getExportResultsUrl(), "q", this.filterBarStore.getQuery()).toString();
-  }
 
   loadSavedSearch(searchId) {
     this.disableAllFilters();

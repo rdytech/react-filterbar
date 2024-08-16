@@ -14,6 +14,7 @@ export class FilterBarStore {
     this.savedSearchesUrl = configuration.savedSearchesUrl;
     this.configurationUrl = configuration.configurationUrl;
     this.exportResultsUrl = configuration.exportResultsUrl;
+    this.exportAllOptions = configuration.exportAllOptions;
     this.exportPageLimit = configuration.exportPageLimit;
     this.exportPageLimitExceededMessage = configuration.exportPageLimitExceededMessage;
     this.filters = configuration.filters;
