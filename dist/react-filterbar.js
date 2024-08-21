@@ -20261,7 +20261,7 @@ var ExportResultsList = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/React.createElement("ul", {
         className: "dropdown-menu",
         role: "menu"
-      }, this.props.exportAllOptions && /*#__PURE__*/React.createElement("li", {
+      }, /*#__PURE__*/React.createElement("li", {
         role: "presentation"
       }, /*#__PURE__*/React.createElement("a", {
         role: "menuitem",
@@ -20284,10 +20284,6 @@ var ExportResultsList = /*#__PURE__*/function (_React$Component) {
 
 exports.ExportResultsList = ExportResultsList;
 ExportResultsList.contextTypes = {
-  filterBarActor: _propTypes["default"].object.isRequired
-};
-ExportResultsList.propTypes = {
-  exportAllOptions: _propTypes["default"].bool.isRequired,
   filterBarActor: _propTypes["default"].object.isRequired
 };
 
@@ -20371,10 +20367,7 @@ var FilterBar = /*#__PURE__*/function (_React$Component) {
         filterBarStore: this.context.filterBarStore
       }), this.context.filterBarStore.isConfigurable() && /*#__PURE__*/React.createElement(_ConfigurationButton.ConfigurationButton, {
         filterBarStore: this.context.filterBarStore
-      }), this.context.filterBarStore.isExportable() && (exportAllOptions ? /*#__PURE__*/React.createElement(_ExportResultsList.ExportResultsList, {
-        filterBarActor: this.context.filterBarActor,
-        exportAllOptions: exportAllOptions
-      }) : /*#__PURE__*/React.createElement(_ExportResultsButton.ExportResultsButton, null)), /*#__PURE__*/React.createElement(_BatchActionsList.BatchActionsList, null)), /*#__PURE__*/React.createElement(_FilterDisplay.FilterDisplay, {
+      }), this.context.filterBarStore.isExportable() && (exportAllOptions ? /*#__PURE__*/React.createElement(_ExportResultsList.ExportResultsList, null) : /*#__PURE__*/React.createElement(_ExportResultsButton.ExportResultsButton, null)), /*#__PURE__*/React.createElement(_BatchActionsList.BatchActionsList, null)), /*#__PURE__*/React.createElement(_FilterDisplay.FilterDisplay, {
         enabledFilters: this.context.filterBarStore.getEnabled()
       })));
     }
@@ -24915,11 +24908,6 @@ var FilterBarStore = /*#__PURE__*/function () {
     key: "getExportResultsUrl",
     value: function getExportResultsUrl() {
       return this.exportResultsUrl;
-    }
-  }, {
-    key: "hasExportAllOptions",
-    value: function hasExportAllOptions() {
-      return this.exportAllOptions === 'true';
     }
   }, {
     key: "getExportPageLimit",
