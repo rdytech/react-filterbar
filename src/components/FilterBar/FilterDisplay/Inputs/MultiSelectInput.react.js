@@ -7,7 +7,7 @@ export class MultiSelectInput extends React.Component {
       value: this.props.value === '' ? this.getDefaultValue() : this.props.value,
       options: [],
       operator: this.props.operator,
-      label: this.props.label
+      label: this.props.filterUid
     }
   }
 
