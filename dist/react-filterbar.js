@@ -21578,7 +21578,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var optionList = this.state.options;
-      var name_label = "operator_".concat(this.state.label);
+      var operatorLabel = "operator_".concat(this.state.label);
       var options = optionList.map(function (option) {
         return /*#__PURE__*/React.createElement("option", {
           key: option.value,
@@ -21595,7 +21595,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         className: "radio-inline"
       }, /*#__PURE__*/React.createElement("input", {
         type: "radio",
-        name: name_label,
+        name: operatorLabel,
         value: "any",
         checked: this.state.operator == "any",
         onChange: this.updateOperator.bind(this)
@@ -21603,7 +21603,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         className: "radio-inline"
       }, /*#__PURE__*/React.createElement("input", {
         type: "radio",
-        name: name_label,
+        name: operatorLabel,
         value: "all",
         checked: this.state.operator == "all",
         onChange: this.updateOperator.bind(this)
@@ -21611,7 +21611,7 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         className: "radio-inline"
       }, /*#__PURE__*/React.createElement("input", {
         type: "radio",
-        name: name_label,
+        name: operatorLabel,
         value: "none",
         checked: this.state.operator == "none",
         onChange: this.updateOperator.bind(this)

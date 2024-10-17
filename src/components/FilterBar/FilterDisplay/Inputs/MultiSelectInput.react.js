@@ -62,7 +62,7 @@ export class MultiSelectInput extends React.Component {
 
   render() {
     let optionList = this.state.options;
-    let name_label = `operator_${this.state.label}`
+    let operatorLabel = `operator_${this.state.label}`
     let options = optionList.map(function(option) {
       return (
         <option key={option.value} value={option.value}>
@@ -87,7 +87,7 @@ export class MultiSelectInput extends React.Component {
             <label className="radio-inline">
               <input
                 type="radio"
-                name={name_label}
+                name={operatorLabel}
                 value="any"
                 checked={this.state.operator == "any"}
                 onChange={this.updateOperator.bind(this)}
@@ -97,7 +97,7 @@ export class MultiSelectInput extends React.Component {
             <label className="radio-inline">
               <input
                 type="radio"
-                name={name_label}
+                name={operatorLabel}
                 value="all"
                 checked={this.state.operator == "all"}
                 onChange={this.updateOperator.bind(this)}
@@ -107,7 +107,7 @@ export class MultiSelectInput extends React.Component {
             <label className="radio-inline">
               <input
                 type="radio"
-                name={name_label}
+                name={operatorLabel}
                 value="none"
                 checked={this.state.operator == "none"}
                 onChange={this.updateOperator.bind(this)}
