@@ -3,7 +3,7 @@
 ## General Information
 
 A ReactJS implementation of the new Jobready Filterbar widget. This implmentation is intended to function as a drop in widget in any of our applications.
-A example sinatra application, usefull for developing, can be found in the example dir. see https://github.com/jobready/react-filterbar/tree/develop/example/README.md
+A example sinatra application, usefull for developing, can be found in the example dir. see https://github.com/rdytech/react-filterbar/tree/develop/example/README.md
 
 ## Dependencies
 
@@ -19,7 +19,7 @@ A example sinatra application, usefull for developing, can be found in the examp
 
 * A global ReactBootstrap-DateTimePicker
 
-See the [react-fluxer](http://github.com/jobready/react-fluxer) repository for requirable global react and event-emitter libraries.
+See the [react-fluxer](https://github.com/rdytech/react-fluxer) repository for requirable global react and event-emitter libraries.
 
 The primary distribution method is bower. The recommended target is the master branch, which will be tagged according to semver.
 
