@@ -5,7 +5,7 @@ This document describes how to setup Sinatra for the purposes of development and
 
 * Clone the Repo
 ```
-git clone https://github.com/jobready/react-filterbar.git
+git clone https://github.com/rdytech/react-filterbar.git
 ```
 
 * Use Docker
