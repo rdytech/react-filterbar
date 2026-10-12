@@ -114,6 +114,16 @@ export class MultiSelectInput extends React.Component {
               />
               { t('filterbar.buttons.missing_any_selected') }
             </label>
+            <label className="radio-inline">
+              <input
+                type="radio"
+                name={operatorLabel}
+                value="missing_all"
+                checked={this.state.operator == "missing_all"}
+                onChange={this.updateOperator.bind(this)}
+              />
+              { t('filterbar.buttons.missing_all_selected') }
+            </label>
           </div>
         )}
       </li>

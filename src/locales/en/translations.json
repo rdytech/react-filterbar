@@ -31,6 +31,7 @@
         "calendar": "Calendar",
         "any_selected": "ANY selected",
         "all_selected": "ALL selected",
+        "missing_all_selected": "MISSING ALL selected",
         "missing_any_selected": "MISSING ANY selected",
         "today": "Today",
         "days": "day(s)",
