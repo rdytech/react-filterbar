@@ -182,7 +182,9 @@ This is an optional field for a lazy_multi_select/lazy_select type. The default 
 
 This is an optional field for the multi_select filter type. If specified, the filter will include the option to search by "Any" of the specified values (boolean OR), or by "All" of the specified values (boolean AND). Whichever value is supplied will be the default selected option.
 
-*Allowed Values*: ['all', 'any']
+The filter renders four operator radios: `any` (ANY selected), `all` (ALL selected), `none` (MISSING ANY selected, lacks at least one of the values) and `missing_all` (MISSING ALL selected, has none of the values).
+
+*Allowed Values*: ['all', 'any', 'none', 'missing_all']
 
 ### dl.tableConfiguration
 
