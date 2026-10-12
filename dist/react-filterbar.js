@@ -21615,7 +21615,15 @@ var MultiSelectInput = /*#__PURE__*/function (_React$Component) {
         value: "none",
         checked: this.state.operator == "none",
         onChange: this.updateOperator.bind(this)
-      }), (0, _i18n["default"])('filterbar.buttons.missing_any_selected'))));
+      }), (0, _i18n["default"])('filterbar.buttons.missing_any_selected')), /*#__PURE__*/React.createElement("label", {
+        className: "radio-inline"
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "radio",
+        name: operatorLabel,
+        value: "missing_all",
+        checked: this.state.operator == "missing_all",
+        onChange: this.updateOperator.bind(this)
+      }), (0, _i18n["default"])('filterbar.buttons.missing_all_selected'))));
     }
   }]);
 
@@ -24552,6 +24560,7 @@ module.exports={
         "calendar": "Calendar",
         "any_selected": "ANY selected",
         "all_selected": "ALL selected",
+        "missing_all_selected": "MISSING ALL selected",
         "missing_any_selected": "MISSING ANY selected",
         "today": "Today",
         "days": "day(s)",
